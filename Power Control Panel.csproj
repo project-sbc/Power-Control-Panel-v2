@@ -1,0 +1,107 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>Power_Control_Panel</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="PowerControlPanel\Logs\application_log.txt" />
+    <None Remove="PowerControlPanel\Pages\ProjectSBC.png" />
+    <None Remove="PowerControlPanel\ProfileData\Profiles.xml" />
+    <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
+    <None Remove="Resources\AMD\RyzenAdj\libryzenadj.dll" />
+    <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
+    <None Remove="Resources\AMD\RyzenAdj\WinRing0x64.dll" />
+    <None Remove="Resources\AMD\RyzenAdj\WinRing0x64.sys" />
+    <None Remove="Resources\Intel\MSR\msr-cmd.exe" />
+    <None Remove="Resources\Intel\MSR\winio-drv.exe" />
+    <None Remove="Resources\Intel\MSR\WinIo32.dll" />
+    <None Remove="Resources\Intel\MSR\WinIo32.sys" />
+    <None Remove="Resources\Intel\MSR\WinIo64.dll" />
+    <None Remove="Resources\Intel\MSR\WinIo64.sys" />
+    <None Remove="Resources\Intel\MSR\WinRing0x64.dll" />
+    <None Remove="Resources\Intel\MSR\WinRing0x64.sys" />
+    <None Remove="Resources\Intel\RW\Rw.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="PowerControlPanel\Logs\application_log.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PowerControlPanel\ProfileData\Profiles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AMD\RyzenAdj\inpoutx64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AMD\RyzenAdj\libryzenadj.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AMD\RyzenAdj\ryzenadj.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AMD\RyzenAdj\WinRing0x64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AMD\RyzenAdj\WinRing0x64.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\msr-cmd.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\winio-drv.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\WinIo32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\WinIo32.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\WinIo64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\WinIo64.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\WinRing0x64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\MSR\WinRing0x64.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\RW\Rw.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PowerControlPanel\Pages\ProjectSBC.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
