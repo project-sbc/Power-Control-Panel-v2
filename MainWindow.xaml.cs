@@ -29,18 +29,55 @@ namespace Power_Control_Panel
     {
         public static double PL1;
         public static double PL2;
-        public static Boolean usingRW = false;
-
+   
     }
     public partial class MainWindow : MetroWindow
     {
         private readonly NavigationServiceEx navigationServiceEx;
         public Window overlay = new Overlay();
+        public DispatchTimer inputCheck = new DispatchTimer();
+        public DispatchTimer valueUpdate = new DispatchTimer();
         public MainWindow()
         {
             this.InitializeComponent();
 
+            //Run code to set up hamburger menu
+            initializeNavigationFrame();
 
+            //Run code to set up dispatch timers, one for inputcheck (i.e. xinput or keyboard prompts) and one for updating TDP values
+           
+        }
+        void initializeDispatchTimers()
+        {
+            //Set up timespan for timers
+            inputCheck.Timespan.FromSeconds(2);
+            valueUpdate.Timespan.FromSeconds(10);
+
+            //Add the event handlers to the timers
+            inputCheck += inputCheck_Tick;
+            valueUpdate += valueUpdate_Tick;
+
+            //Start timers
+            inputCheck.Start();
+            valueUpdate.Start();
+        }
+
+        void inputCheck_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        void valueUpdate_Tick(object sender, EventArgs e)
+        {
+            //Check settings for enabled values like TDP, CPU, etc.
+            if (Properties.Settings.Default.enabledTDP)
+            {
+
+            }
+        }
+
+        void initializeNavigationFrame()
+        {
             this.navigationServiceEx = new NavigationServiceEx();
             this.navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             this.HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
@@ -51,8 +88,8 @@ namespace Power_Control_Panel
          
             this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
 
-     
         }
+
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
         {
