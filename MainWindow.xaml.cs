@@ -1,22 +1,14 @@
 ﻿using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Threading;
 using Power_Control_Panel.PowerControlPanel.Classes.Navigation;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
 using MenuItem = Power_Control_Panel.PowerControlPanel.Classes.ViewModels.MenuItem;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace Power_Control_Panel
 {
@@ -27,39 +19,71 @@ namespace Power_Control_Panel
 
     public static class GlobalVariables
     {
-        public static double PL1;
-        public static double PL2;
-   
+        public static double PL1 = 0;
+        public static double PL2 = 0;
+        public static bool needTDPRead = false;
+        
+
     }
+
     public partial class MainWindow : MetroWindow
     {
-        private readonly NavigationServiceEx navigationServiceEx;
+        private NavigationServiceEx navigationServiceEx;
         public Window overlay = new Overlay();
-        public DispatchTimer inputCheck = new DispatchTimer();
-        public DispatchTimer valueUpdate = new DispatchTimer();
+        public DispatcherTimer inputCheck=new DispatcherTimer();
+        public SecretNest.TaskSchedulers.SequentialScheduler scheduler = new SecretNest.TaskSchedulers.SequentialScheduler();
+        public Thread taskScheduler;
         public MainWindow()
         {
             this.InitializeComponent();
 
+            startScheduler();
+
+  
             //Run code to set up hamburger menu
             initializeNavigationFrame();
 
             //Run code to set up dispatch timers, one for inputcheck (i.e. xinput or keyboard prompts) and one for updating TDP values
-           
+            initializeDispatchTimersAndBackgroundThread();
+
+
+           runTask(() => ChangeTDP.readTDP2());
         }
-        void initializeDispatchTimers()
+
+        void startScheduler()
         {
+            scheduler = new SecretNest.TaskSchedulers.SequentialScheduler(true);
+
+            taskScheduler = new Thread(MyThreadJob);
+            taskScheduler.Start();
+        }
+
+        void MyThreadJob()
+        {
+            //...
+
+            scheduler.Run(); //This will block this thread until the scheduler disposed.
+        }
+        public void runTask(Action action)
+        {
+            var taskFactory = new TaskFactory(scheduler);
+            var result = taskFactory.StartNew(action);
+
+        }
+        void initializeDispatchTimersAndBackgroundThread()
+        {
+ 
             //Set up timespan for timers
-            inputCheck.Timespan.FromSeconds(2);
-            valueUpdate.Timespan.FromSeconds(10);
-
+            inputCheck.Interval= new TimeSpan(0, 0, 1); 
+       
             //Add the event handlers to the timers
-            inputCheck += inputCheck_Tick;
-            valueUpdate += valueUpdate_Tick;
-
+            inputCheck.Tick += inputCheck_Tick;
+            
             //Start timers
             inputCheck.Start();
-            valueUpdate.Start();
+
+
+            
         }
 
         void inputCheck_Tick(object sender, EventArgs e)
@@ -67,20 +91,23 @@ namespace Power_Control_Panel
 
         }
 
-        void valueUpdate_Tick(object sender, EventArgs e)
+      
+        private async void updateTDP()
         {
-            //Check settings for enabled values like TDP, CPU, etc.
-            if (Properties.Settings.Default.enabledTDP)
+            Task<string> taskTDP = ChangeTDP.readTDP();
+            string tdp = await taskTDP;
+            if (tdp != null)
             {
-
+                GlobalVariables.PL1 = Convert.ToDouble(tdp.Substring(0, tdp.IndexOf(";")));
+                GlobalVariables.PL2 = Convert.ToDouble(tdp.Substring(tdp.IndexOf(";") + 1, tdp.Length - tdp.IndexOf(";") - 1));
             }
         }
 
         void initializeNavigationFrame()
         {
-            this.navigationServiceEx = new NavigationServiceEx();
-            this.navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
-            this.HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
+            navigationServiceEx = new NavigationServiceEx();
+            navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
+            HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
 
 
 

@@ -21,15 +21,47 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         public static string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-        public static  async Task<string> readTDP()
+
+ 
+        public static void readTDP2()
         {
 
             try
             {
+                //add small delay to prevent write and read operations from interfering
+                Thread.Sleep(100);
                 string tdp = null;
                 determineCPU();
-                if (cpuType == "Intel") {tdp = runIntelReadTDP(); }
+                if (cpuType == "Intel") {tdp = runIntelReadTDPMSR(); }
                 else { if (cpuType == "AMD") {  } }
+
+                double dblPL1 = Convert.ToDouble(tdp.Substring(0, tdp.IndexOf(";")));
+                GlobalVariables.PL1 = dblPL1;
+               
+                double dblPL2 = Convert.ToDouble(tdp.Substring(tdp.IndexOf(";") + 1, tdp.Length - tdp.IndexOf(";") - 1));
+                GlobalVariables.PL2 = dblPL2;
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs:  Reading TDP: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+
+                //return "Error";
+            }
+
+        }
+        public static async Task<string> readTDP()
+        {
+
+            try
+            {
+                //add small delay to prevent write and read operations from interfering
+                Thread.Sleep(100);
+                string tdp = null;
+                determineCPU();
+                if (cpuType == "Intel") { tdp = runIntelReadTDPMSR(); }
+                else { if (cpuType == "AMD") { } }
 
                 return tdp;
             }
@@ -43,7 +75,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
 
         }
-
         public static async Task<string> changeTDP(int pl1TDP, int pl2TDP)
         {
             //Return Success as default value, otherwise alert calling routine to error
@@ -178,7 +209,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         }
 
-        static string runIntelReadTDP()
+        static string runIntelReadTDPMMIO()
         {
             string tdp = null;
             tdp = "Error";
@@ -195,8 +226,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         string result = RunCLI.RunCommand(commandArguments, true, processRW);
                         if (result != null)
                         {
-                            tdp = parseHexFromResultConvertToTDP(result,true);
-                            tdp = tdp + ";" + parseHexFromResultConvertToTDP(result, false);
+                            tdp = parseHexFromResultMMIOConvertToTDP(result,true);
+                            tdp = tdp + ";" + parseHexFromResultMMIOConvertToTDP(result, false);
 
                             return tdp;
                         }
@@ -221,8 +252,50 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             return tdp;
         }
+        static string runIntelReadTDPMSR()
+        {
+            string tdp = null;
+            tdp = "Error";
 
-        static string parseHexFromResultConvertToTDP(string result, bool isPL1)
+            try
+            {
+                string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
+                if (MCHBAR != null)
+                {
+                    lock (objLock)
+                    {
+                        string commandArguments = " /nologo /stdout /command=" + '\u0022' + "RDMSR 0x610 0x0 0x00000000 0;" + '\u0022';
+
+                        string result = RunCLI.RunCommand(commandArguments, true, processRW);
+                        if (result != null)
+                        {
+                            tdp = parseHexFromResultMSRConvertToTDP(result, true);
+                            tdp = tdp + ";" + parseHexFromResultMSRConvertToTDP(result, false);
+
+                            return tdp;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Unable to get MCHBAR for intel CPU");
+                    tdp = "Error";
+
+                    return tdp;
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs: Reading intel tdp: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+                tdp = "Error";
+
+                return tdp;
+            }
+            return tdp;
+        }
+        static string parseHexFromResultMMIOConvertToTDP(string result, bool isPL1)
         {
             try
             {
@@ -242,6 +315,41 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     FindString = result.IndexOf(MCHBAR + "A4 =") + MCHBAR.Length + 4;
                     hexResult = result.Substring(FindString, 7).Trim();
                     intResult = (Convert.ToInt32(hexResult, 16) - 32768) / 8;
+                    return intResult.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs:  Parse intel tdp from result: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+                return "Error";
+            }
+
+
+
+        }
+
+        static string parseHexFromResultMSRConvertToTDP(string result, bool isPL1)
+        {
+            try
+            {
+                int FindString;
+                string hexResult;
+                float intResult;
+                if (isPL1)
+                {
+                    FindString = result.IndexOf("0x00DD8") + 7;
+                    hexResult = result.Substring(FindString, 3).Trim();
+                    intResult = (Convert.ToInt32(hexResult, 16)) / 8;
+                    return intResult.ToString();
+
+                }
+                else
+                {
+                    FindString = result.IndexOf("0x00428") + 7;
+                    hexResult = result.Substring(FindString, 3).Trim();
+                    intResult = (Convert.ToInt32(hexResult, 16)) / 8;
                     return intResult.ToString();
                 }
             }
