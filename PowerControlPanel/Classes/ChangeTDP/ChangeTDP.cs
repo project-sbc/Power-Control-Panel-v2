@@ -35,7 +35,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 if (cpuType == "Intel") {
                     if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
                     {
-                        runIntelReadTDPMMIO();
+                        //runIntelReadTDPMMIO();
+                        runIntelReadTDPMSRCMD();
                     }
                     if (Properties.Settings.Default.IntelMMIOMSR=="MSR") { runIntelReadTDPMSR();  }
 
@@ -66,7 +67,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 {
                     if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
                     {
-                        runIntelTDPChangeMMIO(pl1TDP, pl2TDP);
+                        //runIntelTDPChangeMMIO(pl1TDP, pl2TDP);
+                        runIntelTDPChangeMSR(pl1TDP, pl2TDP);
                     }
                     if (Properties.Settings.Default.IntelMMIOMSR.Contains("MSR")) { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
                 }
@@ -120,9 +122,58 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 string hexPL2 = convertTDPToHexMSR(pl2TDP);
                 if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
                 {
+                    if (hexPL1.Length < 3) 
+                    { 
+                        if (hexPL1.Length == 1) { hexPL1 = "00" + hexPL1; }
+                        if (hexPL1.Length == 2) { hexPL1 = "0" + hexPL1; }
+                    }
+                    if (hexPL2.Length < 3)
+                    {
+                        if (hexPL2.Length == 1) { hexPL2 = "00" + hexPL2; }
+                        if (hexPL2.Length == 2) { hexPL2 = "0" + hexPL2; }
+                    }
                     lock (objLock)
                     {
                         string commandArguments = " /nologo /stdout /command=" + '\u0022' + "wrmsr 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1 + ";" + '\u0022';
+
+                        RunCLI.RunCommand(commandArguments, false, processRW);
+                        Thread.Sleep(100);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+
+            }
+
+
+        }
+
+        static void runIntelTDPChangeMSRCMD(int pl1TDP, int pl2TDP)
+        {
+            try
+            {
+                string processRW = "cmd.exe";
+                string hexPL1 = convertTDPToHexMSR(pl1TDP);
+                string hexPL2 = convertTDPToHexMSR(pl2TDP);
+                if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
+                {
+                    lock (objLock)
+                    {
+                        if (hexPL1.Length < 3)
+                        {
+                            if (hexPL1.Length == 1) { hexPL1 = "00" + hexPL1; }
+                            if (hexPL1.Length == 2) { hexPL1 = "0" + hexPL1; }
+                        }
+                        if (hexPL2.Length < 3)
+                        {
+                            if (hexPL2.Length == 1) { hexPL2 = "00" + hexPL2; }
+                            if (hexPL2.Length == 2) { hexPL2 = "0" + hexPL2; }
+                        }
+                        string commandArguments = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe -s write 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1;
 
                         RunCLI.RunCommand(commandArguments, false, processRW);
                         Thread.Sleep(100);
@@ -326,6 +377,41 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
         }
+
+        static string parseHexFromResultMSRCMDConvertToTDP(string result, bool isPL1)
+        {
+            try
+            {
+                int FindString;
+                string hexResult;
+                float intResult;
+                if (isPL1)
+                {
+                    FindString = result.IndexOf("0x00dd8") + 7;
+                    hexResult = result.Substring(FindString, 3).Trim();
+                    intResult = (Convert.ToInt32(hexResult, 16)) / 8;
+                    return intResult.ToString();
+
+                }
+                else
+                {
+                    FindString = result.IndexOf("0x00438") + 7;
+                    hexResult = result.Substring(FindString, 3).Trim();
+                    intResult = (Convert.ToInt32(hexResult, 16)) / 8;
+                    return intResult.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs:  Parse intel tdp from result: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+                return "Error";
+            }
+
+
+
+        }
         static void runIntelReadTDPMSR()
         {
             try
@@ -344,6 +430,39 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         GlobalVariables.readPL1 = dblPL1;
 
                         double dblPL2 = Convert.ToDouble(parseHexFromResultMSRConvertToTDP(result, false));
+                        GlobalVariables.readPL2 = dblPL2;
+
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs: Reading intel tdp: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+            }
+
+        }
+        static void runIntelReadTDPMSRCMD()
+        {
+            try
+            {
+                string processRW = "cmd.exe";
+
+                lock (objLock)
+                {
+                    string commandArguments = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe read 0x610";
+
+                    string result = RunCLI.RunCommand(commandArguments, true, processRW);
+                    if (result != null)
+                    {
+
+                        double dblPL1 = Convert.ToDouble(parseHexFromResultMSRCMDConvertToTDP(result, true));
+                        GlobalVariables.readPL1 = dblPL1;
+
+                        double dblPL2 = Convert.ToDouble(parseHexFromResultMSRCMDConvertToTDP(result, false));
                         GlobalVariables.readPL2 = dblPL2;
 
                     }
