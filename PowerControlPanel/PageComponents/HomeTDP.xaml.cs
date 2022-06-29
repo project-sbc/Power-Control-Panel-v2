@@ -37,33 +37,27 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             InitializeComponent();
 
         }
-        private void TDP1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (!dragStartedTDP1 && !changingTDP)
-            {
-                HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-               
-
-            }
-          
-        }
 
         private void updateTDP()
         {
             TDPTaskScheduler.runTask(() => ChangeTDP.readTDP());
         }
-
+        private void TDP1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStartedTDP1 && !changingTDP)
+            {
+                HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+            }
+        }
         private void TDP1_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             dragStartedTDP1 = false;
             HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
         }
-
         private void TDP1_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             dragStartedTDP1 = true;
         }
-
         private void TDP1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dragStartedTDP1 = false;
@@ -84,7 +78,6 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             if (!dragStartedTDP2 && !changingTDP)
             {
                 HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
-
             }
         }
         private void TDP2_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -92,17 +85,23 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             dragStartedTDP2 = false;
             HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
         }
-
         private void TDP2_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             dragStartedTDP2 = true;
         }
-
-
         private void TDP2_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dragStartedTDP2 = false;
             HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
+        }
+        private void TDP2_TouchDown(object sender, TouchEventArgs e)
+        {
+            dragStartedTDP2 = true;
+        }
+        private void TDP2_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStartedTDP2 = false;
+            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
         }
         private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
         {
@@ -119,6 +118,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
                     else
                     {
                         TDP2.Value = tdpPL1;
+                        tdpPL2= tdpPL1; 
                         TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
                     };
                 }
@@ -129,6 +129,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
                     else
                     {
                         TDP1.Value = tdpPL2;
+                        tdpPL1= tdpPL2;
                         TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
                     };
                 }
@@ -181,5 +182,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             }
 
         }
+
+
     }
 }

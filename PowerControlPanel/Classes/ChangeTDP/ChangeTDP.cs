@@ -14,15 +14,15 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 {
     public class ChangeTDP
     {
-        static string cpuType = "";
-        static string MCHBAR = "";
+        public static string cpuType = "";
+        public static string MCHBAR = "";
         static string RWDelay = Properties.Settings.Default.RWDelay;
         private static Object objLock = new Object();
 
         public static string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
 
- 
+        //Read TDP routines
         public static void readTDP()
         {
 
@@ -32,7 +32,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 Thread.Sleep(100);
                 
                 determineCPU();
-                if (cpuType == "Intel") {runIntelReadTDPMMIO(); }
+                if (cpuType == "Intel") {
+                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
+                    {
+                        runIntelReadTDPMMIO();
+                    }
+                    if (Properties.Settings.Default.IntelMMIOMSR=="MSR") { runIntelReadTDPMSR();  }
+
+                }
                 else { if (cpuType == "AMD") {  } }
                 GlobalVariables.needTDPRead = false;
              
@@ -47,7 +54,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
 
         }
-      
+      //Change TDP routines - Intel
         public static void changeTDP(int pl1TDP, int pl2TDP)
         {
             //Return Success as default value, otherwise alert calling routine to error
@@ -76,8 +83,63 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
 
         }
+        static void runIntelTDPChangeMMIO(int pl1TDP, int pl2TDP)
+        {
+            try
+            {
+                string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
+                string hexPL1 = convertTDPToHexMMIO(pl1TDP);
+                string hexPL2 = convertTDPToHexMMIO(pl2TDP);
+                if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
+                {
+                    lock (objLock)
+                    {
+                        string commandArguments = " /nologo /stdout /command=" + '\u0022' + "Delay " + RWDelay + "; w16 " + MCHBAR + "a0 0x" + hexPL1 + "; Delay " + RWDelay + "; w16 " + MCHBAR + "a4 0x" + hexPL2 + "; Delay " + RWDelay + ";" + '\u0022';
+
+                        RunCLI.RunCommand(commandArguments, false, processRW);
+                        Thread.Sleep(100);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+
+            }
 
 
+        }
+        static void runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
+        {
+            try
+            {
+                string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
+                string hexPL1 = convertTDPToHexMSR(pl1TDP);
+                string hexPL2 = convertTDPToHexMSR(pl2TDP);
+                if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
+                {
+                    lock (objLock)
+                    {
+                        string commandArguments = " /nologo /stdout /command=" + '\u0022' + "wrmsr 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1 + ";" + '\u0022';
+
+                        RunCLI.RunCommand(commandArguments, false, processRW);
+                        Thread.Sleep(100);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change: " + ex.Message;
+                StreamWriterLog.startStreamWriter(errorMsg);
+                MessageBox.Show(errorMsg);
+
+            }
+
+
+        }
+        //End change TDP routines
         static void determineCPU()
         {
             try
@@ -131,69 +193,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         }
 
-       
-       
-        static void runIntelTDPChangeMMIO(int pl1TDP, int pl2TDP)
-        {
-            try
-            {
-                string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
-                string hexPL1 = convertTDPToHexMMIO(pl1TDP);
-                string hexPL2 = convertTDPToHexMMIO(pl2TDP);
-                if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
-                {
-                    lock (objLock)
-                    {
-                        string commandArguments = " /nologo /stdout /command=" + '\u0022' + "Delay " + RWDelay + "; w16 " + MCHBAR + "a0 0x" + hexPL1 + "; Delay " + RWDelay + "; w16 " + MCHBAR + "a4 0x" + hexPL2 + "; Delay " + RWDelay + ";" + '\u0022';
-
-                        RunCLI.RunCommand(commandArguments, false, processRW);
-                        Thread.Sleep(100);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change: " + ex.Message;
-                StreamWriterLog.startStreamWriter(errorMsg);
-                MessageBox.Show(errorMsg);
-             
-            }
-
-
-        }
-        static void runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
-        {
-            try
-            {
-                string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
-                string hexPL1 = convertTDPToHexMSR(pl1TDP);
-                string hexPL2 = convertTDPToHexMSR(pl2TDP);
-                if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
-                {
-                    lock (objLock)
-                    {
-                        string commandArguments = " /nologo /stdout /command=" + '\u0022' + "wrmsr 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1 + ";" + '\u0022';
-
-                        RunCLI.RunCommand(commandArguments, false, processRW);
-                        Thread.Sleep(100);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change: " + ex.Message;
-                StreamWriterLog.startStreamWriter(errorMsg);
-                MessageBox.Show(errorMsg);
-
-            }
-
-
-        }
 
 
 
-
-        //KEEP, GOOD
+        
 
         //MMIO Stuff here
         static string convertTDPToHexMMIO(int tdp)
@@ -375,21 +378,21 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
         }
         //MSR stuff above
-        static string runAMDTDPChange(int pl1TDP, int pl2TDP)
+        static void runAMDTDPChange(int pl1TDP, int pl2TDP)
         {
             
             //NOT COMPLETE
             try
             {
                 
-                return "Success";
+               
             }
             catch (Exception ex)
             {
                 string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
-                return "Error";
+               
             }
 
 

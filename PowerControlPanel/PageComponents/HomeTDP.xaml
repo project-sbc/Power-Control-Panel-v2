@@ -51,7 +51,7 @@
                     </Label>
 
                     <Label x:Name="txtsliderTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP2, Path=Value}"/>
-                    <Slider x:Name="TDP2" DockPanel.Dock="Right" Thumb.DragCompleted="TDP2_DragCompleted" Height="40" Thumb.DragStarted="TDP2_DragStarted" Width="270" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP2_ValueChanged" MouseLeftButtonUp="TDP2_MouseLeftButtonUp" HorizontalAlignment="Right"  >
+                    <Slider x:Name="TDP2" DockPanel.Dock="Right" Thumb.DragCompleted="TDP2_DragCompleted" Height="40" Thumb.DragStarted="TDP2_DragStarted" Width="270" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP2_ValueChanged" MouseLeftButtonUp="TDP2_MouseLeftButtonUp" HorizontalAlignment="Right" TouchDown="TDP2_TouchDown" TouchUp="TDP2_TouchUp"  >
                         <Slider.LayoutTransform>
                             <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
                         </Slider.LayoutTransform>
