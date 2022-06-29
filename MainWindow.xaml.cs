@@ -9,6 +9,8 @@ using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
 using MenuItem = Power_Control_Panel.PowerControlPanel.Classes.ViewModels.MenuItem;
 using System.Windows.Threading;
 using System.Threading;
+using Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler;
+using Power_Control_Panel.PowerControlPanel.Classes.StartUp;
 
 namespace Power_Control_Panel
 {
@@ -19,8 +21,10 @@ namespace Power_Control_Panel
 
     public static class GlobalVariables
     {
-        public static double PL1 = 0;
-        public static double PL2 = 0;
+        public static double readPL1 = 0;
+        public static double readPL2 = 0;
+        public static double setPL1 = 0;
+        public static double setPL2 = 0;
         public static bool needTDPRead = false;
         
 
@@ -31,14 +35,12 @@ namespace Power_Control_Panel
         private NavigationServiceEx navigationServiceEx;
         public Window overlay = new Overlay();
         public DispatcherTimer inputCheck=new DispatcherTimer();
-        public SecretNest.TaskSchedulers.SequentialScheduler scheduler = new SecretNest.TaskSchedulers.SequentialScheduler();
-        public Thread taskScheduler;
+
         public MainWindow()
         {
             this.InitializeComponent();
 
-            startScheduler();
-
+            StartUp.runStartUp();
   
             //Run code to set up hamburger menu
             initializeNavigationFrame();
@@ -47,29 +49,10 @@ namespace Power_Control_Panel
             initializeDispatchTimersAndBackgroundThread();
 
 
-           runTask(() => ChangeTDP.readTDP2());
+           
         }
 
-        void startScheduler()
-        {
-            scheduler = new SecretNest.TaskSchedulers.SequentialScheduler(true);
-
-            taskScheduler = new Thread(MyThreadJob);
-            taskScheduler.Start();
-        }
-
-        void MyThreadJob()
-        {
-            //...
-
-            scheduler.Run(); //This will block this thread until the scheduler disposed.
-        }
-        public void runTask(Action action)
-        {
-            var taskFactory = new TaskFactory(scheduler);
-            var result = taskFactory.StartNew(action);
-
-        }
+       
         void initializeDispatchTimersAndBackgroundThread()
         {
  
@@ -92,31 +75,16 @@ namespace Power_Control_Panel
         }
 
       
-        private async void updateTDP()
-        {
-            Task<string> taskTDP = ChangeTDP.readTDP();
-            string tdp = await taskTDP;
-            if (tdp != null)
-            {
-                GlobalVariables.PL1 = Convert.ToDouble(tdp.Substring(0, tdp.IndexOf(";")));
-                GlobalVariables.PL2 = Convert.ToDouble(tdp.Substring(tdp.IndexOf(";") + 1, tdp.Length - tdp.IndexOf(";") - 1));
-            }
-        }
-
+      
+        //Navigation routines
         void initializeNavigationFrame()
         {
             navigationServiceEx = new NavigationServiceEx();
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
-
-
-
             // Navigate to the home page.
-         
             this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
-
         }
-
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
         {
@@ -168,6 +136,8 @@ namespace Power_Control_Panel
             this.navigationServiceEx.GoBack();
 
         }
+
+        //End navigation routines
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

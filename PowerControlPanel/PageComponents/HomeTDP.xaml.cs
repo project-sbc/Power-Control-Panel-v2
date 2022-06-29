@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
- 
+using Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler;
 
 
 namespace Power_Control_Panel.PowerControlPanel.PageComponents
@@ -48,21 +48,9 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
           
         }
 
-        private async void updateTDP()
+        private void updateTDP()
         {
-            Task<string> taskTDP = ChangeTDP.readTDP();
-            string tdp = await taskTDP;
-            if (tdp != null )
-            {
-                changingTDP = true;
-                double dblPL1 = Convert.ToDouble(tdp.Substring(0, tdp.IndexOf(";")));
-                GlobalVariables.PL1 = dblPL1;
-                TDP1.Value = Math.Round(dblPL1, 0,MidpointRounding.AwayFromZero);
-                double dblPL2 = Convert.ToDouble(tdp.Substring(tdp.IndexOf(";") + 1, tdp.Length - tdp.IndexOf(";") - 1));
-                GlobalVariables.PL2 = dblPL2;
-                TDP2.Value= Math.Round(dblPL2, 0, MidpointRounding.AwayFromZero);
-                changingTDP = false;
-            }
+            TDPTaskScheduler.runTask(() => ChangeTDP.readTDP());
         }
 
         private void TDP1_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -122,28 +110,29 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             if (!changingTDP)
             {
                 changingTDP = true;
+                GlobalVariables.needTDPRead = true; 
                 if (PL1started)
                 {
                     //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value
 
-                    if (tdpPL1 < tdpPL2) { Task.Run(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
+                    if (tdpPL1 < tdpPL2) { TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
                     else
                     {
                         TDP2.Value = tdpPL1;
-                        Task.Run(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
+                        TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
                     };
                 }
                 else
                 {
                     //If PL2 is less than PL1 drop PL1 down to PL2 new value
-                    if (tdpPL1 < tdpPL2) { Task.Run(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
+                    if (tdpPL1 < tdpPL2) { TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
                     else
                     {
                         TDP1.Value = tdpPL2;
-                        Task.Run(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
+                        TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
                     };
                 }
-                GlobalVariables.needTDPRead = true;
+                TDPTaskScheduler.runTask(() => ChangeTDP.readTDP());
                 changingTDP = false;
             }
 
@@ -155,27 +144,22 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         {
             intializeTimer();
             loadTDPValues();
+          
         }
-
+    
         void loadTDPValues()
         {
             //If global tdp is not zero meaning it was read within 10 seconds, load those instead of calling a update
-            if (GlobalVariables.PL1 > 0 && GlobalVariables.PL2 > 0)
+            if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
             {
                 updateFromGlobalTDP();
             }
-            else
-            {
-                //updateTDP();
-
-        
-               
-            }
+       
         }
         void intializeTimer()
         {
             //Set up auto update tick timer, which syncs with global variable updates
-            updateTick.Interval = new TimeSpan(0, 0, 4);
+            updateTick.Interval = new TimeSpan(0, 0, 2);
             updateTick.Tick += updateTick_Tick;
             updateTick.Start();
             System.Diagnostics.Debug.WriteLine("");
@@ -191,8 +175,8 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             if (GlobalVariables.needTDPRead == false)
             {
                 changingTDP = true;
-                TDP1.Value = Math.Round(GlobalVariables.PL1, 0, MidpointRounding.AwayFromZero);
-                TDP2.Value = Math.Round(GlobalVariables.PL2, 0, MidpointRounding.AwayFromZero);
+                TDP1.Value = Math.Round(GlobalVariables.readPL1, 0, MidpointRounding.AwayFromZero);
+                TDP2.Value = Math.Round(GlobalVariables.readPL2, 0, MidpointRounding.AwayFromZero);
                 changingTDP = false;
             }
 

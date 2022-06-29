@@ -62,16 +62,16 @@ namespace Power_Control_Panel
 
         private async void updateTDP()
         {
-            Task<string> taskTDP = ChangeTDP.readTDP();
-            string tdp = await taskTDP;
-            if (tdp != null)
-            {
-                changingTDP = true;
-                TDP1.Value = Math.Round(Convert.ToDouble(tdp.Substring(0, tdp.IndexOf(";"))), 0, MidpointRounding.AwayFromZero);
+           // Task<string> taskTDP = ChangeTDP.readTDP();
+           // string tdp = await taskTDP;
+           // if (tdp != null)
+           // {
+           //     changingTDP = true;
+          //      TDP1.Value = Math.Round(Convert.ToDouble(tdp.Substring(0, tdp.IndexOf(";"))), 0, MidpointRounding.AwayFromZero);
 
-                TDP2.Value = Math.Round(Convert.ToDouble(tdp.Substring(tdp.IndexOf(";") + 1, tdp.Length - tdp.IndexOf(";") - 1)), 0, MidpointRounding.AwayFromZero);
-                changingTDP = false;
-            }
+           //     TDP2.Value = Math.Round(Convert.ToDouble(tdp.Substring(tdp.IndexOf(";") + 1, tdp.Length - tdp.IndexOf(";") - 1)), 0, MidpointRounding.AwayFromZero);
+           //     changingTDP = false;
+           // }
         }
 
         private void TDP1_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
@@ -142,7 +142,7 @@ namespace Power_Control_Panel
                     else
                     {
                         TDP2.Value = tdpPL1;
-                        ChangeTDP.changeTDP(tdpPL1, tdpPL1);
+                        //ChangeTDP.changeTDP(tdpPL1, tdpPL1);
 
 
                     };

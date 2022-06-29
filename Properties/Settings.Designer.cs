@@ -82,5 +82,17 @@ namespace Power_Control_Panel.Properties {
                 this["maxTDP"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MMIO")]
+        public string IntelMMIOMSR {
+            get {
+                return ((string)(this["IntelMMIOMSR"]));
+            }
+            set {
+                this["IntelMMIOMSR"] = value;
+            }
+        }
     }
 }
