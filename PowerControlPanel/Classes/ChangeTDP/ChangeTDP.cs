@@ -63,8 +63,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 {
                     if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
                     {
-                        //runIntelTDPChangeMMIO(pl1TDP, pl2TDP);
-                        runIntelTDPChangeMSR(pl1TDP, pl2TDP);
+                        runIntelTDPChangeMMIO(pl1TDP, pl2TDP);
                     }
                     if (Properties.Settings.Default.IntelMMIOMSR=="MSRCMD") { runIntelTDPChangeMSRCMD(pl1TDP, pl2TDP); }
                     else { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
