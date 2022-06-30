@@ -18,7 +18,7 @@
       <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="IntelMMIOMSR" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MMIO</Value>
+      <Value Profile="(Default)">MSRCMD</Value>
     </Setting>
   </Settings>
 </SettingsFile>

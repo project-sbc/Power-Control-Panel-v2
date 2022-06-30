@@ -33,13 +33,9 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 
                 determineCPU();
                 if (cpuType == "Intel") {
-                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
-                    {
-                        //runIntelReadTDPMMIO();
-                        runIntelReadTDPMSRCMD();
-                    }
+                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO")) {runIntelReadTDPMMIO();}
                     if (Properties.Settings.Default.IntelMMIOMSR=="MSR") { runIntelReadTDPMSR();  }
-
+                    if (Properties.Settings.Default.IntelMMIOMSR == "MSRCMD") { runIntelReadTDPMSRCMD(); }
                 }
                 else { if (cpuType == "AMD") {  } }
                 GlobalVariables.needTDPRead = false;
@@ -70,7 +66,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         //runIntelTDPChangeMMIO(pl1TDP, pl2TDP);
                         runIntelTDPChangeMSR(pl1TDP, pl2TDP);
                     }
-                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MSR")) { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
+                    if (Properties.Settings.Default.IntelMMIOMSR=="MSRCMD") { runIntelTDPChangeMSRCMD(pl1TDP, pl2TDP); }
+                    else { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
                 }
                 else { if (cpuType == "AMD") {runAMDTDPChange(pl1TDP, pl2TDP); } }
                 GlobalVariables.setPL1 = pl1TDP;
@@ -396,6 +393,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 else
                 {
                     FindString = result.IndexOf("0x00438") + 7;
+                    if (FindString == 6) { FindString = result.IndexOf("0x00428") + 7; }
                     hexResult = result.Substring(FindString, 3).Trim();
                     intResult = (Convert.ToInt32(hexResult, 16)) / 8;
                     return intResult.ToString();
