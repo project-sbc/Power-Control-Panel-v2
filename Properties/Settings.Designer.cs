@@ -85,7 +85,7 @@ namespace Power_Control_Panel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("MSRCMD")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MMIO")]
         public string IntelMMIOMSR {
             get {
                 return ((string)(this["IntelMMIOMSR"]));

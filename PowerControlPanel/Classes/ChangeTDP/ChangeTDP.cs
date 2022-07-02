@@ -88,6 +88,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
                 string hexPL1 = convertTDPToHexMMIO(pl1TDP);
                 string hexPL2 = convertTDPToHexMMIO(pl2TDP);
+                MessageBox.Show(hexPL1);
                 if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
                 {
                     lock (objLock)
