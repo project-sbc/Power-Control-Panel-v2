@@ -109,7 +109,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             if (!changingTDP)
             {
                 changingTDP = true;
-                GlobalVariables.needTDPRead = true; 
+                GlobalVariables.needTDPRead = true;
                 if (PL1started)
                 {
                     //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value

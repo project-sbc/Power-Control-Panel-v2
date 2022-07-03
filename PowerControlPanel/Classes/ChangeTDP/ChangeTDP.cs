@@ -428,8 +428,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             //MSR stuff above
             static void runAMDReadTDP()
             {
-
-  
                 try
                 {
                     string processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
