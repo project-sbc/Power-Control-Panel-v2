@@ -13,7 +13,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
         public static void runStartUp()
         {
             TDPTaskScheduler.TDPTaskScheduler.startScheduler();
-            TDPTaskScheduler.TDPTaskScheduler.runTask(()=> ChangeTDP.ChangeTDP.readTDP());
+            ChangeTDP.ChangeTDP.readTDP();
         }
     }
 }

@@ -42,6 +42,7 @@ namespace Power_Control_Panel
             this.InitializeComponent();
 
             StartUp.runStartUp();
+            
   
             //Run code to set up hamburger menu
             initializeNavigationFrame();
@@ -49,10 +50,7 @@ namespace Power_Control_Panel
             //Run code to set up dispatch timers, one for inputcheck (i.e. xinput or keyboard prompts) and one for updating TDP values
             initializeDispatchTimersAndBackgroundThread();
 
-            //Test for new RW.exe like prgoram he.exe
-            string commandArguments = "help";
-            string processRW = "C:\\Users\\cemoo\\Downloads\\HE_v1.22.6.21_Portable\\HE.exe";
-            RunCLI.RunHECommand(commandArguments,false, processRW);
+     
 
         }
 

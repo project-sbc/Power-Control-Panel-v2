@@ -94,5 +94,17 @@ namespace Power_Control_Panel.Properties {
                 this["IntelMMIOMSR"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("KX")]
+        public string IntelMMIOSoftware {
+            get {
+                return ((string)(this["IntelMMIOSoftware"]));
+            }
+            set {
+                this["IntelMMIOSoftware"] = value;
+            }
+        }
     }
 }

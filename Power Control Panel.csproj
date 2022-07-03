@@ -24,6 +24,7 @@
     <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
     <None Remove="Resources\AMD\RyzenAdj\WinRing0x64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\WinRing0x64.sys" />
+    <None Remove="Resources\Intel\KX\KX.exe" />
     <None Remove="Resources\Intel\MSR\msr-cmd.exe" />
     <None Remove="Resources\Intel\MSR\winio-drv.exe" />
     <None Remove="Resources\Intel\MSR\WinIo32.dll" />
@@ -52,6 +53,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\AMD\RyzenAdj\WinRing0x64.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Intel\KX\KX.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Intel\MSR\msr-cmd.exe">

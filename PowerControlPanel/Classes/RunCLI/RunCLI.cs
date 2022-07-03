@@ -25,6 +25,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
 
                 startInfo.FileName = processName;
                 startInfo.Arguments = "/c " + arguments;
+                startInfo.CreateNoWindow = true;    
                 startInfo.Verb = "runas";
                 process.StartInfo = startInfo;
                 process.Start();

@@ -20,5 +20,8 @@
     <Setting Name="IntelMMIOMSR" Type="System.String" Scope="User">
       <Value Profile="(Default)">MMIO</Value>
     </Setting>
+    <Setting Name="IntelMMIOSoftware" Type="System.String" Scope="User">
+      <Value Profile="(Default)">KX</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
