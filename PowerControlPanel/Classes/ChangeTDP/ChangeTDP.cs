@@ -150,7 +150,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             catch (Exception ex)
             {
-                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change: " + ex.Message;
+                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change MSR: " + ex.Message;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
 
@@ -429,7 +429,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             static void runAMDReadTDP()
             {
 
-                //NOT COMPLETE
+  
                 try
                 {
                     string processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
@@ -441,10 +441,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         string result = RunCLI.RunCommand(commandArguments, true, "cmd.exe");
                         if (result != null)
                         {
-                            MessageBox.Show(result);
                             double dblPL1 = Convert.ToDouble(parseFromResultAMD(result, "PL1"));
                             GlobalVariables.readPL1 = dblPL1;
-
                             double dblPL2 = Convert.ToDouble(parseFromResultAMD(result, "PL2"));
                             GlobalVariables.readPL2 = dblPL2;
 
@@ -465,13 +463,21 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             static void runAMDTDPChange(int pl1TDP, int pl2TDP)
             {
 
-                //NOT COMPLETE
                 try
                 {
+                string processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
 
+                lock (objLock)
+                {
+                    string commandArguments = processRyzenAdj + " --stapm-limit=" + (pl1TDP * 1000).ToString() + " --slow-limit=" + (pl2TDP * 1000).ToString() + " --fast-limit=" + (pl2TDP * 1000).ToString();
 
+                    string result = RunCLI.RunCommand(commandArguments, true, "cmd.exe");
+                    Thread.Sleep(100);
                 }
-                catch (Exception ex)
+
+
+            }
+            catch (Exception ex)
                 {
                     string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message;
                     StreamWriterLog.startStreamWriter(errorMsg);
