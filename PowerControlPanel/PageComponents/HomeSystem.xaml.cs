@@ -26,6 +26,13 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         public HomeSystem()
         {
             InitializeComponent();
+            handleVisibility();
+        }
+        void handleVisibility()
+        {
+            if (Properties.Settings.Default.showSystem)
+            { enableControl.IsOn = true; }
+            else { enableControl.IsOn = false; }
         }
 
         private void Brightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

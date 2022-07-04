@@ -35,9 +35,14 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         public HomeTDP()
         {
             InitializeComponent();
-
+            handleVisibility();
         }
-               
+        void handleVisibility()
+        {
+            if (Properties.Settings.Default.showTDP)
+            { enableControl.IsOn = true; }
+            else { enableControl.IsOn = false; }
+        }
         private void TDP1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!dragStartedTDP1 && !changingTDP)
@@ -179,6 +184,13 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
 
         }
 
-
+        private void enableControl_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (enableControl.IsOn)
+            {
+                this.Height = 150;
+            }
+            else { this.Height = 40; }
+        }
     }
 }

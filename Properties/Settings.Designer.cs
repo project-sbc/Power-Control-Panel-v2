@@ -118,5 +118,17 @@ namespace Power_Control_Panel.Properties {
                 this["RWDelay"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool showSystem {
+            get {
+                return ((bool)(this["showSystem"]));
+            }
+            set {
+                this["showSystem"] = value;
+            }
+        }
     }
 }

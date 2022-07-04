@@ -26,5 +26,8 @@
     <Setting Name="RWDelay" Type="System.String" Scope="User">
       <Value Profile="(Default)">800</Value>
     </Setting>
+    <Setting Name="showSystem" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
