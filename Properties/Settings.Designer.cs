@@ -12,7 +12,7 @@ namespace Power_Control_Panel.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,18 +20,6 @@ namespace Power_Control_Panel.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
-        public string RWDelay {
-            get {
-                return ((string)(this["RWDelay"]));
-            }
-            set {
-                this["RWDelay"] = value;
             }
         }
         
@@ -97,13 +85,37 @@ namespace Power_Control_Panel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("KX")]
-        public string IntelMMIOSoftware {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool enableSystem {
             get {
-                return ((string)(this["IntelMMIOSoftware"]));
+                return ((bool)(this["enableSystem"]));
             }
             set {
-                this["IntelMMIOSoftware"] = value;
+                this["enableSystem"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showTDP {
+            get {
+                return ((bool)(this["showTDP"]));
+            }
+            set {
+                this["showTDP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public string RWDelay {
+            get {
+                return ((string)(this["RWDelay"]));
+            }
+            set {
+                this["RWDelay"] = value;
             }
         }
     }

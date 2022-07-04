@@ -37,11 +37,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             InitializeComponent();
 
         }
-
-        private void updateTDP()
-        {
-            TDPTaskScheduler.runTask(() => ChangeTDP.readTDP());
-        }
+               
         private void TDP1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!dragStartedTDP1 && !changingTDP)

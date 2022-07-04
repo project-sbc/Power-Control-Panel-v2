@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Power_Control_Panel.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="RWDelay" Type="System.String" Scope="User">
-      <Value Profile="(Default)">800</Value>
-    </Setting>
     <Setting Name="enableTDP" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -20,8 +17,14 @@
     <Setting Name="IntelMMIOMSR" Type="System.String" Scope="User">
       <Value Profile="(Default)">MMIO</Value>
     </Setting>
-    <Setting Name="IntelMMIOSoftware" Type="System.String" Scope="User">
-      <Value Profile="(Default)">KX</Value>
+    <Setting Name="enableSystem" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="showTDP" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RWDelay" Type="System.String" Scope="User">
+      <Value Profile="(Default)">800</Value>
     </Setting>
   </Settings>
 </SettingsFile>
