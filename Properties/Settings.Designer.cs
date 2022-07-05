@@ -130,5 +130,17 @@ namespace Power_Control_Panel.Properties {
                 this["showSystem"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool showIntlPB {
+            get {
+                return ((bool)(this["showIntlPB"]));
+            }
+            set {
+                this["showIntlPB"] = value;
+            }
+        }
     }
 }
