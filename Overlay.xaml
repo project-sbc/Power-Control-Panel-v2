@@ -49,30 +49,13 @@
                            Width="35"
                            Height="35"  />
             </Button>
-            <GroupBox Header="TDP Control" Grid.Row="1">
-                <GroupBox.Background>
-                    <SolidColorBrush Color="{DynamicResource MahApps.Colors.Gray10}"/>
-                </GroupBox.Background>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
-                        <RowDefinition Height="100" />
-
-
-                    </Grid.RowDefinitions>
-                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
-                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
-
-
-                
-                </Grid>
-
-
-
-
-
-            </GroupBox>
+            <ScrollViewer Grid.Row="1" Margin="5,10,0,0">
+                <StackPanel Background="White" Orientation="Vertical" >
+                    <Frame x:Name="frame0" Margin="0,0,0,10" />
+                    <Frame x:Name="frame1" Margin="0,0,0,10"/>
+                    <Frame x:Name="frame2" Margin="0,0,0,10"/>
+                </StackPanel>
+            </ScrollViewer>
 
         </Grid>
     </Border>

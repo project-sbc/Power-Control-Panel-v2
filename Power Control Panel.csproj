@@ -112,4 +112,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="PowerControlPanel\PageComponents\OverlayTDP.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
 </Project>
