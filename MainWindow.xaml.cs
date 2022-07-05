@@ -145,7 +145,8 @@ namespace Power_Control_Panel
         {
             //Close overlay when main window is closed
             overlay.Close();
-
+            // = null;
+            TDPTaskScheduler.closeScheduler();
 
         }
 

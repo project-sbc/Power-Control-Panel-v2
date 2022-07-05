@@ -9,7 +9,7 @@
         UseNoneWindowStyle="True" 
         ResizeMode="NoResize"
         Background="Transparent"
-        AllowsTransparency="True" Loaded="MetroWindow_Loaded">
+        AllowsTransparency="True" Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
     <Border 
              Background="{DynamicResource MahApps.Brushes.Accent2}">
         <Grid >
@@ -65,38 +65,7 @@
 
 
 
-                    <DockPanel   >
-                        <Label Content="TDP Sustained" VerticalContentAlignment="Center" DockPanel.Dock="Top" HorizontalAlignment="Left" FontSize="20">
-                            <Label.Foreground>
-                                <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
-                            </Label.Foreground>
-                        </Label>
-                        <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
-                        <Slider x:Name="TDP1" DockPanel.Dock="Left" HorizontalAlignment="Center" Thumb.DragCompleted="TDP1_DragCompleted"  Thumb.DragStarted="TDP1_DragStarted" Width="270" Height="40" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP1_ValueChanged" MouseLeftButtonUp="TDP1_MouseLeftButtonUp" TouchUp="TDP1_TouchUp" TouchDown="TDP1_TouchDown"  >
-                            <Slider.LayoutTransform>
-                                <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
-
-                            </Slider.LayoutTransform>
-
-                        </Slider>
-
-                    </DockPanel>
-
-                    <DockPanel Grid.Row="1"  >
-                        <Label Content="TDP Boost" DockPanel.Dock="Top" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
-                            <Label.Foreground>
-                                <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
-                            </Label.Foreground>
-                        </Label>
-
-                        <Label x:Name="txtsliderTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP2, Path=Value}"/>
-                        <Slider x:Name="TDP2" DockPanel.Dock="Left" HorizontalAlignment="Center" Thumb.DragCompleted="TDP2_DragCompleted" Height="40" Thumb.DragStarted="TDP2_DragStarted" Width="270" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP2_ValueChanged" MouseLeftButtonUp="TDP2_MouseLeftButtonUp"   >
-                            <Slider.LayoutTransform>
-                                <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
-                            </Slider.LayoutTransform>
-                        </Slider>
-                    </DockPanel>
-
+                
                 </Grid>
 
 

@@ -32,6 +32,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 Thread.Sleep(100);
 
                 determineCPU();
+
                 if (cpuType == "Intel")
                 {
                     if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO")) { runIntelReadTDPMMIOKX(); }
@@ -174,6 +175,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         processorName = processorNameRegistry.ToString();
                         if (processorName.IndexOf("Intel") >= 0) { cpuType = "Intel"; }
                         if (processorName.IndexOf("AMD") >= 0) { cpuType = "AMD"; }
+                        
                     }
                 }
                 if (cpuType == "Intel" && Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
@@ -321,10 +323,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
                 if (tdpLevel == "PL1")
                 {
+        
                     return result.Substring(result.IndexOf("STAPM LIMIT") + 25, 7).Trim();
                 }
                 if (tdpLevel == "PL2")
                 {
+  
                     return result.Substring(result.IndexOf("PPT LIMIT SLOW") + 25, 7).Trim();
                 }
                 else { return "error"; }
@@ -431,14 +435,15 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 try
                 {
                     string processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
-
+               
                     lock (objLock)
                     {
                         string commandArguments = processRyzenAdj + " -i";
-
+  
                         string result = RunCLI.RunCommand(commandArguments, true, "cmd.exe");
                         if (result != null)
                         {
+       
                             double dblPL1 = Convert.ToDouble(parseFromResultAMD(result, "PL1"));
                             GlobalVariables.readPL1 = dblPL1;
                             double dblPL2 = Convert.ToDouble(parseFromResultAMD(result, "PL2"));

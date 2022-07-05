@@ -181,7 +181,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
                 TDP2.Value = Math.Round(GlobalVariables.readPL2, 0, MidpointRounding.AwayFromZero);
                 changingTDP = false;
             }
-
+            Debug.Print("still running tick");
         }
 
         private void enableControl_Toggled(object sender, RoutedEventArgs e)
@@ -192,5 +192,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             }
             else { this.Height = 40; }
         }
+
+
     }
 }

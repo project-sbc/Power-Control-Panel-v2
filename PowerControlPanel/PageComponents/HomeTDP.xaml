@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="150"  d:DesignWidth="800"
-      Title="HomePage" Loaded="Page_Loaded" >
+      Title="HomePage" Loaded="Page_Loaded"  >
 
 
         

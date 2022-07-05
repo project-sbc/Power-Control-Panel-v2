@@ -5,13 +5,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Windows;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler
 {
     public class TDPTaskScheduler
     {
-        public static SecretNest.TaskSchedulers.SequentialScheduler scheduler = new SecretNest.TaskSchedulers.SequentialScheduler();
+        public static SecretNest.TaskSchedulers.SequentialScheduler scheduler;
         public static Thread taskScheduler;
+        public static TaskFactory taskFactory = new TaskFactory(scheduler);
 
         public static void startScheduler()
         {
@@ -29,10 +31,16 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler
         }
         public static void runTask(Action action)
         {
-            var taskFactory = new TaskFactory(scheduler);
+   
             var result = taskFactory.StartNew(action);
-            Debug.WriteLine("Ran action ");
+       
+            
         }
 
+        public static void closeScheduler()
+        {
+            scheduler.Dispose();
+
+        }
     }
 }
