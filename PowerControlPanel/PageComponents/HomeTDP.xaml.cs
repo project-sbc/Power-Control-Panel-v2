@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
-using Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler;
+using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
 
 
 namespace Power_Control_Panel.PowerControlPanel.PageComponents
@@ -115,26 +115,26 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
                 {
                     //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value
 
-                    if (tdpPL1 < tdpPL2) { TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
+                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
                     else
                     {
                         TDP2.Value = tdpPL1;
-                        tdpPL2= tdpPL1; 
-                        TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
+                        tdpPL2= tdpPL1;
+                        Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
                     };
                 }
                 else
                 {
                     //If PL2 is less than PL1 drop PL1 down to PL2 new value
-                    if (tdpPL1 < tdpPL2) { TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
+                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2)); }
                     else
                     {
                         TDP1.Value = tdpPL2;
                         tdpPL1= tdpPL2;
-                        TDPTaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
+                        Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.changeTDP(tdpPL1, tdpPL2));
                     };
                 }
-                TDPTaskScheduler.runTask(() => ChangeTDP.readTDP());
+                Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.readTDP());
                 changingTDP = false;
             }
 

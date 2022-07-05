@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler;
+using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 {
@@ -12,7 +12,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 
         public static void runStartUp()
         {
-            TDPTaskScheduler.TDPTaskScheduler.startScheduler();
+            TaskScheduler.TaskScheduler.startScheduler();
             ChangeTDP.ChangeTDP.readTDP();
         }
     }

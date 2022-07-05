@@ -9,9 +9,10 @@ using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
 using MenuItem = Power_Control_Panel.PowerControlPanel.Classes.ViewModels.MenuItem;
 using System.Windows.Threading;
 using System.Threading;
-using Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler;
+using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
 using Power_Control_Panel.PowerControlPanel.Classes.StartUp;
 using Power_Control_Panel.PowerControlPanel.Classes;
+using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 
 namespace Power_Control_Panel
 {
@@ -28,6 +29,9 @@ namespace Power_Control_Panel
         public static double setPL2 = 0;
         public static bool needTDPRead = false;
         
+        public static string batteryPercentage = "0";
+        public static string powerStatus = "None";
+
 
     }
 
@@ -36,6 +40,7 @@ namespace Power_Control_Panel
         private NavigationServiceEx navigationServiceEx;
         public Window overlay = new Overlay();
         public DispatcherTimer inputCheck=new DispatcherTimer();
+        public int counter = 0;
 
         public MainWindow()
         {
@@ -50,7 +55,8 @@ namespace Power_Control_Panel
             //Run code to set up dispatch timers, one for inputcheck (i.e. xinput or keyboard prompts) and one for updating TDP values
             initializeDispatchTimersAndBackgroundThread();
 
-     
+            //test code here
+            Power_Control_Panel.PowerControlPanel.Classes.BatteryInfo.BatteryInfo.readBatteryValue();
 
         }
 
@@ -73,7 +79,11 @@ namespace Power_Control_Panel
 
         void inputCheck_Tick(object sender, EventArgs e)
         {
-
+            //Handle routine object checks like TDP, battery percentage, 
+            RoutineUpdate.handleRoutineChecks(counter);
+            //Consolidate checks into one timer, reset after 60 ticks/seconds
+            if (counter > 60) { counter = 0; }else { counter++; }
+           
         }
 
       
@@ -145,8 +155,8 @@ namespace Power_Control_Panel
         {
             //Close overlay when main window is closed
             overlay.Close();
-            // = null;
-            TDPTaskScheduler.closeScheduler();
+            // Dispose of thread to allow program to close properly
+            PowerControlPanel.Classes.TaskScheduler.TaskScheduler.closeScheduler();
 
         }
 

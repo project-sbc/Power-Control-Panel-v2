@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Windows;
 
-namespace Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler
+namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
 {
-    public class TDPTaskScheduler
+    public class TaskScheduler
     {
         public static SecretNest.TaskSchedulers.SequentialScheduler scheduler;
         public static Thread taskScheduler;
@@ -19,11 +19,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TDPTaskScheduler
         {
             scheduler = new SecretNest.TaskSchedulers.SequentialScheduler(true);
 
-            taskScheduler = new Thread(ThreadTDPHandler);
+            taskScheduler = new Thread(ThreadHandler);
             taskScheduler.Start();
         }
 
-        public static void ThreadTDPHandler()
+        public static void ThreadHandler()
         {
             
 
