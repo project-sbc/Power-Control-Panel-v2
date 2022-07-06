@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        Title="OnScreenKeyboard" Height="350" Width="1000" x:Name="Keyboard" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
 
     <Window.Resources>
      
@@ -60,11 +60,12 @@
             </Setter>
         </Style>
     </Window.Resources>
-
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource IPhoneSteelBackground}" >
+    <Grid>
+        <Canvas  Grid.ColumnSpan="1" VerticalAlignment="Stretch" Name="canvMain">
+            <Grid Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" Height="450" VerticalAlignment="Stretch" Background="{DynamicResource IPhoneSteelBackground}" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="800*"/>
         </Grid.RowDefinitions>
         <Grid HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -83,7 +84,7 @@
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" CommandParameter="ESC" Content="Esc" Height="50" Width="80" IsCancel="True"/>
+            <Button Grid.Column="1" CommandParameter="ESC" Content="Esc"  IsCancel="True"/>
             <Button Grid.Column="2" CommandParameter="_1" Content="1"/>
             <Button Grid.Column="3" CommandParameter="_2" Content="2"/>
             <Button Grid.Column="4" CommandParameter="_3" Content="3"/>
@@ -378,7 +379,8 @@
         </Grid>
         <!--<Image HorizontalAlignment="Left" Margin="-450,0,0,-377" Width="163" Stretch="Fill" VerticalAlignment="Bottom" Height="342" Grid.Row="1"/>-->
     </Grid>
-
+    </Canvas>
+    </Grid>
     <!--<CheckBox Canvas.Left="894.223" Canvas.Top="17.02" Height="16.665" Name="checkBox1" Width="17.845" IsChecked="{Binding Source={DynamicResource virtualKeyboard}, Path=Shift, Mode=TwoWay, NotifyOnTargetUpdated=True}"></CheckBox>-->
 </mah:MetroWindow>
 

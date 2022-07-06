@@ -16,6 +16,7 @@ using System.ComponentModel;
 using MahApps.Metro.Controls;
 using System.Text.RegularExpressions;
 using WindowsInput.Native;
+using SharpDX.XInput;
 using WindowsInput;
 
 namespace Power_Control_Panel
@@ -26,9 +27,25 @@ namespace Power_Control_Panel
     public partial class OnScreenKeyboard : MetroWindow
     {
         #region Public Properties
+        private Controller controller;
+        private Gamepad gamepad;
+        private const double CircleWidth = 14;
+        private const double RectangleWidth = 90;
+        private const double CharFontSize = 65;
+        private Dictionary<int, Point> TouchPositions;
+        private Dictionary<int, Ellipse> TouchEllipses;
+        private double LLx = CircleWidth / 2;
+        private double LLy = CircleWidth / 2;
+        private double ULx = System.Windows.SystemParameters.PrimaryScreenWidth - CircleWidth / 2;
+        private double ULy;
+        private double windowY;
+        WindowSinker sinker;
+        InputSimulator inputSim = new InputSimulator();
+
 
         private bool _showNumericKeyboard;
         public bool ShowNumericKeyboard
+
         {
             get { return _showNumericKeyboard; }
             set { _showNumericKeyboard = value; this.OnPropertyChanged("ShowNumericKeyboard"); }
@@ -37,17 +54,23 @@ namespace Power_Control_Panel
 
 
         #endregion
-        WindowSinker sinker;
+
         #region Constructor
 
-        InputSimulator inputSim = new InputSimulator();
+ 
 
         public OnScreenKeyboard()
         {
             InitializeComponent();
+            setUpWindow();
+        }
+
+
+        void setUpWindow()
+        {
             sinker = new WindowSinker(this);
             sinker.Sink();
-            InitializeComponent();
+
             this.ShowInTaskbar = false;
             this.Topmost = true;
             this.WindowStyle = WindowStyle.None;
