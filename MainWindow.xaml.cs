@@ -39,6 +39,7 @@ namespace Power_Control_Panel
     {
         private NavigationServiceEx navigationServiceEx;
         public Window overlay = new Overlay();
+        public Window osk = new OnScreenKeyboard();
         public DispatcherTimer inputCheck=new DispatcherTimer();
         public int counter = 0;
 
@@ -108,6 +109,11 @@ namespace Power_Control_Panel
                     overlay.Show();
 
                 }
+                if (menuItem.Label == "On Screen Keyboard")
+                {
+                    osk.Show();
+
+                }
                 if (menuItem.IsNavigation)
                 {
                     this.navigationServiceEx.Navigate(menuItem.NavigationDestination);
@@ -155,6 +161,7 @@ namespace Power_Control_Panel
         {
             //Close overlay when main window is closed
             overlay.Close();
+            osk.Close();
             // Dispose of thread to allow program to close properly
             PowerControlPanel.Classes.TaskScheduler.TaskScheduler.closeScheduler();
 

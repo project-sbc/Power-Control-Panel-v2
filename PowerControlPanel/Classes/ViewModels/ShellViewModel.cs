@@ -36,6 +36,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
                 Label = "Overlay",
                
             });
+            this.Menu.Add(new MenuItem()
+            {
+                Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.KeyboardRegular },
+                Label = "On Screen Keyboard",
+
+            });
             this.OptionsMenu.Add(new MenuItem()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.InfoCircleSolid },
