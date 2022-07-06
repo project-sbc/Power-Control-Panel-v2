@@ -22,6 +22,7 @@
         <DropShadowEffect x:Key="DropShadowEffect" ShadowDepth="1" Direction="-90" BlurRadius="3" />
         <Style TargetType="Button">
             <EventSetter Event="Click" Handler="button_Click" />
+            <EventSetter Event="TouchDown" Handler="button_Click" />
             <Setter Property="Margin" Value="4"/>
             <Setter Property="Button.Effect" Value="{StaticResource DropShadowEffect}"/>
             <Setter Property="FontSize" Value="22"/>

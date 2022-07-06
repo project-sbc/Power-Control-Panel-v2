@@ -386,5 +386,10 @@ namespace Power_Control_Panel
         }
 
         #endregion
+
+        private void Button_TouchUp(object sender, TouchEventArgs e)
+        {
+            MessageBox.Show("Touch");
+        }
     }
 }
