@@ -63,7 +63,7 @@
     </Window.Resources>
     <Grid>
         <Canvas  Grid.ColumnSpan="1" VerticalAlignment="Stretch" Name="canvMain">
-            <Grid Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" Height="450" VerticalAlignment="Stretch" Background="{DynamicResource IPhoneSteelBackground}" >
+            <Grid Name="mainGrid" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" Height="450" VerticalAlignment="Stretch" Background="{DynamicResource IPhoneSteelBackground}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="200*"/>
             <RowDefinition Height="800*"/>

@@ -15,10 +15,11 @@ using System.Windows.Navigation;
 using System.ComponentModel;
 using MahApps.Metro.Controls;
 using System.Text.RegularExpressions;
-using TCD.System.TouchInjection;
+
 using WindowsInput.Native;
 using SharpDX.XInput;
 using WindowsInput;
+using System.Runtime.InteropServices;
 
 namespace Power_Control_Panel
 {
@@ -42,10 +43,13 @@ namespace Power_Control_Panel
         private double windowY;
         private bool LTouch = false;
         private bool RTouch = false;
-        private PointerTouchInfo[] contacts = new PointerTouchInfo[1];
+     
         private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         WindowSinker sinker;
         InputSimulator inputSim = new InputSimulator();
+
+
+  
 
 
         private bool _showNumericKeyboard;
@@ -188,7 +192,7 @@ namespace Power_Control_Panel
             }
             return mp;
         }
-
+    
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             
@@ -209,19 +213,14 @@ namespace Power_Control_Panel
                 Canvas.SetLeft(TouchEllipses[1], mp.X - (CircleWidth / 2));
                 Canvas.SetTop(TouchEllipses[1], mp.Y - (CircleWidth / 2));
 
-                if (gamepad.LeftTrigger > 0)
+                if (gamepad.LeftTrigger > 0 & !LTouch)
                 {
-                    contacts[0] = MakePointerTouchInfo(PointerInputType.TOUCH, PointerFlags.NONE, (int)mp.X,
-                                (int)mp.Y, 1, 1, "Start");
-                    LTouch = true;
-                    TouchInjector.InjectTouchInput(1, contacts);
+                   
+                    LTouch= true;
                 }
                 if (gamepad.LeftTrigger == 0 & LTouch)
                 {
-                    contacts[0] = MakePointerTouchInfo(PointerInputType.TOUCH, PointerFlags.NONE, (int)mp.X,
-            (int)mp.Y, 1, 1, "End");
-                    LTouch = false;
-                    TouchInjector.InjectTouchInput(1, contacts);
+                    LTouch= false;
                 }
                 // LeftMouseClick((int)mp.X, (int)(mp.Y + windowY));
 
@@ -232,19 +231,14 @@ namespace Power_Control_Panel
                 Canvas.SetTop(TouchEllipses[2], mp2.Y - (CircleWidth / 2));
 
 
-                if (gamepad.RightTrigger > 0)
+                if (gamepad.RightTrigger > 0 & !RTouch)
                 {
-                    contacts[0] = MakePointerTouchInfo(PointerInputType.TOUCH, PointerFlags.NONE, (int)mp2.X,
-                                (int)mp2.Y, 1, 1, "Start");
+                    
                     RTouch = true;
-                    TouchInjector.InjectTouchInput(1, contacts);
                 }
                 if (gamepad.RightTrigger == 0 & RTouch)
                 {
-                    contacts[0] = MakePointerTouchInfo(PointerInputType.TOUCH, PointerFlags.NONE, (int)mp2.X,
-            (int)mp2.Y, 1, 1, "End");
                     RTouch = false;
-                    TouchInjector.InjectTouchInput(1, contacts);
                 }
             }
             else { 
@@ -257,7 +251,7 @@ namespace Power_Control_Panel
 
         }
 
-
+        
 
         private Ellipse AddEllipseAt(Canvas canv, Point pt, Brush brush)
         {
@@ -339,42 +333,7 @@ namespace Power_Control_Panel
 
         #endregion
 
-        private PointerTouchInfo MakePointerTouchInfo(PointerInputType pointer, PointerFlags click, int x, int y,
-            int radius, uint id, string type, uint orientation = 90, uint pressure = 32000)
-        {
-            var contact = new PointerTouchInfo
-            {
-                PointerInfo = { pointerType = pointer },
-                TouchFlags = TouchFlags.NONE,
-                Orientation = orientation,
-                Pressure = pressure
-            };
-
-            if (type == "Start")
-                contact.PointerInfo.PointerFlags = PointerFlags.DOWN | PointerFlags.INRANGE | PointerFlags.INCONTACT;
-            else if (type == "Move")
-                contact.PointerInfo.PointerFlags = PointerFlags.UPDATE | PointerFlags.INRANGE | PointerFlags.INCONTACT;
-            else if (type == "End")
-                contact.PointerInfo.PointerFlags = PointerFlags.UP;
-            else if (type == "EndToHover")
-                contact.PointerInfo.PointerFlags = PointerFlags.UP | PointerFlags.INRANGE;
-            else if (type == "Hover")
-                contact.PointerInfo.PointerFlags = PointerFlags.UPDATE | PointerFlags.INRANGE;
-            else if (type == "EndFromHover")
-                contact.PointerInfo.PointerFlags = PointerFlags.UPDATE;
-
-            contact.PointerInfo.PointerFlags |= click;
-
-            contact.TouchMasks = TouchMask.CONTACTAREA | TouchMask.ORIENTATION | TouchMask.PRESSURE;
-            contact.PointerInfo.PtPixelLocation.X = x;
-            contact.PointerInfo.PtPixelLocation.Y = y;
-            contact.PointerInfo.PointerId = id;
-            contact.ContactArea.left = x - radius;
-            contact.ContactArea.right = x + radius;
-            contact.ContactArea.top = y - radius;
-            contact.ContactArea.bottom = y + radius;
-            return contact;
-        }
+        
 
         #region INotifyPropertyChanged members
 
@@ -387,9 +346,6 @@ namespace Power_Control_Panel
 
         #endregion
 
-        private void Button_TouchUp(object sender, TouchEventArgs e)
-        {
-            MessageBox.Show("Touch");
-        }
+
     }
 }
