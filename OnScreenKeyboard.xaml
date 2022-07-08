@@ -34,13 +34,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Style TargetType="ToggleButton">
-            <Setter Property="ClickMode" Value="Press"/>
-            <Setter Property="Margin" Value="4"/>
-            <Setter Property="Background" Value="WhiteSmoke"/>
-            <Setter Property="Button.Effect" Value="{StaticResource DropShadowEffect}"/>
+        <Style TargetType="TextBlock">
+            <EventSetter Event="MouseDown" Handler="rectangle_Click" />
+            <EventSetter Event="TouchDown" Handler="rectangle_Click" />
+            
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="22"/>
+
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <!-- Workaround for ATI video cards that don't render good with dropshadoweffect-->
@@ -49,10 +50,16 @@
             </Setter>
         </Style>
 
-        <Style TargetType="Label">
-            <Setter Property="Label.Effect" Value="{StaticResource DropShadowEffect}"/>
-            <Setter Property="FontSize" Value="22"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Style TargetType="Rectangle">
+            <EventSetter Event="MouseDown" Handler="rectangle_Click" />
+            <EventSetter Event="TouchDown" Handler="rectangle_Click" />
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Button.Effect" Value="{StaticResource DropShadowEffect}"/>
+  
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+      
+            <Setter Property="Fill" Value="WhiteSmoke"/>
+  
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <!-- Workaround for ATI video cards that don't render good with dropshadoweffect-->
@@ -61,7 +68,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid >
         <Canvas  Grid.ColumnSpan="1" VerticalAlignment="Stretch" Name="canvMain">
             <Grid Name="mainGrid" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" Height="450" VerticalAlignment="Stretch" Background="{DynamicResource IPhoneSteelBackground}" >
         <Grid.RowDefinitions>
@@ -85,17 +92,49 @@
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" CommandParameter="ESC" Content="Esc"  IsCancel="True"/>
-            <Button Grid.Column="2" CommandParameter="_1" Content="1"/>
-            <Button Grid.Column="3" CommandParameter="_2" Content="2"/>
-            <Button Grid.Column="4" CommandParameter="_3" Content="3"/>
-            <Button Grid.Column="5" CommandParameter="_4" Content="4"/>
-            <Button Grid.Column="6" CommandParameter="_5" Content="5"/>
-            <Button Grid.Column="7" CommandParameter="_6" Content="6"/>
-            <Button Grid.Column="8" CommandParameter="_7" Content="7"/>
-            <Button Grid.Column="9" CommandParameter="_8" Content="8" />
-            <Button Grid.Column="10" CommandParameter="_9" Content="9"/>
-            <Button Grid.Column="13" CommandParameter="_0" Content="0"/>
+                    <Rectangle Name="R_Esc" Grid.Column="1" />
+                    <TextBlock Name="T_Esc" Text="Esc" Grid.Column="1"/>
+            
+                    <Rectangle Name="R_1" Grid.Column="2" />
+                    <TextBlock Name="T_1" Text="1" Grid.Column="2"/>
+            
+                    <Rectangle Name="R_2" Grid.Column="3" />
+                    <TextBlock Name="T_2" Text="2" Grid.Column="3"/>
+            
+                    <Rectangle Name="R_3" Grid.Column="4" />
+                    <TextBlock Name="T_3" Text="3" Grid.Column="4"/>
+
+                    <Rectangle Name="R_4" Grid.Column="5" />
+                    <TextBlock Name="T_4" Text="4" Grid.Column="5"/>
+            
+                    <Rectangle Name="R_5" Grid.Column="6" />
+                    <TextBlock Name="T_5" Text="5" Grid.Column="6"/>
+            
+                    <Rectangle Name="R_6" Grid.Column="7" />
+                    <TextBlock Name="T_6" Text="6" Grid.Column="7"/>
+
+                    <Rectangle Name="R_7" Grid.Column="8" />
+                    <TextBlock Name="T_7" Text="7" Grid.Column="8"/>
+
+                    <Rectangle Name="R_8" Grid.Column="9" />
+                    <TextBlock Name="T_8" Text="8" Grid.Column="9"/>
+
+                    <Rectangle Name="R_9" Grid.Column="10" />
+                    <TextBlock Name="T_9" Text="9" Grid.Column="10"/>
+
+                    <Rectangle Name="R_0" Grid.Column="11" />
+                    <TextBlock Name="T_0" Text="0" Grid.Column="11"/>
+
+
+                    <Button Name="k002" Grid.Column="3" CommandParameter="_2" Content="2"/>
+            <Button Name="k003" Grid.Column="4" CommandParameter="_3" Content="3"/>
+            <Button Name="k004" Grid.Column="5" CommandParameter="_4" Content="4"/>
+            <Button Name="k005" Grid.Column="6" CommandParameter="_5" Content="5"/>
+            <Button Name="k006" Grid.Column="7" CommandParameter="_6" Content="6"/>
+            <Button Name="k007" Grid.Column="8" CommandParameter="_7" Content="7"/>
+            <Button Name="k008" Grid.Column="9" CommandParameter="_8" Content="8" />
+            <Button Name="k009" Grid.Column="10" CommandParameter="_9" Content="9"/>
+            <Button Name="k010" Grid.Column="13" CommandParameter="_0" Content="0"/>
         </Grid>
         <Grid Grid.Row="1" VerticalAlignment="Stretch" x:Name="AlfaKeyboard" Visibility="Visible" Background="{DynamicResource IPhoneSteelBackground}"  >
             <Grid.RowDefinitions>
@@ -123,17 +162,17 @@
                     <ColumnDefinition Width="0"/>
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" CommandParameter="Q" Content="Q"/>
-                <Button Grid.Column="2" CommandParameter="W" Content="W"/>
-                <Button Grid.Column="3" CommandParameter="E" Content="E"/>
-                <Button Grid.Column="4" CommandParameter="R" Content="R"/>
-                <Button Grid.Column="5" CommandParameter="T" Content="T"/>
-                <Button Grid.Column="6" CommandParameter="Y" Content="Y"/>
-                <Button Grid.Column="7" CommandParameter="U" Content="U"/>
-                <Button Grid.Column="8" CommandParameter="I" Content="I"/>
-                <Button Grid.Column="9" CommandParameter="O" Content="O"/>
-                <Button Grid.Column="10" CommandParameter="P" Content="P"/>
-                <Button Grid.Column="13" CommandParameter="BACK">
+                <Button Name="a100" Grid.Column="1" CommandParameter="Q" Content="Q"/>
+                <Button Name="a101" Grid.Column="2" CommandParameter="W" Content="W"/>
+                <Button Name="a102" Grid.Column="3" CommandParameter="E" Content="E"/>
+                <Button Name="a103" Grid.Column="4" CommandParameter="R" Content="R"/>
+                <Button Name="a104" Grid.Column="5" CommandParameter="T" Content="T"/>
+                <Button Name="a105" Grid.Column="6" CommandParameter="Y" Content="Y"/>
+                <Button Name="a106" Grid.Column="7" CommandParameter="U" Content="U"/>
+                <Button Name="a107" Grid.Column="8" CommandParameter="I" Content="I"/>
+                <Button Name="a108" Grid.Column="9" CommandParameter="O" Content="O"/>
+                <Button Name="a109" Grid.Column="10" CommandParameter="P" Content="P"/>
+                <Button Name="a110" Grid.Column="13" CommandParameter="BACK">
                     <Path Stretch="Fill" Width="36" Height="24" Data="F1M555.0371,274.4893L552.7871,276.7383L549.9861,273.9373L547.1991,276.7243L545.1131,274.6393L547.9001,271.8523L545.0101,268.9603L547.2601,266.7113L550.1501,269.6023L552.8921,266.8613L554.9761,268.9463L552.2361,271.6883z M555.3751,264.0003L544.8751,264.0003C543.1251,264.1253,535.0001,270.7503,535.0001,272.2503C535.0001,273.7503,543.1251,279.3753,544.8751,279.5003L555.3751,279.5003C558.8751,279.5003,559.3751,277.7093,559.3751,275.5003L559.3751,268.0003C559.3751,265.7913,558.7501,264.0003,555.3751,264.0003" Fill="#FF333333"></Path>
                 </Button>
             </Grid>
@@ -153,16 +192,16 @@
                     <ColumnDefinition Width="0"/>
                     <ColumnDefinition Width="1.55*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" CommandParameter="A" Content="A"/>
-                <Button Grid.Column="2" CommandParameter="S" Content="S"/>
-                <Button Grid.Column="3" CommandParameter="D" Content="D"/>
-                <Button Grid.Column="4" CommandParameter="F" Content="F"/>
-                <Button Grid.Column="5" CommandParameter="G" Content="G"/>
-                <Button Grid.Column="6" CommandParameter="H" Content="H"/>
-                <Button Grid.Column="7" CommandParameter="J" Content="J"/>
-                <Button Grid.Column="8" CommandParameter="K" Content="K"/>
-                <Button Grid.Column="9" CommandParameter="L" Content="L"/>
-                <Button Grid.Column="12" CommandParameter="RETURN" HorizontalContentAlignment="Right" Padding="10">
+                <Button Name="a200"  Grid.Column="1" CommandParameter="A" Content="A"/>
+                <Button Name="a201" Grid.Column="2" CommandParameter="S" Content="S"/>
+                <Button Name="a202" Grid.Column="3" CommandParameter="D" Content="D"/>
+                <Button Name="a203" Grid.Column="4" CommandParameter="F" Content="F"/>
+                <Button Name="a204" Grid.Column="5" CommandParameter="G" Content="G"/>
+                <Button Name="a205" Grid.Column="6" CommandParameter="H" Content="H"/>
+                <Button Name="a206" Grid.Column="7" CommandParameter="J" Content="J"/>
+                <Button Name="a207" Grid.Column="8" CommandParameter="K" Content="K"/>
+                <Button Name="a208" Grid.Column="9" CommandParameter="L" Content="L"/>
+                <Button Name="a209" Grid.Column="12" CommandParameter="RETURN" HorizontalContentAlignment="Right" Padding="10">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Return "/>
                         <TextBlock Text="8 " FontFamily="Wingdings 3" TextAlignment="Center" />
@@ -185,19 +224,19 @@
                     <ColumnDefinition Width="0"/>
                     <ColumnDefinition Width="1.1*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" CommandParameter="LSHIFT">
+                <Button Name="a300" Grid.Column="0" CommandParameter="LSHIFT">
                     <Path Fill="#FF333333" Stretch="Fill" Width="28" Height="24" Data="F1M269.5,262C269.026,262,268.552,262.168,268.171,262.505L259.671,270.505C259.05,271.057,258.835,271.935,259.131,272.71C259.425,273.487,260.169,274,261,274L265,274L265,278C265,279.104,265.896,280,267,280L272,280C273.104,280,274,279.104,274,278L274,274L278,274C278.81,274,279.538,273.513,279.849,272.766C280.157,272.018,279.986,271.158,279.415,270.585L270.914,262.586C270.524,262.197,270.013,262,269.5,262 M269.5,264L278,272L272,272L272,278L267,278L267,272L261,272L269.5,264"/>
                 </Button>
-                <Button Grid.Column="1" CommandParameter="Z" Content="Z"/>
-                <Button Grid.Column="2" CommandParameter="X" Content="X"/>
-                <Button Grid.Column="3" CommandParameter="C" Content="C"/>
-                <Button Grid.Column="4" CommandParameter="V" Content="V"/>
-                <Button Grid.Column="5" CommandParameter="B" Content="B"/>
-                <Button Grid.Column="6" CommandParameter="N" Content="N"/>
-                <Button Grid.Column="7" CommandParameter="M" Content="M"/>
-                <Button Grid.Column="8" CommandParameter="," Content=","/>
-                <Button Grid.Column="9" CommandParameter="." Content="."/>
-                <Button Grid.Column="11" CommandParameter="-" Content="-"/>
+                <Button Name="a301" Grid.Column="1" CommandParameter="Z" Content="Z"/>
+                <Button Name="a302" Grid.Column="2" CommandParameter="X" Content="X"/>
+                <Button Name="a303" Grid.Column="3" CommandParameter="C" Content="C"/>
+                <Button Name="a304" Grid.Column="4" CommandParameter="V" Content="V"/>
+                <Button Name="a305" Grid.Column="5" CommandParameter="B" Content="B"/>
+                <Button Name="a306" Grid.Column="6" CommandParameter="N" Content="N"/>
+                <Button Name="a307" Grid.Column="7" CommandParameter="M" Content="M"/>
+                <Button Name="a308" Grid.Column="8" CommandParameter="," Content=","/>
+                <Button Name="a309" Grid.Column="9" CommandParameter="." Content="."/>
+                <Button Name="a310" Grid.Column="11" CommandParameter="-" Content="-"/>
             </Grid>
             <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
@@ -209,16 +248,16 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" CommandParameter="HideKeyboard" >
+                <Button Name="a400" Grid.Column="0" CommandParameter="HideKeyboard" >
                     <iconPacks:PackIconModern Kind="InputKeyboardDown" Height="30" Width="40" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </Button>
-                <ToggleButton IsChecked="{Binding ShowNumericKeyboard, ElementName=Keyboard}" Grid.Column="1" Grid.ColumnSpan="1" ClickMode="Press" Content=".?123" />
-                <Button Grid.Column="2"  CommandParameter="CTRL" Content="Ctrl" />
+                <ToggleButton Name="a401" IsChecked="{Binding ShowNumericKeyboard, ElementName=Keyboard}" Grid.Column="1" Grid.ColumnSpan="1" ClickMode="Press" Content=".?123" />
+                <Button Name="a402" Grid.Column="2"  CommandParameter="CTRL" Content="Ctrl" />
                 <!-- wingdings Windows Logo: ÿ -->
                 <!-- wingdings apple cmd key: z -->
-                <Button Grid.Column="3" CommandParameter="SPACE" Content=" "/>
-                <Button Grid.Column="4" CommandParameter="ALT" Content="Alt" />
-                <ToggleButton IsChecked="{Binding ShowNumericKeyboard, ElementName=Keyboard}" Grid.Column="5" Grid.ColumnSpan="2" Command="{Binding Path=PressAndHold}" CommandParameter="IGNORE" Content=".?123" />
+                <Button Name="a403" Grid.Column="3" CommandParameter="SPACE" Content=" "/>
+                <Button Name="a404" Grid.Column="4" CommandParameter="ALT" Content="Alt" />
+                <ToggleButton Name="a405" IsChecked="{Binding ShowNumericKeyboard, ElementName=Keyboard}" Grid.Column="5" Grid.ColumnSpan="2" Command="{Binding Path=PressAndHold}" CommandParameter="IGNORE" Content=".?123" />
             </Grid>
         </Grid>
 

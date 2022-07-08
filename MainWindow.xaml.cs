@@ -39,7 +39,7 @@ namespace Power_Control_Panel
     {
         private NavigationServiceEx navigationServiceEx;
         public Window overlay = new Overlay();
-        public Window osk = new OnScreenKeyboard();
+        public Window osk = new OSK();
         public DispatcherTimer inputCheck=new DispatcherTimer();
         public int counter = 0;
 

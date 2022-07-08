@@ -1,0 +1,304 @@
+﻿<mah:MetroWindow x:Class="Power_Control_Panel.OSK"
+  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Power_Control_Panel" xmlns:iconPacks1="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.BootstrapIcons" xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Modern" xmlns:iconPacks2="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:iconPacks3="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Material"
+                 mc:Ignorable="d"
+        UseNoneWindowStyle="True" 
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" Loaded="Keyboard_Loaded">
+
+    <Window.Resources>
+
+        <LinearGradientBrush x:Key="IPhoneSteelBackground" EndPoint="0.5,1.272" StartPoint="0.5,0">
+            <GradientStop Color="#FF9097A3" Offset="0"/>
+            <GradientStop Color="#FF444D5B" Offset="1"/>
+        </LinearGradientBrush>
+
+        <DropShadowEffect x:Key="DropShadowEffect" ShadowDepth="1" Direction="-90" BlurRadius="3" />
+        <Style TargetType="TextBlock">
+            <EventSetter Event="MouseDown" Handler="button_Click" />
+            <EventSetter Event="TouchDown" Handler="button_Click" />
+            <Setter Property="Margin" Value="4"/>
+      
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Grid.ColumnSpan" Value="2"/>
+
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <!-- Workaround for ATI video cards that don't render good with dropshadoweffect-->
+                    <RotateTransform Angle="0.00000000001"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Rectangle">
+            <EventSetter Event="MouseDown" Handler="button_Click" />
+            <EventSetter Event="TouchDown" Handler="button_Click" />
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Grid.ColumnSpan" Value="2"/>
+            <Setter Property="Fill" Value="WhiteSmoke"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+
+
+
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <!-- Workaround for ATI video cards that don't render good with dropshadoweffect-->
+                    <RotateTransform Angle="0.00000000001"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+    </Window.Resources>
+    <DockPanel>
+        <Canvas Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DockPanel}}}" Background="{DynamicResource IPhoneSteelBackground}"  Name="canvMain">
+
+       
+            <Grid   HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"  VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200*" />
+                    <RowDefinition Height="800*" />
+             
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="61*"></ColumnDefinition>
+                    <ColumnDefinition Width="30*"></ColumnDefinition>
+                    <ColumnDefinition Width="60*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Rectangle Name="R_ESC"  />
+                <TextBlock Name="T_ESC" Text="Esc"/>
+
+                <Rectangle Name="R_1" Grid.Column="2" />
+                <TextBlock Name="T_1" Grid.Column="2" Text="1"/>
+
+                <Rectangle Name="R_2" Grid.Column="4" />
+                <TextBlock Name="T_2" Grid.Column="4" Text="2"/>
+
+                <Rectangle Name="R_3" Grid.Column="6" />
+                <TextBlock Name="T_3" Grid.Column="6" Text="3"/>
+
+                <Rectangle Name="R_4" Grid.Column="8" />
+                <TextBlock Name="T_4" Grid.Column="8" Text="4"/>
+
+                <Rectangle Name="R_5" Grid.Column="10" />
+                <TextBlock Name="T_5" Grid.Column="10" Text="5"/>
+
+                <Rectangle Name="R_6" Grid.Column="12" />
+                <TextBlock Name="T_6" Grid.Column="12" Text="6"/>
+
+                <Rectangle Name="R_7" Grid.Column="14" />
+                <TextBlock Name="T_7" Grid.Column="14" Text="7"/>
+
+                <Rectangle Name="R_8" Grid.Column="16" />
+                <TextBlock Name="T_8" Grid.Column="16" Text="8"/>
+
+                <Rectangle Name="R_9" Grid.Column="18" />
+                <TextBlock Name="T_9" Grid.Column="18" Text="9"/>
+
+                <Rectangle Name="R_0" Grid.Column="20" />
+                <TextBlock Name="T_0" Grid.Column="20" Text="0"/>
+
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="22"  Name="AlphaKB"  HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="250*" />
+
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="60*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Rectangle Name="R_Q"  />
+                    <TextBlock Name="T_Q" Text="Q"/>
+
+                    <Rectangle Name="R_W" Grid.Column="2" />
+                    <TextBlock Name="T_W" Grid.Column="2" Text="W"/>
+
+                    <Rectangle Name="R_E" Grid.Column="4" />
+                    <TextBlock Name="T_E" Grid.Column="4" Text="E"/>
+
+                    <Rectangle Name="R_R" Grid.Column="6" />
+                    <TextBlock Name="T_R" Grid.Column="6" Text="R"/>
+
+                    <Rectangle Name="R_T" Grid.Column="8" />
+                    <TextBlock Name="T_T" Grid.Column="8" Text="T"/>
+
+                    <Rectangle Name="R_Y" Grid.Column="10" />
+                    <TextBlock Name="T_Y" Grid.Column="10" Text="Y"/>
+
+                    <Rectangle Name="R_U" Grid.Column="12" />
+                    <TextBlock Name="T_U" Grid.Column="12" Text="U"/>
+
+                    <Rectangle Name="R_I" Grid.Column="14" />
+                    <TextBlock Name="T_I" Grid.Column="14" Text="I"/>
+
+                    <Rectangle Name="R_O" Grid.Column="16" />
+                    <TextBlock Name="T_O" Grid.Column="16" Text="O"/>
+
+                    <Rectangle Name="R_P" Grid.Column="18" />
+                    <TextBlock Name="T_P" Grid.Column="18" Text="P"/>
+
+                    <Rectangle Name="R_BckSpce" Grid.Column="20" />
+                    <TextBlock Name="T_BckSpce" Grid.Column="20" >
+                        <iconPacks2:PackIconBootstrapIcons Kind="Backspace" Width="42" Height="42" />
+                    </TextBlock>
+
+
+
+
+
+
+                    <Rectangle Name="R_A" Grid.Row="1" Grid.Column="1"  />
+                    <TextBlock Name="T_A" Grid.Row="1" Grid.Column="1" Text="A"/>
+
+                    <Rectangle Name="R_S" Grid.Row="1" Grid.Column="3"  />
+                    <TextBlock Name="T_S" Grid.Row="1" Grid.Column="3" Text="S"/>
+
+                    <Rectangle Name="R_D" Grid.Row="1" Grid.Column="5"  />
+                    <TextBlock Name="T_D" Grid.Row="1" Grid.Column="5" Text="D"/>
+
+                    <Rectangle Name="R_F" Grid.Row="1" Grid.Column="7"  />
+                    <TextBlock Name="T_F" Grid.Row="1" Grid.Column="7" Text="F"/>
+
+                    <Rectangle Name="R_G" Grid.Row="1" Grid.Column="9"  />
+                    <TextBlock Name="T_G" Grid.Row="1" Grid.Column="9" Text="G"/>
+                    
+                    <Rectangle Name="R_H" Grid.Row="1" Grid.Column="11"  />
+                    <TextBlock Name="T_H" Grid.Row="1" Grid.Column="11" Text="H"/>
+
+                    <Rectangle Name="R_J" Grid.Row="1" Grid.Column="13"  />
+                    <TextBlock Name="T_J" Grid.Row="1" Grid.Column="13" Text="J"/>
+                    
+                    <Rectangle Name="R_K" Grid.Row="1" Grid.Column="15"  />
+                    <TextBlock Name="T_K" Grid.Row="1" Grid.Column="15" Text="K"/>
+
+                    <Rectangle Name="R_L" Grid.Row="1" Grid.Column="17"  />
+                    <TextBlock Name="T_L" Grid.Row="1" Grid.Column="17" Text="L"/>
+
+                    <Rectangle Name="R_Enter" Grid.Row="1" Grid.Column="19" Grid.ColumnSpan="3" />
+                    <TextBlock Name="T_Enter" Grid.Row="1" Grid.Column="19" Grid.ColumnSpan="3" >
+                       <iconPacks3:PackIconMaterial Kind="KeyboardReturn" Width="42" Height="42" />
+                    </TextBlock>
+
+                    
+                    
+                    <Rectangle Name="R_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+                    <TextBlock Name="T_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >
+                       <iconPacks3:PackIconMaterial Kind="KeyboardReturn" Width="42" Height="42" />
+                    </TextBlock>
+
+
+                    <Rectangle Name="R_Z" Grid.Row="2" Grid.Column="2"  />
+                    <TextBlock Name="T_Z" Grid.Row="2" Grid.Column="2" Text="Z"/>
+
+                    <Rectangle Name="R_X" Grid.Row="2" Grid.Column="4"  />
+                    <TextBlock Name="T_X" Grid.Row="2" Grid.Column="4" Text="X"/>
+
+                    <Rectangle Name="R_C" Grid.Row="2" Grid.Column="6"  />
+                    <TextBlock Name="T_C" Grid.Row="2" Grid.Column="6" Text="C"/>
+                    
+                    <Rectangle Name="R_V" Grid.Row="2" Grid.Column="8"  />
+                    <TextBlock Name="T_V" Grid.Row="2" Grid.Column="8" Text="V"/>
+
+                    <Rectangle Name="R_B" Grid.Row="2" Grid.Column="10"  />
+                    <TextBlock Name="T_B" Grid.Row="2" Grid.Column="10" Text="B"/>
+
+
+                </Grid>
+
+                <Grid Grid.Row="1"  Grid.ColumnSpan="22" Visibility="Hidden"  Name="NumberKB"   HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="250*" />
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="61*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="60*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                </Grid>
+
+
+            </Grid>
+     
+
+
+        </Canvas>
+    
+    </DockPanel>
+</mah:MetroWindow>

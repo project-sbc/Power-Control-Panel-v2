@@ -11,10 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Windows.Navigation;
-using System.ComponentModel;
 using MahApps.Metro.Controls;
-using System.Text.RegularExpressions;
 
 using WindowsInput.Native;
 using SharpDX.XInput;
@@ -25,11 +22,16 @@ using System.Windows.Controls.Primitives;
 namespace Power_Control_Panel
 {
     /// <summary>
-    /// Interaction logic for OnScreenKeyboard.xaml
+    /// Interaction logic for OSK.xaml
     /// </summary>
-    public partial class OnScreenKeyboard : MetroWindow
+    public partial class OSK : MetroWindow
     {
-       
+
+
+        private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+        WindowSinker sinker;
+        InputSimulator inputSim = new InputSimulator();
+
         private Controller controller;
         private Gamepad gamepad;
         private const double CircleWidth = 10;
@@ -44,49 +46,30 @@ namespace Power_Control_Panel
         private double windowY;
         private bool LTouch = false;
         private bool RTouch = false;
-
-
-
-
-     
-        private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-        WindowSinker sinker;
-        InputSimulator inputSim = new InputSimulator();
-
-
-  
-
-
-        private bool _showNumericKeyboard;
-        public bool ShowNumericKeyboard
-
+        public OSK()
         {
-            get { return _showNumericKeyboard; }
-            set { _showNumericKeyboard = value; this.OnPropertyChanged("ShowNumericKeyboard"); }
-        }
+            InitializeComponent();
 
 
-
- 
-
-
-
- 
-
-        public OnScreenKeyboard()
-        {
             InitializeComponent();
             setUpWindow();
             setUpCircles();
-          
+
             setUpController();
             setUpDispatchTimer();
-
-
         }
 
-
-
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.IInputElement ele = InputHitTest(new Point(50, 100));
+            if (ele != null)
+            {
+                if (ele.GetType() == typeof(TextBlock))
+                {
+                    MessageBox.Show("rec");
+                }
+            }
+        }
 
         void setUpCircles()
         {
@@ -107,11 +90,8 @@ namespace Power_Control_Panel
         }
         void setUpDispatchTimer()
         {
-      
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Start();    
-            
-
+            dispatcherTimer.Start();
         }
         void setUpController()
         {
@@ -203,13 +183,13 @@ namespace Power_Control_Panel
             }
             return mp;
         }
-    
 
-      
+
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
 
-        
+
 
             if (controller.IsConnected)
             {
@@ -230,14 +210,18 @@ namespace Power_Control_Panel
 
                 if (gamepad.LeftTrigger > 0 & !LTouch)
                 {
-                    IInputElement elm = InputHitTest(new Point(mp.X,mp.Y+18));
-                    LTouch= true;
+                    IInputElement elm = InputHitTest(new Point(mp.X, mp.Y + 18));
+                    LTouch = true;
+
+                    //Rectangle rec = (Rectangle)elm;
+                    //MessageBox.Show(rec.Name);
+               
                 }
                 if (gamepad.LeftTrigger == 0 & LTouch)
                 {
-                    LTouch= false;
+                    LTouch = false;
                 }
-             
+
 
                 System.Windows.Point mp2 = TouchPositions[2];
                 mp2 = offset_point(mp2, drx, dry);
@@ -248,7 +232,7 @@ namespace Power_Control_Panel
 
                 if (gamepad.RightTrigger > 0 & !RTouch)
                 {
-                    
+
                     RTouch = true;
                 }
                 if (gamepad.RightTrigger == 0 & RTouch)
@@ -256,17 +240,18 @@ namespace Power_Control_Panel
                     RTouch = false;
                 }
             }
-            else { 
-                setUpController(); 
-                
+            else
+            {
+                setUpController();
+
             }
-            
+
 
 
 
         }
 
-        
+
 
         private Ellipse AddEllipseAt(Canvas canv, Point pt, Brush brush)
         {
@@ -292,78 +277,27 @@ namespace Power_Control_Panel
 
         }
 
-
-            private void button_Click(object sender, RoutedEventArgs e)
+        private void keyboard_Press(object sender)
         {
-            Button button = sender as Button;
-            if (button != null)
+            System.Windows.IInputElement ele = InputHitTest(new Point(500, 250));
+            if (ele != null)
             {
-                switch (button.CommandParameter.ToString())
+                if (ele.GetType() == typeof(Rectangle))
                 {
-                    case "HideKeyboard":
-                        this.Hide();
-                        break;
-                    case "LSHIFT":
-                        Regex upperCaseRegex = new Regex("[A-Z]");
-                        Regex lowerCaseRegex = new Regex("[a-z]");
-                        Button btn;
-                        foreach (UIElement elem in AlfaKeyboard.Children) //iterate the main grid
-                        {
-                            Grid grid = elem as Grid;
-                            if (grid != null)
-                            {
-                                foreach (UIElement uiElement in grid.Children)  //iterate the single rows
-                                {
-                                    btn = uiElement as Button;
-                                    if (btn != null) // if button contains only 1 character
-                                    {
-                                        if (btn.Content.ToString().Length == 1)
-                                        {
-                                            if (upperCaseRegex.Match(btn.Content.ToString()).Success) // if the char is a letter and uppercase
-                                                btn.Content = btn.Content.ToString().ToLower();
-                                            else if (lowerCaseRegex.Match(button.Content.ToString()).Success) // if the char is a letter and lower case
-                                                btn.Content = btn.Content.ToString().ToUpper();
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                        break;
-
-                    case "ALT":
-                    case "CTRL":
-                        break;
-
-                    case "RETURN":
-                        this.DialogResult = true;
-                        break;
-
-                    case "BACK":
-                        
-                        break;
-
-                    default:
-                        inputSim.Keyboard.KeyPress(VirtualKeyCode.VK_E);
-                        break;
+                    MessageBox.Show("rec");
                 }
             }
         }
 
-
-
-        
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
+        private void Keyboard_Loaded(object sender, RoutedEventArgs e)
         {
-            if (PropertyChanged != null)
-                this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+
+           
         }
 
-
-
-
+        private void H_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Hi");
+        }
     }
 }
