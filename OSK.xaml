@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" >
+        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" Closing="Keyboard_Closing" >
 
     <Window.Resources>
 
@@ -95,7 +95,7 @@
 
 
                 <Rectangle Name="R_ESC" Grid.Column="0" />
-                <TextBlock Name="T_ESC" Grid.Column="0" Text="Esc"/>
+                <TextBlock Name="T_ESC" Grid.Column="0"  Text="Esc"/>
 
                 <Rectangle Name="R_1" Grid.Column="2" />
                 <TextBlock Name="T_1" Grid.Column="2" Text="1"/>
@@ -145,12 +145,15 @@
             
 
                 <Rectangle Name="R_Space" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="10"/>
-                <TextBlock Name="T_Space" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="10" Text="Space"/>
+                <TextBlock Name="T_Space" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="10" >
+                          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE75D;" FontSize="40"/>   
+                          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF096;" FontSize="40"/>
+                    
+                </TextBlock>
 
                 <Rectangle Name="R_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4"/>
-                <TextBlock Name="T_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4">
-                       <iconPacks4:PackIconUnicons Kind="KeyboardHide" Width="42" Height="42" />
-                </TextBlock>
+                <TextBlock Name="T_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4" FontFamily="Segoe MDL2 Assets" Text="&#xE92F;" FontSize="40"/>
+                    
 
 
                 <Grid Grid.Row="1" Grid.ColumnSpan="22"  Name="AlphaKB"  HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
@@ -219,7 +222,8 @@
 
                     <Rectangle Name="R_BckSpce" Grid.Column="20" />
                     <TextBlock Name="T_BckSpce" Grid.Column="20" >
-                        <iconPacks2:PackIconBootstrapIcons Kind="Backspace" Width="42" Height="42" />
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE750;" FontSize="40"/>
+                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF096;" FontSize="40"/>
                     </TextBlock>
 
 
@@ -256,14 +260,16 @@
 
                     <Rectangle Name="R_Enter" Grid.Row="1" Grid.Column="19" Grid.ColumnSpan="3" />
                     <TextBlock Name="T_Enter" Grid.Row="1" Grid.Column="19" Grid.ColumnSpan="3" >
-                       <iconPacks3:PackIconMaterial Kind="KeyboardReturn" Width="42" Height="42" />
+                       
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE751;" FontSize="40"/>
                     </TextBlock>
 
                     
                     
                     <Rectangle Name="R_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
                     <TextBlock Name="T_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >
-                     <iconPacks2:PackIconBootstrapIcons Kind="Capslock" Width="42" Height="42" />
+                       <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE752;" FontSize="40"/>
+                        
                     </TextBlock>
 
 
@@ -295,8 +301,8 @@
                     <TextBlock Name="T_Comma" Grid.Row="2" Grid.Column="18" Text=","/>
 
 
-                    <Rectangle Name="R_BackwardSlash" Grid.Row="2" Grid.Column="20" Grid.ColumnSpan="2" />
-                    <TextBlock Name="T_BackwardSlash" Grid.Row="2" Text="/" Grid.Column="20" Grid.ColumnSpan="2" >
+                    <Rectangle Name="R_Shift" Grid.Row="2" Grid.Column="20" Grid.ColumnSpan="2" />
+                    <TextBlock Name="T_Shift" Grid.Row="2" Text="Shift" Grid.Column="20" Grid.ColumnSpan="2" >
                   
                     </TextBlock>
                 

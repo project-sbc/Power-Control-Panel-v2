@@ -48,13 +48,57 @@ namespace Power_Control_Panel
         private bool LTouch = false;
         private bool RTouch = false;
 
-        private bool keyWin = false;
         private bool keyAlt = false;
         private bool keyCtrl = false;
         private bool keyCap = false;
-        private bool key123 = false;
+        private bool keyShift = false;
 
-     
+
+        Dictionary<string, VirtualKeyCode> keyLookUp =
+       new Dictionary<string, VirtualKeyCode>()
+       {
+           {"T_A", VirtualKeyCode.VK_A },
+           {"T_B", VirtualKeyCode.VK_B },
+           {"T_C", VirtualKeyCode.VK_C },
+           {"T_D", VirtualKeyCode.VK_D },
+           {"T_E", VirtualKeyCode.VK_E },
+           {"T_F", VirtualKeyCode.VK_F },
+           {"T_G", VirtualKeyCode.VK_G },
+           {"T_H", VirtualKeyCode.VK_H },
+           {"T_I", VirtualKeyCode.VK_I },
+           {"T_J", VirtualKeyCode.VK_J },
+           {"T_K", VirtualKeyCode.VK_K },
+           {"T_L", VirtualKeyCode.VK_L },
+           {"T_M", VirtualKeyCode.VK_M },
+           {"T_N", VirtualKeyCode.VK_N },
+           {"T_O", VirtualKeyCode.VK_O },
+           {"T_P", VirtualKeyCode.VK_P },
+           {"T_Q", VirtualKeyCode.VK_Q },
+           {"T_R", VirtualKeyCode.VK_R },
+           {"T_S", VirtualKeyCode.VK_S },
+           {"T_T", VirtualKeyCode.VK_T },
+           {"T_U", VirtualKeyCode.VK_U },
+           {"T_V", VirtualKeyCode.VK_V },
+           {"T_W", VirtualKeyCode.VK_W },
+           {"T_X", VirtualKeyCode.VK_X },
+           {"T_Y", VirtualKeyCode.VK_Y },
+           {"T_Z", VirtualKeyCode.VK_Z },
+
+           {"T_1", VirtualKeyCode.VK_1 },
+           {"T_2", VirtualKeyCode.VK_2 },
+           {"T_3", VirtualKeyCode.VK_3 },
+           {"T_4", VirtualKeyCode.VK_4 },
+           {"T_5", VirtualKeyCode.VK_5 },
+           {"T_6", VirtualKeyCode.VK_6 },
+           {"T_7", VirtualKeyCode.VK_7 },
+           {"T_8", VirtualKeyCode.VK_8 },
+           {"T_9", VirtualKeyCode.VK_9 },
+           {"T_0", VirtualKeyCode.VK_0 },
+
+           {"T_Period", VirtualKeyCode.OEM_PERIOD },
+           {"T_Comma", VirtualKeyCode.OEM_COMMA },
+
+       };
 
         public OSK()
         {
@@ -106,7 +150,10 @@ namespace Power_Control_Panel
 
         void keyboardPress(object sender)
         {
+            TextBlock txtblk;
             string textValue = null;
+            string textName;
+
             if (sender is Rectangle)
             {
                 Rectangle rect = (Rectangle)sender;
@@ -117,33 +164,47 @@ namespace Power_Control_Panel
 
             if (sender is TextBlock)
             {
-                TextBlock txtblk = (TextBlock)sender;
+                txtblk = (TextBlock)sender;
                 textValue = txtblk.Text;
-                string textName = txtblk.Name;
+                textName = txtblk.Name;
 
-                var sim = new InputSimulator();
-                if (!keyWin & !keyAlt & !keyCtrl)
+                if (textName == "")
                 {
+                    txtblk = getParentTextBlock(txtblk);
+                    textValue = txtblk.Text;
+                    textName = txtblk.Name;
+                }
+                if (textName == "T_HideKeyboard") { this.Hide(); }
+                else
+                {
+                    var sim = new InputSimulator();
+
                     if (textValue != "")
                     {
+                        bool isKeyDown;
                         switch (textValue)
                         {
                             case "Esc":
                                 sim.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
                                 break;
-                            case "Space":
-                                sim.Keyboard.KeyPress(VirtualKeyCode.SPACE);
+
+                            case "Shift":
+                                isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.SHIFT);
+                                if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT); } else { sim.Keyboard.KeyDown(VirtualKeyCode.SHIFT); }
+                                toggleRectangleOn(txtblk);
                                 break;
                             case "Alt":
-                                keyAlt = !keyAlt;
-                                if (keyAlt) { txtblk.Background = Brushes.Gray; } else { txtblk.Background = Brushes.Transparent; }
+                                isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.MENU);
+                                if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.MENU); } else { sim.Keyboard.KeyDown(VirtualKeyCode.MENU); }
+                                toggleRectangleOn(txtblk);
                                 break;
                             case "Ctrl":
-                                keyCtrl = !keyCtrl;
-                                if (keyCtrl) { txtblk.Background = Brushes.Gray; } else { txtblk.Background = Brushes.Transparent; }
+                                isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL);
+                                if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL); } else { sim.Keyboard.KeyDown(VirtualKeyCode.CONTROL); }
+                                toggleRectangleOn(txtblk);
                                 break;
                             case "123":
-                                AlphaKB.Visibility = Visibility.Hidden; 
+                                AlphaKB.Visibility = Visibility.Hidden;
                                 NumberKB.Visibility = Visibility.Visible;
                                 txtblk.Text = "ABC";
                                 break;
@@ -153,7 +214,10 @@ namespace Power_Control_Panel
                                 txtblk.Text = "123";
                                 break;
                             default:
-                                sim.Keyboard.TextEntry(textValue);
+                                VirtualKeyCode vkc;
+                                vkc = keyLookUp[textName];
+                                sim.Keyboard.KeyPress(vkc);
+                                //sim.Keyboard.TextEntry(textValue);
                                 break;
                         }
                     }
@@ -167,7 +231,7 @@ namespace Power_Control_Panel
                             case "T_CAP":
                                 swapAlphaUpperLower();
                                 keyCap = !keyCap;
-                                if (keyCap) { txtblk.Background = Brushes.Gray;} else { txtblk.Background = Brushes.Transparent;  }
+                                toggleRectangleOn(txtblk);
                                 break;
                             case "T_BckSpce":
                                 sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
@@ -175,18 +239,64 @@ namespace Power_Control_Panel
                             case "T_Enter":
                                 sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
                                 break;
-                
+                            case "T_Win":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.LWIN);
+                                break;
+                            case "T_Space":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.SPACE);
+                                break;
 
                         }
                     }
-                }
-                else
-                {
 
                 }
+               
 
     
             }
+
+
+        }
+
+        void toggleRectangleOn(TextBlock txtblk)
+        {
+            Rectangle rect;
+            
+
+            if (txtblk != null)
+            {
+                rect = (Rectangle)canvMain.FindName("R_" + txtblk.Name.Substring(2, txtblk.Name.Length - 2));
+
+                if (rect.Fill == Brushes.WhiteSmoke) { rect.Fill = Brushes.Gray; } else { rect.Fill = Brushes.WhiteSmoke; }
+
+            }
+
+        }
+        TextBlock getParentTextBlock(DependencyObject txtblk)
+        {
+
+            TextBlock returnTxtblk = null;
+            DependencyObject parent;
+            if (txtblk != null)
+            {
+                parent = VisualTreeHelper.GetParent(txtblk);
+
+                if (parent is not TextBlock)
+                {
+                    parent = VisualTreeHelper.GetParent(parent);
+                    if (parent is not TextBlock)
+                    {
+                        parent = VisualTreeHelper.GetParent(parent);
+                    }
+                }
+                
+                returnTxtblk = (TextBlock)parent;
+             
+    
+
+            }
+
+           return returnTxtblk;
 
 
         }
@@ -234,7 +344,7 @@ namespace Power_Control_Panel
             }
             else
             {
-                dispatcherTimer.Interval = TimeSpan.FromMilliseconds(4);
+                dispatcherTimer.Interval = TimeSpan.FromMilliseconds(15);
             }
 
         }
@@ -395,6 +505,12 @@ namespace Power_Control_Panel
             return el;
         }
 
-
+        private void Keyboard_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            InputSimulator sim = new InputSimulator();
+            sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
+            sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL);
+            sim.Keyboard.KeyUp(VirtualKeyCode.MENU);
+        }
     }
 }
