@@ -18,6 +18,7 @@ using SharpDX.XInput;
 using WindowsInput;
 using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
+using System.Text.RegularExpressions;
 
 namespace Power_Control_Panel
 {
@@ -47,42 +48,13 @@ namespace Power_Control_Panel
         private bool LTouch = false;
         private bool RTouch = false;
 
-        private Dictionary<string, VirtualKeyCode> keyPressDictionary = new Dictionary<string, VirtualKeyCode>();
+        private bool keyWin = false;
+        private bool keyAlt = false;
+        private bool keyCtrl = false;
+        private bool keyCap = false;
+        private bool key123 = false;
 
-
-        void populateDictionary()
-        {
-            keyPressDictionary.Add("A", VirtualKeyCode.VK_A);
-            keyPressDictionary.Add("B", VirtualKeyCode.VK_B);
-            keyPressDictionary.Add("C", VirtualKeyCode.VK_C);
-            keyPressDictionary.Add("D", VirtualKeyCode.VK_D);
-            keyPressDictionary.Add("E", VirtualKeyCode.VK_E);
-            keyPressDictionary.Add("F", VirtualKeyCode.VK_F);
-            keyPressDictionary.Add("G", VirtualKeyCode.VK_G);
-            keyPressDictionary.Add("H", VirtualKeyCode.VK_H);
-            keyPressDictionary.Add("I", VirtualKeyCode.VK_I);
-            keyPressDictionary.Add("J", VirtualKeyCode.VK_J);
-            keyPressDictionary.Add("K", VirtualKeyCode.VK_K);
-            keyPressDictionary.Add("L", VirtualKeyCode.VK_L);
-            keyPressDictionary.Add("M", VirtualKeyCode.VK_M);
-            keyPressDictionary.Add("N", VirtualKeyCode.VK_N);
-            keyPressDictionary.Add("O", VirtualKeyCode.VK_O);
-            keyPressDictionary.Add("P", VirtualKeyCode.VK_P);
-            keyPressDictionary.Add("Q", VirtualKeyCode.VK_Q);
-            keyPressDictionary.Add("R", VirtualKeyCode.VK_R);
-            keyPressDictionary.Add("S", VirtualKeyCode.VK_S);
-            keyPressDictionary.Add("T", VirtualKeyCode.VK_T);
-            keyPressDictionary.Add("U", VirtualKeyCode.VK_U);
-            keyPressDictionary.Add("V", VirtualKeyCode.VK_V);
-            keyPressDictionary.Add("W", VirtualKeyCode.VK_W);
-            keyPressDictionary.Add("X", VirtualKeyCode.VK_X);
-            keyPressDictionary.Add("Y", VirtualKeyCode.VK_Y);
-            keyPressDictionary.Add("Z", VirtualKeyCode.VK_Z);
-
-
-
-
-        }
+     
 
         public OSK()
         {
@@ -95,6 +67,8 @@ namespace Power_Control_Panel
 
             setUpController();
             setUpDispatchTimer();
+
+            swapAlphaUpperLower();
         }
         
         private void button_Click(object sender, RoutedEventArgs e)
@@ -102,27 +76,119 @@ namespace Power_Control_Panel
             keyboardPress(sender);
         }
 
+        void swapAlphaUpperLower()
+        {
+            Regex upperCaseRegex = new Regex("[A-Z]");
+            Regex lowerCaseRegex = new Regex("[a-z]");
+
+            foreach (UIElement elem in AlphaKB.Children) //iterate the main grid
+            {
+
+                if (elem is TextBlock) // if button contains only 1 character
+                {
+                    TextBlock txtblk = elem as TextBlock;
+                    if (txtblk.Text.Length == 1)
+                    {
+                        if (upperCaseRegex.Match(txtblk.Text.ToString()).Success) // if the char is a letter and uppercase
+                        {
+                            txtblk.Text = txtblk.Text.ToString().ToLower();
+                        }
+                        else if (lowerCaseRegex.Match(txtblk.Text.ToString()).Success) // if the char is a letter and lower case
+                        {
+                            txtblk.Text = txtblk.Text.ToString().ToUpper();
+                        }
+
+                    }
+
+                }
+            }
+        }
 
         void keyboardPress(object sender)
         {
-            string lookUpValue = null;
+            string textValue = null;
             if (sender is Rectangle)
             {
                 Rectangle rect = (Rectangle)sender;
-                lookUpValue = rect.Name.Substring(2, rect.Name.Length - 2);
+
+                sender = canvMain.FindName("T_" + rect.Name.Substring(2, rect.Name.Length - 2));
+         
             }
 
             if (sender is TextBlock)
             {
                 TextBlock txtblk = (TextBlock)sender;
-                lookUpValue = txtblk.Name.Substring(2, txtblk.Name.Length - 2);
+                textValue = txtblk.Text;
+                string textName = txtblk.Name;
+
+                var sim = new InputSimulator();
+                if (!keyWin & !keyAlt & !keyCtrl)
+                {
+                    if (textValue != "")
+                    {
+                        switch (textValue)
+                        {
+                            case "Esc":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.ESCAPE);
+                                break;
+                            case "Space":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.SPACE);
+                                break;
+                            case "Alt":
+                                keyAlt = !keyAlt;
+                                if (keyAlt) { txtblk.Background = Brushes.Gray; } else { txtblk.Background = Brushes.Transparent; }
+                                break;
+                            case "Ctrl":
+                                keyCtrl = !keyCtrl;
+                                if (keyCtrl) { txtblk.Background = Brushes.Gray; } else { txtblk.Background = Brushes.Transparent; }
+                                break;
+                            case "123":
+                                AlphaKB.Visibility = Visibility.Hidden; 
+                                NumberKB.Visibility = Visibility.Visible;
+                                txtblk.Text = "ABC";
+                                break;
+                            case "ABC":
+                                AlphaKB.Visibility = Visibility.Visible;
+                                NumberKB.Visibility = Visibility.Hidden;
+                                txtblk.Text = "123";
+                                break;
+                            default:
+                                sim.Keyboard.TextEntry(textValue);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (txtblk.Name)
+                        {
+                            case "T_HideKeyboard":
+                                this.Hide();
+                                break;
+                            case "T_CAP":
+                                swapAlphaUpperLower();
+                                keyCap = !keyCap;
+                                if (keyCap) { txtblk.Background = Brushes.Gray;} else { txtblk.Background = Brushes.Transparent;  }
+                                break;
+                            case "T_BckSpce":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
+                                break;
+                            case "T_Enter":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+                                break;
+                
+
+                        }
+                    }
+                }
+                else
+                {
+
+                }
+
+    
             }
 
-            if (lookUpValue != null)
-            {
-                var sim = new InputSimulator();
-                sim.Keyboard.TextEntry(lookUpValue);
-            }
+
         }
         void setUpCircles()
         {
@@ -201,6 +267,8 @@ namespace Power_Control_Panel
                 return Math.Round(10 * Convert.ToDouble(Input) / 32768, 0, MidpointRounding.AwayFromZero);
             }
 
+        
+
         }
         private Point offset_point(Point mp, Double dx, Double dy)
         {
@@ -278,22 +346,17 @@ namespace Power_Control_Panel
                 {
                     handleButtonPress(mp,1);
                     LTouch = true;
-
-              
-               
                 }
                 if (gamepad.LeftTrigger == 0 & LTouch)
                 {
                     LTouch = false;
                 }
 
-
                 System.Windows.Point mp2 = TouchPositions[2];
                 mp2 = offset_point(mp2, drx, dry);
                 TouchPositions[2] = mp2;
                 Canvas.SetLeft(TouchEllipses[2], mp2.X - (CircleWidth / 2));
                 Canvas.SetTop(TouchEllipses[2], mp2.Y - (CircleWidth / 2));
-
 
                 if (gamepad.RightTrigger > 0 & !RTouch)
                 {
@@ -310,9 +373,6 @@ namespace Power_Control_Panel
                 setUpController();
 
             }
-
-
-
 
         }
 
@@ -336,44 +396,5 @@ namespace Power_Control_Panel
         }
 
 
-        private void rectangle_Click(object sender, RoutedEventArgs e)
-        {
-            string lookUpValue;
-            if (sender is Rectangle)
-            {
-                Rectangle rect = (Rectangle)sender;
-                lookUpValue = rect.Name.Substring(2, rect.Name.Length - 2);
-
-                VirtualKeyCode vkc;
-                keyPressDictionary.TryGetValue(lookUpValue, out vkc);
-                var sim = new InputSimulator();
-                sim.Keyboard.KeyPress(vkc);
-
-            }
-
-        }
-
-        private void keyboard_Press(object sender)
-        {
-            System.Windows.IInputElement ele = InputHitTest(new Point(500, 250));
-            if (ele != null)
-            {
-                if (ele.GetType() == typeof(Rectangle))
-                {
-                    MessageBox.Show("rec");
-                }
-            }
-        }
-
-        private void Keyboard_Loaded(object sender, RoutedEventArgs e)
-        {
-
-           
-        }
-
-        private void H_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Hi");
-        }
     }
 }

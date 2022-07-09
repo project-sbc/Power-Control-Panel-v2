@@ -4,13 +4,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Power_Control_Panel" xmlns:iconPacks1="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.BootstrapIcons" xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Modern" xmlns:iconPacks2="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:iconPacks3="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Material"
+        xmlns:local="clr-namespace:Power_Control_Panel" xmlns:iconPacks1="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.BootstrapIcons" xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Modern" xmlns:iconPacks2="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:iconPacks3="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Material" xmlns:iconPacks4="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Unicons" xmlns:iconPacks5="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Ionicons"
                  mc:Ignorable="d"
         UseNoneWindowStyle="True" 
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" Loaded="Keyboard_Loaded">
+        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" >
 
     <Window.Resources>
 
@@ -65,8 +65,8 @@
             <Grid   HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"  VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200*" />
-                    <RowDefinition Height="800*" />
-             
+                    <RowDefinition Height="600*" />
+                    <RowDefinition Height="200*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30*"></ColumnDefinition>
@@ -128,12 +128,37 @@
                 <TextBlock Name="T_0" Grid.Column="20" Text="0"/>
 
 
+                <Rectangle Name="R_Win" Grid.Row="2" Grid.Column="0" />
+                <TextBlock Name="T_Win" Grid.Row="2" Grid.Column="0" >
+                       <iconPacks5:PackIconIonicons Kind="LogoWindows"  Width="42" Height="42" />
+                </TextBlock>
+
+                <Rectangle Name="R_AlphaNum" Grid.Row="2" Grid.Column="2" />
+                <TextBlock Name="T_AlphaNum" Grid.Row="2" Grid.Column="2" Text="123"/>
+
+                <Rectangle Name="R_Ctrl" Grid.Row="2" Grid.Column="4" />
+                <TextBlock Name="T_Ctrl" Grid.Row="2" Grid.Column="4" Text="Ctrl"/>
+
+                <Rectangle Name="R_Alt" Grid.Row="2" Grid.Column="16" />
+                <TextBlock Name="T_Alt" Grid.Row="2" Grid.Column="16" Text="Alt"/>
+
+            
+
+                <Rectangle Name="R_Space" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="10"/>
+                <TextBlock Name="T_Space" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="10" Text="Space"/>
+
+                <Rectangle Name="R_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4"/>
+                <TextBlock Name="T_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4">
+                       <iconPacks4:PackIconUnicons Kind="KeyboardHide" Width="42" Height="42" />
+                </TextBlock>
+
+
                 <Grid Grid.Row="1" Grid.ColumnSpan="22"  Name="AlphaKB"  HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="250*" />
-                        <RowDefinition Height="250*" />
-                        <RowDefinition Height="250*" />
-                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="333*" />
+                        <RowDefinition Height="333*" />
+                        <RowDefinition Height="333*" />
+                     
 
 
                     </Grid.RowDefinitions>
@@ -257,15 +282,33 @@
                     <Rectangle Name="R_B" Grid.Row="2" Grid.Column="10"  />
                     <TextBlock Name="T_B" Grid.Row="2" Grid.Column="10" Text="B"/>
 
+                    <Rectangle Name="R_N" Grid.Row="2" Grid.Column="12"  />
+                    <TextBlock Name="T_N" Grid.Row="2" Grid.Column="12" Text="N"/>
+
+                    <Rectangle Name="R_M" Grid.Row="2" Grid.Column="14"  />
+                    <TextBlock Name="T_M" Grid.Row="2" Grid.Column="14" Text="M"/>
+
+                    <Rectangle Name="R_Period" Grid.Row="2" Grid.Column="16"  />
+                    <TextBlock Name="T_Period" Grid.Row="2" Grid.Column="16" Text="."/>
+
+                    <Rectangle Name="R_Comma" Grid.Row="2" Grid.Column="18"  />
+                    <TextBlock Name="T_Comma" Grid.Row="2" Grid.Column="18" Text=","/>
+
+
+                    <Rectangle Name="R_BackwardSlash" Grid.Row="2" Grid.Column="20" Grid.ColumnSpan="2" />
+                    <TextBlock Name="T_BackwardSlash" Grid.Row="2" Text="/" Grid.Column="20" Grid.ColumnSpan="2" >
+                  
+                    </TextBlock>
+                
 
                 </Grid>
 
                 <Grid Grid.Row="1"  Grid.ColumnSpan="22" Visibility="Hidden"  Name="NumberKB"   HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="250*" />
-                        <RowDefinition Height="250*" />
-                        <RowDefinition Height="250*" />
-                        <RowDefinition Height="250*" />
+                        <RowDefinition Height="333*" />
+                        <RowDefinition Height="333*" />
+                        <RowDefinition Height="333*" />
+              
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
