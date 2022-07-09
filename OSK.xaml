@@ -92,8 +92,10 @@
                     <ColumnDefinition Width="30*"></ColumnDefinition>
                     <ColumnDefinition Width="60*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Rectangle Name="R_ESC"  />
-                <TextBlock Name="T_ESC" Text="Esc"/>
+
+
+                <Rectangle Name="R_ESC" Grid.Column="0" />
+                <TextBlock Name="T_ESC" Grid.Column="0" Text="Esc"/>
 
                 <Rectangle Name="R_1" Grid.Column="2" />
                 <TextBlock Name="T_1" Grid.Column="2" Text="1"/>
@@ -236,7 +238,7 @@
                     
                     <Rectangle Name="R_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
                     <TextBlock Name="T_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >
-                       <iconPacks3:PackIconMaterial Kind="KeyboardReturn" Width="42" Height="42" />
+                     <iconPacks2:PackIconBootstrapIcons Kind="Capslock" Width="42" Height="42" />
                     </TextBlock>
 
 

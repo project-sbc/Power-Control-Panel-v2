@@ -46,6 +46,44 @@ namespace Power_Control_Panel
         private double windowY;
         private bool LTouch = false;
         private bool RTouch = false;
+
+        private Dictionary<string, VirtualKeyCode> keyPressDictionary = new Dictionary<string, VirtualKeyCode>();
+
+
+        void populateDictionary()
+        {
+            keyPressDictionary.Add("A", VirtualKeyCode.VK_A);
+            keyPressDictionary.Add("B", VirtualKeyCode.VK_B);
+            keyPressDictionary.Add("C", VirtualKeyCode.VK_C);
+            keyPressDictionary.Add("D", VirtualKeyCode.VK_D);
+            keyPressDictionary.Add("E", VirtualKeyCode.VK_E);
+            keyPressDictionary.Add("F", VirtualKeyCode.VK_F);
+            keyPressDictionary.Add("G", VirtualKeyCode.VK_G);
+            keyPressDictionary.Add("H", VirtualKeyCode.VK_H);
+            keyPressDictionary.Add("I", VirtualKeyCode.VK_I);
+            keyPressDictionary.Add("J", VirtualKeyCode.VK_J);
+            keyPressDictionary.Add("K", VirtualKeyCode.VK_K);
+            keyPressDictionary.Add("L", VirtualKeyCode.VK_L);
+            keyPressDictionary.Add("M", VirtualKeyCode.VK_M);
+            keyPressDictionary.Add("N", VirtualKeyCode.VK_N);
+            keyPressDictionary.Add("O", VirtualKeyCode.VK_O);
+            keyPressDictionary.Add("P", VirtualKeyCode.VK_P);
+            keyPressDictionary.Add("Q", VirtualKeyCode.VK_Q);
+            keyPressDictionary.Add("R", VirtualKeyCode.VK_R);
+            keyPressDictionary.Add("S", VirtualKeyCode.VK_S);
+            keyPressDictionary.Add("T", VirtualKeyCode.VK_T);
+            keyPressDictionary.Add("U", VirtualKeyCode.VK_U);
+            keyPressDictionary.Add("V", VirtualKeyCode.VK_V);
+            keyPressDictionary.Add("W", VirtualKeyCode.VK_W);
+            keyPressDictionary.Add("X", VirtualKeyCode.VK_X);
+            keyPressDictionary.Add("Y", VirtualKeyCode.VK_Y);
+            keyPressDictionary.Add("Z", VirtualKeyCode.VK_Z);
+
+
+
+
+        }
+
         public OSK()
         {
             InitializeComponent();
@@ -58,19 +96,34 @@ namespace Power_Control_Panel
             setUpController();
             setUpDispatchTimer();
         }
-
+        
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.IInputElement ele = InputHitTest(new Point(50, 100));
-            if (ele != null)
-            {
-                if (ele.GetType() == typeof(TextBlock))
-                {
-                    MessageBox.Show("rec");
-                }
-            }
+            keyboardPress(sender);
         }
 
+
+        void keyboardPress(object sender)
+        {
+            string lookUpValue = null;
+            if (sender is Rectangle)
+            {
+                Rectangle rect = (Rectangle)sender;
+                lookUpValue = rect.Name.Substring(2, rect.Name.Length - 2);
+            }
+
+            if (sender is TextBlock)
+            {
+                TextBlock txtblk = (TextBlock)sender;
+                lookUpValue = txtblk.Name.Substring(2, txtblk.Name.Length - 2);
+            }
+
+            if (lookUpValue != null)
+            {
+                var sim = new InputSimulator();
+                sim.Keyboard.TextEntry(lookUpValue);
+            }
+        }
         void setUpCircles()
         {
             TouchPositions = new Dictionary<int, Point>();
@@ -115,7 +168,7 @@ namespace Power_Control_Panel
             }
             else
             {
-                dispatcherTimer.Interval = TimeSpan.FromMilliseconds(8);
+                dispatcherTimer.Interval = TimeSpan.FromMilliseconds(4);
             }
 
         }
@@ -139,7 +192,7 @@ namespace Power_Control_Panel
         private double offset_calculator(short Input)
         {
             //Convert short from joystick to double, divide by largest value, and round to largest nubmer away from zero
-            if (Input < 3277 && Input > 0)
+            if (Input < 500 && Input > 0)
             {
                 return 1;
             }
@@ -184,7 +237,20 @@ namespace Power_Control_Panel
             return mp;
         }
 
+        void handleButtonPress(Point point, int ellipse)
+        {
+            //Delete ellipse before running inputhittest or it will return the ellipse
+            Brush ellipseColor = TouchEllipses[ellipse].Fill;
 
+            canvMain.Children.Remove(TouchEllipses[ellipse]);
+            
+            IInputElement element = InputHitTest(point);
+            object sender = element;
+
+            Ellipse el = AddEllipseAt(canvMain, point, ellipseColor);
+            TouchEllipses[ellipse] = el;
+            keyboardPress(sender);
+        }
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -210,11 +276,10 @@ namespace Power_Control_Panel
 
                 if (gamepad.LeftTrigger > 0 & !LTouch)
                 {
-                    IInputElement elm = InputHitTest(new Point(mp.X, mp.Y + 18));
+                    handleButtonPress(mp,1);
                     LTouch = true;
 
-                    //Rectangle rec = (Rectangle)elm;
-                    //MessageBox.Show(rec.Name);
+              
                
                 }
                 if (gamepad.LeftTrigger == 0 & LTouch)
@@ -232,7 +297,7 @@ namespace Power_Control_Panel
 
                 if (gamepad.RightTrigger > 0 & !RTouch)
                 {
-
+                    handleButtonPress(mp2, 2);
                     RTouch = true;
                 }
                 if (gamepad.RightTrigger == 0 & RTouch)
@@ -273,7 +338,18 @@ namespace Power_Control_Panel
 
         private void rectangle_Click(object sender, RoutedEventArgs e)
         {
+            string lookUpValue;
+            if (sender is Rectangle)
+            {
+                Rectangle rect = (Rectangle)sender;
+                lookUpValue = rect.Name.Substring(2, rect.Name.Length - 2);
 
+                VirtualKeyCode vkc;
+                keyPressDictionary.TryGetValue(lookUpValue, out vkc);
+                var sim = new InputSimulator();
+                sim.Keyboard.KeyPress(vkc);
+
+            }
 
         }
 
