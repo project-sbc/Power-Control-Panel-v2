@@ -13,6 +13,7 @@ using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
 using Power_Control_Panel.PowerControlPanel.Classes.StartUp;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
+using SharpDX.XInput;
 
 namespace Power_Control_Panel
 {
@@ -32,7 +33,9 @@ namespace Power_Control_Panel
         public static string batteryPercentage = "0";
         public static string powerStatus = "None";
 
+        public static string internetDevice = "Not Connected";
 
+        public static Controller? controller;
     }
 
     public partial class MainWindow : MetroWindow

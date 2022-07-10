@@ -52,7 +52,7 @@ namespace Power_Control_Panel
         private bool keyCtrl = false;
         private bool keyCap = false;
         private bool keyShift = false;
-
+        private bool keyWin = false;
 
         Dictionary<string, VirtualKeyCode> keyLookUp =
        new Dictionary<string, VirtualKeyCode>()
@@ -112,7 +112,7 @@ namespace Power_Control_Panel
             setUpController();
             setUpDispatchTimer();
 
-            swapAlphaUpperLower();
+            swapAlphaUpperLower(false);
         }
         
         private void button_Click(object sender, RoutedEventArgs e)
@@ -120,10 +120,12 @@ namespace Power_Control_Panel
             keyboardPress(sender);
         }
 
-        void swapAlphaUpperLower()
+        void swapAlphaUpperLower(bool upper)
         {
             Regex upperCaseRegex = new Regex("[A-Z]");
             Regex lowerCaseRegex = new Regex("[a-z]");
+
+           
 
             foreach (UIElement elem in AlphaKB.Children) //iterate the main grid
             {
@@ -133,11 +135,11 @@ namespace Power_Control_Panel
                     TextBlock txtblk = elem as TextBlock;
                     if (txtblk.Text.Length == 1)
                     {
-                        if (upperCaseRegex.Match(txtblk.Text.ToString()).Success) // if the char is a letter and uppercase
+                        if (upperCaseRegex.Match(txtblk.Text.ToString()).Success && !upper) // if the char is a letter and uppercase
                         {
                             txtblk.Text = txtblk.Text.ToString().ToLower();
                         }
-                        else if (lowerCaseRegex.Match(txtblk.Text.ToString()).Success) // if the char is a letter and lower case
+                        else if (lowerCaseRegex.Match(txtblk.Text.ToString()).Success && upper) // if the char is a letter and lower case
                         {
                             txtblk.Text = txtblk.Text.ToString().ToUpper();
                         }
@@ -189,16 +191,19 @@ namespace Power_Control_Panel
                                 break;
 
                             case "Shift":
+                                keyShift = !keyShift;
                                 isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.SHIFT);
                                 if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT); } else { sim.Keyboard.KeyDown(VirtualKeyCode.SHIFT); }
                                 toggleRectangleOn(textName);
                                 break;
                             case "Alt":
+                                keyAlt = !keyAlt;
                                 isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.MENU);
                                 if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.MENU); } else { sim.Keyboard.KeyDown(VirtualKeyCode.MENU); }
                                 toggleRectangleOn(textName);
                                 break;
                             case "Ctrl":
+                                keyCtrl = !keyCtrl;
                                 isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL);
                                 if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL); } else { sim.Keyboard.KeyDown(VirtualKeyCode.CONTROL); }
                                 toggleRectangleOn(textName);
@@ -226,12 +231,12 @@ namespace Power_Control_Panel
                         switch (txtblk.Name)
                         {
                             case "T_HideKeyboard":
-                                this.Hide();
+                                this.Close();
                                 break;
                             case "T_CAP":
-                                swapAlphaUpperLower();
+                                
                                 isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CAPITAL);
-                                if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CAPITAL); } else { sim.Keyboard.KeyDown(VirtualKeyCode.CAPITAL); }
+                                if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CAPITAL); swapAlphaUpperLower(false); } else { sim.Keyboard.KeyDown(VirtualKeyCode.CAPITAL); swapAlphaUpperLower(true); }
                                 toggleRectangleOn(textName);
                                 break;
                             case "T_BckSpce":
@@ -251,7 +256,7 @@ namespace Power_Control_Panel
                     }
 
                     //Clear ctrl alt shift win if used
-                    if (textName != "T_Shift" && textName != "T_Alt" && textName != "T_Ctrl" && textName != "T_Win")
+                    if (textName != "T_Shift" && textName != "T_Alt" && textName != "T_Ctrl" )
                     {
                         isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.SHIFT);
                         if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT); toggleRectangleOn("T_Shift"); }
@@ -262,8 +267,6 @@ namespace Power_Control_Panel
                         isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL);
                         if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL); toggleRectangleOn("T_Ctrl"); }
 
-                        isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.LWIN);
-                        if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.LWIN); toggleRectangleOn("T_Win"); }
                     }
                 }
                
@@ -529,6 +532,8 @@ namespace Power_Control_Panel
             sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
             sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL);
             sim.Keyboard.KeyUp(VirtualKeyCode.MENU);
+            sim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
+            sim.Keyboard.KeyUp(VirtualKeyCode.CAPITAL);
         }
     }
 }

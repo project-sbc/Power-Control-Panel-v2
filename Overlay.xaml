@@ -19,37 +19,46 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
 
 
 
-
-
-            <TextBlock Name="txtblkPCPHeader"
-                       Text="Power Control Panel"
-                       TextWrapping="NoWrap"
-                       Grid.ColumnSpan="2"
+            <DockPanel >
+                <DockPanel.Background>
+                    <SolidColorBrush Color="{DynamicResource MahApps.Colors.Gray2}"/>
+                </DockPanel.Background>
+                <Label DockPanel.Dock="Left"
+                       Content="POWER CONTROL PANEL"
                        VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
+                   
                        Foreground="White"
                        FontSize="26"
-                       Margin="20,0,0,0"
-                       Grid.Column="0"
+         
+                   
                        FontFamily="/Fonts/#Poppins"/>
-            <Button Name="HideOverlay" Grid.Column="1" Width="45" Height="45" Background="white" Margin="0,0,-318,0" RenderTransformOrigin="1.889,0.515" Click="HideOverlay_Click" >
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <iconPacks:PackIconControl Kind="{x:Static iconPacks:PackIconBoxIconsKind.RegularArrowFromLeft}"
-                           Width="35"
-                           Height="35"  />
-            </Button>
-            <ScrollViewer Grid.Row="1" Margin="5,10,0,0">
+
+
+                <TextBlock DockPanel.Dock="Right" FontFamily="Segoe MDL2 Assets" Text="&#xE89F;" VerticalAlignment="Center" Foreground="White" HorizontalAlignment="Right" FontSize="50" TouchDown="HideOverlay_Click" MouseDown="HideOverlay_Click"/>
+
+
+            </DockPanel>
+
+            <DockPanel  Grid.Row="1" >
+                <DockPanel.Background>
+                    <SolidColorBrush Color="{DynamicResource MahApps.Colors.Gray2}"/>
+                </DockPanel.Background>
+
+                <TextBlock Name="txtblkInternet" FontFamily="Segoe MDL2 Assets" Text="&#xF384;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
+                <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xF384;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
+                <TextBlock Name="txtblkBatteryPercentage"  Text="d" TextAlignment="Right" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
+
+
+            </DockPanel>
+            <ScrollViewer Grid.Row="2" Margin="5,10,0,0">
                 <StackPanel Background="White" Orientation="Vertical" >
                     <Frame x:Name="frame0" Margin="0,0,0,10" />
                     <Frame x:Name="frame1" Margin="0,0,0,10"/>
