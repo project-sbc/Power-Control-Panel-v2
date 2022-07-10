@@ -167,7 +167,7 @@ namespace Power_Control_Panel
                 txtblk = (TextBlock)sender;
                 textValue = txtblk.Text;
                 textName = txtblk.Name;
-
+                bool isKeyDown;
                 if (textName == "")
                 {
                     txtblk = getParentTextBlock(txtblk);
@@ -181,7 +181,7 @@ namespace Power_Control_Panel
 
                     if (textValue != "")
                     {
-                        bool isKeyDown;
+                        
                         switch (textValue)
                         {
                             case "Esc":
@@ -191,17 +191,17 @@ namespace Power_Control_Panel
                             case "Shift":
                                 isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.SHIFT);
                                 if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT); } else { sim.Keyboard.KeyDown(VirtualKeyCode.SHIFT); }
-                                toggleRectangleOn(txtblk);
+                                toggleRectangleOn(textName);
                                 break;
                             case "Alt":
                                 isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.MENU);
                                 if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.MENU); } else { sim.Keyboard.KeyDown(VirtualKeyCode.MENU); }
-                                toggleRectangleOn(txtblk);
+                                toggleRectangleOn(textName);
                                 break;
                             case "Ctrl":
                                 isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL);
                                 if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL); } else { sim.Keyboard.KeyDown(VirtualKeyCode.CONTROL); }
-                                toggleRectangleOn(txtblk);
+                                toggleRectangleOn(textName);
                                 break;
                             case "123":
                                 AlphaKB.Visibility = Visibility.Hidden;
@@ -230,8 +230,9 @@ namespace Power_Control_Panel
                                 break;
                             case "T_CAP":
                                 swapAlphaUpperLower();
-                                keyCap = !keyCap;
-                                toggleRectangleOn(txtblk);
+                                isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CAPITAL);
+                                if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CAPITAL); } else { sim.Keyboard.KeyDown(VirtualKeyCode.CAPITAL); }
+                                toggleRectangleOn(textName);
                                 break;
                             case "T_BckSpce":
                                 sim.Keyboard.KeyPress(VirtualKeyCode.BACK);
@@ -249,6 +250,21 @@ namespace Power_Control_Panel
                         }
                     }
 
+                    //Clear ctrl alt shift win if used
+                    if (textName != "T_Shift" && textName != "T_Alt" && textName != "T_Ctrl" && textName != "T_Win")
+                    {
+                        isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.SHIFT);
+                        if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT); toggleRectangleOn("T_Shift"); }
+
+                        isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.MENU);
+                        if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.MENU); toggleRectangleOn("T_Alt"); }
+
+                        isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CONTROL);
+                        if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL); toggleRectangleOn("T_Ctrl"); }
+
+                        isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.LWIN);
+                        if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.LWIN); toggleRectangleOn("T_Win"); }
+                    }
                 }
                
 
@@ -258,8 +274,10 @@ namespace Power_Control_Panel
 
         }
 
-        void toggleRectangleOn(TextBlock txtblk)
+        void toggleRectangleOn(string txtblkName)
         {
+            TextBlock txtblk = (TextBlock)canvMain.FindName(txtblkName);
+            
             Rectangle rect;
             
 
