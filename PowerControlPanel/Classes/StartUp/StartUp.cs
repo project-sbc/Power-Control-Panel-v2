@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
+using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 {
@@ -14,6 +15,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
         {
             TaskScheduler.TaskScheduler.startScheduler();
             ChangeTDP.ChangeTDP.readTDP();
+            RoutineUpdate.RoutineUpdate.checkNetworkInterface();
+            RoutineUpdate.RoutineUpdate.checkPowerStatus();
         }
     }
 }

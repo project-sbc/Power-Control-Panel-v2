@@ -4,7 +4,7 @@
         
         xmlns:local="clr-namespace:Power_Control_Panel"
            xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+
               Title="Overlay"   Height="600" Width="380"
         UseNoneWindowStyle="True" 
         ResizeMode="NoResize"
@@ -52,11 +52,12 @@
                     <SolidColorBrush Color="{DynamicResource MahApps.Colors.Gray2}"/>
                 </DockPanel.Background>
 
+
                 <TextBlock Name="txtblkInternet" FontFamily="Segoe MDL2 Assets" Text="&#xF384;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
                 <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xF384;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
-                <TextBlock Name="txtblkBatteryPercentage"  Text="d" TextAlignment="Right" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
+                <TextBlock Name="txtblkBatteryPercentage"  Text="" TextAlignment="Right" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right" FontSize="15" Margin="0,0,10,0" />
 
-
+                <TextBlock Name="txtblkGamepad" FontFamily="Segoe MDL2 Assets" Text="&#xE7FC;" TextAlignment="Right" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
             </DockPanel>
             <ScrollViewer Grid.Row="2" Margin="5,10,0,0">
                 <StackPanel Background="White" Orientation="Vertical" >

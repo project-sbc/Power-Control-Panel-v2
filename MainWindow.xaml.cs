@@ -30,7 +30,7 @@ namespace Power_Control_Panel
         public static double setPL2 = 0;
         public static bool needTDPRead = false;
         
-        public static string batteryPercentage = "0";
+        public static int batteryPercentage = 0;
         public static string powerStatus = "None";
 
         public static string internetDevice = "Not Connected";

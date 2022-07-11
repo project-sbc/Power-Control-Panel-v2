@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Power_Control_Panel" xmlns:iconPacks1="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.BootstrapIcons" xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Modern"
+        xmlns:local="clr-namespace:Power_Control_Panel" 
         mc:Ignorable="d"
         UseNoneWindowStyle="True" 
         ResizeMode="NoResize"
@@ -249,8 +249,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Button Name="a400" Grid.Column="0" CommandParameter="HideKeyboard" >
-                    <iconPacks:PackIconModern Kind="InputKeyboardDown" Height="30" Width="40" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                </Button>
+                                     </Button>
                 <ToggleButton Name="a401" IsChecked="{Binding ShowNumericKeyboard, ElementName=Keyboard}" Grid.Column="1" Grid.ColumnSpan="1" ClickMode="Press" Content=".?123" />
                 <Button Name="a402" Grid.Column="2"  CommandParameter="CTRL" Content="Ctrl" />
                 <!-- wingdings Windows Logo: ÿ -->

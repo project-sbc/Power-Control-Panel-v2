@@ -29,7 +29,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
         }
 
 
-        static void  checkNetworkInterface()
+        public static void  checkNetworkInterface()
         {
 
             //Gets internet status to display on overlay
@@ -48,7 +48,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             if (!connectedDevice) { GlobalVariables.internetDevice = "Not Connected"; }
         }
 
-        static void checkPowerStatus()
+        public static void checkPowerStatus()
         {
 
             ManagementObjectSearcher mos = new ManagementObjectSearcher("select * from Win32_Battery");
@@ -57,7 +57,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             {
                 returnValue = mo["EstimatedChargeRemaining"].ToString();
             }
-            if (returnValue != "AC") { GlobalVariables.batteryPercentage = returnValue; } else { GlobalVariables.powerStatus = "AC"; }
+            if (returnValue != "AC") 
+            { GlobalVariables.batteryPercentage = Int16.Parse(returnValue);
+                PowerLineStatus Power = SystemParameters.PowerLineStatus;
+                GlobalVariables.powerStatus = Power.ToString();
+
+            } else { GlobalVariables.powerStatus = "AC"; }
 
 
         }

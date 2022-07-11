@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages" xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.Material" xmlns:iconPacks1="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.BootstrapIcons"
+      xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages" 
       mc:Ignorable="d" 
       d:DesignHeight="100"  d:DesignWidth="800"
       Title="HomePage">
@@ -38,11 +38,7 @@
                         <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
                     </Label.Foreground>
                 </Label>
-                <iconPacks1:PackIconBootstrapIcons DockPanel.Dock="Right" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Kind="BrightnessAltHigh" >
-                    <iconPacks1:PackIconBootstrapIcons.Foreground>
-                        <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
-                    </iconPacks1:PackIconBootstrapIcons.Foreground>
-                </iconPacks1:PackIconBootstrapIcons>
+       
 
                 <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Brightness_DragCompleted"  Thumb.DragStarted="Brightness_DragStarted" Width="270" Height="40" IsSnapToTickEnabled="True" Maximum="255"  Value="{Binding ElementName=txtsliderBrightness, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Brightness_ValueChanged" MouseLeftButtonUp="Brightness_MouseLeftButtonUp"  >
                     <Slider.LayoutTransform>
@@ -51,12 +47,7 @@
                     </Slider.LayoutTransform>
 
                 </Slider>
-                <iconPacks1:PackIconBootstrapIcons DockPanel.Dock="Right" Height="40" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" Kind="BrightnessAltHigh" Opacity="0.23" >
-                    <iconPacks1:PackIconBootstrapIcons.Foreground>
-                        <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
-                    </iconPacks1:PackIconBootstrapIcons.Foreground>
-
-                </iconPacks1:PackIconBootstrapIcons>
+            
             </DockPanel>
 
 

@@ -19,6 +19,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
             this.Menu.Add(new MenuItem()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid  },
+          
                 Label = "Home",
                 NavigationType = typeof(MainPage),
                 NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute)
