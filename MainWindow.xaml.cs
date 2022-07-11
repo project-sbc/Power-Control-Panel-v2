@@ -35,7 +35,7 @@ namespace Power_Control_Panel
 
         public static string internetDevice = "Not Connected";
 
-        public static Controller? controller;
+        public static Controller? controller = new Controller(UserIndex.One);
     }
 
     public partial class MainWindow : MetroWindow

@@ -95,22 +95,23 @@ namespace Power_Control_Panel
                     txtblkBatteryPercentage.Text = GlobalVariables.batteryPercentage.ToString() + "%";   
                     break;
                 case "Offline":
-                    if (GlobalVariables.batteryPercentage < 10 && GlobalVariables.batteryPercentage >= 0) { txtblkPower.Text = "\uE851"; }
-                    if (GlobalVariables.batteryPercentage < 20 && GlobalVariables.batteryPercentage >= 10) { txtblkPower.Text = "\uE852"; }
-                    if (GlobalVariables.batteryPercentage < 30 && GlobalVariables.batteryPercentage >= 20) { txtblkPower.Text = "\uE853"; }
-                    if (GlobalVariables.batteryPercentage < 40 && GlobalVariables.batteryPercentage >= 30) { txtblkPower.Text = "\uE854"; }
-                    if (GlobalVariables.batteryPercentage < 50 && GlobalVariables.batteryPercentage >= 40) { txtblkPower.Text = "\uE855"; }
-                    if (GlobalVariables.batteryPercentage < 60 && GlobalVariables.batteryPercentage >= 50) { txtblkPower.Text = "\uE856"; }
-                    if (GlobalVariables.batteryPercentage < 70 && GlobalVariables.batteryPercentage >= 60) { txtblkPower.Text = "\uE857"; }
-                    if (GlobalVariables.batteryPercentage < 80 && GlobalVariables.batteryPercentage >= 70) { txtblkPower.Text = "\uE858"; }
-                    if (GlobalVariables.batteryPercentage < 90 && GlobalVariables.batteryPercentage >= 80) { txtblkPower.Text = "\uE859"; }
-                    if (GlobalVariables.batteryPercentage < 100 && GlobalVariables.batteryPercentage >= 90) { txtblkPower.Text = "\uE83F"; }
+                    if (GlobalVariables.batteryPercentage < 10 && GlobalVariables.batteryPercentage >= 0) { txtblkPower.Text = "\uE850"; }
+                    if (GlobalVariables.batteryPercentage < 20 && GlobalVariables.batteryPercentage >= 10) { txtblkPower.Text = "\uE851"; }
+                    if (GlobalVariables.batteryPercentage < 30 && GlobalVariables.batteryPercentage >= 20) { txtblkPower.Text = "\uE852"; }
+                    if (GlobalVariables.batteryPercentage < 40 && GlobalVariables.batteryPercentage >= 30) { txtblkPower.Text = "\uE853"; }
+                    if (GlobalVariables.batteryPercentage < 50 && GlobalVariables.batteryPercentage >= 40) { txtblkPower.Text = "\uE854"; }
+                    if (GlobalVariables.batteryPercentage < 60 && GlobalVariables.batteryPercentage >= 50) { txtblkPower.Text = "\uE855"; }
+                    if (GlobalVariables.batteryPercentage < 70 && GlobalVariables.batteryPercentage >= 60) { txtblkPower.Text = "\uE856"; }
+                    if (GlobalVariables.batteryPercentage < 80 && GlobalVariables.batteryPercentage >= 70) { txtblkPower.Text = "\uE857"; }
+                    if (GlobalVariables.batteryPercentage < 90 && GlobalVariables.batteryPercentage >= 80) { txtblkPower.Text = "\uE858"; }
+                    if (GlobalVariables.batteryPercentage < 100 && GlobalVariables.batteryPercentage >= 90) { txtblkPower.Text = "\uE859"; }
                     txtblkBatteryPercentage.Text = GlobalVariables.batteryPercentage.ToString() + "%";
                     break;
                 default:
                     break;
             }
 
+            if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }
         }
 
         private void HideOverlay_Click(object sender, RoutedEventArgs e)

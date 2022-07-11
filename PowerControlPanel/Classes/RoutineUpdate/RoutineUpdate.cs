@@ -13,6 +13,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 {
     public class RoutineUpdate
     {
+      
         public static void handleRoutineChecks(int counter)
         {
             //Read tdp every 60 seconds
@@ -25,9 +26,36 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             {
                 checkNetworkInterface();
                 checkPowerStatus();
+                checkControllerConnected();
             }
         }
 
+        public static void checkControllerConnected()
+        {
+            if (GlobalVariables.controller is null)
+            {
+                GlobalVariables.controller = new Controller(UserIndex.One);
+            }
+            if (GlobalVariables.controller.IsConnected == false)
+            {
+                GlobalVariables.controller = new Controller(UserIndex.One);
+                if (GlobalVariables.controller.IsConnected == false)
+                {
+                    GlobalVariables.controller = new Controller(UserIndex.Two);
+                }
+                if (GlobalVariables.controller.IsConnected == false)
+                {
+                    GlobalVariables.controller = new Controller(UserIndex.Three);
+                }
+                if (GlobalVariables.controller.IsConnected == false)
+                {
+                    GlobalVariables.controller = new Controller(UserIndex.Four);
+                }
+            }
+
+
+
+        }
 
         public static void  checkNetworkInterface()
         {

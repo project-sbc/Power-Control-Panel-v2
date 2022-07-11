@@ -33,13 +33,13 @@ namespace Power_Control_Panel
         WindowSinker sinker;
         InputSimulator inputSim = new InputSimulator();
 
-        private Controller controller;
+     
         private Gamepad gamepad;
         private const double CircleWidth = 10;
         private const double RectangleWidth = 90;
         private const double CharFontSize = 65;
-        private Dictionary<int, Point> TouchPositions;
-        private Dictionary<int, Ellipse> TouchEllipses;
+        private Dictionary<int, Point> TouchPositions = new Dictionary<int, Point>();
+        private Dictionary<int, Ellipse> TouchEllipses = new Dictionary<int, Ellipse>();
         private double LLx = CircleWidth / 2;
         private double LLy = CircleWidth / 2;
         private double ULx = System.Windows.SystemParameters.PrimaryScreenWidth - CircleWidth / 2;
@@ -47,6 +47,7 @@ namespace Power_Control_Panel
         private double windowY;
         private bool LTouch = false;
         private bool RTouch = false;
+        private bool ellipseSetup = false;  
 
         private bool keyAlt = false;
         private bool keyCtrl = false;
@@ -323,8 +324,7 @@ namespace Power_Control_Panel
         }
         void setUpCircles()
         {
-            TouchPositions = new Dictionary<int, Point>();
-            TouchEllipses = new Dictionary<int, Ellipse>();
+
             Point startL = new Point(this.Width * 0.25, this.Height * 0.5);
 
             Point startR = new Point(this.Width * 0.75, this.Height * 0.5);
@@ -336,6 +336,24 @@ namespace Power_Control_Panel
             TouchEllipses.Add(1, el);
             TouchEllipses.Add(2, el2);
 
+            ellipseSetup = true;
+
+        }
+        void removeCircles()
+        {
+         
+            if (canvMain.Children.Contains(TouchEllipses[1]))
+            {
+                canvMain.Children.Remove(TouchEllipses[1]);
+                TouchPositions.Remove(1);
+                TouchEllipses.Remove(1);
+            }
+            if (canvMain.Children.Contains(TouchEllipses[2]))
+            {
+                canvMain.Children.Remove(TouchEllipses[2]);
+                TouchPositions.Remove(2);
+                TouchEllipses.Remove(2);
+            }
 
         }
         void setUpDispatchTimer()
@@ -345,27 +363,22 @@ namespace Power_Control_Panel
         }
         void setUpController()
         {
-            controller = new Controller(UserIndex.One);
-            if (controller.IsConnected == false)
-            {
-                controller = new Controller(UserIndex.Two);
-            }
-            if (controller.IsConnected == false)
-            {
-                controller = new Controller(UserIndex.Three);
-            }
-            if (controller.IsConnected == false)
-            {
-                controller = new Controller(UserIndex.Four);
-            }
-            if (controller.IsConnected == false)
+            
+            if (GlobalVariables.controller.IsConnected == false && ellipseSetup)
             {
                 //set up dispatch timer to check for xinput controller every 5 seconds
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+                ellipseSetup = false;
+                removeCircles();
             }
             else
             {
+                if (!ellipseSetup)
+                {
+                    setUpCircles();
+                }
                 dispatcherTimer.Interval = TimeSpan.FromMilliseconds(15);
+                
             }
 
         }
@@ -456,9 +469,17 @@ namespace Power_Control_Panel
 
 
 
-            if (controller.IsConnected)
+            if (GlobalVariables.controller.IsConnected && ellipseSetup)
             {
-                gamepad = controller.GetState().Gamepad;
+                if (!ellipseSetup)
+                {
+                    setUpCircles();
+                    ellipseSetup = true;
+                }
+
+
+
+                gamepad = GlobalVariables.controller.GetState().Gamepad;
                 double dlx = offset_calculator(gamepad.LeftThumbX);
                 double dly = -1 * offset_calculator(gamepad.LeftThumbY);
                 double drx = offset_calculator(gamepad.RightThumbX);

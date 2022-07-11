@@ -13,11 +13,22 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
         public static string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         public static void startStreamWriter(string newLog)
         {
-            
-            if (!File.Exists(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt")) { createLogFile(); }
-            using (StreamWriter w = File.AppendText("PowerControlPanel/Logs/application_log.txt"))
+            try
             {
-               Log(newLog,w);
+                if (!File.Exists(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt")) { createLogFile(); }
+                using (StreamWriter w = File.AppendText("PowerControlPanel/Logs/application_log.txt"))
+                {
+                    Log(newLog, w);
+                }
+
+
+
+
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
          
