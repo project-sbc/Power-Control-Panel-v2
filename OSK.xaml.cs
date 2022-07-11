@@ -35,9 +35,11 @@ namespace Power_Control_Panel
 
      
         private Gamepad gamepad;
+
+     
         private const double CircleWidth = 10;
-        private const double RectangleWidth = 90;
-        private const double CharFontSize = 65;
+
+    
         private Dictionary<int, Point> TouchPositions = new Dictionary<int, Point>();
         private Dictionary<int, Ellipse> TouchEllipses = new Dictionary<int, Ellipse>();
         private double LLx = CircleWidth / 2;
@@ -45,8 +47,18 @@ namespace Power_Control_Panel
         private double ULx = System.Windows.SystemParameters.PrimaryScreenWidth - CircleWidth / 2;
         private double ULy;
         private double windowY;
+
+        //Keep track of button presses
         private bool LTouch = false;
         private bool RTouch = false;
+        private bool YPress = false;
+        private bool BPress = false;
+        private bool XPress = false;
+        private bool LTPress = false;
+        private bool RTPress = false;
+
+        InputSimulator sim = new InputSimulator();
+
         private bool ellipseSetup = false;  
 
         private bool keyAlt = false;
@@ -180,7 +192,7 @@ namespace Power_Control_Panel
                 if (textName == "T_HideKeyboard") { this.Hide(); }
                 else
                 {
-                    var sim = new InputSimulator();
+                    
 
                     if (textValue != "")
                     {
@@ -494,12 +506,12 @@ namespace Power_Control_Panel
                 Canvas.SetLeft(TouchEllipses[1], mp.X - (CircleWidth / 2));
                 Canvas.SetTop(TouchEllipses[1], mp.Y - (CircleWidth / 2));
 
-                if (gamepad.LeftTrigger > 0 & !LTouch)
+                if (gamepad.Buttons == GamepadButtonFlags.LeftShoulder & !LTouch)
                 {
                     handleButtonPress(mp,1);
                     LTouch = true;
                 }
-                if (gamepad.LeftTrigger == 0 & LTouch)
+                if (gamepad.Buttons != GamepadButtonFlags.LeftShoulder & LTouch)
                 {
                     LTouch = false;
                 }
@@ -510,14 +522,61 @@ namespace Power_Control_Panel
                 Canvas.SetLeft(TouchEllipses[2], mp2.X - (CircleWidth / 2));
                 Canvas.SetTop(TouchEllipses[2], mp2.Y - (CircleWidth / 2));
 
-                if (gamepad.RightTrigger > 0 & !RTouch)
+                if (gamepad.Buttons == GamepadButtonFlags.RightShoulder & !RTouch)
                 {
                     handleButtonPress(mp2, 2);
                     RTouch = true;
                 }
-                if (gamepad.RightTrigger == 0 & RTouch)
+                if (gamepad.Buttons != GamepadButtonFlags.RightShoulder & RTouch)
                 {
                     RTouch = false;
+                }
+
+                
+                if (gamepad.Buttons == GamepadButtonFlags.Y & !YPress)
+                {
+                    keyboardPress(canvMain.FindName("R_Space"));
+                    YPress = true;
+                }
+                if (gamepad.Buttons != GamepadButtonFlags.Y & YPress)
+                {
+                    YPress = false;
+                }
+
+                if (gamepad.Buttons == GamepadButtonFlags.B)
+                {
+                    this.Close();
+                }
+
+                if (gamepad.Buttons == GamepadButtonFlags.X & !XPress)
+                {
+                    keyboardPress(canvMain.FindName("R_BckSpce"));
+                    XPress = true;
+                }
+                if (gamepad.Buttons != GamepadButtonFlags.X & XPress)
+                {
+                    XPress = false;
+                }
+
+
+                if (gamepad.LeftTrigger > 0 & !LTPress)
+                {
+                    keyboardPress(canvMain.FindName("R_AlphaNum"));
+                    LTPress = true;
+                }
+                if (gamepad.LeftTrigger == 0 & LTPress)
+                {
+                    LTPress = false;
+                }
+
+                if (gamepad.RightTrigger > 0 & !RTPress)
+                {
+                    keyboardPress(canvMain.FindName("R_CAP"));
+                    RTPress = true;
+                }
+                if (gamepad.RightTrigger == 0 & RTPress)
+                {
+                    RTPress = false;
                 }
             }
             else

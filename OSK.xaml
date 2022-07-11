@@ -134,7 +134,10 @@
                 </TextBlock>
 
                 <Rectangle Name="R_AlphaNum" Grid.Row="2" Grid.Column="2" />
-                <TextBlock Name="T_AlphaNum" Grid.Row="2" Grid.Column="2" Text="123"/>
+                <TextBlock Name="T_AlphaNum" Grid.Row="2" TextAlignment="Left" Grid.Column="2" Text="123">
+                    <TextBlock FontFamily="Segoe MDL2 Assets"  HorizontalAlignment="Right" Text="&#xF10A;" FontSize="40"/>
+                    
+                </TextBlock>
 
                 <Rectangle Name="R_Ctrl" Grid.Row="2" Grid.Column="4" />
                 <TextBlock Name="T_Ctrl" Grid.Row="2" Grid.Column="4" Text="Ctrl"/>
@@ -146,13 +149,18 @@
 
                 <Rectangle Name="R_Space" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="10"/>
                 <TextBlock Name="T_Space" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="10" >
-                          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE75D;" FontSize="40"/>   
-                          <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF096;" FontSize="40"/>
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF095;" FontSize="40"/>      
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE75D;" FontSize="40"/>   
+                  
                     
                 </TextBlock>
 
                 <Rectangle Name="R_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4"/>
-                <TextBlock Name="T_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4" FontFamily="Segoe MDL2 Assets" Text="&#xE92F;" FontSize="40"/>
+                <TextBlock Name="T_HideKeyboard" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="4"  FontSize="40">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF094;" FontSize="40"/>
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE92F;" FontSize="40"/>
+
+                </TextBlock>
                     
 
 
@@ -222,8 +230,9 @@
 
                     <Rectangle Name="R_BckSpce" Grid.Column="20" />
                     <TextBlock Name="T_BckSpce" Grid.Column="20" >
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF096;" FontSize="40"/>
                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE750;" FontSize="40"/>
-                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF096;" FontSize="40"/>
+
                     </TextBlock>
 
 
@@ -268,8 +277,9 @@
                     
                     <Rectangle Name="R_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
                     <TextBlock Name="T_CAP" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >
+                             <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF10B;" FontSize="40"/>
                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE752;" FontSize="40"/>
-                        
+                   
                     </TextBlock>
 
 
