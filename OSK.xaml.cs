@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
-
+using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using WindowsInput.Native;
 using SharpDX.XInput;
 using WindowsInput;
@@ -613,6 +613,9 @@ namespace Power_Control_Panel
             sim.Keyboard.KeyUp(VirtualKeyCode.MENU);
             sim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
             if (Console.CapsLock) { sim.Keyboard.KeyPress(VirtualKeyCode.CAPITAL); }
+
+            //set controller gamepad state tick to 1000 ms
+            RoutineUpdate.sleepTimer = 1000;
             
         }
 

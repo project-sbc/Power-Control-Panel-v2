@@ -123,6 +123,7 @@ namespace Power_Control_Panel
                 if (menuItem.Label == "On Screen Keyboard")
                 {
                     osk = new OSK();
+                    RoutineUpdate.sleepTimer = 10;
                     osk.Show();
 
                 }
@@ -172,7 +173,7 @@ namespace Power_Control_Panel
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //Close overlay when main window is closed
-            overlay.Close();
+            if (overlay != null) { overlay.Close(); }
             if (osk != null) { osk.Close(); }
             
             // Dispose of thread to allow program to close properly
