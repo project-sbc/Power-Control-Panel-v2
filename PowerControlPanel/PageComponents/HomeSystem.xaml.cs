@@ -21,8 +21,8 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
     public partial class HomeSystem : Page
     {
         private bool dragStartedBrightness = true;
-     
-    
+        private bool dragStartedVolume = true;
+
         public HomeSystem()
         {
             InitializeComponent();
@@ -70,7 +70,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         {
             if (enableControl.IsOn)
             {
-                this.Height = 100;
+                this.Height = 150;
             }
             else { this.Height = 40; }
         }
@@ -78,5 +78,42 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         {
 
         }
+        void HandleChangingVolume(int birghtness)
+        {
+
+        }
+        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStartedVolume)
+            {
+                HandleChangingVolume((int)Volume.Value);
+            }
+        }
+        private void Volume_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            dragStartedVolume = false;
+            HandleChangingVolume((int)Volume.Value);
+        }
+        private void Volume_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            dragStartedVolume = true;
+        }
+        private void Volume_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dragStartedVolume = false;
+            HandleChangingVolume((int)Volume.Value);
+        }
+        private void Volume_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStartedVolume = false;
+            HandleChangingVolume((int)Volume.Value);
+        }
+        private void Volume_TouchDown(object sender, TouchEventArgs e)
+        {
+            dragStartedVolume = true;
+        }
+
+
+
     }
 }
