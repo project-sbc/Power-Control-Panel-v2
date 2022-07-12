@@ -60,7 +60,7 @@ namespace Power_Control_Panel
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
-            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/PageComponents/OverlayTDP.xaml", UriKind.RelativeOrAbsolute));
+            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
@@ -122,8 +122,14 @@ namespace Power_Control_Panel
             MainWindow.overlay = null;
         }
 
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - this.Width;
+            this.Top = 0;
 
+            //make height total height - 10%
+            this.Height = System.Windows.SystemParameters.PrimaryScreenHeight - ((System.Windows.SystemParameters.PrimaryScreenHeight) / 15);
 
-
+        }
     }
 }

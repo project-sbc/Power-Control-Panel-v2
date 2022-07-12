@@ -140,7 +140,7 @@ namespace Power_Control_Panel
             int i = 0;
 
             //if (Properties.Settings.Default.enableSystem) { page[i] = new HomeSystem(); i = i + 1; }
-            if (Properties.Settings.Default.enableTDP) { page[i] = new OverlayTDP(); i = i + 1; }
+            if (Properties.Settings.Default.enableTDP) { page[i] = new HomeTDP(); i = i + 1; }
             //if (Properties.Settings.Default.enableCPU) { page[i] = new HomeCPU(); i = i + 1; }
 
             i = 0;

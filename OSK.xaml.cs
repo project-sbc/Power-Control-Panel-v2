@@ -617,13 +617,10 @@ namespace Power_Control_Panel
             //set controller gamepad state tick to 1000 ms
             RoutineUpdate.sleepTimer = 1000;
             //Make null so it can be called again
-            MainWindow.overlay = null;
+            MainWindow.osk = null;
 
         }
 
-        private void Keyboard_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
 
-        }
     }
 }

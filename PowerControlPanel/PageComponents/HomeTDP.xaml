@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="150"  d:DesignWidth="800"
+      d:DesignHeight="150"  d:DesignWidth="450" MinWidth="450"
       Title="HomePage" Loaded="Page_Loaded"  >
 
 
@@ -15,7 +15,7 @@
             <DockPanel Height="30">
                 <Label Content="TDP CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControl"  Toggled="enableControl_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
+                <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControl"  Toggled="enableControl_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
             </DockPanel>
         </GroupBox.Header>
         <GroupBox.Background>
@@ -40,7 +40,7 @@
                         </Label.Foreground>
                     </Label>
                     <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
-                    <Slider x:Name="TDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="TDP1_DragCompleted"  Thumb.DragStarted="TDP1_DragStarted" Width="270" Height="40" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP1_ValueChanged" MouseLeftButtonUp="TDP1_MouseLeftButtonUp" TouchUp="TDP1_TouchUp" TouchDown="TDP1_TouchDown" >
+                    <Slider x:Name="TDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="TDP1_DragCompleted"  Thumb.DragStarted="TDP1_DragStarted" Width="230" Height="40" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP1_ValueChanged" MouseLeftButtonUp="TDP1_MouseLeftButtonUp" TouchUp="TDP1_TouchUp" TouchDown="TDP1_TouchDown" >
                         <Slider.LayoutTransform>
                             <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
 
@@ -58,7 +58,7 @@
                     </Label>
 
                     <Label x:Name="txtsliderTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP2, Path=Value}"/>
-                    <Slider x:Name="TDP2" DockPanel.Dock="Right" Thumb.DragCompleted="TDP2_DragCompleted" Height="40" Thumb.DragStarted="TDP2_DragStarted" Width="270" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP2_ValueChanged" MouseLeftButtonUp="TDP2_MouseLeftButtonUp" HorizontalAlignment="Right" TouchDown="TDP2_TouchDown" TouchUp="TDP2_TouchUp"  >
+                    <Slider x:Name="TDP2" DockPanel.Dock="Right" Thumb.DragCompleted="TDP2_DragCompleted" Height="40" Thumb.DragStarted="TDP2_DragStarted" Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP2_ValueChanged" MouseLeftButtonUp="TDP2_MouseLeftButtonUp" HorizontalAlignment="Right" TouchDown="TDP2_TouchDown" TouchUp="TDP2_TouchUp"  >
                         <Slider.LayoutTransform>
                             <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
                         </Slider.LayoutTransform>

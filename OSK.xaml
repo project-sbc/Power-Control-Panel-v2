@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True"
-        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" Closing="Keyboard_Closing" IsVisibleChanged="Keyboard_IsVisibleChanged" >
+        Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" Closing="Keyboard_Closing" >
 
     <Window.Resources>
 

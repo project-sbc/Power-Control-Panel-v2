@@ -6,7 +6,10 @@
         xmlns:navigation="clr-namespace:Power_Control_Panel.PowerControlPanel.Classes.Navigation"
         xmlns:classes="clr-namespace:Power_Control_Panel.PowerControlPanel.Classes"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="Power Control Panel" Height="600" Width="450" Closing="MetroWindow_Closing" MinWidth="450" MinHeight="350">
+        UseNoneWindowStyle="True" 
+        ResizeMode="NoResize"         
+        Topmost="True"           
+        Title="Power Control Panel" Height="600" Width="530" Closing="MetroWindow_Closing" MinWidth="450" MinHeight="350" Loaded="MetroWindow_Loaded">
     <controls:MetroWindow.DataContext>
         <viewModels:SVM />
     </controls:MetroWindow.DataContext>
