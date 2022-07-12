@@ -17,6 +17,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             ChangeTDP.ChangeTDP.readTDP();
             RoutineUpdate.RoutineUpdate.checkNetworkInterface();
             RoutineUpdate.RoutineUpdate.checkPowerStatus();
+            RoutineUpdate.RoutineUpdate.createGamePadStateCollectorLoop();
         }
     }
 }

@@ -117,6 +117,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="QuickAccessMenu.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="PowerControlPanel\PageComponents\OverlayTDP.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

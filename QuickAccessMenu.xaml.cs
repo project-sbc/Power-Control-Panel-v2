@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 using Power_Control_Panel.PowerControlPanel.Classes.Navigation;
-using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
-using MenuItem = Power_Control_Panel.PowerControlPanel.Classes.ViewModels.MenuItem;
+using MenuItem = Power_Control_Panel.PowerControlPanel.Classes.VMQAM.MI;
 using System.Windows.Threading;
 using System.Threading;
 using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
@@ -22,81 +21,25 @@ namespace Power_Control_Panel
     /// </summary>
     /// 
 
-    public static class GlobalVariables
-    {
-        //TDP global
-        public static double readPL1 = 0;
-        public static double readPL2 = 0;
-        public static double setPL1 = 0;
-        public static double setPL2 = 0;
-        public static bool needTDPRead = false;
-        
-        //System global
-        public static int batteryPercentage = 0;
-        public static string powerStatus = "None";
-        public static string internetDevice = "Not Connected";
 
-        //Controller global
-        public static Controller? controller = new Controller(UserIndex.One);
-        public static Gamepad? gamepadOld = null;
-        public static Gamepad? gamepadCurrent = null;
 
-        //Shut down boolean to stop threads
-        public static bool useControllerFastThread = true;
-     
-    }
-
-    public partial class MainWindow : MetroWindow
+    public partial class QuickAccessMenu : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
-        public Window overlay;
-        public Window osk;
-        public DispatcherTimer inputCheck=new DispatcherTimer();
-        public int counter = 0;
 
-        public MainWindow()
+
+        public QuickAccessMenu()
         {
             this.InitializeComponent();
 
-            StartUp.runStartUp();
-            
-  
             //Run code to set up hamburger menu
             initializeNavigationFrame();
 
-            //Run code to set up dispatch timers, one for inputcheck (i.e. xinput or keyboard prompts) and one for updating TDP values
-            initializeDispatchTimersAndBackgroundThread();
-
-
 
         }
 
        
-        void initializeDispatchTimersAndBackgroundThread()
-        {
- 
-            //Set up timespan for timers
-            inputCheck.Interval= new TimeSpan(0, 0, 1); 
-       
-            //Add the event handlers to the timers
-            inputCheck.Tick += inputCheck_Tick;
-            
-            //Start timers
-            inputCheck.Start();
-
-
-            
-        }
-
-        void inputCheck_Tick(object sender, EventArgs e)
-        {
-            //Handle routine object checks like TDP, battery percentage, 
-            RoutineUpdate.handleRoutineChecks(counter);
-            //Consolidate checks into one timer, reset after 60 ticks/seconds
-            if (counter > 60) { counter = 0; }else { counter++; }
-           
-        }
-
+     
       
       
         //Navigation routines
@@ -114,18 +57,12 @@ namespace Power_Control_Panel
 
             if (e.InvokedItem is MenuItem menuItem)
             {
-                if (menuItem.Label == "Overlay")
+                if (menuItem.Label == "Hide")
                 {
-                    overlay = new QuickAccessMenu();
-                    overlay.Show();
+                    this.Close();
 
                 }
-                if (menuItem.Label == "On Screen Keyboard")
-                {
-                    osk = new OSK();
-                    osk.Show();
-
-                }
+              
                 if (menuItem.IsNavigation)
                 {
                     this.navigationServiceEx.Navigate(menuItem.NavigationDestination);
@@ -171,14 +108,7 @@ namespace Power_Control_Panel
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //Close overlay when main window is closed
-            overlay.Close();
-            if (osk != null) { osk.Close(); }
-            
-            // Dispose of thread to allow program to close properly
-            PowerControlPanel.Classes.TaskScheduler.TaskScheduler.closeScheduler();
-            //Throw boolean to end controller checking thread
-            GlobalVariables.useControllerFastThread = false;
+       
         }
 
 

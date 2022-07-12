@@ -8,12 +8,14 @@ using Power_Control_Panel.PowerControlPanel.Classes;
 using System.Net.NetworkInformation;
 using System.Windows;
 using System.Management;
+using System.Threading;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 {
     public class RoutineUpdate
     {
-      
+        public static Thread controllerThread;
+        public static int sleepTimer = 1000;
         public static void handleRoutineChecks(int counter)
         {
             //Read tdp every 60 seconds
@@ -26,36 +28,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             {
                 checkNetworkInterface();
                 checkPowerStatus();
-                checkControllerConnected();
+                
             }
         }
 
-        public static void checkControllerConnected()
-        {
-            if (GlobalVariables.controller is null)
-            {
-                GlobalVariables.controller = new Controller(UserIndex.One);
-            }
-            if (GlobalVariables.controller.IsConnected == false)
-            {
-                GlobalVariables.controller = new Controller(UserIndex.One);
-                if (GlobalVariables.controller.IsConnected == false)
-                {
-                    GlobalVariables.controller = new Controller(UserIndex.Two);
-                }
-                if (GlobalVariables.controller.IsConnected == false)
-                {
-                    GlobalVariables.controller = new Controller(UserIndex.Three);
-                }
-                if (GlobalVariables.controller.IsConnected == false)
-                {
-                    GlobalVariables.controller = new Controller(UserIndex.Four);
-                }
-            }
-
-
-
-        }
+   
 
         public static void  checkNetworkInterface()
         {
@@ -94,5 +71,61 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 
 
         }
+
+
+        public static void createGamePadStateCollectorLoop()
+        {
+            controllerThread = new Thread(new ThreadStart(gamePadStateCollector));
+            controllerThread.IsBackground = true;
+            controllerThread.Start();
+        }
+
+        public static void gamePadStateCollector()
+        {
+            while (GlobalVariables.useControllerFastThread)
+            {
+
+
+                if (GlobalVariables.controller.IsConnected)
+                {
+                    GlobalVariables.gamepadCurrent = GlobalVariables.controller.GetState().Gamepad;
+                    Thread.Sleep(sleepTimer);
+                    while (GlobalVariables.useControllerFastThread && GlobalVariables.controller.IsConnected)
+                    {
+                        GlobalVariables.gamepadOld = GlobalVariables.gamepadCurrent;
+                        GlobalVariables.gamepadCurrent = GlobalVariables.controller.GetState().Gamepad;
+                        Thread.Sleep(sleepTimer);
+                    }
+
+
+                }
+                else
+                {
+                    while (GlobalVariables.controller.IsConnected && GlobalVariables.useControllerFastThread)
+                    {
+                        Thread.Sleep(5000);
+                        GlobalVariables.controller = new Controller(UserIndex.One);
+                        if (GlobalVariables.controller.IsConnected == false)
+                        {
+                            GlobalVariables.controller = new Controller(UserIndex.Two);
+                        }
+                        if (GlobalVariables.controller.IsConnected == false)
+                        {
+                            GlobalVariables.controller = new Controller(UserIndex.Three);
+                        }
+                        if (GlobalVariables.controller.IsConnected == false)
+                        {
+                            GlobalVariables.controller = new Controller(UserIndex.Four);
+                        }
+
+
+                    }
+
+                }
+            }
+
+         
+        }
+
     }
 }

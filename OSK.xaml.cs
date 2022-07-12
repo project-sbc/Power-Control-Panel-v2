@@ -118,7 +118,7 @@ namespace Power_Control_Panel
             InitializeComponent();
 
 
-            InitializeComponent();
+      
             setUpWindow();
             setUpCircles();
 
@@ -248,8 +248,8 @@ namespace Power_Control_Panel
                                 break;
                             case "T_CAP":
                                 
-                                isKeyDown = sim.InputDeviceState.IsKeyDown(VirtualKeyCode.CAPITAL);
-                                if (isKeyDown) { sim.Keyboard.KeyUp(VirtualKeyCode.CAPITAL); swapAlphaUpperLower(false); } else { sim.Keyboard.KeyDown(VirtualKeyCode.CAPITAL); swapAlphaUpperLower(true); }
+                                isKeyDown = Console.CapsLock;
+                                if (isKeyDown) { sim.Keyboard.KeyPress(VirtualKeyCode.CAPITAL); swapAlphaUpperLower(false); } else { sim.Keyboard.KeyPress(VirtualKeyCode.CAPITAL); swapAlphaUpperLower(true); }
                                 toggleRectangleOn(textName);
                                 break;
                             case "T_BckSpce":
@@ -374,6 +374,7 @@ namespace Power_Control_Panel
             dispatcherTimer.Start();
         }
         void setUpController()
+
         {
             
             if (GlobalVariables.controller.IsConnected == false && ellipseSetup)
@@ -478,8 +479,6 @@ namespace Power_Control_Panel
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-
-
 
             if (GlobalVariables.controller.IsConnected && ellipseSetup)
             {
@@ -613,7 +612,13 @@ namespace Power_Control_Panel
             sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL);
             sim.Keyboard.KeyUp(VirtualKeyCode.MENU);
             sim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
-            sim.Keyboard.KeyUp(VirtualKeyCode.CAPITAL);
+            if (Console.CapsLock) { sim.Keyboard.KeyPress(VirtualKeyCode.CAPITAL); }
+            
+        }
+
+        private void Keyboard_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }

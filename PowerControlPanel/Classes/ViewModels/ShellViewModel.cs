@@ -59,5 +59,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
             });
     
         }
+
+       
     }
 }

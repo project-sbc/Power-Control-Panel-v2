@@ -15,6 +15,9 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
         public static Thread taskScheduler;
         public static TaskFactory taskFactory = new TaskFactory(scheduler);
 
+
+        
+
         public static void startScheduler()
         {
             scheduler = new SecretNest.TaskSchedulers.SequentialScheduler(true);
@@ -33,8 +36,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
         {
    
             var result = taskFactory.StartNew(action);
-       
-            
+
         }
 
         public static void closeScheduler()
@@ -42,5 +44,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
             scheduler.Dispose();
 
         }
+
+
+    
+
+       
     }
 }
