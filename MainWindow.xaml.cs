@@ -38,22 +38,24 @@ namespace Power_Control_Panel
 
         //Controller global
         public static Controller? controller = new Controller(UserIndex.One);
-        public static Gamepad? gamepadOld = null;
-        public static Gamepad? gamepadCurrent = null;
+        public static Gamepad gamepadOld = controller.GetState().Gamepad;
+        public static Gamepad gamepadCurrent = controller.GetState().Gamepad;
 
         //Shut down boolean to stop threads
         public static bool useControllerFastThread = true;
-     
+
+   
+
     }
 
     public partial class MainWindow : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
-        public Window overlay;
-        public Window osk;
+
         public DispatcherTimer inputCheck=new DispatcherTimer();
         public int counter = 0;
-
+        public static Window overlay;
+        public static Window osk;
         public MainWindow()
         {
             this.InitializeComponent();
@@ -94,7 +96,15 @@ namespace Power_Control_Panel
             RoutineUpdate.handleRoutineChecks(counter);
             //Consolidate checks into one timer, reset after 60 ticks/seconds
             if (counter > 60) { counter = 0; }else { counter++; }
-           
+
+         
+            //Add overlay open
+            if (GlobalVariables.gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.DPadLeft) && GlobalVariables.gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && GlobalVariables.gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+            {
+                if (overlay == null) { overlay = new QuickAccessMenu(); overlay.Show(); } else { overlay.Show(); } 
+            }
+     
+
         }
 
       

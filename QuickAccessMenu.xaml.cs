@@ -21,12 +21,12 @@ namespace Power_Control_Panel
     /// </summary>
     /// 
 
-
+  
 
     public partial class QuickAccessMenu : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
-
+        WindowSinker sinker;
 
         public QuickAccessMenu()
         {
@@ -35,10 +35,21 @@ namespace Power_Control_Panel
             //Run code to set up hamburger menu
             initializeNavigationFrame();
 
+            initializeWindow();
 
         }
 
-       
+       void initializeWindow()
+        {
+            sinker = new WindowSinker(this);
+            sinker.Sink();
+            InitializeComponent();
+            this.ShowInTaskbar = false;
+            this.Topmost = true;
+            this.WindowStyle = WindowStyle.None;
+            this.AllowsTransparency = true;
+
+        }
      
       
       
@@ -49,7 +60,7 @@ namespace Power_Control_Panel
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
-            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
+            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/PageComponents/OverlayTDP.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
@@ -108,7 +119,7 @@ namespace Power_Control_Panel
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-       
+            MainWindow.overlay = null;
         }
 
 
