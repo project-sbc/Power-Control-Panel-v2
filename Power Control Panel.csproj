@@ -90,11 +90,10 @@
   <ItemGroup>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
-    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
     <PackageReference Include="SecretNest.SequentialScheduler" Version="1.0.2" />
     <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
     <PackageReference Include="System.Management" Version="6.0.0" />
-    <PackageReference Include="TCD.System.TouchInjection" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
