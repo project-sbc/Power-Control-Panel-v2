@@ -44,8 +44,9 @@ namespace Power_Control_Panel
         //Shut down boolean to stop threads
         public static bool useControllerFastThread = true;
 
-   
 
+        //brightness and volume setting
+        public static int brightness = 0;
     }
 
     public partial class MainWindow : MetroWindow
