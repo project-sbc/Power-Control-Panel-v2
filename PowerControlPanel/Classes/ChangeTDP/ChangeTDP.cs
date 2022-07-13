@@ -245,18 +245,19 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 {
                     lock (objLock)
                     {
-                        string commandArgumentsPL1 = processKX + " /rdmem16 " + MCHBAR + "a0";
+                        string commandArgumentsPL1 = " /rdmem16 " + MCHBAR + "a0";
 
-                        string resultPL1 = RunCLI.RunCommand(commandArgumentsPL1, true, "cmd.exe");
+                        string resultPL1 = RunCLI.RunCommand(commandArgumentsPL1, true, processKX);
+
                         if (resultPL1 != null)
                         {
                             double dblPL1 = Convert.ToDouble(parseHexFromResultMMIOConvertToTDPKX(resultPL1, true));
                             GlobalVariables.readPL1 = dblPL1;
                         }
                         Thread.Sleep(300);
-                        string commandArgumentsPL2 = processKX + " /rdmem16 " + MCHBAR + "a4";
+                        string commandArgumentsPL2 = " /rdmem16 " + MCHBAR + "a4";
 
-                        string resultPL2 = RunCLI.RunCommand(commandArgumentsPL2, true, "cmd.exe");
+                        string resultPL2 = RunCLI.RunCommand(commandArgumentsPL2, true, processKX);
                         if (resultPL2 != null)
                         {
                             double dblPL2 = Convert.ToDouble(parseHexFromResultMMIOConvertToTDPKX(resultPL2, false));
@@ -336,7 +337,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             catch (Exception ex)
             {
-                string errorMsg = "Error: ChangeTDP.cs:  Parse intel tdp from result: " + ex.Message;
+                string errorMsg = "Error: ChangeTDP.cs:  Parse AMD tdp from result: " + ex.Message + " result is " + result;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
                 return "Error";
@@ -432,16 +433,22 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             //MSR stuff above
             static void runAMDReadTDP()
             {
+                string commandArguments = "";
+                string result = "";
                 try
                 {
                     string processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
                
                     lock (objLock)
                     {
-                        string commandArguments = processRyzenAdj + " -i";
-  
-                        string result = RunCLI.RunCommand(commandArguments, true, "cmd.exe");
-                        if (result != null)
+                        commandArguments = processRyzenAdj + " -i";
+
+                    //result = RunCLI.RunCommand(commandArguments, true, "cmd.exe");
+                    result = RunCLI.RunCommand(" -i", true, processRyzenAdj);
+                    
+                    
+
+                    if (result != null)
                         {
        
                             double dblPL1 = Convert.ToDouble(parseFromResultAMD(result, "PL1"));
@@ -455,7 +462,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
                 catch (Exception ex)
                 {
-                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message;
+                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message + " command argument is " + commandArguments + ", result is " + result;
                     StreamWriterLog.startStreamWriter(errorMsg);
                     MessageBox.Show(errorMsg);
 

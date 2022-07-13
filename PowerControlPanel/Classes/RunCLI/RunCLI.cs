@@ -24,21 +24,29 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                 if (readOutput) { startInfo.RedirectStandardOutput = true; } else { startInfo.RedirectStandardOutput = false; }
 
                 startInfo.FileName = processName;
-                startInfo.Arguments = "/c " + arguments;
+                //startInfo.Arguments = "/c " + arguments;
+                startInfo.Arguments = arguments;
                 startInfo.CreateNoWindow = true;    
                 startInfo.Verb = "runas";
+                startInfo.RedirectStandardError = readOutput;
+                startInfo.RedirectStandardOutput = readOutput;
+                process.EnableRaisingEvents = true;
                 process.StartInfo = startInfo;
                 process.Start();
+
+                process.WaitForExit(3000);
                 if (readOutput)
                 {
+                    int Errorlevel = process.ExitCode;
+                    
                     string output = process.StandardOutput.ReadToEnd();
-                    process.WaitForExit();
+                    process.Close();
                     return output;
 
                 }
                 else
                 {
-                    process.WaitForExit();
+                    process.Close();
                     return "COMPLETE";
                 }
 
