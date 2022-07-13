@@ -10,13 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="PowerControlPanel\Logs\**" />
-    <EmbeddedResource Remove="PowerControlPanel\Logs\**" />
-    <None Remove="PowerControlPanel\Logs\**" />
-    <Page Remove="PowerControlPanel\Logs\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Remove="PowerControlPanel\Logs\application_log.txt" />
     <None Remove="PowerControlPanel\Pages\ProjectSBC.png" />
     <None Remove="PowerControlPanel\ProfileData\Profiles.xml" />
     <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
@@ -37,6 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="PowerControlPanel\Logs\application_log.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="PowerControlPanel\ProfileData\Profiles.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
