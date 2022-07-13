@@ -27,7 +27,7 @@ namespace Power_Control_Panel
     {
         private NavigationServiceEx navigationServiceEx;
         WindowSinker sinker;
-
+        public DispatcherTimer updateTimer = new DispatcherTimer();
         public QuickAccessMenu()
         {
             this.InitializeComponent();
@@ -37,6 +37,20 @@ namespace Power_Control_Panel
 
             initializeWindow();
 
+
+
+            updateValues();
+
+
+
+            //Set up timespan for timers
+            updateTimer.Interval = new TimeSpan(0, 0, 5);
+
+            //Add the event handlers to the timers
+            updateTimer.Tick += tick_updateValues;
+
+            //Start timers
+            updateTimer.Start();
         }
 
        void initializeWindow()
@@ -130,6 +144,66 @@ namespace Power_Control_Panel
             //make height total height - 10%
             this.Height = System.Windows.SystemParameters.PrimaryScreenHeight - ((System.Windows.SystemParameters.PrimaryScreenHeight) / 15);
 
+        }
+
+        void tick_updateValues(object sender, EventArgs e)
+        {
+            updateValues();
+        }
+        void updateValues()
+        {
+            switch (GlobalVariables.internetDevice)
+            {
+                case "Not Connected":
+                    txtblkInternet.Text = "\uF384";
+                    break;
+                case "Wireless":
+                    txtblkInternet.Text = "\uE701";
+                    break;
+                case "Ethernet":
+                    txtblkInternet.Text = "\uE839";
+                    break;
+                default:
+                    txtblkInternet.Text = "";
+                    break;
+            }
+
+            switch (GlobalVariables.powerStatus)
+            {
+                case "AC":
+                    txtblkPower.Text = "";
+                    break;
+                case "Online":
+                    if (GlobalVariables.batteryPercentage < 10 && GlobalVariables.batteryPercentage >= 0) { txtblkPower.Text = "\uE85A"; }
+                    if (GlobalVariables.batteryPercentage < 20 && GlobalVariables.batteryPercentage >= 10) { txtblkPower.Text = "\uE85B"; }
+                    if (GlobalVariables.batteryPercentage < 30 && GlobalVariables.batteryPercentage >= 20) { txtblkPower.Text = "\uE85C"; }
+                    if (GlobalVariables.batteryPercentage < 40 && GlobalVariables.batteryPercentage >= 30) { txtblkPower.Text = "\uE85D"; }
+                    if (GlobalVariables.batteryPercentage < 50 && GlobalVariables.batteryPercentage >= 40) { txtblkPower.Text = "\uE85E"; }
+                    if (GlobalVariables.batteryPercentage < 60 && GlobalVariables.batteryPercentage >= 50) { txtblkPower.Text = "\uE85F"; }
+                    if (GlobalVariables.batteryPercentage < 70 && GlobalVariables.batteryPercentage >= 60) { txtblkPower.Text = "\uE860"; }
+                    if (GlobalVariables.batteryPercentage < 80 && GlobalVariables.batteryPercentage >= 70) { txtblkPower.Text = "\uE861"; }
+                    if (GlobalVariables.batteryPercentage < 90 && GlobalVariables.batteryPercentage >= 80) { txtblkPower.Text = "\uE862"; }
+                    if (GlobalVariables.batteryPercentage <= 100 && GlobalVariables.batteryPercentage >= 90) { txtblkPower.Text = "\uE83E"; }
+                    txtblkBatteryPercentage.Text = GlobalVariables.batteryPercentage.ToString() + "%";
+                    break;
+                case "Offline":
+                    if (GlobalVariables.batteryPercentage < 10 && GlobalVariables.batteryPercentage >= 0) { txtblkPower.Text = "\uE850"; }
+                    if (GlobalVariables.batteryPercentage < 20 && GlobalVariables.batteryPercentage >= 10) { txtblkPower.Text = "\uE851"; }
+                    if (GlobalVariables.batteryPercentage < 30 && GlobalVariables.batteryPercentage >= 20) { txtblkPower.Text = "\uE852"; }
+                    if (GlobalVariables.batteryPercentage < 40 && GlobalVariables.batteryPercentage >= 30) { txtblkPower.Text = "\uE853"; }
+                    if (GlobalVariables.batteryPercentage < 50 && GlobalVariables.batteryPercentage >= 40) { txtblkPower.Text = "\uE854"; }
+                    if (GlobalVariables.batteryPercentage < 60 && GlobalVariables.batteryPercentage >= 50) { txtblkPower.Text = "\uE855"; }
+                    if (GlobalVariables.batteryPercentage < 70 && GlobalVariables.batteryPercentage >= 60) { txtblkPower.Text = "\uE856"; }
+                    if (GlobalVariables.batteryPercentage < 80 && GlobalVariables.batteryPercentage >= 70) { txtblkPower.Text = "\uE857"; }
+                    if (GlobalVariables.batteryPercentage < 90 && GlobalVariables.batteryPercentage >= 80) { txtblkPower.Text = "\uE858"; }
+                    if (GlobalVariables.batteryPercentage < 100 && GlobalVariables.batteryPercentage >= 90) { txtblkPower.Text = "\uE859"; }
+                    txtblkBatteryPercentage.Text = GlobalVariables.batteryPercentage.ToString() + "%";
+                    break;
+                default:
+                    break;
+            }
+
+            if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }
         }
     }
 }
