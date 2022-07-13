@@ -76,7 +76,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             catch (Exception ex)
             {
-                string errorMsg = "Error: ChangeTDP.cs:  Changing TDP: " + ex.Message;
+                string errorMsg = "Error: ChangeTDP.cs:  Changing TDP Intel or AMD handler: " + ex.Message;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
 
@@ -97,20 +97,20 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 {
                     lock (objLock)
                     {
-                        string commandArgumentsPL1 = processKX + " /wrmem16 " + MCHBAR + "a0 0x" + hexPL1;
+                        string commandArgumentsPL1 = " /wrmem16 " + MCHBAR + "a0 0x" + hexPL1;
 
-                        RunCLI.RunCommand(commandArgumentsPL1, true, "cmd.exe");
+                        RunCLI.RunCommand(commandArgumentsPL1, true, processKX);
                         Thread.Sleep(500);
-                        string commandArgumentsPL2 = processKX + " /wrmem16 " + MCHBAR + "a4 0x" + hexPL2;
+                        string commandArgumentsPL2 = " /wrmem16 " + MCHBAR + "a4 0x" + hexPL2;
 
-                        RunCLI.RunCommand(commandArgumentsPL2, true, "cmd.exe");
+                        RunCLI.RunCommand(commandArgumentsPL2, true, processKX);
                         Thread.Sleep(100);
                     }
                 }
             }
             catch (Exception ex)
             {
-                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change: " + ex.Message;
+                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change MMIOKX: " + ex.Message;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
 
@@ -141,10 +141,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                             if (hexPL2.Length == 1) { hexPL2 = "00" + hexPL2; }
                             if (hexPL2.Length == 2) { hexPL2 = "0" + hexPL2; }
                         }
-                        string commandArguments = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe -s write 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1;
-                        string processRW = "cmd.exe";
+                        string commandArguments = " -s write 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1;
+                        string processMSR = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe";
 
-                        RunCLI.RunCommand(commandArguments, false, processRW);
+                        RunCLI.RunCommand(commandArguments, false, processMSR);
                         Thread.Sleep(100);
                     }
                 }
@@ -383,13 +383,13 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             {
                 try
                 {
-                    string processRW = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe";
+                    string processMSR = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe";
 
                     lock (objLock)
                     {
                         string commandArguments = " read 0x610";
                         
-                        string result = RunCLI.RunCommand(commandArguments, true, processRW);
+                        string result = RunCLI.RunCommand(commandArguments, true, processMSR);
                         if (result != null)
                         {
 
@@ -406,7 +406,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
                 catch (Exception ex)
                 {
-                    string errorMsg = "Error: ChangeTDP.cs: Reading intel tdp: " + ex.Message;
+                    string errorMsg = "Error: ChangeTDP.cs: Reading intel tdp MSR: " + ex.Message;
                     StreamWriterLog.startStreamWriter(errorMsg);
                     MessageBox.Show(errorMsg);
                 }
@@ -503,6 +503,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             {
                 try
                 {
+
+                //OLD RW STUFF, I CHANGED CLI METHOD SO THIS RUNCLI COMMAND NEEDS TO BE REVISITED IF I BRING THIS BACK
                     string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
                     string hexPL1 = convertTDPToHexMSR(pl1TDP);
                     string hexPL2 = convertTDPToHexMSR(pl2TDP);
