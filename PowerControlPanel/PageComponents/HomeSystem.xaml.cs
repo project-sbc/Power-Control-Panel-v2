@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Power_Control_Panel.PowerControlPanel.PageComponents
 {
@@ -20,8 +22,11 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
     /// </summary>
     public partial class HomeSystem : Page
     {
-        private bool dragStartedBrightness = true;
-        private bool dragStartedVolume = true;
+        private bool dragStartedBrightness = false;
+        private bool dragStartedVolume = false;
+
+        private bool firstTick = true;
+        private DispatcherTimer updateTick = new DispatcherTimer();
 
         public HomeSystem()
         {
@@ -76,11 +81,13 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         }
         void HandleChangingBrightness(double brightness)
         {
+            GlobalVariables.needBrightnessRead = true;
             Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)brightness);
         }
-        void HandleChangingVolume(int birghtness)
+        void HandleChangingVolume(int volume)
         {
-
+            GlobalVariables.needVolumeRead = true;
+            Classes.ChangeVolume.AudioManager.SetMasterVolume((float)volume);
         }
         private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -113,6 +120,42 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             dragStartedVolume = true;
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            intializeTimer();
+            loadValues();
+
+        }
+
+        void loadValues()
+        {
+            //If global tdp is not zero meaning it was read within 10 seconds, load those instead of calling a update
+            if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
+            {
+                updateFromGlobalValues();
+            }
+
+        }
+        void intializeTimer()
+        {
+            //Set up auto update tick timer, which syncs with global variable updates
+            updateTick.Interval = new TimeSpan(0, 0, 2);
+            updateTick.Tick += updateTick_Tick;
+            updateTick.Start();
+            System.Diagnostics.Debug.WriteLine("");
+        }
+        void updateTick_Tick(object sender, EventArgs e)
+        {
+            //Divorce actual routine from tick event so the updateFromGlobalTDP can be called at start up or tick event
+            updateFromGlobalValues();
+        }
+        void updateFromGlobalValues()
+        {
+            if (!dragStartedBrightness && !GlobalVariables.needBrightnessRead) { Brightness.Value = GlobalVariables.brightness; }
+            if (!dragStartedVolume && !GlobalVariables.needVolumeRead) 
+            { Volume.Value = GlobalVariables.volume; }
+         
+        }
 
 
     }

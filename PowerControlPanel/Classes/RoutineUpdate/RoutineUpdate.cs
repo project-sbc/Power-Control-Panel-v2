@@ -16,20 +16,26 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
     {
         public static Thread controllerThread;
         public static int sleepTimer = 1000;
+        private static int count5 = 0;
         public static void handleRoutineChecks(int counter)
         {
             //Read tdp every 60 seconds
             if (counter == 60) { Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.ChangeTDP.readTDP()); }
  
 
-            decimal dec5Counter = counter / 5;
+            
 
-            if (dec5Counter == decimal.Round(dec5Counter, 0))
+            if (count5 >= 5)
             {
                 checkNetworkInterface();
                 checkPowerStatus();
                 Classes.ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
                 Classes.ChangeVolume.AudioManager.GetMasterVolume();
+                count5 = 0;
+            }
+            else
+            {
+                count5++;
             }
         }
 

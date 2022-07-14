@@ -28,7 +28,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeVolume
                 {
                     float volumeLevel;
                     masterVol.GetMasterVolumeLevelScalar(out volumeLevel);
-                    GlobalVariables.volume = (int)volumeLevel * 100;
+                    GlobalVariables.volume = (int)(volumeLevel * 100);
+                    if (GlobalVariables.needVolumeRead) { GlobalVariables.needVolumeRead = false; }
                 }
 
 

@@ -31,7 +31,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeBrightness
                         {
                             Console.WriteLine(item.Name + " " + item.Value.ToString());
                             if (item.Name == "CurrentBrightness")
-                            { GlobalVariables.brightness = Convert.ToInt32(item.Value); }    //Do something with CurrentBrightness
+                            { GlobalVariables.brightness = Convert.ToInt32(item.Value); if (GlobalVariables.needBrightnessRead) { GlobalVariables.needBrightnessRead = false; } }    //Do something with CurrentBrightness
         }
                     }
                 }

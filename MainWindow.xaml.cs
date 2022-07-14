@@ -30,7 +30,8 @@ namespace Power_Control_Panel
         public static double setPL1 = 0;
         public static double setPL2 = 0;
         public static bool needTDPRead = false;
-        
+        public static bool needVolumeRead = false;
+        public static bool needBrightnessRead = false;
         //System global
         public static int batteryPercentage = 0;
         public static string powerStatus = "None";

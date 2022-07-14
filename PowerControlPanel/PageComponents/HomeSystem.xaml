@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages" 
       mc:Ignorable="d" 
       d:DesignHeight="150"  d:DesignWidth="800"
-      Title="HomePage">
+      Title="HomePage" Loaded="Page_Loaded">
 
     <GroupBox >
         <GroupBox.Background>
@@ -57,7 +57,7 @@
                     </Label.Foreground>
                 </Label>
                 <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE767;" FontSize="30" Margin="8,0,0,0"/>
-                <Slider x:Name="Volume" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Volume_DragCompleted"  Thumb.DragStarted="Volume_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="255"  Value="{Binding ElementName=txtsliderVolume, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Volume_ValueChanged" MouseLeftButtonUp="Volume_MouseLeftButtonUp"  >
+                <Slider x:Name="Volume" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Volume_DragCompleted"  Thumb.DragStarted="Volume_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  Value="{Binding ElementName=txtsliderVolume, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Volume_ValueChanged" MouseLeftButtonUp="Volume_MouseLeftButtonUp"  >
                     <Slider.LayoutTransform>
                         <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
 
