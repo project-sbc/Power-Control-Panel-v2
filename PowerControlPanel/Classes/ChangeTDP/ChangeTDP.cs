@@ -67,8 +67,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     {
                         runIntelTDPChangeMMIOKX(pl1TDP, pl2TDP);
                     }
-                    if (Properties.Settings.Default.IntelMMIOMSR == "MSRCMD") { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
-                    else { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
+                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MSR")) { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
+                   
                 }
                 else { if (cpuType == "AMD") { runAMDTDPChange(pl1TDP, pl2TDP); } }
                 GlobalVariables.setPL1 = pl1TDP;
@@ -185,6 +185,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         processorName = processorNameRegistry.ToString();
                         if (processorName.IndexOf("Intel") >= 0) { cpuType = "Intel"; }
                         if (processorName.IndexOf("AMD") >= 0) { cpuType = "AMD"; }
+                        
                         
                     }
                 }
@@ -339,13 +340,13 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
                 if (tdpLevel == "PL1")
                 {
-        
-                    return result.Substring(result.IndexOf("STAPM LIMIT") + 25, 7).Trim();
+                    
+                    return result.Substring(result.IndexOf("STAPM LIMIT") + 25, 6).Trim();
                 }
                 if (tdpLevel == "PL2")
                 {
   
-                    return result.Substring(result.IndexOf("PPT LIMIT SLOW") + 25, 7).Trim();
+                    return result.Substring(result.IndexOf("PPT LIMIT SLOW") + 25, 6).Trim();
                 }
                 else { return "error"; }
 
