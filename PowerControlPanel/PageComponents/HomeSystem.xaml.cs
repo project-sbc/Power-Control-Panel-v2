@@ -76,7 +76,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         }
         void HandleChangingBrightness(short brightness)
         {
-            Classes.ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
+            
         }
         void HandleChangingVolume(int birghtness)
         {

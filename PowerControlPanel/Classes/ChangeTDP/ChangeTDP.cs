@@ -86,22 +86,27 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         static void runIntelTDPChangeMMIOKX(int pl1TDP, int pl2TDP)
         {
+            string processKX = "";
+            string hexPL1 = "";
+            string hexPL2 = "";
+            string commandArgumentsPL1 = "";
+            string commandArgumentsPL2 = "";
             try
             {
 
-                string processKX = BaseDir + "\\Resources\\Intel\\KX\\KX.exe";
-                string hexPL1 = convertTDPToHexMMIO(pl1TDP);
-                string hexPL2 = convertTDPToHexMMIO(pl2TDP);
+                processKX = BaseDir + "\\Resources\\Intel\\KX\\KX.exe";
+                hexPL1 = convertTDPToHexMMIO(pl1TDP);
+                hexPL2 = convertTDPToHexMMIO(pl2TDP);
 
                 if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
                 {
                     lock (objLock)
                     {
-                        string commandArgumentsPL1 = " /wrmem16 " + MCHBAR + "a0 0x" + hexPL1;
+                        commandArgumentsPL1 = " /wrmem16 " + MCHBAR + "a0 0x" + hexPL1;
 
                         RunCLI.RunCommand(commandArgumentsPL1, true, processKX);
                         Thread.Sleep(500);
-                        string commandArgumentsPL2 = " /wrmem16 " + MCHBAR + "a4 0x" + hexPL2;
+                        commandArgumentsPL2 = " /wrmem16 " + MCHBAR + "a4 0x" + hexPL2;
 
                         RunCLI.RunCommand(commandArgumentsPL2, true, processKX);
                         Thread.Sleep(100);
@@ -110,7 +115,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             catch (Exception ex)
             {
-                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change MMIOKX: " + ex.Message;
+                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change MMIOKX: " + ex.Message + " hexPL1 and PL2 are: " + hexPL1 + ", " + hexPL2 + ", processKX is " + processKX + ", commandarguments are " + commandArgumentsPL1 + " and " + commandArgumentsPL2;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
 
@@ -122,11 +127,16 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         static void runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
         {
+
+            string processMSR = "";
+            string hexPL1 = "";
+            string hexPL2 = "";
+            string commandArguments = "";
             try
             {
 
-                string hexPL1 = convertTDPToHexMSR(pl1TDP);
-                string hexPL2 = convertTDPToHexMSR(pl2TDP);
+                hexPL1 = convertTDPToHexMSR(pl1TDP);
+                hexPL2 = convertTDPToHexMSR(pl2TDP);
                 if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
                 {
                     lock (objLock)
@@ -141,8 +151,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                             if (hexPL2.Length == 1) { hexPL2 = "00" + hexPL2; }
                             if (hexPL2.Length == 2) { hexPL2 = "0" + hexPL2; }
                         }
-                        string commandArguments = " -s write 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1;
-                        string processMSR = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe";
+                        commandArguments = " -s write 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1;
+                        processMSR = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe";
 
                         RunCLI.RunCommand(commandArguments, false, processMSR);
                         Thread.Sleep(100);
@@ -151,7 +161,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             catch (Exception ex)
             {
-                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change MSR: " + ex.Message;
+                string errorMsg = "Error: ChangeTDP.cs:  Run Intel TDP Change MSR: " + ex.Message + " Hex pl1 and pl2 are " + hexPL1 + " and " + hexPL2 + ", commandargument is " + commandArguments + ", processMSR is " + processMSR;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
 
@@ -237,17 +247,22 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         static void runIntelReadTDPMMIOKX()
         {
+            string processKX = "";
+            string commandArgumentsPL1 = "";
+            string resultPL1 = "";
+            string commandArgumentsPL2 = "";
+            string resultPL2 = "";
 
             try
             {
-                string processKX = BaseDir + "\\Resources\\Intel\\KX\\KX.exe";
+                processKX = BaseDir + "\\Resources\\Intel\\KX\\KX.exe";
                 if (MCHBAR != null)
                 {
                     lock (objLock)
                     {
-                        string commandArgumentsPL1 = " /rdmem16 " + MCHBAR + "a0";
+                        commandArgumentsPL1 = " /rdmem16 " + MCHBAR + "a0";
 
-                        string resultPL1 = RunCLI.RunCommand(commandArgumentsPL1, true, processKX);
+                        resultPL1 = RunCLI.RunCommand(commandArgumentsPL1, true, processKX);
 
                         if (resultPL1 != null)
                         {
@@ -255,9 +270,9 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                             GlobalVariables.readPL1 = dblPL1;
                         }
                         Thread.Sleep(300);
-                        string commandArgumentsPL2 = " /rdmem16 " + MCHBAR + "a4";
+                        commandArgumentsPL2 = " /rdmem16 " + MCHBAR + "a4";
 
-                        string resultPL2 = RunCLI.RunCommand(commandArgumentsPL2, true, processKX);
+                        resultPL2 = RunCLI.RunCommand(commandArgumentsPL2, true, processKX);
                         if (resultPL2 != null)
                         {
                             double dblPL2 = Convert.ToDouble(parseHexFromResultMMIOConvertToTDPKX(resultPL2, false));
@@ -273,7 +288,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             catch (Exception ex)
             {
-                string errorMsg = "Error: ChangeTDP.cs: Reading intel tdp: " + ex.Message;
+                string errorMsg = "Error: ChangeTDP.cs: Reading intel tdp: " + ex.Message + ", processKX is " + processKX + ", result pl1 and pl2 are " + resultPL1 + ", " + resultPL2 + ", command arguments are " + commandArgumentsPL1 + " and " + commandArgumentsPL2;
                 StreamWriterLog.startStreamWriter(errorMsg);
                 MessageBox.Show(errorMsg);
 
@@ -346,10 +361,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         }
             static string parseHexFromResultMSRConvertToTDP(string result, bool isPL1)
             {
+                int FindString = -1;
+                string hexResult = "";
                 try
                 {
-                    int FindString;
-                    string hexResult;
+
                     float intResult;
                     if (isPL1)
                     {
@@ -370,7 +386,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
                 catch (Exception ex)
                 {
-                    string errorMsg = "Error: ChangeTDP.cs:  Parse intel tdp from result: " + ex.Message;
+                    string errorMsg = "Error: ChangeTDP.cs:  Parse intel tdp from result: " + ex.Message + "hexresult is " + hexResult + " and intFindString is " + FindString.ToString();
                     StreamWriterLog.startStreamWriter(errorMsg);
                     MessageBox.Show(errorMsg);
                     return "Error";
@@ -433,16 +449,19 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             //MSR stuff above
             static void runAMDReadTDP()
             {
+                string processRyzenAdj = "";
+                string result = "";
+                string commandArguments = "";
                 try
                 {
-                    string processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
+                     processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
                
                     lock (objLock)
                     {
-                        string commandArguments = " -i";
+                        commandArguments = " -i";
 
                         
-                        string result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
+                        result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
                     
                     
 
@@ -462,7 +481,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
                 catch (Exception ex)
                 {
-                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message ;
+                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message + ", processRyzenAdj is " + processRyzenAdj + ", result is " + result + ", commandargument is " + commandArguments;
                     StreamWriterLog.startStreamWriter(errorMsg);
                     MessageBox.Show(errorMsg);
 
@@ -472,16 +491,18 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             static void runAMDTDPChange(int pl1TDP, int pl2TDP)
             {
-
+                string processRyzenAdj = "";
+                string result = "";
+                string commandArguments = "";
                 try
                 {
-                string processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
+                processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
 
                 lock (objLock)
                 {
-                    string commandArguments = " --stapm-limit=" + (pl1TDP * 1000).ToString() + " --slow-limit=" + (pl2TDP * 1000).ToString() + " --fast-limit=" + (pl2TDP * 1000).ToString();
+                    commandArguments = " --stapm-limit=" + (pl1TDP * 1000).ToString() + " --slow-limit=" + (pl2TDP * 1000).ToString() + " --fast-limit=" + (pl2TDP * 1000).ToString();
 
-                    string result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
+                    result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
                     Thread.Sleep(100);
                 }
 
@@ -489,7 +510,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
             catch (Exception ex)
                 {
-                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message;
+                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message + ", processRyzenAdj is " + processRyzenAdj + ", result is " + result + ", commandargument is " + commandArguments; ;
                     StreamWriterLog.startStreamWriter(errorMsg);
                     MessageBox.Show(errorMsg);
 
