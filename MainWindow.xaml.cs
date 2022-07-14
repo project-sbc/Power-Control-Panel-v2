@@ -47,6 +47,7 @@ namespace Power_Control_Panel
 
         //brightness and volume setting
         public static int brightness = 0;
+        public static int volume = 0;
     }
 
     public partial class MainWindow : MetroWindow

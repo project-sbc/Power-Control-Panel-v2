@@ -39,13 +39,13 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         {
             if (!dragStartedBrightness )
             {
-                HandleChangingBrightness((short)Brightness.Value);
+                HandleChangingBrightness(Brightness.Value);
             }
         }
         private void Brightness_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             dragStartedBrightness = false;
-            HandleChangingBrightness((short)Brightness.Value);
+            HandleChangingBrightness(Brightness.Value);
         }
         private void Brightness_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
@@ -54,12 +54,12 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         private void Brightness_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             dragStartedBrightness = false;
-            HandleChangingBrightness((short)Brightness.Value);
+            HandleChangingBrightness(Brightness.Value);
         }
         private void Brightness_TouchUp(object sender, TouchEventArgs e)
         {
             dragStartedBrightness = false;
-            HandleChangingBrightness((short)Brightness.Value);
+            HandleChangingBrightness(Brightness.Value);
         }
         private void Brightness_TouchDown(object sender, TouchEventArgs e)
         {
@@ -74,9 +74,9 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             }
             else { this.Height = 40; }
         }
-        void HandleChangingBrightness(short brightness)
+        void HandleChangingBrightness(double brightness)
         {
-            
+            Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)brightness);
         }
         void HandleChangingVolume(int birghtness)
         {

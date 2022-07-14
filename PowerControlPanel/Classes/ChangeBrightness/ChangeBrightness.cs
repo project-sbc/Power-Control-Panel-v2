@@ -11,7 +11,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeBrightness
 {
     public class WindowsSettingsBrightnessController
     {
-       public static void getBrightness()
+        public static void getBrightness()
         {
 
             ManagementScope scope;
@@ -36,6 +36,44 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeBrightness
                     }
                 }
             }
+        }
+
+
+        public static void setBrightness(int intBrightness)
+        {
+
+            try
+            {
+                ManagementClass mclass = new ManagementClass("WmiMonitorBrightnessMethods");
+                mclass.Scope = new ManagementScope("\\\\.\\root\\wmi");
+
+                ManagementObjectCollection instances = mclass.GetInstances();   
+
+                foreach(ManagementObject instance in instances)
+                {
+                    byte brightness = Convert.ToByte(intBrightness);
+                    UInt64 timeout = 1;
+
+                    object[] args = new object[] { timeout, brightness };
+
+                    instance.InvokeMethod("WmiSetBrightness", args);
+                }
+
+            }
+            catch 
+            { 
+            
+            
+            
+            
+            }
+
+
+
+   
+
+
+
         }
     }
 }

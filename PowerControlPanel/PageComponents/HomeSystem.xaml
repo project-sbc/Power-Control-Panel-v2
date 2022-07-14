@@ -39,7 +39,7 @@
                     </Label.Foreground>
                 </Label>
                 <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE706;" FontSize="30" Margin="5,0,0,0"/>
-                <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Brightness_DragCompleted"  Thumb.DragStarted="Brightness_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="255"  Value="{Binding ElementName=txtsliderBrightness, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Brightness_ValueChanged" MouseLeftButtonUp="Brightness_MouseLeftButtonUp"  >
+                <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Brightness_DragCompleted"  Thumb.DragStarted="Brightness_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  Value="{Binding ElementName=txtsliderBrightness, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Brightness_ValueChanged" MouseLeftButtonUp="Brightness_MouseLeftButtonUp"  >
                     <Slider.LayoutTransform>
                         <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
 
