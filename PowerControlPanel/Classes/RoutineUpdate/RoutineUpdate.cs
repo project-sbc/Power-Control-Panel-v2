@@ -29,7 +29,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
                 checkNetworkInterface();
                 checkPowerStatus();
                 Classes.ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
-
+                Classes.ChangeVolume.AudioManager.GetMasterVolume();
             }
         }
 
