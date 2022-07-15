@@ -92,25 +92,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             while (GlobalVariables.useControllerFastThread)
             {
 
-
-                if (GlobalVariables.controller.IsConnected)
+                if (GlobalVariables.controller == null)
                 {
-                    GlobalVariables.gamepadCurrent = GlobalVariables.controller.GetState().Gamepad;
-                    Thread.Sleep(sleepTimer);
-                    while (GlobalVariables.useControllerFastThread && GlobalVariables.controller.IsConnected)
+                    while( GlobalVariables.controller == null && GlobalVariables.useControllerFastThread)
                     {
-                        GlobalVariables.gamepadOld = GlobalVariables.gamepadCurrent;
-                        GlobalVariables.gamepadCurrent = GlobalVariables.controller.GetState().Gamepad;
-                        Thread.Sleep(sleepTimer);
-                    }
-
-
-                }
-                else
-                {
-                    while (GlobalVariables.controller.IsConnected && GlobalVariables.useControllerFastThread)
-                    {
-                        Thread.Sleep(5000);
+                        Thread.Sleep(3000);
                         GlobalVariables.controller = new Controller(UserIndex.One);
                         if (GlobalVariables.controller.IsConnected == false)
                         {
@@ -124,11 +110,49 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
                         {
                             GlobalVariables.controller = new Controller(UserIndex.Four);
                         }
+                    }
 
+                }
+                if (GlobalVariables.controller != null)
+                {
+                    if (GlobalVariables.controller.IsConnected)
+                    {
+                        GlobalVariables.gamepadCurrent = GlobalVariables.controller.GetState().Gamepad;
+                        Thread.Sleep(sleepTimer);
+                        while (GlobalVariables.useControllerFastThread && GlobalVariables.controller.IsConnected)
+                        {
+                            GlobalVariables.gamepadOld = GlobalVariables.gamepadCurrent;
+                            GlobalVariables.gamepadCurrent = GlobalVariables.controller.GetState().Gamepad;
+                            Thread.Sleep(sleepTimer);
+                        }
+
+
+                    }
+                    else
+                    {
+                        while (!GlobalVariables.controller.IsConnected && GlobalVariables.useControllerFastThread)
+                        {
+                            Thread.Sleep(3000);
+                            GlobalVariables.controller = new Controller(UserIndex.One);
+                            if (GlobalVariables.controller.IsConnected == false)
+                            {
+                                GlobalVariables.controller = new Controller(UserIndex.Two);
+                            }
+                            if (GlobalVariables.controller.IsConnected == false)
+                            {
+                                GlobalVariables.controller = new Controller(UserIndex.Three);
+                            }
+                            if (GlobalVariables.controller.IsConnected == false)
+                            {
+                                GlobalVariables.controller = new Controller(UserIndex.Four);
+                            }
+                        }
 
                     }
 
                 }
+
+
             }
 
          
