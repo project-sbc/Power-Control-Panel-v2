@@ -9,6 +9,12 @@
       Title="SettingsPage">
 
     <Grid>
-        
+        <ComboBox x:Name="cboIntelTDP" HorizontalAlignment="Left" Margin="184,137,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cboIntelTDP_SelectionChanged">
+            <ComboBoxItem Content="MMIO"/>
+            <ComboBoxItem Content="MMIO and MSR"/>
+            <ComboBoxItem Content="MSR"/>
+        </ComboBox>
+        <Label x:Name="label" Content="Intel TDP Type" HorizontalAlignment="Left" Margin="77,137,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Page>

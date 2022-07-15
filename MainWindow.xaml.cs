@@ -38,9 +38,9 @@ namespace Power_Control_Panel
         public static string internetDevice = "Not Connected";
 
         //Controller global
-        public static Controller? controller = new Controller(UserIndex.One);
-        public static Gamepad gamepadOld = controller.GetState().Gamepad;
-        public static Gamepad gamepadCurrent = controller.GetState().Gamepad;
+        public static Controller controller;
+        public static Gamepad gamepadOld;
+        public static Gamepad gamepadCurrent;
 
         //Shut down boolean to stop threads
         public static bool useControllerFastThread = true;
