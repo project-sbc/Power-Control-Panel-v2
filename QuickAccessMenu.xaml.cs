@@ -41,16 +41,6 @@ namespace Power_Control_Panel
 
             updateValues();
 
-
-
-            //Set up timespan for timers
-            updateTimer.Interval = new TimeSpan(0, 0, 5);
-
-            //Add the event handlers to the timers
-            updateTimer.Tick += tick_updateValues;
-
-            //Start timers
-            updateTimer.Start();
         }
 
        void initializeWindow()
@@ -64,9 +54,9 @@ namespace Power_Control_Panel
             this.AllowsTransparency = true;
 
         }
-     
-      
-      
+
+
+        #region hamburger navigation
         //Navigation routines
         void initializeNavigationFrame()
         {
@@ -129,6 +119,8 @@ namespace Power_Control_Panel
 
         }
 
+
+        #endregion hamburger navigation
         //End navigation routines
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -146,10 +138,9 @@ namespace Power_Control_Panel
 
         }
 
-        void tick_updateValues(object sender, EventArgs e)
-        {
-            updateValues();
-        }
+
+
+
         void updateValues()
         {
             switch (GlobalVariables.internetDevice)

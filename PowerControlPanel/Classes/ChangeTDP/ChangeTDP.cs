@@ -12,6 +12,9 @@ using System.Diagnostics;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 {
+
+
+
     public class ChangeTDP
     {
         public static string cpuType = "";

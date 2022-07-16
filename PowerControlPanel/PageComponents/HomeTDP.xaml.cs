@@ -30,8 +30,8 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         private bool dragStartedTDP1 = true;
         private bool dragStartedTDP2 = true;
         private bool changingTDP = false;
-        private bool firstTick = true;
-        private DispatcherTimer updateTick = new DispatcherTimer();
+  
+        
         public HomeTDP()
         {
             InitializeComponent();
@@ -144,7 +144,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            intializeTimer();
+         
             loadTDPValues();
           
         }
@@ -158,14 +158,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             }
        
         }
-        void intializeTimer()
-        {
-            //Set up auto update tick timer, which syncs with global variable updates
-            updateTick.Interval = new TimeSpan(0, 0, 2);
-            updateTick.Tick += updateTick_Tick;
-            updateTick.Start();
-            System.Diagnostics.Debug.WriteLine("");
-        }
+    
         void updateTick_Tick(object sender, EventArgs e)
         {
             //Divorce actual routine from tick event so the updateFromGlobalTDP can be called at start up or tick event
@@ -190,7 +183,10 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             {
                 this.Height = 150;
             }
-            else { this.Height = 40; }
+            else { 
+                this.Height = 40;
+                updateFromGlobalTDP();
+            }
         }
 
 

@@ -1,15 +1,34 @@
 ﻿<Application x:Class="Power_Control_Panel.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Power_Control_Panel"
+             xmlns:local="clr-namespace:Power_Control_Panel" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:mah1="http://metro.mahapps.com/winfx/xaml/controls"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
+
+        <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah1="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Height">20</system:Double>
+            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Width">20</system:Double>
+            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width">16</system:Double>
+            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height">10</system:Double>
+
+            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Height.Win10">20</system:Double>
+            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Width.Win10">20</system:Double>
+            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width.Win10">20</system:Double>
+            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height.Win10">20</system:Double>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Slider.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+
+
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>
