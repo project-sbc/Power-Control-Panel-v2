@@ -10,15 +10,6 @@
                     xmlns:mah1="clr-namespace:MahApps.Metro.Controls"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Height">20</system:Double>
-            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Width">20</system:Double>
-            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width">16</system:Double>
-            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height">10</system:Double>
-
-            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Height.Win10">20</system:Double>
-            <system:Double x:Key="MahApps.Sizes.Slider.HorizontalThumb.Width.Win10">20</system:Double>
-            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Width.Win10">20</system:Double>
-            <system:Double x:Key="MahApps.Sizes.Slider.VerticalThumb.Height.Win10">20</system:Double>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

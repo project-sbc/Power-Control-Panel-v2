@@ -21,7 +21,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
         public static void handleRoutineChecks(int counter)
         {
             //Read tdp every 60 seconds
-            if (counter == 60) { Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.ChangeTDP.readTDP()); }
+            if (counter == 60) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP()); }
  
 
             

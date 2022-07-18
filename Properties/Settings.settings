@@ -15,7 +15,7 @@
       <Value Profile="(Default)">30</Value>
     </Setting>
     <Setting Name="IntelMMIOMSR" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MSR</Value>
+      <Value Profile="(Default)">MMIO</Value>
     </Setting>
     <Setting Name="enableSystem" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

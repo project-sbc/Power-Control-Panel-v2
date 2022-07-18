@@ -17,16 +17,16 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
     public class ChangeTDP
     {
-        public static string cpuType = "";
-        public static string MCHBAR = "";
-        static string RWDelay = Properties.Settings.Default.RWDelay;
-        private static Object objLock = new Object();
+        public string cpuType = "";
+        public string MCHBAR = "";
+        string RWDelay = Properties.Settings.Default.RWDelay;
+        private  Object objLock = new Object();
 
-        public static string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public  string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
 
         //Read TDP routines
-        public static void readTDP()
+        public void readTDP()
         {
 
             try
@@ -57,7 +57,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         }
         //Change TDP routines - Intel
-        public static void changeTDP(int pl1TDP, int pl2TDP)
+        public void changeTDP(int pl1TDP, int pl2TDP)
         {
             //Return Success as default value, otherwise alert calling routine to error
             try
@@ -87,7 +87,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         }
 
-        static void runIntelTDPChangeMMIOKX(int pl1TDP, int pl2TDP)
+        void runIntelTDPChangeMMIOKX(int pl1TDP, int pl2TDP)
         {
             string processKX = "";
             string hexPL1 = "";
@@ -128,7 +128,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         }
 
 
-        static void runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
+        void runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
         {
 
             string processMSR = "";
@@ -173,7 +173,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
         }
         //End change TDP routines
-        static void determineCPU()
+        void determineCPU()
         {
             try
             {
@@ -205,7 +205,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
         }
 
-        static void determineIntelMCHBAR()
+        void determineIntelMCHBAR()
         {
             try
             {
@@ -229,7 +229,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         }
 
         //MMIO Stuff here
-        static string convertTDPToHexMMIO(int tdp)
+        string convertTDPToHexMMIO(int tdp)
         {
             //Convert integer TDP value to Hex for rw.exe
             //Must use formula (TDP in watt   *1000/125) +32768 and convert to hex
@@ -249,7 +249,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         }
 
 
-        static void runIntelReadTDPMMIOKX()
+        void runIntelReadTDPMMIOKX()
         {
             string processKX = "";
             string commandArgumentsPL1 = "";
@@ -299,7 +299,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
 
         }
-        static string parseHexFromResultMMIOConvertToTDPKX(string result, bool isPL1)
+        string parseHexFromResultMMIOConvertToTDPKX(string result, bool isPL1)
         {
             try
             {
@@ -336,7 +336,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         //MSR stuff here
 
 
-        static string parseFromResultAMD(string result, string tdpLevel)
+        string parseFromResultAMD(string result, string tdpLevel)
         {
             try
             {
@@ -399,7 +399,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
             }
-            static void runIntelReadTDPMSR()
+            void runIntelReadTDPMSR()
             {
                 try
                 {
@@ -451,7 +451,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
             }
             //MSR stuff above
-            static void runAMDReadTDP()
+            void runAMDReadTDP()
             {
                 string processRyzenAdj = "";
                 string result = "";
@@ -493,7 +493,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
             }
-            static void runAMDTDPChange(int pl1TDP, int pl2TDP)
+            void runAMDTDPChange(int pl1TDP, int pl2TDP)
             {
                 string processRyzenAdj = "";
                 string result = "";
@@ -524,7 +524,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
 
             //retired RW.exe stuff here\
-            static void Retired_runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
+            void Retired_runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
             {
                 try
                 {
@@ -564,7 +564,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
             }
-            static void Retired_changeTDPRWMSR()
+            void Retired_changeTDPRWMSR()
             {
                 //Retired since rw.exe is going away after windows 11 22H2, will keep this code for those who want to use rw or want the example
                 try
@@ -598,7 +598,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
 
             }
-            static string Retired_parseHexFromResultMMIOConvertToTDP(string result, bool isPL1)
+            string Retired_parseHexFromResultMMIOConvertToTDP(string result, bool isPL1)
             {
                 //Retired since rw.exe is going away after windows 11 22H2, will keep this code for those who want to use rw or want the example
                 try
@@ -633,7 +633,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
             }
-            static string Retired_parseHexFromResultRWMSRConvertToTDP(string result, bool isPL1)
+            string Retired_parseHexFromResultRWMSRConvertToTDP(string result, bool isPL1)
             {
                 //Retired since rw.exe is going away after windows 11 22H2, will keep this code for those who want to use rw or want the example
                 try
@@ -668,7 +668,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
             }
-            static void Retired_runIntelReadTDPMMIORW()
+            void Retired_runIntelReadTDPMMIORW()
             {
                 //Retired since rw.exe is going away after windows 11 22H2, will keep this code for those who want to use rw or want the example
                 try
@@ -707,7 +707,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
 
             }
-            static void Retired_runIntelTDPChangeMMIORW(int pl1TDP, int pl2TDP)
+            void Retired_runIntelTDPChangeMMIORW(int pl1TDP, int pl2TDP)
             {
                 try
                 {

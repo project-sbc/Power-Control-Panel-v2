@@ -39,7 +39,7 @@
                         </Label.Foreground>
                     </Label>
                     <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
-                    <Slider x:Name="TDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="TDP1_DragCompleted"  Thumb.DragStarted="TDP1_DragStarted" Width="230" Height="40" Minimum="5" Maximum="35"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP1_ValueChanged" MouseLeftButtonUp="TDP1_MouseLeftButtonUp" TouchUp="TDP1_TouchUp" TouchDown="TDP1_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" />
+                    <Slider x:Name="TDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="TDP1_DragCompleted"  Thumb.DragStarted="TDP1_DragStarted" Width="230" Height="40" Minimum="5" Maximum="35"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP1_ValueChanged" MouseLeftButtonUp="TDP1_MouseLeftButtonUp" TouchUp="TDP1_TouchUp" TouchDown="TDP1_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"  />
 
             </DockPanel>
 

@@ -14,7 +14,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
         public static void runStartUp()
         {
             TaskScheduler.TaskScheduler.startScheduler();
-            ChangeTDP.ChangeTDP.readTDP();
+            GlobalVariables.tdp.readTDP();
 
             //RoutineUpdate.RoutineUpdate.createGamePadStateCollectorLoop();
             ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
