@@ -158,12 +158,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             }
        
         }
-    
-        void updateTick_Tick(object sender, EventArgs e)
-        {
-            //Divorce actual routine from tick event so the updateFromGlobalTDP can be called at start up or tick event
-            updateFromGlobalTDP();
-        }
+
         void updateFromGlobalTDP()
         {
             //Make changingTDP boolean true to prevent slider event from updating TDP

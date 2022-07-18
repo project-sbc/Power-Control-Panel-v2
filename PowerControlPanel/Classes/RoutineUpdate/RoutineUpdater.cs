@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
+namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdater
 {
     public class ParameterHandler
     {
         private string _NetworkStatus;
         private string _PowerStatus;
-        private string _BatteryLevel;
+        private string _BatteryLevel= "0";
         //#1
         public event System.EventHandler NetworkStatusChanged;
         public event System.EventHandler PowerStatusChanged;
@@ -126,6 +126,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 
         public void startTimer()
         {
+            checkNetworkInterface();
+            checkPowerStatus();
+
+
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 3);
             timer.Tick += timerTick;

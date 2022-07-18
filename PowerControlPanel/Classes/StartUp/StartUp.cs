@@ -15,9 +15,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
         {
             TaskScheduler.TaskScheduler.startScheduler();
             ChangeTDP.ChangeTDP.readTDP();
-            RoutineUpdate.RoutineUpdate.checkNetworkInterface();
-            RoutineUpdate.RoutineUpdate.checkPowerStatus();
-            RoutineUpdate.RoutineUpdate.createGamePadStateCollectorLoop();
+
+            //RoutineUpdate.RoutineUpdate.createGamePadStateCollectorLoop();
             ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
         }
     }

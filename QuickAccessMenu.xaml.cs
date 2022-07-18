@@ -13,6 +13,9 @@ using Power_Control_Panel.PowerControlPanel.Classes.StartUp;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using SharpDX.XInput;
+using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdater;
+using System.Net.NetworkInformation;
+using System.Management;
 
 namespace Power_Control_Panel
 {
@@ -21,26 +24,36 @@ namespace Power_Control_Panel
     /// </summary>
     /// 
 
-  
+    
 
     public partial class QuickAccessMenu : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
         WindowSinker sinker;
-        public DispatcherTimer updateTimer = new DispatcherTimer();
+
+        DispatcherTimer timer = new DispatcherTimer();  
+        
         public QuickAccessMenu()
         {
             this.InitializeComponent();
+
+            initializeTimer();
 
             //Run code to set up hamburger menu
             initializeNavigationFrame();
 
             initializeWindow();
 
-
-
             updateValues();
 
+
+        }
+
+        void initializeTimer()
+        {
+            timer.Interval = new TimeSpan(0, 0, 3);
+            timer.Tick += updateValuesTick;
+            timer.Start();
         }
 
        void initializeWindow()
@@ -54,6 +67,7 @@ namespace Power_Control_Panel
             this.AllowsTransparency = true;
 
         }
+
 
 
         #region hamburger navigation
@@ -141,60 +155,99 @@ namespace Power_Control_Panel
 
 
 
-        void updateValues()
+        public void checkNetworkInterface()
         {
-            switch (GlobalVariables.internetDevice)
-            {
-                case "Not Connected":
-                    txtblkInternet.Text = "\uF384";
-                    break;
-                case "Wireless":
-                    txtblkInternet.Text = "\uE701";
-                    break;
-                case "Ethernet":
-                    txtblkInternet.Text = "\uE839";
-                    break;
-                default:
-                    txtblkInternet.Text = "";
-                    break;
-            }
 
-            switch (GlobalVariables.powerStatus)
+            //Gets internet status to display on overlay
+            NetworkInterface[] networkCards = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces();
+            bool connectedDevice = false;
+            foreach (NetworkInterface networkCard in networkCards)
+            {
+                if (networkCard.OperationalStatus == OperationalStatus.Up)
+                {
+                    if (networkCard.NetworkInterfaceType == NetworkInterfaceType.Ethernet) { txtblkInternet.Text = "\uE839"; ; connectedDevice = true; }
+                    if (networkCard.NetworkInterfaceType == NetworkInterfaceType.Wireless80211) { txtblkInternet.Text = "\uE701"; ; connectedDevice = true; }
+                }
+
+
+            }
+            if (!connectedDevice) { txtblkInternet.Text = "\uF384"; }
+
+           
+        }
+
+        void checkPowerStatus()
+        {
+            int batterylevel = -1;
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("select * from Win32_Battery");
+            string powerStatus = "AC";
+            foreach (ManagementObject mo in mos.Get())
+            {
+                powerStatus = mo["EstimatedChargeRemaining"].ToString();
+            }
+            if (powerStatus != "AC")
+            {
+                batterylevel = Int16.Parse(powerStatus);
+                PowerLineStatus Power = SystemParameters.PowerLineStatus;
+                powerStatus = Power.ToString();
+
+            }
+            else { powerStatus = "AC"; }
+
+
+            switch (powerStatus)
             {
                 case "AC":
                     txtblkPower.Text = "";
                     break;
                 case "Online":
-                    if (GlobalVariables.batteryPercentage < 10 && GlobalVariables.batteryPercentage >= 0) { txtblkPower.Text = "\uE85A"; }
-                    if (GlobalVariables.batteryPercentage < 20 && GlobalVariables.batteryPercentage >= 10) { txtblkPower.Text = "\uE85B"; }
-                    if (GlobalVariables.batteryPercentage < 30 && GlobalVariables.batteryPercentage >= 20) { txtblkPower.Text = "\uE85C"; }
-                    if (GlobalVariables.batteryPercentage < 40 && GlobalVariables.batteryPercentage >= 30) { txtblkPower.Text = "\uE85D"; }
-                    if (GlobalVariables.batteryPercentage < 50 && GlobalVariables.batteryPercentage >= 40) { txtblkPower.Text = "\uE85E"; }
-                    if (GlobalVariables.batteryPercentage < 60 && GlobalVariables.batteryPercentage >= 50) { txtblkPower.Text = "\uE85F"; }
-                    if (GlobalVariables.batteryPercentage < 70 && GlobalVariables.batteryPercentage >= 60) { txtblkPower.Text = "\uE860"; }
-                    if (GlobalVariables.batteryPercentage < 80 && GlobalVariables.batteryPercentage >= 70) { txtblkPower.Text = "\uE861"; }
-                    if (GlobalVariables.batteryPercentage < 90 && GlobalVariables.batteryPercentage >= 80) { txtblkPower.Text = "\uE862"; }
-                    if (GlobalVariables.batteryPercentage <= 100 && GlobalVariables.batteryPercentage >= 90) { txtblkPower.Text = "\uE83E"; }
-                    txtblkBatteryPercentage.Text = GlobalVariables.batteryPercentage.ToString() + "%";
+
+                    if (batterylevel < 10 && batterylevel >= 0) { txtblkPower.Text = "\uE85A"; }
+                    if (batterylevel < 20 && batterylevel >= 10) { txtblkPower.Text = "\uE85B"; }
+                    if (batterylevel < 30 && batterylevel >= 20) { txtblkPower.Text = "\uE85C"; }
+                    if (batterylevel < 40 && batterylevel >= 30) { txtblkPower.Text = "\uE85D"; }
+                    if (batterylevel < 50 && batterylevel >= 40) { txtblkPower.Text = "\uE85E"; }
+                    if (batterylevel < 60 && batterylevel >= 50) { txtblkPower.Text = "\uE85F"; }
+                    if (batterylevel < 70 && batterylevel >= 60) { txtblkPower.Text = "\uE860"; }
+                    if (batterylevel < 80 && batterylevel >= 70) { txtblkPower.Text = "\uE861"; }
+                    if (batterylevel < 90 && batterylevel >= 80) { txtblkPower.Text = "\uE862"; }
+                    if (batterylevel <= 100 && batterylevel >= 90) { txtblkPower.Text = "\uE83E"; }
+                    txtblkBatteryPercentage.Text = batterylevel.ToString() + "%";
                     break;
                 case "Offline":
-                    if (GlobalVariables.batteryPercentage < 10 && GlobalVariables.batteryPercentage >= 0) { txtblkPower.Text = "\uE850"; }
-                    if (GlobalVariables.batteryPercentage < 20 && GlobalVariables.batteryPercentage >= 10) { txtblkPower.Text = "\uE851"; }
-                    if (GlobalVariables.batteryPercentage < 30 && GlobalVariables.batteryPercentage >= 20) { txtblkPower.Text = "\uE852"; }
-                    if (GlobalVariables.batteryPercentage < 40 && GlobalVariables.batteryPercentage >= 30) { txtblkPower.Text = "\uE853"; }
-                    if (GlobalVariables.batteryPercentage < 50 && GlobalVariables.batteryPercentage >= 40) { txtblkPower.Text = "\uE854"; }
-                    if (GlobalVariables.batteryPercentage < 60 && GlobalVariables.batteryPercentage >= 50) { txtblkPower.Text = "\uE855"; }
-                    if (GlobalVariables.batteryPercentage < 70 && GlobalVariables.batteryPercentage >= 60) { txtblkPower.Text = "\uE856"; }
-                    if (GlobalVariables.batteryPercentage < 80 && GlobalVariables.batteryPercentage >= 70) { txtblkPower.Text = "\uE857"; }
-                    if (GlobalVariables.batteryPercentage < 90 && GlobalVariables.batteryPercentage >= 80) { txtblkPower.Text = "\uE858"; }
-                    if (GlobalVariables.batteryPercentage < 100 && GlobalVariables.batteryPercentage >= 90) { txtblkPower.Text = "\uE859"; }
-                    txtblkBatteryPercentage.Text = GlobalVariables.batteryPercentage.ToString() + "%";
+                    if (batterylevel < 10 && batterylevel >= 0) { txtblkPower.Text = "\uE850"; }
+                    if (batterylevel < 20 && batterylevel >= 10) { txtblkPower.Text = "\uE851"; }
+                    if (batterylevel < 30 && batterylevel >= 20) { txtblkPower.Text = "\uE852"; }
+                    if (batterylevel < 40 && batterylevel >= 30) { txtblkPower.Text = "\uE853"; }
+                    if (batterylevel < 50 && batterylevel >= 40) { txtblkPower.Text = "\uE854"; }
+                    if (batterylevel < 60 && batterylevel >= 50) { txtblkPower.Text = "\uE855"; }
+                    if (batterylevel < 70 && batterylevel >= 60) { txtblkPower.Text = "\uE856"; }
+                    if (batterylevel < 80 && batterylevel >= 70) { txtblkPower.Text = "\uE857"; }
+                    if (batterylevel < 90 && batterylevel >= 80) { txtblkPower.Text = "\uE858"; }
+                    if (batterylevel < 100 && batterylevel >= 90) { txtblkPower.Text = "\uE859"; }
+                    txtblkBatteryPercentage.Text = batterylevel.ToString() + "%";
                     break;
                 default:
                     break;
             }
 
-            if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }
+        }
+
+
+        void updateValuesTick(object sender, EventArgs e)
+        {
+            updateValues();
+
+        }
+
+        void updateValues()
+        {
+            checkNetworkInterface();
+            checkPowerStatus();
+
+           
+            //game pad stuff here
+            //if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }
         }
     }
 }

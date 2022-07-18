@@ -19,6 +19,7 @@ using WindowsInput;
 using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
 using System.Text.RegularExpressions;
+using Power_Control_Panel.PowerControlPanel.Classes;
 
 namespace Power_Control_Panel
 {
@@ -377,7 +378,7 @@ namespace Power_Control_Panel
 
         {
             
-            if (GlobalVariables.controller.IsConnected == false && ellipseSetup)
+            if (ControllerHandler.controller.IsConnected == false && ellipseSetup)
             {
                 //set up dispatch timer to check for xinput controller every 5 seconds
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
@@ -480,7 +481,7 @@ namespace Power_Control_Panel
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
 
-            if (GlobalVariables.controller.IsConnected && ellipseSetup)
+            if (Power_Control_Panel.PowerControlPanel.Classes.ControllerHandler.controller.IsConnected && ellipseSetup)
             {
                 if (!ellipseSetup)
                 {
@@ -490,7 +491,7 @@ namespace Power_Control_Panel
 
 
 
-                gamepad = GlobalVariables.controller.GetState().Gamepad;
+                gamepad = Power_Control_Panel.PowerControlPanel.Classes.ControllerHandler.controller.GetState().Gamepad;
                 double dlx = offset_calculator(gamepad.LeftThumbX);
                 double dly = -1 * offset_calculator(gamepad.LeftThumbY);
                 double drx = offset_calculator(gamepad.RightThumbX);

@@ -32,15 +32,6 @@ namespace Power_Control_Panel
         public static bool needTDPRead = false;
         public static bool needVolumeRead = false;
         public static bool needBrightnessRead = false;
-        //System global
-        public static int batteryPercentage = 0;
-        public static string powerStatus = "None";
-        public static string internetDevice = "Not Connected";
-
-        //Controller global
-        public static Controller controller;
-        public static Gamepad gamepadOld;
-        public static Gamepad gamepadCurrent;
 
         //Shut down boolean to stop threads
         public static bool useControllerFastThread = true;
@@ -55,8 +46,6 @@ namespace Power_Control_Panel
     {
         private NavigationServiceEx navigationServiceEx;
 
-        public DispatcherTimer inputCheck=new DispatcherTimer();
-        public int counter = 0;
         public static Window overlay;
         public static Window osk;
         public MainWindow()
@@ -64,54 +53,23 @@ namespace Power_Control_Panel
             this.InitializeComponent();
 
             StartUp.runStartUp();
-            
-  
+
+            ControllerHandler.createGamePadStateCollectorLoop();
+
             //Run code to set up hamburger menu
             initializeNavigationFrame();
 
-            //Run code to set up dispatch timers, one for inputcheck (i.e. xinput or keyboard prompts) and one for updating TDP values
-            initializeDispatchTimersAndBackgroundThread();
 
+            pressA.pressAEvent += HandleCustomEvent;
 
 
         }
 
-       
-        void initializeDispatchTimersAndBackgroundThread()
+        void HandleCustomEvent(object sender, EventArgs a)
         {
- 
-            //Set up timespan for timers
-            inputCheck.Interval= new TimeSpan(0, 0, 1); 
-       
-            //Add the event handlers to the timers
-            inputCheck.Tick += inputCheck_Tick;
-            
-            //Start timers
-            inputCheck.Start();
-
-
-            
+            MessageBox.Show("hey event worked");
         }
 
-        void inputCheck_Tick(object sender, EventArgs e)
-        {
-            //Handle routine object checks like TDP, battery percentage, 
-            RoutineUpdate.handleRoutineChecks(counter);
-            //Consolidate checks into one timer, reset after 60 ticks/seconds
-            if (counter > 60) { counter = 0; }else { counter++; }
-
-         
-            //Add overlay open
-            if (GlobalVariables.gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.DPadLeft) && GlobalVariables.gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && GlobalVariables.gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
-            {
-                if (overlay == null) { overlay = new QuickAccessMenu(); overlay.Show(); } else { overlay.Show(); } 
-            }
-     
-
-        }
-
-      
-      
         //Navigation routines
         void initializeNavigationFrame()
         {
