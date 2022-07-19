@@ -8,24 +8,26 @@ using SharpDX.XInput;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes
 {
-    public static class ControllerHandler
+    public class ControllerHandler
     {
-        public static Thread controllerThread;
-        public static Controller controller;
-        private static Gamepad gamepadCurrent;
-        private static Gamepad gamepadOld;
+        public Thread controllerThread;
+        public Controller controller;
+        private Gamepad gamepadCurrent;
+        private  Gamepad gamepadOld;
 
- 
+        public buttonEvents events = new buttonEvents();
 
-        public static void createGamePadStateCollectorLoop()
+        public void createGamePadStateCollectorLoop()
         {
             controllerThread = new Thread(new ThreadStart(gamePadStateCollector));
             controllerThread.IsBackground = true;
             controllerThread.Start();
         }
 
-        public static void gamePadStateCollector()
+        public void gamePadStateCollector()
         {
+            
+
             while (GlobalVariables.useControllerFastThread)
             {
 
@@ -40,52 +42,62 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                 }
                 if (controller != null)
                 {
-                    if (controller.IsConnected)
+                    try
                     {
-                        gamepadCurrent = controller.GetState().Gamepad;
-                        Task.Delay(15);
-                        while (GlobalVariables.useControllerFastThread && controller.IsConnected)
+                        if (controller.IsConnected)
                         {
-                            gamepadOld = gamepadCurrent;
                             gamepadCurrent = controller.GetState().Gamepad;
-                            
-                            if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.A) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.A))
+                            Task.Delay(15);
+                            while (GlobalVariables.useControllerFastThread && controller.IsConnected)
                             {
-                                pressA.RaiseEvent();
+                                gamepadOld = gamepadCurrent;
+                                gamepadCurrent = controller.GetState().Gamepad;
+
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.A) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.A))
+                                {
+                                    events.RaiseEventA();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.B) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.B))
+                                {
+                                    events.RaiseEventB();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.X) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.X))
+                                {
+                                    events.RaiseEventX();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.Y) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.Y))
+                                {
+                                    events.RaiseEventY();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+                                {
+                                    events.RaiseEventLB();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder))
+                                {
+                                    events.RaiseEventRB();
+                                }
                             }
-                            if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.B) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.B))
-                            {
-                                pressB.RaiseEvent();
-                            }
-                            if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.X) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.X))
-                            {
-                                pressX.RaiseEvent();
-                            }
-                            if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.Y) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.Y))
-                            {
-                                pressY.RaiseEvent();
-                            }
-                            if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
-                            {
-                                pressLB.RaiseEvent();
-                            }
-                            if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder))
-                            {
-                                pressRB.RaiseEvent();
-                            }
+
+
                         }
-
-
-                    }
-                    else
-                    {
-                        while (!controller.IsConnected && GlobalVariables.useControllerFastThread)
+                        else
                         {
-                            Task.Delay(3000);
-                            controller = new Controller(UserIndex.One);
+                            while (!controller.IsConnected && GlobalVariables.useControllerFastThread)
+                            {
+                                Task.Delay(3000);
+                                controller = new Controller(UserIndex.One);
+                            }
+
                         }
 
                     }
+                    catch
+                    {
+
+                    }
+
+
 
                 }
 
@@ -98,54 +110,41 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
 
     }
 
-    public static class pressA
+    public class buttonEvents
     {
-        public static event EventHandler pressAEvent;
-        public static void RaiseEvent()
+        public event EventHandler pressAEvent;
+        public void RaiseEventA()
         {
-            pressAEvent?.Invoke(typeof(pressA), EventArgs.Empty);
+            pressAEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+        }
+
+
+        public event EventHandler pressXEvent;
+        public void RaiseEventX()
+        {
+            pressXEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+        }
+
+        public event EventHandler pressYEvent;
+        public void RaiseEventY()
+        {
+            pressYEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+        }
+        public event EventHandler pressBEvent;
+        public void RaiseEventB()
+        {
+            pressBEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+        }
+        public event EventHandler pressLBEvent;
+        public void RaiseEventLB()
+        {
+            pressLBEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+        }
+        public event EventHandler pressRBEvent;
+        public void RaiseEventRB()
+        {
+            pressRBEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
         }
     }
 
-    public static class pressX
-    {
-        public static event EventHandler pressXEvent;
-        public static void RaiseEvent()
-        {
-            pressXEvent?.Invoke(typeof(pressX), EventArgs.Empty);
-        }
-    }
-    public static class pressY
-    {
-        public static event EventHandler pressYEvent;
-        public static void RaiseEvent()
-        {
-            pressYEvent?.Invoke(typeof(pressA), EventArgs.Empty);
-        }
-    }
-    public static class pressB
-    {
-        public static event EventHandler pressBEvent;
-        public static void RaiseEvent()
-        {
-            pressBEvent?.Invoke(typeof(pressA), EventArgs.Empty);
-        }
-    }
-
-    public static class pressLB
-    {
-        public static event EventHandler pressLBEvent;
-        public static void RaiseEvent()
-        {
-            pressLBEvent?.Invoke(typeof(pressA), EventArgs.Empty);
-        }
-    }
-    public static class pressRB
-    {
-        public static event EventHandler pressRBEvent;
-        public static void RaiseEvent()
-        {
-            pressRBEvent?.Invoke(typeof(pressA), EventArgs.Empty);
-        }
-    }
 }

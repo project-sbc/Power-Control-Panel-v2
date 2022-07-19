@@ -41,7 +41,11 @@ namespace Power_Control_Panel
         public static int brightness = 0;
         public static int volume = 0;
 
+        //TDP change class
         public static PowerControlPanel.Classes.ChangeTDP.ChangeTDP tdp = new PowerControlPanel.Classes.ChangeTDP.ChangeTDP();
+
+        //controller handler class
+        public static PowerControlPanel.Classes.ControllerHandler ch = new PowerControlPanel.Classes.ControllerHandler();
     }
 
     public partial class MainWindow : MetroWindow
@@ -56,23 +60,23 @@ namespace Power_Control_Panel
 
             StartUp.runStartUp();
 
-            ControllerHandler.createGamePadStateCollectorLoop();
+          
 
             //Run code to set up hamburger menu
             initializeNavigationFrame();
 
 
-            pressA.pressAEvent += HandleCustomEvent;
+       
 
 
         }
 
-        void HandleCustomEvent(object sender, EventArgs a)
-        {
-            MessageBox.Show("hey event worked");
-        }
+
+
+
 
         //Navigation routines
+        #region navigation
         void initializeNavigationFrame()
         {
             navigationServiceEx = new NavigationServiceEx();
@@ -156,7 +160,7 @@ namespace Power_Control_Panel
         }
 
 
-
+        #endregion navigation
 
     }
 }

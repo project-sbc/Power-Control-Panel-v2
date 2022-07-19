@@ -272,6 +272,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         {
                             double dblPL1 = Convert.ToDouble(parseHexFromResultMMIOConvertToTDPKX(resultPL1, true));
                             GlobalVariables.readPL1 = dblPL1;
+                            if (dblPL1 == 4096) { Properties.Settings.Default.IntelMMIOMSR = "MSR"; Properties.Settings.Default.Save(); }
                         }
                         Thread.Sleep(300);
                         commandArgumentsPL2 = " /rdmem16 " + MCHBAR + "a4";
@@ -281,6 +282,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                         {
                             double dblPL2 = Convert.ToDouble(parseHexFromResultMMIOConvertToTDPKX(resultPL2, false));
                             GlobalVariables.readPL2 = dblPL2;
+                            if (dblPL2 == 4096) { Properties.Settings.Default.IntelMMIOMSR = "MSR"; Properties.Settings.Default.Save(); }
                         }
                     }
                 }

@@ -114,10 +114,14 @@ namespace Power_Control_Panel
 
        };
 
+
+        ControllerHandler ch = new ControllerHandler();
+
         public OSK()
         {
             InitializeComponent();
 
+            setUpControllerHandler();
 
       
             setUpWindow();
@@ -128,7 +132,22 @@ namespace Power_Control_Panel
 
             swapAlphaUpperLower(false);
         }
-        
+
+        void setUpControllerHandler()
+        {
+            ch.createGamePadStateCollectorLoop();
+
+            ch.events.pressAEvent += HandlePressAEvent;
+
+
+        }
+
+        void HandlePressAEvent(object sender, EventArgs a)
+        {
+            MessageBox.Show("hey event worked");
+        }
+
+
         private void button_Click(object sender, RoutedEventArgs e)
         {
             keyboardPress(sender);
@@ -378,10 +397,10 @@ namespace Power_Control_Panel
 
         {
             
-            if (ControllerHandler.controller.IsConnected == false && ellipseSetup)
+            if (ch.controller == null && ellipseSetup)
             {
                 //set up dispatch timer to check for xinput controller every 5 seconds
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
                 ellipseSetup = false;
                 removeCircles();
             }
@@ -481,7 +500,7 @@ namespace Power_Control_Panel
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
 
-            if (Power_Control_Panel.PowerControlPanel.Classes.ControllerHandler.controller.IsConnected && ellipseSetup)
+            if (ch.controller.IsConnected && ellipseSetup)
             {
                 if (!ellipseSetup)
                 {
@@ -491,7 +510,7 @@ namespace Power_Control_Panel
 
 
 
-                gamepad = Power_Control_Panel.PowerControlPanel.Classes.ControllerHandler.controller.GetState().Gamepad;
+                gamepad = ch.controller.GetState().Gamepad;
                 double dlx = offset_calculator(gamepad.LeftThumbX);
                 double dly = -1 * offset_calculator(gamepad.LeftThumbY);
                 double drx = offset_calculator(gamepad.RightThumbX);
@@ -619,6 +638,8 @@ namespace Power_Control_Panel
             RoutineUpdate.sleepTimer = 1000;
             //Make null so it can be called again
             MainWindow.osk = null;
+
+           
 
         }
 
