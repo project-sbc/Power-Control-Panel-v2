@@ -45,6 +45,19 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 else { if (cpuType == "AMD") { runAMDReadTDP(); } }
                 GlobalVariables.needTDPRead = false;
 
+                if (Math.Abs(GlobalVariables.setPL1 - GlobalVariables.readPL1) > 2 || Math.Abs(GlobalVariables.setPL2 - GlobalVariables.readPL2) > 2)
+                {
+                    if (GlobalVariables.setPL1 != 0 && GlobalVariables.setPL2 != 0)
+                    {
+                        string errorTDPMsg = "Error: set TDP doesn't match applied TDP.";
+                        StreamWriterLog.startStreamWriter(errorTDPMsg);
+                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1, (int)GlobalVariables.setPL2));
+
+                    }
+
+
+                }
+
             }
             catch (Exception ex)
             {
@@ -76,6 +89,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 else { if (cpuType == "AMD") { runAMDTDPChange(pl1TDP, pl2TDP); } }
                 GlobalVariables.setPL1 = pl1TDP;
                 GlobalVariables.setPL2 = pl2TDP;
+
+                readTDP();
             }
             catch (Exception ex)
             {
@@ -739,5 +754,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
             }
         }
+
+    
+
     }
 

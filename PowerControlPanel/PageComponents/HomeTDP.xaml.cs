@@ -31,12 +31,13 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         private bool dragStartedTDP1 = true;
         private bool dragStartedTDP2 = true;
         private bool changingTDP = false;
-  
-        
+
+
         public HomeTDP()
         {
             InitializeComponent();
             handleVisibility();
+                       
         }
         void handleVisibility()
         {
@@ -135,7 +136,7 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
                         Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
                     };
                 }
-                Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP());
+                
                 changingTDP = false;
             }
 
@@ -185,6 +186,8 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
                 updateFromGlobalTDP();
             }
         }
+
+
 
 
     }
