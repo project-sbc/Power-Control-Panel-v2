@@ -30,8 +30,6 @@ namespace Power_Control_Panel
         public static double setPL1 = 0;
         public static double setPL2 = 0;
         public static bool needTDPRead = false;
-        public static bool needVolumeRead = false;
-        public static bool needBrightnessRead = false;
 
         //Shut down boolean to stop threads
         public static bool useControllerFastThread = true;
@@ -40,6 +38,8 @@ namespace Power_Control_Panel
         //brightness and volume setting
         public static int brightness = 0;
         public static int volume = 0;
+        public static bool needVolumeRead = false;
+        public static bool needBrightnessRead = false;
 
         //TDP change class
         public static PowerControlPanel.Classes.ChangeTDP.ChangeTDP tdp = new PowerControlPanel.Classes.ChangeTDP.ChangeTDP();

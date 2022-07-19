@@ -32,13 +32,29 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         private bool dragStartedTDP2 = true;
         private bool changingTDP = false;
 
-
+        private DispatcherTimer timer;
         public HomeTDP()
         {
             InitializeComponent();
             handleVisibility();
-                       
+            initializeTimer();          
         }
+        void initializeTimer()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 5);
+            timer.Tick += timerTick;
+            timer.Start();
+        }
+
+        void timerTick(object sender, EventArgs e)
+        {
+            updateFromGlobalTDPPL1();
+            updateFromGlobalTDPPL2();
+
+        }
+
+
         void handleVisibility()
         {
             if (Properties.Settings.Default.showTDP)
@@ -156,23 +172,45 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             //If global tdp is not zero meaning it was read within 10 seconds, load those instead of calling a update
             if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
             {
-                updateFromGlobalTDP();
+                updateFromGlobalTDPPL1();
+                updateFromGlobalTDPPL2();
             }
        
         }
 
-        void updateFromGlobalTDP()
+        void updateFromGlobalTDPPL1()
         {
             //Make changingTDP boolean true to prevent slider event from updating TDP
             if (GlobalVariables.needTDPRead == false)
             {
                 changingTDP = true;
-                if (TDP1.IsFocused == false)
-                TDP1.Value = Math.Round(GlobalVariables.readPL1, 0, MidpointRounding.AwayFromZero);
-                TDP2.Value = Math.Round(GlobalVariables.readPL2, 0, MidpointRounding.AwayFromZero);
+
+                try
+                {
+                    if (!TDP1.IsFocused) { TDP1.Value = Math.Round(GlobalVariables.readPL1, 0, MidpointRounding.AwayFromZero); }
+                }
+                catch { }
+
+              
                 changingTDP = false;
             }
   
+        }
+        void updateFromGlobalTDPPL2()
+        {
+            //Make changingTDP boolean true to prevent slider event from updating TDP
+            if (GlobalVariables.needTDPRead == false)
+            {
+                changingTDP = true;
+                try
+                {
+                    if (!TDP2.IsFocused) { TDP2.Value = Math.Round(GlobalVariables.readPL2, 0, MidpointRounding.AwayFromZero); }
+                }
+                catch { }
+
+                changingTDP = false;
+            }
+
         }
 
         private void enableControl_Toggled(object sender, RoutedEventArgs e)
@@ -183,12 +221,25 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             }
             else { 
                 this.Height = 40;
-                updateFromGlobalTDP();
+                updateFromGlobalTDPPL1();
+                updateFromGlobalTDPPL2();
             }
         }
 
+        private void TDP1_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Math.Abs(TDP1.Value - GlobalVariables.readPL1) >2)
+            {
+                updateFromGlobalTDPPL1();
+            }
+        }
 
-
-
+        private void TDP2_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (Math.Abs(TDP2.Value - GlobalVariables.readPL2) > 2)
+            {
+                updateFromGlobalTDPPL2();
+            }
+        }
     }
 }

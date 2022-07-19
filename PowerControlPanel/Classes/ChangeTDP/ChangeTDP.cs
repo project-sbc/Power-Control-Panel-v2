@@ -32,24 +32,27 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             try
             {
                 //add small delay to prevent write and read operations from interfering
+                StreamWriterLog.startStreamWriter("Read TDP start: determine CPU type");
                 Thread.Sleep(100);
 
                 determineCPU();
-
+                StreamWriterLog.startStreamWriter("CPU type is " + cpuType);
                 if (cpuType == "Intel")
                 {
-                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO")) { runIntelReadTDPMMIOKX(); }
-                    if (Properties.Settings.Default.IntelMMIOMSR == "MSR") { runIntelReadTDPMSR(); }
+                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO")) { StreamWriterLog.startStreamWriter("Read TDP MMIO: read MMIO intel"); runIntelReadTDPMMIOKX(); }
+                    if (Properties.Settings.Default.IntelMMIOMSR == "MSR") { StreamWriterLog.startStreamWriter("Read TDP start: read MSR intel"); runIntelReadTDPMSR(); }
                     //if (Properties.Settings.Default.IntelMMIOMSR == "MSRCMD") { runIntelReadTDPMSRCMD(); }
                 }
-                else { if (cpuType == "AMD") { runAMDReadTDP(); } }
+                else { if (cpuType == "AMD") { StreamWriterLog.startStreamWriter("Read TDP start: read AMD"); runAMDReadTDP(); } }
                 GlobalVariables.needTDPRead = false;
 
+
+                //If set vs read tdp is greater than 2 watts apart than reapply TDP
                 if (Math.Abs(GlobalVariables.setPL1 - GlobalVariables.readPL1) > 2 || Math.Abs(GlobalVariables.setPL2 - GlobalVariables.readPL2) > 2)
                 {
                     if (GlobalVariables.setPL1 != 0 && GlobalVariables.setPL2 != 0)
                     {
-                        string errorTDPMsg = "Error: set TDP doesn't match applied TDP.";
+                        string errorTDPMsg = "Error: set TDP doesn't match applied TDP. Reapplying TDP";
                         StreamWriterLog.startStreamWriter(errorTDPMsg);
                         Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1, (int)GlobalVariables.setPL2));
 
@@ -75,21 +78,25 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             //Return Success as default value, otherwise alert calling routine to error
             try
             {
-                determineCPU();
 
+                StreamWriterLog.startStreamWriter("Start TDP change");
+                determineCPU();
+                StreamWriterLog.startStreamWriter("CPU type is " + cpuType);
                 if (cpuType == "Intel")
                 {
                     if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
                     {
+                        StreamWriterLog.startStreamWriter("Start intel change TDP MMIO");
                         runIntelTDPChangeMMIOKX(pl1TDP, pl2TDP);
                     }
-                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MSR")) { runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
+                    if (Properties.Settings.Default.IntelMMIOMSR.Contains("MSR")) { StreamWriterLog.startStreamWriter("Start intel change TDP MSR"); runIntelTDPChangeMSR(pl1TDP, pl2TDP); }
                    
                 }
-                else { if (cpuType == "AMD") { runAMDTDPChange(pl1TDP, pl2TDP); } }
+                else { if (cpuType == "AMD") { StreamWriterLog.startStreamWriter("Start AMD change TDP"); runAMDTDPChange(pl1TDP, pl2TDP); } }
                 GlobalVariables.setPL1 = pl1TDP;
                 GlobalVariables.setPL2 = pl2TDP;
 
+                //read tdp after changing
                 readTDP();
             }
             catch (Exception ex)
@@ -115,18 +122,19 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 processKX = BaseDir + "\\Resources\\Intel\\KX\\KX.exe";
                 hexPL1 = convertTDPToHexMMIO(pl1TDP);
                 hexPL2 = convertTDPToHexMMIO(pl2TDP);
-
+                StreamWriterLog.startStreamWriter("Change TDP MMIO processKX=" + processKX + "; Hex PL1 PL2=" + hexPL1 + "," + hexPL2 );
                 if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
                 {
                     lock (objLock)
                     {
                         commandArgumentsPL1 = " /wrmem16 " + MCHBAR + "a0 0x" + hexPL1;
-
+                        StreamWriterLog.startStreamWriter("Change TDP MMIO commandargumentPL1=" + commandArgumentsPL1);
                         RunCLI.RunCommand(commandArgumentsPL1, true, processKX);
                         Thread.Sleep(500);
                         commandArgumentsPL2 = " /wrmem16 " + MCHBAR + "a4 0x" + hexPL2;
-
+                        StreamWriterLog.startStreamWriter("Change TDP MMIO commandargumentPL2=" + commandArgumentsPL2);
                         RunCLI.RunCommand(commandArgumentsPL2, true, processKX);
+                        StreamWriterLog.startStreamWriter("Change TDP MMIO complete");
                         Thread.Sleep(100);
                     }
                 }
@@ -155,6 +163,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
                 hexPL1 = convertTDPToHexMSR(pl1TDP);
                 hexPL2 = convertTDPToHexMSR(pl2TDP);
+
                 if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
                 {
                     lock (objLock)
@@ -169,10 +178,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                             if (hexPL2.Length == 1) { hexPL2 = "00" + hexPL2; }
                             if (hexPL2.Length == 2) { hexPL2 = "0" + hexPL2; }
                         }
+                        
                         commandArguments = " -s write 0x610 0x00438" + hexPL2 + " 0x00dd8" + hexPL1;
                         processMSR = BaseDir + "\\Resources\\Intel\\MSR\\msr-cmd.exe";
-
+                        StreamWriterLog.startStreamWriter("Change TDP MSR processMSR=" + processMSR + "; Hex PL1 PL2=" + hexPL1 + "," + hexPL2);
                         RunCLI.RunCommand(commandArguments, false, processMSR);
+                        StreamWriterLog.startStreamWriter("Change TDP MSR complete");
                         Thread.Sleep(100);
                     }
                 }
@@ -280,24 +291,26 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     lock (objLock)
                     {
                         commandArgumentsPL1 = " /rdmem16 " + MCHBAR + "a0";
-
+                        StreamWriterLog.startStreamWriter("Read TDP MMIO processKX=" + processKX + "; commandarugmentPL1=" + commandArgumentsPL1 );
                         resultPL1 = RunCLI.RunCommand(commandArgumentsPL1, true, processKX);
 
                         if (resultPL1 != null)
                         {
+                            StreamWriterLog.startStreamWriter("Read TDP MMIO resultpl1=" + resultPL1);
                             double dblPL1 = Convert.ToDouble(parseHexFromResultMMIOConvertToTDPKX(resultPL1, true));
                             GlobalVariables.readPL1 = dblPL1;
-                            if (dblPL1 == 4096) { Properties.Settings.Default.IntelMMIOMSR = "MSR"; Properties.Settings.Default.Save(); }
+                            StreamWriterLog.startStreamWriter("Read TDP MMIO pl1=" + dblPL1.ToString());
                         }
                         Thread.Sleep(300);
                         commandArgumentsPL2 = " /rdmem16 " + MCHBAR + "a4";
-
+                        StreamWriterLog.startStreamWriter("Read TDP MMIO processKX=" + processKX + "; commandarugmentPL2=" + commandArgumentsPL2);
                         resultPL2 = RunCLI.RunCommand(commandArgumentsPL2, true, processKX);
                         if (resultPL2 != null)
                         {
+                            StreamWriterLog.startStreamWriter("Read TDP MMIO resultpl2=" + resultPL2);
                             double dblPL2 = Convert.ToDouble(parseHexFromResultMMIOConvertToTDPKX(resultPL2, false));
                             GlobalVariables.readPL2 = dblPL2;
-                            if (dblPL2 == 4096) { Properties.Settings.Default.IntelMMIOMSR = "MSR"; Properties.Settings.Default.Save(); }
+                            StreamWriterLog.startStreamWriter("Read TDP MMIO pl2=" + dblPL2.ToString());
                         }
                     }
                 }
@@ -380,7 +393,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
 
         }
-            static string parseHexFromResultMSRConvertToTDP(string result, bool isPL1)
+        string parseHexFromResultMSRConvertToTDP(string result, bool isPL1)
             {
                 int FindString = -1;
                 string hexResult = "";
@@ -416,7 +429,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
             }
-            void runIntelReadTDPMSR()
+        void runIntelReadTDPMSR()
             {
                 try
                 {
@@ -425,18 +438,18 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     lock (objLock)
                     {
                         string commandArguments = " read 0x610";
-                        
+                        StreamWriterLog.startStreamWriter("Read TDP MSR processMSR=" + processMSR + "; commandarugmentPL1=" + commandArguments);
                         string result = RunCLI.RunCommand(commandArguments, true, processMSR);
                         if (result != null)
                         {
-
+                            StreamWriterLog.startStreamWriter("Read TDP MSR result=" + result);
                             double dblPL1 = Convert.ToDouble(parseHexFromResultMSRConvertToTDP(result, true));
                             GlobalVariables.readPL1 = dblPL1;
 
                             double dblPL2 = Convert.ToDouble(parseHexFromResultMSRConvertToTDP(result, false));
                             GlobalVariables.readPL2 = dblPL2;
-
-                        }
+                            StreamWriterLog.startStreamWriter("Read TDP MSR PL1=" + dblPL1.ToString() + "; PL1=" + dblPL2.ToString());
+                    }
                     }
 
 
@@ -449,7 +462,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
 
             }
-            static string convertTDPToHexMSR(int tdp)
+        string convertTDPToHexMSR(int tdp)
             {
                 //Convert integer TDP value to Hex for rw.exe
                 //Must use formula (TDP in watt   *1000/125) +32768 and convert to hex
@@ -468,7 +481,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
             }
             //MSR stuff above
-            void runAMDReadTDP()
+        void runAMDReadTDP()
             {
                 string processRyzenAdj = "";
                 string result = "";
@@ -480,22 +493,18 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     lock (objLock)
                     {
                         commandArguments = " -i";
+                        StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
 
-                        
                         result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
-                    
-                    
-
-
-
-                    if (result != null)
-                        {
        
+                        if (result != null)
+                        {
+                            StreamWriterLog.startStreamWriter("Read AMD result=" + result);
                             double dblPL1 = Convert.ToDouble(parseFromResultAMD(result, "PL1"));
                             GlobalVariables.readPL1 = dblPL1;
                             double dblPL2 = Convert.ToDouble(parseFromResultAMD(result, "PL2"));
                             GlobalVariables.readPL2 = dblPL2;
-
+                            StreamWriterLog.startStreamWriter("Read TDP AMD PL1=" + dblPL1.ToString() + "; PL1=" + dblPL2.ToString());
                         }
                     }
 
@@ -510,7 +519,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
 
             }
-            void runAMDTDPChange(int pl1TDP, int pl2TDP)
+        void runAMDTDPChange(int pl1TDP, int pl2TDP)
             {
                 string processRyzenAdj = "";
                 string result = "";
@@ -522,9 +531,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 lock (objLock)
                 {
                     commandArguments = " --stapm-limit=" + (pl1TDP * 1000).ToString() + " --slow-limit=" + (pl2TDP * 1000).ToString() + " --fast-limit=" + (pl2TDP * 1000).ToString();
-
+                    StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAdj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
                     result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
                     Thread.Sleep(100);
+                    StreamWriterLog.startStreamWriter("Read TDP AMD complete");
                 }
 
 
@@ -550,6 +560,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     string processRW = BaseDir + "\\Resources\\Intel\\RW\\Rw.exe";
                     string hexPL1 = convertTDPToHexMSR(pl1TDP);
                     string hexPL2 = convertTDPToHexMSR(pl2TDP);
+
                     if (hexPL1 != "Error" && hexPL2 != "Error" && MCHBAR != null)
                     {
                         if (hexPL1.Length < 3)
