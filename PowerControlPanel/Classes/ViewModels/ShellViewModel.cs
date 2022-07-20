@@ -34,7 +34,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
             this.Menu.Add(new MenuItem()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.WindowRestoreSolid },
-                Label = "Overlay",
+                Label = "Quick Access Menu",
                
             });
             this.Menu.Add(new MenuItem()

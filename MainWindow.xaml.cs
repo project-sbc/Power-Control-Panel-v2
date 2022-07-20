@@ -44,25 +44,20 @@ namespace Power_Control_Panel
         //TDP change class
         public static PowerControlPanel.Classes.ChangeTDP.ChangeTDP tdp = new PowerControlPanel.Classes.ChangeTDP.ChangeTDP();
 
-        //controller handler class
-        public static PowerControlPanel.Classes.ControllerHandler ch = new PowerControlPanel.Classes.ControllerHandler();
-
         //Routine update class
         public static RoutineUpdate routineUpdate = new RoutineUpdate();
+
+        
     }
     
 
-    public static class TimerEvents
-    {
-
-
-
-
-    }
     public partial class MainWindow : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
-        
+        private DispatcherTimer timer = new DispatcherTimer();
+
+        private Controller controller;
+        private Gamepad gamepad;
 
         public static Window overlay;
         public static Window osk;
@@ -77,12 +72,55 @@ namespace Power_Control_Panel
             //Run code to set up hamburger menu
             initializeNavigationFrame();
 
+            initializeTimer();
+
+
+        }
+   
+        private void initializeTimer()
+        {
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += timerTick;
+            timer.Start();
+
+        }
+        private void timerTick(object sender, EventArgs e)
+        {
+            controller = new Controller(UserIndex.One);
+            if (controller != null)
+            { 
+                if (controller.IsConnected)
+                {
+                    gamepad = controller.GetState().Gamepad;
+
+                    if (gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+                    {
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight))
+                        {
+                            handleOpenCloseQAM();
+
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown))
+                        {
+                            handleOpenCloseOSK();
+
+                        }
+                    }
+
+                }
+            }
+        }
+        private void OSKEvent(object sender, EventArgs e)
+        {
+            handleOpenCloseOSK();
 
         }
 
+        private void QAMEvent(object sender, EventArgs e)
+        {
 
-
-
+            handleOpenCloseQAM();
+        }
 
         //Navigation routines
         #region navigation
@@ -100,17 +138,14 @@ namespace Power_Control_Panel
 
             if (e.InvokedItem is MenuItem menuItem)
             {
-                if (menuItem.Label == "Overlay")
+                if (menuItem.Label == "Quick Access Menu")
                 {
-                    overlay = new QuickAccessMenu();
-                    overlay.Show();
 
+                    handleOpenCloseQAM();
                 }
                 if (menuItem.Label == "On Screen Keyboard")
                 {
-                    osk = new OSK();
-                  
-                    osk.Show();
+                    handleOpenCloseOSK();
 
                 }
                 if (menuItem.IsNavigation)
@@ -121,6 +156,32 @@ namespace Power_Control_Panel
             }
         }
 
+        private void handleOpenCloseQAM()
+        {
+            if (overlay == null)
+            {
+                overlay = new QuickAccessMenu();
+                overlay.Show();
+            }
+            else
+            {
+                overlay.Close();
+            }
+
+        }
+        private void handleOpenCloseOSK()
+        {
+            if (osk == null)
+            {
+                osk = new OSK();
+                osk.Show();
+            }
+            else
+            {
+                osk.Close();
+            }
+
+        }
         private void NavigationServiceEx_OnNavigated(object sender, NavigationEventArgs e)
         {
             // select the menu item

@@ -29,6 +29,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         public void readTDP()
         {
 
+
+
             try
             {
                 //add small delay to prevent write and read operations from interfering

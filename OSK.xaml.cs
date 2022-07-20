@@ -135,7 +135,7 @@ namespace Power_Control_Panel
 
         void setUpControllerHandler()
         {
-            ch.createGamePadStateCollectorLoop();
+            ch.createGamePadStateCollectorLoop(15,true);
 
             ch.events.pressAEvent += HandlePressAEvent;
 
