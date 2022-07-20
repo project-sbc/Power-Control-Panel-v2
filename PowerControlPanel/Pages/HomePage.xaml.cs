@@ -13,8 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Power_Control_Panel.PowerControlPanel.PageComponents;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
+using System.Windows.Threading;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -23,37 +23,327 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
     /// </summary>
     public partial class HomePage : Page
     {
-      
+        private DispatcherTimer timer = new DispatcherTimer();
+
+        //tdp variables
+        private bool dragStartedTDP1 = false;
+        private bool dragStartedTDP2 = false;
+        private bool changingTDP = true;
+
+        //system variables
+        private bool dragStartedBrightness = false;
+        private bool dragStartedVolume = false;
+
         public HomePage()
         {
             InitializeComponent();
-            arrangeStackPanel();
-            
 
-            
+            initializeTimer();
+
+            handleVisibility();
+
+            loadTDPValues();
+            loadSystemValues();
         }
-        void arrangeStackPanel()
+        #region timer controls
+
+        private void initializeTimer()
         {
-            Page[] page;
-            Frame[] frame = new Frame[3];
-            frame[0] = frame0;
-            frame[1] = frame1;
-            frame[2] = frame2;
-            page = new Page[3];
-            int i = 0;
+            timer.Interval = new TimeSpan(0, 0, 3);
+            timer.Tick += timerTick;
+            timer.Start();
 
-            if (Properties.Settings.Default.enableSystem) { page[i] = new HomeSystem(); i = i + 1; }
-            if (Properties.Settings.Default.enableTDP)  {page[i] = new HomeTDP(); i = i + 1; }
-            if (Properties.Settings.Default.enableCPU) { page[i] = new HomeCPU(); i = i + 1; }
+        }
+        private void timerTick(object sender, EventArgs e)
+        {
+            #region tdp updates
+            loadTDPValues();
 
-            i = 0;
-            while (page[i] is not null)
+            #endregion tdp updates
+            #region system updates
+            loadSystemValues();
+            #endregion system updates
+
+        }
+
+        #endregion timer controls
+
+        #region handle visibility
+
+        private void handleVisibility()
+        {
+            if (Properties.Settings.Default.showTDP)
+            { enableControlTDP.IsOn = true; }
+            else { enableControlTDP.IsOn = false; }
+
+            if (Properties.Settings.Default.showSystem)
+            { enableControlSystem.IsOn = true; }
+            else { enableControlSystem.IsOn = false; }
+        }
+
+
+        #endregion handle visibility
+
+        #region TDP controls
+
+        private void TDP1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStartedTDP1 && !changingTDP)
             {
-                frame[i].Navigate(page[i]);
-                i=i + 1;
+                HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+            }
+        }
+        private void TDP1_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            dragStartedTDP1 = false;
+            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+        }
+        private void TDP1_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            dragStartedTDP1 = true;
+        }
+        private void TDP1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dragStartedTDP1 = false;
+            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+        }
+        private void TDP1_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStartedTDP1 = false;
+            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+        }
+        private void TDP1_TouchDown(object sender, TouchEventArgs e)
+        {
+            dragStartedTDP1 = true;
+        }
+
+        private void TDP2_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStartedTDP2 && !changingTDP)
+            {
+                HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
+            }
+        }
+        private void TDP2_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            dragStartedTDP2 = false;
+            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
+        }
+        private void TDP2_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            dragStartedTDP2 = true;
+        }
+        private void TDP2_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dragStartedTDP2 = false;
+            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
+        }
+        private void TDP2_TouchDown(object sender, TouchEventArgs e)
+        {
+            dragStartedTDP2 = true;
+        }
+        private void TDP2_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStartedTDP2 = false;
+            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+        }
+        private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
+        {
+
+            if (!changingTDP)
+            {
+                changingTDP = true;
+                GlobalVariables.needTDPRead = true;
+                if (PL1started)
+                {
+                    //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value
+
+                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
+                    else
+                    {
+                        TDP2.Value = tdpPL1;
+                        tdpPL2 = tdpPL1;
+                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
+                    };
+                }
+                else
+                {
+                    //If PL2 is less than PL1 drop PL1 down to PL2 new value
+                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
+                    else
+                    {
+                        TDP1.Value = tdpPL2;
+                        tdpPL1 = tdpPL2;
+                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
+                    };
+                }
+
+                changingTDP = false;
+            }
+
+
+        }
+
+
+
+
+        void loadTDPValues()
+        {
+            //If global tdp is not zero meaning it was read within 10 seconds, load those instead of calling a update
+            if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
+            {
+                changingTDP = true;
+                updateFromGlobalTDPPL1();
+                updateFromGlobalTDPPL2();
+                changingTDP = false;
             }
 
         }
- 
+
+        void updateFromGlobalTDPPL1()
+        {
+            //Make changingTDP boolean true to prevent slider event from updating TDP
+            if (GlobalVariables.needTDPRead == false)
+            {
+
+                try
+                {
+                    if (!dragStartedTDP1)
+                    { TDP1.Value = Math.Round(GlobalVariables.readPL1, 0, MidpointRounding.AwayFromZero); }
+                }
+                catch { }
+
+            }
+
+        }
+        void updateFromGlobalTDPPL2()
+        {
+            //Make changingTDP boolean true to prevent slider event from updating TDP
+            if (GlobalVariables.needTDPRead == false)
+            {
+
+
+                try
+                {
+                    if (!dragStartedTDP2)
+                    { TDP2.Value = Math.Round(GlobalVariables.readPL2, 0, MidpointRounding.AwayFromZero); }
+                }
+                catch { }
+
+
+
+            }
+
+        }
+
+        private void enableControlTDP_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (enableControlTDP.IsOn)
+            {
+                GBTDPControls.Height = 150;
+            }
+            else
+            {
+                GBTDPControls.Height = 40;
+                loadTDPValues();
+            }
+        }
+
+        #endregion TDP controls
+
+        #region system controls
+
+
+        private void Brightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStartedBrightness)
+            {
+                HandleChangingBrightness(Brightness.Value);
+            }
+        }
+        private void Brightness_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            dragStartedBrightness = false;
+            HandleChangingBrightness(Brightness.Value);
+        }
+        private void Brightness_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            dragStartedBrightness = true;
+        }
+        private void Brightness_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dragStartedBrightness = false;
+            HandleChangingBrightness(Brightness.Value);
+        }
+        private void Brightness_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStartedBrightness = false;
+            HandleChangingBrightness(Brightness.Value);
+        }
+        private void Brightness_TouchDown(object sender, TouchEventArgs e)
+        {
+            dragStartedBrightness = true;
+        }
+
+        private void enableControlSystem_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (enableControlSystem.IsOn)
+            {
+                GBSystemControls.Height = 150;
+            }
+            else { GBSystemControls.Height = 40; }
+        }
+        void HandleChangingBrightness(double brightness)
+        {
+            GlobalVariables.needBrightnessRead = true;
+            Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)brightness);
+        }
+        void HandleChangingVolume(int volume)
+        {
+            GlobalVariables.needVolumeRead = true;
+            Classes.ChangeVolume.AudioManager.SetMasterVolume((float)volume);
+        }
+        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStartedVolume)
+            {
+                HandleChangingVolume((int)Volume.Value);
+            }
+        }
+        private void Volume_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            dragStartedVolume = false;
+            HandleChangingVolume((int)Volume.Value);
+        }
+        private void Volume_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            dragStartedVolume = true;
+        }
+        private void Volume_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dragStartedVolume = false;
+            HandleChangingVolume((int)Volume.Value);
+        }
+        private void Volume_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStartedVolume = false;
+            HandleChangingVolume((int)Volume.Value);
+        }
+        private void Volume_TouchDown(object sender, TouchEventArgs e)
+        {
+            dragStartedVolume = true;
+        }
+
+
+        void loadSystemValues()
+        {
+            if (!dragStartedBrightness && !GlobalVariables.needBrightnessRead) { Brightness.Value = GlobalVariables.brightness; }
+            if (!dragStartedVolume && !GlobalVariables.needVolumeRead)
+            { Volume.Value = GlobalVariables.volume; }
+
+        }
+
+        #endregion system controls
+
     }
 }

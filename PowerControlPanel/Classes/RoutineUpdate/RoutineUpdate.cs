@@ -16,7 +16,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
     public class RoutineUpdate
     {
         private Thread routineThread;
- 
+
         private int counter = 0;
 
       
@@ -25,40 +25,16 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             while (GlobalVariables.useRoutineThread)
             {
 
-
-
-
-
-
-
-                Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP());
-                Task.Delay(8000);
-                CallTDPEvent();
-
+                ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
+                ChangeVolume.AudioManager.GetMasterVolume();
+                if (counter > 10) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP()); counter = -1; }
+                
+                Thread.Sleep(1000);
+         
+                counter ++;
             }
 
         }
-
-
-
-        public void CallBrightnessEvent()
-        {
-            updatedBrightness?.Invoke(typeof(RoutineUpdate), EventArgs.Empty);
-        }
-        public event EventHandler updatedBrightness;
-
-        public void CallVolumeEvent()
-        {
-            updatedVolume?.Invoke(typeof(RoutineUpdate), EventArgs.Empty);
-        }
-        public event EventHandler updatedVolume;
-
-        public void CallTDPEvent()
-        {
-            updatedTDP?.Invoke(typeof(RoutineUpdate), EventArgs.Empty);
-        }
-        public event EventHandler updatedTDP;
-
 
 
 
