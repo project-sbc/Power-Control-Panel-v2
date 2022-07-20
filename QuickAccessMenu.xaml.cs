@@ -13,7 +13,6 @@ using Power_Control_Panel.PowerControlPanel.Classes.StartUp;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using SharpDX.XInput;
-using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdater;
 using System.Net.NetworkInformation;
 using System.Management;
 
