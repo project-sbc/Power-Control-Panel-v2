@@ -634,8 +634,7 @@ namespace Power_Control_Panel
             sim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
             if (Console.CapsLock) { sim.Keyboard.KeyPress(VirtualKeyCode.CAPITAL); }
 
-            //set controller gamepad state tick to 1000 ms
-            RoutineUpdate.sleepTimer = 1000;
+  
             //Make null so it can be called again
             MainWindow.osk = null;
 

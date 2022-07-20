@@ -11,6 +11,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
     public class StreamWriterLog
     {
         public static string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public static Object objLock = new Object();
         public static void startStreamWriter(string newLog)
         {
             try
@@ -18,7 +19,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                 if (!File.Exists(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt")) { createLogFile(); }
                 using (StreamWriter w = File.AppendText("PowerControlPanel/Logs/application_log.txt"))
                 {
-                    Log(newLog, w);
+                    lock(objLock)
+                    {
+                        Log(newLog, w);
+                    }
+                    
                 }
 
 

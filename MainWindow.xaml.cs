@@ -32,7 +32,7 @@ namespace Power_Control_Panel
         public static bool needTDPRead = false;
 
         //Shut down boolean to stop threads
-        public static bool useControllerFastThread = true;
+        public static bool useRoutineThread = true;
 
 
         //brightness and volume setting
@@ -46,11 +46,23 @@ namespace Power_Control_Panel
 
         //controller handler class
         public static PowerControlPanel.Classes.ControllerHandler ch = new PowerControlPanel.Classes.ControllerHandler();
-    }
 
+        //Routine update class
+        public static RoutineUpdate routineUpdate = new RoutineUpdate();
+    }
+    
+
+    public static class TimerEvents
+    {
+
+
+
+
+    }
     public partial class MainWindow : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
+        
 
         public static Window overlay;
         public static Window osk;
@@ -60,13 +72,10 @@ namespace Power_Control_Panel
 
             StartUp.runStartUp();
 
-          
+            GlobalVariables.routineUpdate.startThread();
 
             //Run code to set up hamburger menu
             initializeNavigationFrame();
-
-
-       
 
 
         }
@@ -100,7 +109,7 @@ namespace Power_Control_Panel
                 if (menuItem.Label == "On Screen Keyboard")
                 {
                     osk = new OSK();
-                    RoutineUpdate.sleepTimer = 10;
+                  
                     osk.Show();
 
                 }
@@ -156,7 +165,7 @@ namespace Power_Control_Panel
             // Dispose of thread to allow program to close properly
             PowerControlPanel.Classes.TaskScheduler.TaskScheduler.closeScheduler();
             //Throw boolean to end controller checking thread
-            GlobalVariables.useControllerFastThread = false;
+            GlobalVariables.useRoutineThread = false;
         }
 
 

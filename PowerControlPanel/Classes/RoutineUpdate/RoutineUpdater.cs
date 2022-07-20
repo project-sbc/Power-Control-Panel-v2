@@ -131,7 +131,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdater
 
 
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 3);
+            timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += timerTick;
             timer.Start();
         }
