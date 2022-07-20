@@ -28,12 +28,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
         {
             
 
-            while (GlobalVariables.useControllerFastThread)
+            while (GlobalVariables.useRoutineThread)
             {
 
                 if (controller == null)
                 {
-                    while (controller == null && GlobalVariables.useControllerFastThread)
+                    while (controller == null && GlobalVariables.useRoutineThread)
                     {
                         controller = new Controller(UserIndex.One);
                         if (controller == null) { Task.Delay(4000); }
@@ -48,7 +48,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                         {
                             gamepadCurrent = controller.GetState().Gamepad;
                             Task.Delay(15);
-                            while (GlobalVariables.useControllerFastThread && controller.IsConnected)
+                            while (GlobalVariables.useRoutineThread && controller.IsConnected)
                             {
                                 gamepadOld = gamepadCurrent;
                                 gamepadCurrent = controller.GetState().Gamepad;
@@ -83,7 +83,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                         }
                         else
                         {
-                            while (!controller.IsConnected && GlobalVariables.useControllerFastThread)
+                            while (!controller.IsConnected && GlobalVariables.useRoutineThread)
                             {
                                 Task.Delay(3000);
                                 controller = new Controller(UserIndex.One);
@@ -110,40 +110,40 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
 
     }
 
-    public class buttonEvents
+    public class buttonEvents 
     {
-        public event EventHandler pressAEvent;
+        
         public void RaiseEventA()
         {
-            pressAEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+            pressAEvent?.Invoke(this, EventArgs.Empty);
         }
-
+        public event EventHandler pressAEvent;
 
         public event EventHandler pressXEvent;
         public void RaiseEventX()
         {
-            pressXEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+            pressXEvent?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler pressYEvent;
+        public event EventHandler PressYEvent;
         public void RaiseEventY()
         {
-            pressYEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+            PressYEvent?.Invoke(this, EventArgs.Empty);
         }
         public event EventHandler pressBEvent;
         public void RaiseEventB()
         {
-            pressBEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+            pressBEvent?.Invoke(this, EventArgs.Empty);
         }
         public event EventHandler pressLBEvent;
         public void RaiseEventLB()
         {
-            pressLBEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+            pressLBEvent?.Invoke(this, EventArgs.Empty);
         }
         public event EventHandler pressRBEvent;
         public void RaiseEventRB()
         {
-            pressRBEvent?.Invoke(typeof(buttonEvents), EventArgs.Empty);
+            pressRBEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 

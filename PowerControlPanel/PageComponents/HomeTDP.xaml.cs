@@ -32,27 +32,18 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         private bool dragStartedTDP2 = true;
         private bool changingTDP = false;
 
-        private DispatcherTimer timer;
+       
         public HomeTDP()
         {
             InitializeComponent();
             handleVisibility();
-            initializeTimer();          
-        }
-        void initializeTimer()
-        {
-            timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 5);
-            timer.Tick += timerTick;
-            timer.Start();
-        }
+            
 
-        void timerTick(object sender, EventArgs e)
-        {
-            updateFromGlobalTDPPL1();
-            updateFromGlobalTDPPL2();
 
         }
+
+
+
 
 
         void handleVisibility()
@@ -164,9 +155,16 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
         {
          
             loadTDPValues();
+
+            GlobalVariables.routineUpdate.updatedTDP += tdpChangeEvent;
           
         }
     
+        void tdpChangeEvent(object sender, EventArgs e)
+        {
+            loadTDPValues();
+
+        }
         void loadTDPValues()
         {
             //If global tdp is not zero meaning it was read within 10 seconds, load those instead of calling a update
@@ -221,25 +219,10 @@ namespace Power_Control_Panel.PowerControlPanel.PageComponents
             }
             else { 
                 this.Height = 40;
-                updateFromGlobalTDPPL1();
-                updateFromGlobalTDPPL2();
+                loadTDPValues();
             }
         }
 
-        private void TDP1_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (Math.Abs(TDP1.Value - GlobalVariables.readPL1) >2)
-            {
-                updateFromGlobalTDPPL1();
-            }
-        }
 
-        private void TDP2_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (Math.Abs(TDP2.Value - GlobalVariables.readPL2) > 2)
-            {
-                updateFromGlobalTDPPL2();
-            }
-        }
     }
 }

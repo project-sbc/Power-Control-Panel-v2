@@ -15,35 +15,59 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 {
     public class RoutineUpdate
     {
-        public static Thread controllerThread;
-        public static int sleepTimer = 1000;
-        private static int count5 = 0;
-        public static void handleRoutineChecks(int counter)
-        {
-            //Read tdp every 60 seconds
-            if (counter == 60) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP()); }
+        private Thread routineThread;
  
+        private int counter = 0;
 
-            
-
-            if (count5 >= 5)
+      
+        private void handleRoutineChecks()
+        {
+            while (GlobalVariables.useRoutineThread)
             {
 
-                Classes.ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
-                Classes.ChangeVolume.AudioManager.GetMasterVolume();
-                count5 = 0;
+
+
+
+
+
+
+                Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP());
+                Task.Delay(8000);
+                CallTDPEvent();
+
             }
-            else
-            {
-                count5++;
-            }
+
         }
 
-        public static DispatcherTimer timer = new DispatcherTimer();
 
-        public static void startTimer()
+
+        public void CallBrightnessEvent()
         {
+            updatedBrightness?.Invoke(typeof(RoutineUpdate), EventArgs.Empty);
+        }
+        public event EventHandler updatedBrightness;
 
+        public void CallVolumeEvent()
+        {
+            updatedVolume?.Invoke(typeof(RoutineUpdate), EventArgs.Empty);
+        }
+        public event EventHandler updatedVolume;
+
+        public void CallTDPEvent()
+        {
+            updatedTDP?.Invoke(typeof(RoutineUpdate), EventArgs.Empty);
+        }
+        public event EventHandler updatedTDP;
+
+
+
+
+        public void startThread()
+        {
+            routineThread = new Thread(handleRoutineChecks);
+            routineThread.IsBackground = true;
+            routineThread.Name = "Dispatch background thread";
+            routineThread.Start();
 
         }
 
