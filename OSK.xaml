@@ -138,7 +138,7 @@
                     <TextBlock FontFamily="Segoe MDL2 Assets"  HorizontalAlignment="Right" Text="&#xF10A;" FontSize="40"/>
                     
                 </TextBlock>
-
+             
                 <Rectangle Name="R_Ctrl" Grid.Row="2" Grid.Column="4" />
                 <TextBlock Name="T_Ctrl" Grid.Row="2" Grid.Column="4" Text="Ctrl"/>
 
@@ -164,7 +164,7 @@
                     
 
 
-                <Grid Grid.Row="1" Grid.ColumnSpan="22"  Name="AlphaKB"  HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
+                <Grid Grid.Row="1" Grid.ColumnSpan="22"  Name="AlphaKB" Visibility="Visible"  HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="333*" />
                         <RowDefinition Height="333*" />
@@ -319,7 +319,7 @@
 
                 </Grid>
 
-                <Grid Grid.Row="1"  Grid.ColumnSpan="22" Visibility="Hidden"  Name="NumberKB"   HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
+                <Grid Grid.Row="1"  Grid.ColumnSpan="22" Visibility="Collapsed"  Name="NumberKB"   HorizontalAlignment="Stretch" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Canvas}}}"   VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="333*" />
                         <RowDefinition Height="333*" />
@@ -351,6 +351,98 @@
                         <ColumnDefinition Width="30*"></ColumnDefinition>
                         <ColumnDefinition Width="60*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+
+
+                    <Rectangle Name="R_Exclamation" Grid.Row="0" Grid.Column="0" />
+                    <TextBlock Name="T_Exclamation" Grid.Row="0" Grid.Column="0" Text="!"/>
+                    
+                    <Rectangle Name="R_At" Grid.Row="0" Grid.Column="2" />
+                    <TextBlock Name="T_At" Grid.Row="0" Grid.Column="2" Text="@"/>
+
+                    <Rectangle Name="R_Pound" Grid.Row="0" Grid.Column="4" />
+                    <TextBlock Name="T_Pound" Grid.Row="0" Grid.Column="4" Text="#"/>
+
+                    <Rectangle Name="R_Dollar" Grid.Row="0" Grid.Column="6" />
+                    <TextBlock Name="T_Dollar" Grid.Row="0" Grid.Column="6" Text="$"/>
+
+                    <Rectangle Name="R_Percentage" Grid.Row="0" Grid.Column="8" />
+                    <TextBlock Name="T_Percentage" Grid.Row="0" Grid.Column="8" Text="%"/>
+                    
+                    <Rectangle Name="R_UpCarrot" Grid.Row="0" Grid.Column="10" />
+                    <TextBlock Name="T_UpCarrot" Grid.Row="0" Grid.Column="10" Text="^"/>
+
+                    <Rectangle Name="R_And" Grid.Row="0" Grid.Column="12" />
+                    <TextBlock Name="T_And" Grid.Row="0" Grid.Column="12" Text="&amp;"/>
+
+                    <Rectangle Name="R_Star" Grid.Row="0" Grid.Column="14" />
+                    <TextBlock Name="T_Star" Grid.Row="0" Grid.Column="14" Text="*"/>
+     
+                    <Rectangle Name="R_OpenParenthesis" Grid.Row="0" Grid.Column="16" />
+                    <TextBlock Name="T_OpenParenthesis" Grid.Row="0" Grid.Column="16" Text="("/>
+
+                    <Rectangle Name="R_CloseParenthesis" Grid.Row="0" Grid.Column="18" />
+                    <TextBlock Name="T_CloseParenthesis" Grid.Row="0" Grid.Column="18" Text=")"/>
+
+                    <Rectangle Name="R_Dash" Grid.Row="0" Grid.Column="20" />
+                    <TextBlock Name="T_Dash" Grid.Row="0" Grid.Column="20" Text="-"/>
+
+                    <Rectangle Name="R_FSlash" Grid.Row="1" Grid.Column="1" />
+                    <TextBlock Name="T_FSlash" Grid.Row="1" Grid.Column="1" Text="/"/>
+                    
+                    <Rectangle Name="R_BSlash" Grid.Row="1" Grid.Column="3" />
+                    <TextBlock Name="T_BSlash" Grid.Row="1" Grid.Column="3" Text="\"/>
+
+                    <Rectangle Name="R_Plus" Grid.Row="1" Grid.Column="5" />
+                    <TextBlock Name="T_Plus" Grid.Row="1" Grid.Column="5" Text="+"/>
+
+                    <Rectangle Name="R_Equals" Grid.Row="1" Grid.Column="7" />
+                    <TextBlock Name="T_Equals" Grid.Row="1" Grid.Column="7" Text="="/>
+
+                    <Rectangle Name="R_OpenCarrot" Grid.Row="1" Grid.Column="9" />
+                    <TextBlock Name="T_OpenCarrot" Grid.Row="1" Grid.Column="9" Text="&lt;" />
+
+                    <Rectangle Name="R_CloseCarrot" Grid.Row="1" Grid.Column="11" />
+                    <TextBlock Name="T_CloseCarrot" Grid.Row="1" Grid.Column="11" Text=">"/>
+
+                    <Rectangle Name="R_OpenBracket" Grid.Row="1" Grid.Column="13" />
+                    <TextBlock Name="T_OpenBracket" Grid.Row="1" Grid.Column="13" Text="[" />
+
+                    <Rectangle Name="R_CloseBracket" Grid.Row="1" Grid.Column="15" />
+                    <TextBlock Name="T_CloseBracket" Grid.Row="1" Grid.Column="15" Text="]"/>
+
+                    <Rectangle Name="R_Colon" Grid.Row="1" Grid.Column="17" />
+                    <TextBlock Name="T_Colon" Grid.Row="1" Grid.Column="17" Text=":" />
+
+                    <Rectangle Name="R_SemiColon" Grid.Row="1" Grid.Column="19" />
+                    <TextBlock Name="T_SemiColon" Grid.Row="1" Grid.Column="19" Text=";"/>
+
+
+                    <Rectangle Name="R_Period_" Grid.Row="2" Grid.Column="2" />
+                    <TextBlock Name="T_Period_" Grid.Row="2" Grid.Column="2" Text="."/>
+
+                    <Rectangle Name="R_Comma_" Grid.Row="2" Grid.Column="4" />
+                    <TextBlock Name="T_Comma_" Grid.Row="2" Grid.Column="4" Text=","/>
+
+                    <Rectangle Name="R_Tilda" Grid.Row="2" Grid.Column="6" />
+                    <TextBlock Name="T_Tilda" Grid.Row="2" Grid.Column="6" Text="~"/>
+
+                    <Rectangle Name="R_All" Grid.Row="2" Grid.Column="8" />
+                    <TextBlock Name="T_All" Grid.Row="2" Grid.Column="8" Text="Ctrl+A"/>
+
+                    <Rectangle Name="R_Copy" Grid.Row="2" Grid.Column="10" />
+                    <TextBlock Name="T_Copy" Grid.Row="2" Grid.Column="10" Text="Ctrl+C"/>
+
+                    <Rectangle Name="R_Cut" Grid.Row="2" Grid.Column="12" />
+                    <TextBlock Name="T_Cut" Grid.Row="2" Grid.Column="12" Text="Ctrl+X"/>
+
+                    <Rectangle Name="R_Paste" Grid.Row="2" Grid.Column="14" />
+                    <TextBlock Name="T_Paste" Grid.Row="2" Grid.Column="14" Text="Ctrl+V"/>
+
+                    <Rectangle Name="R_PrintScreen" Grid.Row="2" Grid.Column="16" />
+                    <TextBlock Name="T_PrintScreen" Grid.Row="2" Grid.Column="16" Text="PrintScreen"/>
+
+                    <Rectangle Name="R_Delete" Grid.Row="2" Grid.Column="18" />
+                    <TextBlock Name="T_Delete" Grid.Row="2" Grid.Column="18" Text="Del"/>
 
                 </Grid>
 

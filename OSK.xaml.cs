@@ -105,6 +105,11 @@ namespace Power_Control_Panel
            {"T_Period", VirtualKeyCode.OEM_PERIOD },
            {"T_Comma", VirtualKeyCode.OEM_COMMA },
 
+           {"T_Period_", VirtualKeyCode.OEM_PERIOD },
+           {"T_Comma_", VirtualKeyCode.OEM_COMMA },
+
+        
+
        };
 
         private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -527,7 +532,7 @@ namespace Power_Control_Panel
                     textValue = txtblk.Text;
                     textName = txtblk.Name;
                 }
-                if (textName == "T_HideKeyboard") { this.Hide(); }
+                if (textName == "T_HideKeyboard") { this.Close(); }
                 else
                 {
                     
@@ -569,6 +574,71 @@ namespace Power_Control_Panel
                                 NumberKB.Visibility = Visibility.Hidden;
                                 txtblk.Text = "123";
                                 break;
+                            case "!":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_1);
+                                break;
+                            case "@":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_2);
+                                break;
+                            case "#":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_3);
+                                break;
+                            case "$":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_4);
+                                break;
+                            case "%":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_5);
+                                break;
+                            case "^":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_6);
+                                break;
+                            case "&amp;":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_7);
+                                break;
+                            case "*":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_8);
+                                break;
+                            case "(":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_9);
+                                break;
+                            case ")":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.SHIFT, VirtualKeyCode.VK_0);
+                                break;
+                            case "-":
+                                sim.Keyboard.TextEntry("-");
+                                break;
+
+                            case "/":
+                                sim.Keyboard.TextEntry("/");
+                                break;
+
+                            case "+":
+                                sim.Keyboard.TextEntry("+");
+                                break;
+                            case "=":
+                                sim.Keyboard.TextEntry("=");
+                                break;
+
+                            case "Ctrl+A":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_A);
+                                break;
+                            case "Ctrl+C":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_C);
+                                break;
+                            case "Ctrl+X":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_X);
+                                break;
+                            case "Ctrl+V":
+                                sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_V);
+                                break;
+
+                            case "PrintScreen":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.PRINT);
+                                break;
+                            case "Del":
+                                sim.Keyboard.KeyPress(VirtualKeyCode.DELETE);
+                                break;
+
                             default:
                                 VirtualKeyCode vkc;
                                 vkc = keyLookUp[textName];

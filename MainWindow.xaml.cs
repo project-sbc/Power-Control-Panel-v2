@@ -78,7 +78,7 @@ namespace Power_Control_Panel
 
 
             //test code here
-            ThemeManager.Current.ChangeTheme(this, "Dark.Green");
+            //ThemeManager.Current.ChangeTheme(this, "Dark.Green");
 
         }
    
