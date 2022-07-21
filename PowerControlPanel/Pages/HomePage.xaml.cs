@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
 using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -44,7 +45,71 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             loadTDPValues();
             loadSystemValues();
+
+         
         }
+
+        private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
+        {
+            int count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is FrameworkElement childframeworkelement && childframeworkelement.Name == childname)
+                    return child;
+
+                var FindRes = GetElementFromParent(child, childname);
+                if (FindRes != null)
+                    return FindRes;
+            }
+            return null;
+        }
+        #region slider loaded change thumb
+        private void Slider_Loaded(object sender, RoutedEventArgs e)
+        {
+            var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
+            if (SliderThumb != null)
+            {
+                if (SliderThumb is Thumb thumb)
+                {
+
+
+                    thumb.Width = 20;
+                    thumb.Height = 25;
+                }
+                else
+                {
+                    //SliderThumb is not an object of type Thumb
+                }
+            }
+            else
+            {
+                //SliderThumb is null
+            }
+        }
+
+        private void Brightness_Loaded(object sender, RoutedEventArgs e)
+        {
+            Slider_Loaded(sender, e);
+        }
+
+        private void Volume_Loaded(object sender, RoutedEventArgs e)
+        {
+            Slider_Loaded(sender, e);
+        }
+
+        private void TDP1_Loaded(object sender, RoutedEventArgs e)
+        {
+            Slider_Loaded(sender, e);
+        }
+
+        private void TDP2_Loaded(object sender, RoutedEventArgs e)
+        {
+            Slider_Loaded(sender, e);
+        }
+        #endregion
+
+
         #region timer controls
 
         private void initializeTimer()
@@ -343,7 +408,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
+
         #endregion system controls
+
 
     }
 }

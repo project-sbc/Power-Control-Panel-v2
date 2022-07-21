@@ -10,11 +10,13 @@
       MinWidth="450"
       Title="HomePage">
 
+
+    
     <ScrollViewer Margin="5,10,0,0">
         <StackPanel Orientation="Vertical" >
             <GroupBox Name="GBSystemControls" Margin="0,0,0,10">
                 <GroupBox.Background>
-                    <SolidColorBrush Color="{DynamicResource MahApps.Colors.Gray10}"/>
+                    <SolidColorBrush Color="Transparent"/>
                 </GroupBox.Background>
                 <GroupBox.Header >
                     <DockPanel Height="30">
@@ -44,13 +46,8 @@
                             </Label.Foreground>
                         </Label>
                         <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE706;" FontSize="30" Margin="8,0,0,0"/>
-                        <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Brightness_DragCompleted"  Thumb.DragStarted="Brightness_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  Value="{Binding ElementName=txtsliderBrightness, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Brightness_ValueChanged" MouseLeftButtonUp="Brightness_MouseLeftButtonUp"  >
-                            <Slider.LayoutTransform>
-                                <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
+                        <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Brightness_DragCompleted"  Thumb.DragStarted="Brightness_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  Value="{Binding ElementName=txtsliderBrightness, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Brightness_ValueChanged" MouseLeftButtonUp="Brightness_MouseLeftButtonUp" AutoToolTipPlacement="TopLeft" Loaded="Brightness_Loaded"  />
 
-                            </Slider.LayoutTransform>
-
-                        </Slider>
 
                     </DockPanel>
                     <DockPanel Grid.Row="2"  >
@@ -61,11 +58,8 @@
                             </Label.Foreground>
                         </Label>
                         <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE767;" FontSize="30" Margin="8,0,0,0"/>
-                        <Slider x:Name="Volume" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Volume_DragCompleted"  Thumb.DragStarted="Volume_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  Value="{Binding ElementName=txtsliderVolume, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Volume_ValueChanged" MouseLeftButtonUp="Volume_MouseLeftButtonUp"  >
-                            <Slider.LayoutTransform>
-                                <ScaleTransform ScaleY="1.4" CenterX="15" CenterY="15"/>
-
-                            </Slider.LayoutTransform>
+                        <Slider x:Name="Volume"  DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Volume_DragCompleted"  Thumb.DragStarted="Volume_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  Value="{Binding ElementName=txtsliderVolume, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="Volume_ValueChanged" MouseLeftButtonUp="Volume_MouseLeftButtonUp" AutoToolTipPlacement="TopLeft" Loaded="Volume_Loaded"  >
+       
 
                         </Slider>
 
@@ -110,7 +104,7 @@
                             </Label.Foreground>
                         </Label>
                         <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
-                        <Slider x:Name="TDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="TDP1_DragCompleted"  Thumb.DragStarted="TDP1_DragStarted" Width="230" Height="40" Minimum="5" Maximum="35"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP1_ValueChanged" MouseLeftButtonUp="TDP1_MouseLeftButtonUp" TouchUp="TDP1_TouchUp" TouchDown="TDP1_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"  />
+                        <Slider x:Name="TDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="TDP1_DragCompleted"  Thumb.DragStarted="TDP1_DragStarted" Width="230" Height="40" Minimum="5" Maximum="35"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP1_ValueChanged" MouseLeftButtonUp="TDP1_MouseLeftButtonUp" TouchUp="TDP1_TouchUp" TouchDown="TDP1_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="TDP1_Loaded"  />
 
                     </DockPanel>
 
@@ -122,7 +116,7 @@
                         </Label>
 
                         <Label x:Name="txtsliderTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP2, Path=Value}"/>
-                        <Slider x:Name="TDP2"  DockPanel.Dock="Right" Thumb.DragCompleted="TDP2_DragCompleted" Height="25" Thumb.DragStarted="TDP2_DragStarted" Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP2_ValueChanged" MouseLeftButtonUp="TDP2_MouseLeftButtonUp" HorizontalAlignment="Right" TouchDown="TDP2_TouchDown" TouchUp="TDP2_TouchUp" AutoToolTipPlacement="TopLeft"  >
+                        <Slider x:Name="TDP2"  DockPanel.Dock="Right" Thumb.DragCompleted="TDP2_DragCompleted" Height="25" Thumb.DragStarted="TDP2_DragStarted" Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None" ValueChanged="TDP2_ValueChanged" MouseLeftButtonUp="TDP2_MouseLeftButtonUp" HorizontalAlignment="Right" TouchDown="TDP2_TouchDown" TouchUp="TDP2_TouchUp" AutoToolTipPlacement="TopLeft" Loaded="TDP2_Loaded"  >
 
                         </Slider>
                     </DockPanel>

@@ -14,6 +14,7 @@ using Power_Control_Panel.PowerControlPanel.Classes.StartUp;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using SharpDX.XInput;
+using ControlzEx.Theming;
 
 namespace Power_Control_Panel
 {
@@ -74,6 +75,10 @@ namespace Power_Control_Panel
 
             initializeTimer();
 
+
+
+            //test code here
+            ThemeManager.Current.ChangeTheme(this, "Dark.Green");
 
         }
    
