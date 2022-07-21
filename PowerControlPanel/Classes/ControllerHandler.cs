@@ -21,11 +21,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
 
         public void createGamePadStateCollectorLoop(int threadSleepValue, bool readEventArg)
         {
-            controllerThread = new Thread(new ThreadStart(gamePadStateCollector));
-            controllerThread.IsBackground = true;
+            //controllerThread = new Thread(new ThreadStart(gamePadStateCollector));
+            //controllerThread.IsBackground = true;
             threadSleep = threadSleepValue;
             readEvents = readEventArg;
-            controllerThread.Start();
+            gamePadStateCollector();
         }
 
         public void gamePadStateCollector()
@@ -54,53 +54,49 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                             while (GlobalVariables.useRoutineThread && controller.IsConnected)
                             {
 
-                                if (!readEvents) 
+                                gamepadOld = gamepadCurrent;
+                                gamepadCurrent = controller.GetState().Gamepad;
+
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.A) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.A))
                                 {
-                                    gamepadCurrent = controller.GetState().Gamepad;
-                                    if (gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
-                                    {
-                                        if (gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.DPadRight))
-                                        {
-                                            events.RaiseEventQAM();
-                                        }
-                                        if (gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.DPadDown))
-                                        {
-                                            events.RaiseEventOSK();
-                                        }
-                                    }
+                                    events.RaiseEventA();
+
                                 }
-                                else 
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.B) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.B))
                                 {
-                                    gamepadOld = gamepadCurrent;
-                                    gamepadCurrent = controller.GetState().Gamepad;
+                                    events.RaiseEventB();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.X) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.X))
+                                {
+                                    events.RaiseEventX();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.Y) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.Y))
+                                {
+                                    events.RaiseEventY();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+                                {
+                                    events.RaiseEventLB();
 
-                                    if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.A) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.A))
-                                    {
-                                        events.RaiseEventA();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder))
+                                {
+                                    events.RaiseEventRB();
 
-                                    }
-                                    if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.B) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.B))
-                                    {
-                                        events.RaiseEventB();
-                                    }
-                                    if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.X) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.X))
-                                    {
-                                        events.RaiseEventX();
-                                    }
-                                    if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.Y) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.Y))
-                                    {
-                                        events.RaiseEventY();
-                                    }
-                                    if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
-                                    {
-                                        events.RaiseEventLB();
+                                }
+                                if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder))
+                                {
+                                    events.RaiseEventRB();
 
-                                    }
-                                    if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder))
-                                    {
-                                        events.RaiseEventRB();
+                                }
+                                if (gamepadOld.RightTrigger == 0 && gamepadCurrent.RightTrigger > 0)
+                                {
+                                    events.RaiseEventRT();
 
-                                    }
+                                }
+                                if (gamepadOld.LeftTrigger == 0 && gamepadCurrent.LeftTrigger > 0)
+                                {
+                                    events.RaiseEventLT();
 
                                 }
 
@@ -140,16 +136,17 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
 
     public class buttonEvents 
     {
-        public void RaiseEventOSK()
+        public void RaiseEventRT()
         {
-            pressOSKEvent?.Invoke(this, EventArgs.Empty);
+            pressRTEvent?.Invoke(this, EventArgs.Empty);
         }
-        public event EventHandler pressOSKEvent;
-        public void RaiseEventQAM()
+        public event EventHandler pressRTEvent;
+        public void RaiseEventLT()
         {
-            pressQAMEvent?.Invoke(this, EventArgs.Empty);
+            pressLTEvent?.Invoke(this, EventArgs.Empty);
         }
-        public event EventHandler pressQAMEvent;
+        public event EventHandler pressLTEvent;
+
         public void RaiseEventA()
         {
             pressAEvent?.Invoke(this, EventArgs.Empty);
@@ -162,10 +159,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
             pressXEvent?.Invoke(this, EventArgs.Empty);
         }
 
-        public event EventHandler PressYEvent;
+        public event EventHandler pressYEvent;
         public void RaiseEventY()
         {
-            PressYEvent?.Invoke(this, EventArgs.Empty);
+            pressYEvent?.Invoke(this, EventArgs.Empty);
         }
         public event EventHandler pressBEvent;
         public void RaiseEventB()

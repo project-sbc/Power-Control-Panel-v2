@@ -20,6 +20,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
 using System.Text.RegularExpressions;
 using Power_Control_Panel.PowerControlPanel.Classes;
+using System.Diagnostics;
 
 namespace Power_Control_Panel
 {
@@ -29,44 +30,36 @@ namespace Power_Control_Panel
     public partial class OSK : MetroWindow
     {
 
-
-        private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
         WindowSinker sinker;
-        InputSimulator inputSim = new InputSimulator();
+        InputSimulator sim = new InputSimulator();
 
-     
-        private Gamepad gamepad;
+        private Controller controller;
+        private Gamepad gamepadOld;
+        private Gamepad gamepadCurrent;
 
-     
         private const double CircleWidth = 10;
-
-    
-        private Dictionary<int, Point> TouchPositions = new Dictionary<int, Point>();
-        private Dictionary<int, Ellipse> TouchEllipses = new Dictionary<int, Ellipse>();
+        //private Dictionary<int, Point> TouchPositions = new Dictionary<int, Point>();
+        //private Dictionary<int, Ellipse> TouchEllipses = new Dictionary<int, Ellipse>();
         private double LLx = CircleWidth / 2;
         private double LLy = CircleWidth / 2;
         private double ULx = System.Windows.SystemParameters.PrimaryScreenWidth - CircleWidth / 2;
         private double ULy;
         private double windowY;
 
-        //Keep track of button presses
-        private bool LTouch = false;
-        private bool RTouch = false;
-        private bool YPress = false;
-        private bool BPress = false;
-        private bool XPress = false;
-        private bool LTPress = false;
-        private bool RTPress = false;
-
-        InputSimulator sim = new InputSimulator();
-
-        private bool ellipseSetup = false;  
+        private bool ellipseSetup = false;
+        private Ellipse ellipseL;
+        private Ellipse ellipseR;
+        private Point pointL;
+        private Point pointR;
 
         private bool keyAlt = false;
         private bool keyCtrl = false;
         private bool keyCap = false;
         private bool keyShift = false;
         private bool keyWin = false;
+
+
+        buttonEvents events = new buttonEvents();
 
         Dictionary<string, VirtualKeyCode> keyLookUp =
        new Dictionary<string, VirtualKeyCode>()
@@ -114,38 +107,363 @@ namespace Power_Control_Panel
 
        };
 
-
-        ControllerHandler ch = new ControllerHandler();
-
+        private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+  
         public OSK()
         {
             InitializeComponent();
-
-            setUpControllerHandler();
-
-      
+            //Make window sinker, always on top, situate bottom of screen
             setUpWindow();
+
+            //Set up  controller events for button presses
+            setUpControllerEvents();
+
+            //Set up circles, make the shared ellipses to get ready to add to canvas
             setUpCircles();
 
+            //check if controller is connected 
             setUpController();
-            setUpDispatchTimer();
 
+            //add circles to canvas if controller connected
+            addCirclesCanvas();
+
+            //Setup dispatcher timer
+            setupTimer();
+
+            //swap upper and lower case letters
             swapAlphaUpperLower(false);
         }
 
-        void setUpControllerHandler()
+        #region Controller press events
+        void HandlePressLBEvent(object sender, EventArgs a)
         {
-            ch.createGamePadStateCollectorLoop(15,true);
+            handleButtonPress(pointL, ellipseL);
+        }
+        void HandlePressRBEvent(object sender, EventArgs a)
+        {
+            handleButtonPress(pointR, ellipseR);
+        }
 
-            ch.events.pressAEvent += HandlePressAEvent;
+        void HandlePressBEvent(object sender, EventArgs a)
+        {
+
+            Close();
+            
+        }
+        void HandlePressYEvent(object sender, EventArgs a)
+        {
+            keyboardPress(canvMain.FindName("R_Space"));
+        }
+        void HandlePressXEvent(object sender, EventArgs a)
+        {
+            keyboardPress(canvMain.FindName("R_BckSpce"));
+        }
+        void HandlePressLTEvent(object sender, EventArgs a)
+        {
+
+            keyboardPress(canvMain.FindName("R_CAP"));
+        }
+        void HandlePressRTEvent(object sender, EventArgs a)
+        {
+            keyboardPress(canvMain.FindName("R_AlphaNum"));
+        }
+        #endregion controler press events
+
+        #region joystick point math
+
+        private double offset_calculator(short Input)
+        {
+            //Convert short from joystick to double, divide by largest value, and round to largest nubmer away from zero
+            if (Input < 500 && Input > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return Math.Round(10 * Convert.ToDouble(Input) / 32768, 0, MidpointRounding.AwayFromZero);
+            }
+        }
+        private Point offset_point(Point mp, Double dx, Double dy)
+        {
+            if ((mp.X + dx >= LLx) && (mp.X + dx <= ULx))
+            {
+                mp.Offset(dx, 0);
+            }
+            else
+            {
+                if (mp.X + dx < LLx)
+                {
+                    mp.X = LLx;
+                }
+                else
+                {
+                    mp.X = ULx;
+                }
+            }
+            if ((mp.Y + dy >= LLy) && (mp.Y + dy <= ULy))
+            {
+                mp.Offset(0, dy);
+            }
+            else
+            {
+                if (mp.Y + dy < LLy)
+                {
+                    mp.Y = LLy;
+                }
+                else
+                {
+                    mp.Y = ULy;
+                }
+            }
+            return mp;
+        }
+
+        #endregion joystick point math
+
+        #region setup routines
+        private void setUpControllerEvents()
+        {
+
+            events.pressBEvent += HandlePressBEvent;
+            events.pressXEvent += HandlePressXEvent;
+            events.pressYEvent += HandlePressYEvent;
+            events.pressLBEvent += HandlePressLBEvent;
+            events.pressRBEvent += HandlePressRBEvent;
+            events.pressLTEvent += HandlePressLTEvent;
+            events.pressRTEvent += HandlePressRTEvent;
+        }
+        private void setUpWindow()
+        {
+            //create window sinker for always on top
+            sinker = new WindowSinker(this);
+            sinker.Sink();
+
+            //more window options
+            this.ShowInTaskbar = false;
+            this.Topmost = true;
+            this.WindowStyle = WindowStyle.None;
+            this.AllowsTransparency = true;
+            this.Left = 0;
+            this.Top = System.Windows.SystemParameters.PrimaryScreenHeight - this.Height;
+            ULy = this.Top - CircleWidth / 2;
+            windowY = this.Top;
+
+        }
+        private void setUpController()
+        {
+            //set up controller and get first gamepad state
+            controller = new Controller(UserIndex.One);
+            if (controller != null)
+            {
+                if (controller.IsConnected)
+                {
+                    try
+                    {
+                        gamepadCurrent = controller.GetState().Gamepad;
+                    }
+                    catch { }
+                }
+                else { controller = null; }
+
+            }
+        }
+        private void setupTimer()
+        {
+            dispatcherTimer.Tick += new EventHandler(timer_Tick);
+            //If controller is not null and connected, make timespan 15 ms otherwise make it 3 seconds
+            if (controller != null) { if (controller.IsConnected) { dispatcherTimer.Interval = TimeSpan.FromMilliseconds(15); } else { dispatcherTimer.Interval = new TimeSpan(0, 0, 3); } } else { dispatcherTimer.Interval = new TimeSpan(0, 0, 3); }
+            dispatcherTimer.Start();
+        }
+        private void setUpCircles()
+        {
+            //Set up ellipses as circles to add to canvas
+            ellipseL = new Ellipse();
+            ellipseL.Stroke = Brushes.Black;
+            ellipseL.Fill = Brushes.Red;
+            ellipseL.Width = CircleWidth;
+            ellipseL.Height = CircleWidth;
+
+            ellipseR = new Ellipse();
+            ellipseR.Stroke = Brushes.Black;
+            ellipseR.Fill = Brushes.Blue;
+            ellipseR.Width = CircleWidth;
+            ellipseR.Height = CircleWidth;
+
+        }
+
+        #endregion set up routines
+
+        private void addCirclesCanvas()
+        {
+            if (controller != null)
+            {
+                if (controller.IsConnected)
+                {
+                    if (!canvMain.Children.Contains(ellipseL))
+                    {
+                        pointL = new Point(this.Width * 0.25, this.Height * 0.5);
+                        AddEllipseAt(canvMain, pointL, ellipseL);
+                    }
+                    if (!canvMain.Children.Contains(ellipseR))
+                    {
+                        pointR = new Point(this.Width * 0.75, this.Height * 0.5);
+                        AddEllipseAt(canvMain, pointR, ellipseR);
+                    }
+
+
+                    ellipseSetup = true;
+                }
+            }
+
+
+        }
+        private void removeCircles()
+        {
+
+            if (canvMain.Children.Contains(ellipseL))
+            {
+                canvMain.Children.Remove(ellipseL);
+            }
+            if (canvMain.Children.Contains(ellipseR))
+            {
+                canvMain.Children.Remove(ellipseR);
+            }
+
+        }
+
+        private void AddEllipseAt(Canvas canv, Point pt, Ellipse ellipse)
+        {
+            Canvas.SetLeft(ellipse, pt.X - (CircleWidth / 2));
+            Canvas.SetTop(ellipse, pt.Y - (CircleWidth / 2));
+
+            canv.Children.Add(ellipse);
+        }
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            //Check controller, if null start it
+            if (controller == null)
+            {
+                controller = new Controller(UserIndex.One);
+                if (controller == null)
+                {
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+                }
+                else
+                { 
+                    if (controller.IsConnected)
+                    {
+                        dispatcherTimer.Interval = TimeSpan.FromMilliseconds(15);
+                        addCirclesCanvas();
+                        //Use try catch to prevent error when controller disconnects
+                        try
+                        {
+                            gamepadCurrent = controller.GetState().Gamepad;
+                        }
+                        catch { }
+                    }
+                    else { dispatcherTimer.Interval = new TimeSpan(0, 0, 3); }
+                
+                }
+            }
+            else
+            {
+                if (!controller.IsConnected) 
+                { 
+                    controller = null;
+                    ellipseSetup = false;
+                    removeCircles();
+                }
+            }
+
+
+            if (controller != null)
+            {
+                if (controller.IsConnected)
+                {
+                    //caputre in try to prevent error if controller disconnected
+                    try
+                    {
+                        //get gamepad states
+                        gamepadOld = gamepadCurrent;
+                        gamepadCurrent = controller.GetState().Gamepad;
+
+
+
+                        //move circles based on joystick movement
+                        double dlx = offset_calculator(gamepadCurrent.LeftThumbX);
+                        double dly = -1 * offset_calculator(gamepadCurrent.LeftThumbY);
+                        double drx = offset_calculator(gamepadCurrent.RightThumbX);
+                        double dry = -1 * offset_calculator(gamepadCurrent.RightThumbY);
+
+
+                        pointL = offset_point(pointL, dlx, dly);
+                        Canvas.SetLeft(ellipseL, pointL.X - (CircleWidth / 2));
+                        Canvas.SetTop(ellipseL, pointL.Y - (CircleWidth / 2));
+
+                        pointR = offset_point(pointR, drx, dry);
+                        Canvas.SetLeft(ellipseR, pointR.X - (CircleWidth / 2));
+                        Canvas.SetTop(ellipseR, pointR.Y - (CircleWidth / 2));
+
+
+                        //check for event firing from button states
+                        if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.A) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.A))
+                        {
+                            events.RaiseEventA();
+
+                        }
+                        if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.B) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.B))
+                        {
+                            events.RaiseEventB();
+                        }
+                        if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.X) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.X))
+                        {
+                           events.RaiseEventX();
+                        }
+                        if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.Y) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.Y))
+                        {
+                            events.RaiseEventY();
+                        }
+                        if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+                        {
+                            events.RaiseEventLB();
+                          
+
+                        }
+                        if (!gamepadOld.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepadCurrent.Buttons.HasFlag(GamepadButtonFlags.RightShoulder))
+                        {
+                            events.RaiseEventRB();
+
+                        }
+
+                        if (gamepadOld.RightTrigger == 0 && gamepadCurrent.RightTrigger > 0)
+                        {
+                            events.RaiseEventRT();
+
+                        }
+                        if (gamepadOld.LeftTrigger == 0 && gamepadCurrent.LeftTrigger > 0)
+                        {
+                            events.RaiseEventLT();
+
+                        }
+                    }
+                    catch { }
+
+
+
+
+
+                }
+
+            }
+
 
 
         }
 
-        void HandlePressAEvent(object sender, EventArgs a)
-        {
-            MessageBox.Show("hey event worked");
-        }
+
+      
+
+        
 
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -354,294 +672,92 @@ namespace Power_Control_Panel
 
 
         }
-        void setUpCircles()
-        {
-
-            Point startL = new Point(this.Width * 0.25, this.Height * 0.5);
-
-            Point startR = new Point(this.Width * 0.75, this.Height * 0.5);
-
-            Ellipse el = AddEllipseAt(canvMain, startL, Brushes.Red);
-            Ellipse el2 = AddEllipseAt(canvMain, startR, Brushes.Blue);
-            TouchPositions.Add(1, startL);
-            TouchPositions.Add(2, startR);
-            TouchEllipses.Add(1, el);
-            TouchEllipses.Add(2, el2);
-
-            ellipseSetup = true;
-
-        }
-        void removeCircles()
-        {
-         
-            if (canvMain.Children.Contains(TouchEllipses[1]))
-            {
-                canvMain.Children.Remove(TouchEllipses[1]);
-                TouchPositions.Remove(1);
-                TouchEllipses.Remove(1);
-            }
-            if (canvMain.Children.Contains(TouchEllipses[2]))
-            {
-                canvMain.Children.Remove(TouchEllipses[2]);
-                TouchPositions.Remove(2);
-                TouchEllipses.Remove(2);
-            }
-
-        }
-        void setUpDispatchTimer()
-        {
-            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Start();
-        }
-        void setUpController()
-
-        {
-            
-            if (ch.controller == null && ellipseSetup)
-            {
-                //set up dispatch timer to check for xinput controller every 5 seconds
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
-                ellipseSetup = false;
-                removeCircles();
-            }
-            else
-            {
-                if (!ellipseSetup)
-                {
-                    setUpCircles();
-                }
-                dispatcherTimer.Interval = TimeSpan.FromMilliseconds(15);
-                
-            }
-
-        }
-        void setUpWindow()
-        {
-            sinker = new WindowSinker(this);
-            sinker.Sink();
-
-            this.ShowInTaskbar = false;
-            this.Topmost = true;
-            this.WindowStyle = WindowStyle.None;
-            this.AllowsTransparency = true;
-
-
-            this.Left = 0;
-            this.Top = System.Windows.SystemParameters.PrimaryScreenHeight - this.Height;
-            ULy = this.Top - CircleWidth / 2;
-            windowY = this.Top;
-
-        }
-        private double offset_calculator(short Input)
-        {
-            //Convert short from joystick to double, divide by largest value, and round to largest nubmer away from zero
-            if (Input < 500 && Input > 0)
-            {
-                return 1;
-            }
-            else
-            {
-                return Math.Round(10 * Convert.ToDouble(Input) / 32768, 0, MidpointRounding.AwayFromZero);
-            }
-
+        
         
 
-        }
-        private Point offset_point(Point mp, Double dx, Double dy)
-        {
-            if ((mp.X + dx >= LLx) && (mp.X + dx <= ULx))
-            {
-                mp.Offset(dx, 0);
-            }
-            else
-            {
-                if (mp.X + dx < LLx)
-                {
-                    mp.X = LLx;
-                }
-                else
-                {
-                    mp.X = ULx;
-                }
-            }
-            if ((mp.Y + dy >= LLy) && (mp.Y + dy <= ULy))
-            {
-                mp.Offset(0, dy);
-            }
-            else
-            {
-                if (mp.Y + dy < LLy)
-                {
-                    mp.Y = LLy;
-                }
-                else
-                {
-                    mp.Y = ULy;
-                }
-            }
-            return mp;
-        }
-
-        void handleButtonPress(Point point, int ellipse)
+        void handleButtonPress(Point point, Ellipse ellipse)
         {
             //Delete ellipse before running inputhittest or it will return the ellipse
-            Brush ellipseColor = TouchEllipses[ellipse].Fill;
-
-            canvMain.Children.Remove(TouchEllipses[ellipse]);
+            
+            canvMain.Children.Remove(ellipse);
             
             IInputElement element = InputHitTest(point);
             object sender = element;
 
-            Ellipse el = AddEllipseAt(canvMain, point, ellipseColor);
-            TouchEllipses[ellipse] = el;
+            AddEllipseAt(canvMain, point, ellipse);
+         
             keyboardPress(sender);
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
-        {
-
-            if (ch.controller.IsConnected && ellipseSetup)
-            {
-                if (!ellipseSetup)
-                {
-                    setUpCircles();
-                    ellipseSetup = true;
-                }
-
-
-
-                gamepad = ch.controller.GetState().Gamepad;
-                double dlx = offset_calculator(gamepad.LeftThumbX);
-                double dly = -1 * offset_calculator(gamepad.LeftThumbY);
-                double drx = offset_calculator(gamepad.RightThumbX);
-                double dry = -1 * offset_calculator(gamepad.RightThumbY);
-
-
-
-                System.Windows.Point mp = TouchPositions[1];
-                //Use offset point function to make sure 
-                mp = offset_point(mp, dlx, dly);
-                TouchPositions[1] = mp;
-                Canvas.SetLeft(TouchEllipses[1], mp.X - (CircleWidth / 2));
-                Canvas.SetTop(TouchEllipses[1], mp.Y - (CircleWidth / 2));
-
-                if (gamepad.Buttons == GamepadButtonFlags.LeftShoulder & !LTouch)
-                {
-                    handleButtonPress(mp,1);
-                    LTouch = true;
-                }
-                if (gamepad.Buttons != GamepadButtonFlags.LeftShoulder & LTouch)
-                {
-                    LTouch = false;
-                }
-
-                System.Windows.Point mp2 = TouchPositions[2];
-                mp2 = offset_point(mp2, drx, dry);
-                TouchPositions[2] = mp2;
-                Canvas.SetLeft(TouchEllipses[2], mp2.X - (CircleWidth / 2));
-                Canvas.SetTop(TouchEllipses[2], mp2.Y - (CircleWidth / 2));
-
-                if (gamepad.Buttons == GamepadButtonFlags.RightShoulder & !RTouch)
-                {
-                    handleButtonPress(mp2, 2);
-                    RTouch = true;
-                }
-                if (gamepad.Buttons != GamepadButtonFlags.RightShoulder & RTouch)
-                {
-                    RTouch = false;
-                }
-
-                
-                if (gamepad.Buttons == GamepadButtonFlags.Y & !YPress)
-                {
-                    keyboardPress(canvMain.FindName("R_Space"));
-                    YPress = true;
-                }
-                if (gamepad.Buttons != GamepadButtonFlags.Y & YPress)
-                {
-                    YPress = false;
-                }
-
-                if (gamepad.Buttons == GamepadButtonFlags.B)
-                {
-                    this.Close();
-                }
-
-                if (gamepad.Buttons == GamepadButtonFlags.X & !XPress)
-                {
-                    keyboardPress(canvMain.FindName("R_BckSpce"));
-                    XPress = true;
-                }
-                if (gamepad.Buttons != GamepadButtonFlags.X & XPress)
-                {
-                    XPress = false;
-                }
-
-
-                if (gamepad.LeftTrigger > 0 & !LTPress)
-                {
-                    keyboardPress(canvMain.FindName("R_AlphaNum"));
-                    LTPress = true;
-                }
-                if (gamepad.LeftTrigger == 0 & LTPress)
-                {
-                    LTPress = false;
-                }
-
-                if (gamepad.RightTrigger > 0 & !RTPress)
-                {
-                    keyboardPress(canvMain.FindName("R_CAP"));
-                    RTPress = true;
-                }
-                if (gamepad.RightTrigger == 0 & RTPress)
-                {
-                    RTPress = false;
-                }
-            }
-            else
-            {
-                setUpController();
-
-            }
-
-        }
-
-
-
-        private Ellipse AddEllipseAt(Canvas canv, Point pt, Brush brush)
-        {
-            Ellipse el = new Ellipse();
-            el.Stroke = Brushes.Black;
-            el.Fill = brush;
-
-            el.Width = CircleWidth;
-            el.Height = CircleWidth;
-
-            Canvas.SetLeft(el, pt.X - (CircleWidth / 2));
-            Canvas.SetTop(el, pt.Y - (CircleWidth / 2));
-
-            canv.Children.Add(el);
-
-            return el;
-        }
+       
+        
 
         private void Keyboard_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            InputSimulator sim = new InputSimulator();
+            
             sim.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
             sim.Keyboard.KeyUp(VirtualKeyCode.CONTROL);
             sim.Keyboard.KeyUp(VirtualKeyCode.MENU);
             sim.Keyboard.KeyUp(VirtualKeyCode.LWIN);
             if (Console.CapsLock) { sim.Keyboard.KeyPress(VirtualKeyCode.CAPITAL); }
 
-  
+            dispatcherTimer.Stop();
+
             //Make null so it can be called again
             MainWindow.osk = null;
 
+            
            
 
         }
 
 
+    }
+
+    public class buttonEvents
+    {
+        public void RaiseEventRT()
+        {
+            pressRTEvent?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler pressRTEvent;
+        public void RaiseEventLT()
+        {
+            pressLTEvent?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler pressLTEvent;
+
+        public void RaiseEventA()
+        {
+            pressAEvent?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler pressAEvent;
+
+        public event EventHandler pressXEvent;
+        public void RaiseEventX()
+        {
+            pressXEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler pressYEvent;
+        public void RaiseEventY()
+        {
+            pressYEvent?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler pressBEvent;
+        public void RaiseEventB()
+        {
+            pressBEvent?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler pressLBEvent;
+        public void RaiseEventLB()
+        {
+            pressLBEvent?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler pressRBEvent;
+        public void RaiseEventRB()
+        {
+            pressRBEvent?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
