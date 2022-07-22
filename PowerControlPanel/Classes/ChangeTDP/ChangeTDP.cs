@@ -528,7 +528,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
                 catch (Exception ex)
                 {
-                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Change: " + ex.Message + ", processRyzenAdj is " + processRyzenAdj + ", result is " + result + ", commandargument is " + commandArguments;
+                    string errorMsg = "Error: ChangeTDP.cs:  Run AMD TDP Read: " + ex.Message + ", processRyzenAdj is " + processRyzenAdj + ", result is " + result + ", commandargument is " + commandArguments;
                     StreamWriterLog.startStreamWriter(errorMsg);
                     MessageBox.Show(errorMsg);
 
