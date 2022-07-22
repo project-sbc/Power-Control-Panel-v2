@@ -21,7 +21,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         public string MCHBAR = "";
         string RWDelay = Properties.Settings.Default.RWDelay;
         private  Object objLock = new Object();
-
+        private string processorName = "";
         public  string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
 
@@ -218,7 +218,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 {
                     //Get the processor name to determine intel vs AMD
                     object processorNameRegistry = Registry.GetValue("HKEY_LOCAL_MACHINE\\hardware\\description\\system\\centralprocessor\\0", "ProcessorNameString", null);
-                    string processorName = null;
+                    
                     if (processorNameRegistry != null)
                     {
                         //If not null, find intel or AMD string and clarify type. For Intel determine MCHBAR for rw.exe
@@ -497,6 +497,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 string processRyzenAdj = "";
                 string result = "";
                 string commandArguments = "";
+                if (processorName.Contains("6800U"))
+                {
+                    GlobalVariables.readPL1 = GlobalVariables.setPL1;
+                    GlobalVariables.readPL2 = GlobalVariables.setPL2;
+                }
+                
                 try
                 {
                      processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
