@@ -20,6 +20,7 @@
     <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
     <None Remove="Resources\AMD\RyzenAdj\WinRing0x64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\WinRing0x64.sys" />
+    <None Remove="Resources\CRU\CRU.exe" />
     <None Remove="Resources\Intel\KX\KX.exe" />
     <None Remove="Resources\Intel\MSR\msr-cmd.exe" />
     <None Remove="Resources\Intel\MSR\winio-drv.exe" />
@@ -30,6 +31,7 @@
     <None Remove="Resources\Intel\MSR\WinRing0x64.dll" />
     <None Remove="Resources\Intel\MSR\WinRing0x64.sys" />
     <None Remove="Resources\Intel\RW\Rw.exe" />
+    <None Remove="Resources\QRes\QRes.exe" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +54,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\AMD\RyzenAdj\WinRing0x64.sys">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CRU\CRU.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Intel\KX\KX.exe">
@@ -82,6 +87,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Intel\RW\Rw.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\QRes\QRes.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
