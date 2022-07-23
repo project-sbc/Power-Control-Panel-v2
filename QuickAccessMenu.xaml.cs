@@ -138,7 +138,9 @@ namespace Power_Control_Panel
 
         private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            timer.Stop();
             MainWindow.overlay = null;
+            
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)

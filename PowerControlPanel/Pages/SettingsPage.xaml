@@ -1,20 +1,75 @@
 ﻿<Page x:Class="Power_Control_Panel.PowerControlPanel.Pages.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      MinWidth="450"
       Title="SettingsPage">
 
-    <Grid>
-        <ComboBox x:Name="cboIntelTDP" HorizontalAlignment="Left" Margin="184,137,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cboIntelTDP_SelectionChanged">
-            <ComboBoxItem Content="MMIO"/>
-            <ComboBoxItem Content="MMIO and MSR"/>
-            <ComboBoxItem Content="MSR"/>
-        </ComboBox>
-        <Label x:Name="label" Content="Intel TDP Type" HorizontalAlignment="Left" Margin="77,137,0,0" VerticalAlignment="Top"/>
 
-    </Grid>
+
+    <ScrollViewer Margin="5,10,0,0">
+        <StackPanel Orientation="Vertical" >
+            <GroupBox Name="GBSystemControls" Margin="0,0,0,10">
+                <GroupBox.Background>
+                    <SolidColorBrush Color="Transparent"/>
+                </GroupBox.Background>
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="SYSTEM CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" x:Name="enableControlSystem"   IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
+                    </DockPanel>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+
+
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+
+
+
+
+                    <DockPanel   >
+
+                        <Label Content="Brightness" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                            <Label.Foreground>
+                                <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
+                            </Label.Foreground>
+                        </Label>
+                 
+
+                    </DockPanel>
+                    <DockPanel Grid.Row="2"  >
+
+                        <Label Content="Volume" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                            <Label.Foreground>
+                                <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
+                            </Label.Foreground>
+                        </Label>
+                   
+
+
+                    </DockPanel>
+
+
+                </Grid>
+
+
+
+
+
+            </GroupBox>
+
+          
+        </StackPanel>
+    </ScrollViewer>
 </Page>

@@ -414,7 +414,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     float intResult;
                     if (isPL1)
                     {
-                        FindString = result.IndexOf("0x00dd8") + 7;
+                        FindString = result.IndexOf("0x00000610") + 29;
                         hexResult = result.Substring(FindString, 3).Trim();
                         intResult = (Convert.ToInt32(hexResult, 16)) / 8;
                         return intResult.ToString();
@@ -422,8 +422,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     }
                     else
                     {
-                        FindString = result.IndexOf("0x00438") + 7;
-                        if (FindString == 6) { FindString = result.IndexOf("0x00428") + 7; }
+                        FindString = result.IndexOf("0x00000610") + 18;
                         hexResult = result.Substring(FindString, 3).Trim();
                         intResult = (Convert.ToInt32(hexResult, 16)) / 8;
                         return intResult.ToString();

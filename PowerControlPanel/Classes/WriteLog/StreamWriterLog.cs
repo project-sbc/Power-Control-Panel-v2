@@ -11,7 +11,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
     public class StreamWriterLog
     {
         //public static string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        public string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
+        public static string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
         public static Object objLock = new Object();
         public static void startStreamWriter(string newLog)
         {

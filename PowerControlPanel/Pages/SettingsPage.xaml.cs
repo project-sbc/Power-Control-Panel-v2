@@ -27,11 +27,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
   
 
-        private void cboIntelTDP_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Properties.Settings.Default.IntelMMIOMSR = cboIntelTDP.Text;
-            Properties.Settings.Default.Save();
-
-        }
+     
     }
 }
