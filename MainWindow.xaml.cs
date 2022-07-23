@@ -60,6 +60,8 @@ namespace Power_Control_Panel
         private Controller controller;
         private Gamepad gamepad;
 
+        private string theme = Properties.Settings.Default.systemTheme;
+
         public static Window overlay;
         public static Window osk;
         public MainWindow()
@@ -78,10 +80,13 @@ namespace Power_Control_Panel
 
 
             //test code here
-            ThemeManager.Current.ChangeTheme(this, "Light.Steel");
+            ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
 
         }
-   
+        private void setTheme()
+        {
+            ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
+        }
         private void initializeTimer()
         {
             timer.Interval = new TimeSpan(0, 0, 1);
@@ -91,6 +96,7 @@ namespace Power_Control_Panel
         }
         private void timerTick(object sender, EventArgs e)
         {
+            //Controller input handler
             controller = new Controller(UserIndex.One);
             if (controller != null)
             { 
@@ -113,6 +119,14 @@ namespace Power_Control_Panel
                     }
 
                 }
+            }
+
+
+            //Theme manager
+            if (theme != Properties.Settings.Default.systemTheme)
+            {
+                setTheme();
+                theme = Properties.Settings.Default.systemTheme;
             }
         }
         private void OSKEvent(object sender, EventArgs e)

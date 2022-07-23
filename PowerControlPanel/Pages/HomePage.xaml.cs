@@ -13,16 +13,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
+using ControlzEx.Theming;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
     /// <summary>
     /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class HomePage : Page 
     {
         private DispatcherTimer timer = new DispatcherTimer();
 
@@ -46,7 +48,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             loadTDPValues();
             loadSystemValues();
 
-         
+            ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
         }
 
         private DependencyObject GetElementFromParent(DependencyObject parent, string childname)

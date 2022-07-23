@@ -10,19 +10,22 @@
       MinWidth="450"
       Title="SettingsPage">
 
+    <Page.Resources>
+        <Style TargetType="ComboBoxItem">
+
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+    </Page.Resources>
 
 
     <ScrollViewer Margin="5,10,0,0">
         <StackPanel Orientation="Vertical" >
-            <GroupBox Name="GBSystemControls" Margin="0,0,0,10">
-                <GroupBox.Background>
-                    <SolidColorBrush Color="Transparent"/>
-                </GroupBox.Background>
-                <GroupBox.Header >
+            <GroupBox Name="GB_General_Settings" Margin="0,0,0,10">
+                   <GroupBox.Header >
                     <DockPanel Height="30">
-                        <Label Content="SYSTEM CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                        <Label Content="GENERAL SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" x:Name="enableControlSystem"   IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
+                        <Button x:Name="btnSave" Content="Save Settings" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click"></Button>
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid>
@@ -40,20 +43,44 @@
 
                     <DockPanel   >
 
-                        <Label Content="Brightness" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-                            <Label.Foreground>
-                                <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
-                            </Label.Foreground>
-                        </Label>
-                 
+                        <Label Content="Theme" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+                        <ComboBox x:Name="cboAccentTheme" Width="150" DockPanel.Dock="Right" HorizontalAlignment="Right" IsEditable="False">
+                            <ComboBoxItem Content="Red"/>
+                            <ComboBoxItem Content="Green"/>
+                            <ComboBoxItem Content="Blue"/>
+                            <ComboBoxItem Content="Purple"/>
+                            <ComboBoxItem Content="Orange"/>
+                            <ComboBoxItem Content="Lime"/>
+                            <ComboBoxItem Content="Emerald"/>
+                            <ComboBoxItem Content="Teal"/>
+                            <ComboBoxItem Content="Cyan"/>
+                            <ComboBoxItem Content="Cobalt"/>
+                            <ComboBoxItem Content="Indigo"/>
+                            <ComboBoxItem Content="Violet"/>
+                            <ComboBoxItem Content="Pink"/>
+                            <ComboBoxItem Content="Magenta"/>
+                            <ComboBoxItem Content="Crimson"/>
+                            <ComboBoxItem Content="Amber"/>
+                            <ComboBoxItem Content="Yellow"/>
+                            <ComboBoxItem Content="Brown"/>
+                            <ComboBoxItem Content="Olive"/>
+                            <ComboBoxItem Content="Steel"/>
+                            <ComboBoxItem Content="Mauve"/>
+                            <ComboBoxItem Content="Taupe"/>
+                            <ComboBoxItem Content="Sienna"/>
+
+                        </ComboBox>
+                        <ComboBox x:Name="cboLightDarkTheme" Width="100" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                            <ComboBoxItem Content="Light" />
+                            <ComboBoxItem Content="Dark" />
+
+                        </ComboBox>
 
                     </DockPanel>
                     <DockPanel Grid.Row="2"  >
 
                         <Label Content="Volume" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-                            <Label.Foreground>
-                                <SolidColorBrush Color="{DynamicResource MahApps.Colors.AccentBase}"/>
-                            </Label.Foreground>
+          
                         </Label>
                    
 

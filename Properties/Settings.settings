@@ -23,14 +23,14 @@
     <Setting Name="showTDP" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="RWDelay" Type="System.String" Scope="User">
-      <Value Profile="(Default)">800</Value>
-    </Setting>
     <Setting Name="showSystem" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="showIntlPB" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="systemTheme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Light.Steel</Value>
     </Setting>
   </Settings>
 </SettingsFile>

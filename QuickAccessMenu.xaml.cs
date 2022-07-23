@@ -15,6 +15,7 @@ using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using SharpDX.XInput;
 using System.Net.NetworkInformation;
 using System.Management;
+using ControlzEx.Theming;
 
 namespace Power_Control_Panel
 {
@@ -45,7 +46,7 @@ namespace Power_Control_Panel
 
             updateValues();
 
-
+            ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
         }
 
         void initializeTimer()

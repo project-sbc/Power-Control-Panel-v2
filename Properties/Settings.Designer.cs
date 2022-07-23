@@ -109,19 +109,7 @@ namespace Power_Control_Panel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
-        public string RWDelay {
-            get {
-                return ((string)(this["RWDelay"]));
-            }
-            set {
-                this["RWDelay"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool showSystem {
             get {
                 return ((bool)(this["showSystem"]));
@@ -140,6 +128,18 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["showIntlPB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Light.Steel")]
+        public string systemTheme {
+            get {
+                return ((string)(this["systemTheme"]));
+            }
+            set {
+                this["systemTheme"] = value;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
     {
         public string cpuType = "";
         public string MCHBAR = "";
-        string RWDelay = Properties.Settings.Default.RWDelay;
+        string RWDelay = "800"; //legacy value, RW.exe is not used anymore
         private  Object objLock = new Object();
         private string processorName = "";
         //public  string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
