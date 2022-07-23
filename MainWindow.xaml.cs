@@ -16,6 +16,7 @@ using Power_Control_Panel.PowerControlPanel.Classes;
 using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using SharpDX.XInput;
 using ControlzEx.Theming;
+using System.IO;
 
 namespace Power_Control_Panel
 {
@@ -72,11 +73,14 @@ namespace Power_Control_Panel
 
         public static Window overlay;
         public static Window osk;
+
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         public MainWindow()
         {
             this.InitializeComponent();
 
             StartUp.runStartUp();
+
 
             GlobalVariables.routineUpdate.startThread();
 
@@ -92,7 +96,17 @@ namespace Power_Control_Panel
             //test code here
             PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
 
+        
         }
+      
+        private void notifyIcon_Click(object sender, EventArgs e)
+        {
+            this.WindowState = WindowState.Normal;
+            notifyIcon.Visible = false;
+            this.ShowInTaskbar = true;
+
+        }
+
         private void setTheme()
         {
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
@@ -261,5 +275,28 @@ namespace Power_Control_Panel
 
         #endregion navigation
 
+        private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                notifyIcon.Visible = true;
+                this.ShowInTaskbar = false;
+
+
+            }
+        }
+
+        private void MetroWindow_Initialized(object sender, EventArgs e)
+        {
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Click += notifyIcon_Click;
+            if (String.Equals("C:\\Windows\\System32", Directory.GetCurrentDirectory(), StringComparison.OrdinalIgnoreCase))
+            {
+           
+                this.WindowState = WindowState.Minimized;
+                this.ShowInTaskbar = false;
+                notifyIcon.Visible = true;
+            }
+        }
     }
 }
