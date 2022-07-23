@@ -22,8 +22,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         string RWDelay = Properties.Settings.Default.RWDelay;
         private  Object objLock = new Object();
         private string processorName = "";
-        public  string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
+        //public  string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
 
         //Read TDP routines
         public void readTDP()
