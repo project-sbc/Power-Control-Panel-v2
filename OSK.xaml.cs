@@ -248,6 +248,7 @@ namespace Power_Control_Panel
             sinker.Sink();
 
             //more window options
+            this.Height = System.Windows.SystemParameters.PrimaryScreenHeight * 0.4;
             this.ShowInTaskbar = false;
             this.Topmost = true;
             this.WindowStyle = WindowStyle.None;
@@ -477,6 +478,7 @@ namespace Power_Control_Panel
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            
             keyboardPress(sender);
         }
 
