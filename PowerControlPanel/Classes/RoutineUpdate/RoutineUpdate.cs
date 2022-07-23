@@ -27,6 +27,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 
                 ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
                 ChangeVolume.AudioManager.GetMasterVolume();
+                ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
                 if (counter > 10) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP()); counter = -1; }
                 
                 Thread.Sleep(1000);

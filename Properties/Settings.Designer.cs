@@ -142,5 +142,17 @@ namespace Power_Control_Panel.Properties {
                 this["systemTheme"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Disable")]
+        public string systemAutoStart {
+            get {
+                return ((string)(this["systemAutoStart"]));
+            }
+            set {
+                this["systemAutoStart"] = value;
+            }
+        }
     }
 }

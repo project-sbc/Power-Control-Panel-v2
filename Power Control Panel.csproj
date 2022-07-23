@@ -32,6 +32,7 @@
     <None Remove="Resources\Intel\MSR\WinRing0x64.sys" />
     <None Remove="Resources\Intel\RW\Rw.exe" />
     <None Remove="Resources\QRes\QRes.exe" />
+    <None Remove="Resources\SetDPI\SetDpi.exe" />
   </ItemGroup>
 
   <ItemGroup>
@@ -90,6 +91,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\QRes\QRes.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SetDPI\SetDpi.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

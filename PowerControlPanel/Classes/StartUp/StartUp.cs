@@ -15,10 +15,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
         {
             TaskScheduler.TaskScheduler.startScheduler();
             GlobalVariables.tdp.readTDP();
-            if (GlobalVariables.readPL1 > 4000) { Properties.Settings.Default.IntelMMIOMSR = "MSR"; Properties.Settings.Default.Save(); GlobalVariables.tdp.readTDP(); } 
+            if (GlobalVariables.readPL1 > 4000) { Properties.Settings.Default.IntelMMIOMSR = "MSR"; Properties.Settings.Default.Save(); GlobalVariables.tdp.readTDP(); }
 
-            //RoutineUpdate.RoutineUpdate.createGamePadStateCollectorLoop();
-            ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
+            ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
+            ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
+            //ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
+       
         }
     }
 }

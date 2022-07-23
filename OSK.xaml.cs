@@ -21,6 +21,7 @@ using System.Windows.Controls.Primitives;
 using System.Text.RegularExpressions;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using System.Diagnostics;
+using ControlzEx.Theming;
 
 namespace Power_Control_Panel
 {
@@ -29,6 +30,7 @@ namespace Power_Control_Panel
     /// </summary>
     public partial class OSK : MetroWindow
     {
+        
 
         WindowSinker sinker;
         InputSimulator sim = new InputSimulator();
@@ -137,6 +139,8 @@ namespace Power_Control_Panel
 
             //swap upper and lower case letters
             swapAlphaUpperLower(false);
+
+
         }
 
         #region Controller press events

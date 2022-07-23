@@ -6,11 +6,24 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       MinWidth="450"
       Title="HomePage">
 
 
+    <Page.Resources>
+        <Style TargetType="ComboBoxItem">
+
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="SelectedValuePath" Value="Content"/>
+        
+        </Style>
+    </Page.Resources>
+    
     
     <ScrollViewer Margin="5,10,0,0">
         <StackPanel Orientation="Vertical" >
@@ -32,7 +45,7 @@
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
+               
 
 
 
@@ -115,8 +128,72 @@
 
 
             </GroupBox>
-           
-            
+
+            <GroupBox Name="GBDisplayControls" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="DISPLAY CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlDisplay"  Toggled="enableControlDisplay_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                    </DockPanel>
+                </GroupBox.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+                    <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+
+
+                    <DockPanel   >
+                        <Label Content="Display Resolution" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
+
+
+                        </ComboBox>
+
+
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1"  >
+                        <Label Content="Display Refresh Rate" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged">
+                            
+                            
+                        </ComboBox>
+                       
+                    </DockPanel>
+                    <DockPanel Grid.Row="2"  >
+                        <Label Content="Display Scaling" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
+                            <ComboBoxItem Content="Default" />
+                            <ComboBoxItem Content="100" />
+                            <ComboBoxItem Content="125" />
+                            <ComboBoxItem Content="150" />
+                            <ComboBoxItem Content="175" />
+                            <ComboBoxItem Content="200" />
+                            <ComboBoxItem Content="225" />
+                        </ComboBox>
+
+                    </DockPanel>
+                </Grid>
+
+
+
+
+
+            </GroupBox>
         </StackPanel>
     </ScrollViewer>
 </Page>

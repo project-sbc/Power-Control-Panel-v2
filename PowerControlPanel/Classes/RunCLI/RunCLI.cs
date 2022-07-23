@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes
 {
@@ -54,7 +55,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
             }
             catch (Exception ex)
             {
-                return "Error running CLI: " + ex.Message + " " + arguments;
+                string error = "Error running CLI: " + ex.Message + " " + arguments; 
+                MessageBox.Show(error);
+                return error;
+                
             }
 
 

@@ -8,6 +8,7 @@ using Power_Control_Panel.PowerControlPanel.Classes.Navigation;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
 using MenuItem = Power_Control_Panel.PowerControlPanel.Classes.ViewModels.MenuItem;
 using System.Windows.Threading;
+using System.Collections.Generic;
 using System.Threading;
 using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
 using Power_Control_Panel.PowerControlPanel.Classes.StartUp;
@@ -42,6 +43,13 @@ namespace Power_Control_Panel
         public static bool needVolumeRead = false;
         public static bool needBrightnessRead = false;
 
+        //display settings
+        public static string resolution = "";
+        public static string refreshRate = "";
+        public static string scaling = "Default";
+        
+        public static List<string> resolutions = new List<string>();
+        public static List<string> refreshRates = new List<string>();
         //TDP change class
         public static PowerControlPanel.Classes.ChangeTDP.ChangeTDP tdp = new PowerControlPanel.Classes.ChangeTDP.ChangeTDP();
 
@@ -56,7 +64,7 @@ namespace Power_Control_Panel
     {
         private NavigationServiceEx navigationServiceEx;
         private DispatcherTimer timer = new DispatcherTimer();
-
+        
         private Controller controller;
         private Gamepad gamepad;
 
@@ -78,9 +86,11 @@ namespace Power_Control_Panel
             initializeTimer();
 
 
+            //set theme
+            setTheme();
 
             //test code here
-            ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
+            PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
 
         }
         private void setTheme()

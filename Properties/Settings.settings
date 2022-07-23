@@ -32,5 +32,8 @@
     <Setting Name="systemTheme" Type="System.String" Scope="User">
       <Value Profile="(Default)">Light.Steel</Value>
     </Setting>
+    <Setting Name="systemAutoStart" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Disable</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -37,7 +37,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //General settings
             Properties.Settings.Default.systemTheme = cboLightDarkTheme.Text + "." + cboAccentTheme.Text;
 
-
+            if (Properties.Settings.Default.systemAutoStart != cboAutoStart.Text)
+            Properties.Settings.Default.systemAutoStart = cboAutoStart.Text;
 
 
 
@@ -53,13 +54,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             //Load general settings
 
-
             //handle theme
             int intPeriodLocation = Properties.Settings.Default.systemTheme.IndexOf(".");
             int intLengthTheme = Properties.Settings.Default.systemTheme.Length;
             cboAccentTheme.Text = Properties.Settings.Default.systemTheme.Substring(intPeriodLocation+1,intLengthTheme-(intPeriodLocation+1) );
             cboLightDarkTheme.Text = Properties.Settings.Default.systemTheme.Substring(0, intPeriodLocation);
             
+            cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
         }
 
     }

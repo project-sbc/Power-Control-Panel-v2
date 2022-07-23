@@ -37,6 +37,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool dragStartedBrightness = false;
         private bool dragStartedVolume = false;
 
+        //display settings
+        private bool changingResolution = false;
+        private bool changingRefreshRate = false;
+        private bool changingScaling = false;
+
         public HomePage()
         {
             InitializeComponent();
@@ -48,7 +53,54 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             loadTDPValues();
             loadSystemValues();
 
+            //apply theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
+
+            //Add list of resolution refresh to combo box
+            displayItemSourceBind();
+        }
+
+        private void displayItemSourceBind()
+        {
+
+            cboRefreshRate.ItemsSource = GlobalVariables.refreshRates;
+            cboResolution.ItemsSource = GlobalVariables.resolutions;
+
+            changingResolution = true;
+            cboResolution.SelectedIndex = 0;
+            changingResolution = false;
+
+            updateDisplaySettings();
+
+
+        }
+
+        private void updateDisplaySettings()
+        {
+
+
+            if (cboRefreshRate.Text != GlobalVariables.refreshRate && !changingRefreshRate) 
+            {
+                changingRefreshRate = true;
+                cboRefreshRate.Text = GlobalVariables.refreshRate;
+                changingRefreshRate = false;
+            
+            }
+            if (cboResolution.Text != GlobalVariables.resolution && !changingResolution && GlobalVariables.resolution != "") 
+            { 
+                changingResolution = true;
+                cboResolution.Text = GlobalVariables.resolution; 
+                changingResolution=false;
+            
+            }
+            if (cboScaling.Text != GlobalVariables.scaling && !changingScaling)
+            {
+                changingScaling = true;
+                cboScaling.Text = GlobalVariables.scaling;
+                changingScaling = false;
+
+            }
+
         }
 
         private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
@@ -131,6 +183,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             loadSystemValues();
             #endregion system updates
 
+            updateDisplaySettings();
         }
 
         #endregion timer controls
@@ -411,8 +464,45 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         }
 
 
+
         #endregion system controls
 
+        private void enableControlDisplay_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (enableControlDisplay.IsOn)
+            {
+                GBDisplayControls.Height = 200;
+            }
+            else
+            {
 
+
+                GBDisplayControls.Height = 40;
+                
+            }
+        }
+
+        private void cboResolution_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(GlobalVariables.resolution != cboResolution.SelectedItem && !changingResolution && cboResolution.SelectedItem != "Custom Scaling")
+            { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayResolution(cboResolution.SelectedItem.ToString()); }
+        }
+
+        private void cboRefreshRate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (GlobalVariables.refreshRate != cboRefreshRate.SelectedItem && !changingRefreshRate)
+            { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayRefreshRate(cboRefreshRate.SelectedItem.ToString()); }
+        }
+
+        private void cboScaling_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!changingScaling && cboScaling.SelectedValue.ToString() != "Default")
+            {
+                changingScaling = true;
+                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cboScaling.SelectedValue.ToString());
+                changingScaling = false;
+            }
+            
+        }
     }
 }
