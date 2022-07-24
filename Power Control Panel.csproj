@@ -16,6 +16,7 @@
     <None Remove="PowerControlPanel\Logs\application_log.txt" />
     <None Remove="PowerControlPanel\Pages\ProjectSBC.png" />
     <None Remove="PowerControlPanel\ProfileData\Profiles.xml" />
+    <None Remove="Published\New Text Document.txt" />
     <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\libryzenadj.dll" />
     <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
@@ -41,6 +42,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="PowerControlPanel\ProfileData\Profiles.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Published\New Text Document.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\AMD\RyzenAdj\inpoutx64.dll">

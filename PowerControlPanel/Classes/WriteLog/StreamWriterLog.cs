@@ -41,13 +41,22 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
         }
         public static void Log(string logMessage, TextWriter w)
         {
-            w.WriteLine($"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToLongTimeString()} {logMessage}");
-            w.Flush();
+            try
+            {
+                w.WriteLine($"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToLongTimeString()} {logMessage}");
+                w.Flush();
+            }
+            catch { }
         }
         public static void createLogFile()
         {
-            if (!Directory.Exists(BaseDir + "\\PowerControlPanel\\Logs")) { System.IO.Directory.CreateDirectory(BaseDir + "\\PowerControlPanel\\Logs"); }
-            if (!File.Exists(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt")) { File.CreateText(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt"); }
+            try
+            {
+                if (!Directory.Exists(BaseDir + "\\PowerControlPanel\\Logs")) { System.IO.Directory.CreateDirectory(BaseDir + "\\PowerControlPanel\\Logs"); }
+                if (!File.Exists(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt")) { File.CreateText(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt"); }
+            }
+            catch { }
+         
         }
 
     }
