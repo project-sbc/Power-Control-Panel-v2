@@ -10,13 +10,14 @@
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>Resources\Pictures\PCP.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="PowerControlPanel\Logs\application_log.txt" />
     <None Remove="PowerControlPanel\Pages\ProjectSBC.png" />
     <None Remove="PowerControlPanel\ProfileData\Profiles.xml" />
-    <None Remove="Published\New Text Document.txt" />
     <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\libryzenadj.dll" />
     <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
@@ -42,9 +43,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="PowerControlPanel\ProfileData\Profiles.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Published\New Text Document.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\AMD\RyzenAdj\inpoutx64.dll">
@@ -111,6 +109,7 @@
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
     <PackageReference Include="SecretNest.SequentialScheduler" Version="1.0.2" />
     <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
+    <PackageReference Include="squirrel.windows" Version="2.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="TaskScheduler" Version="2.10.1" />

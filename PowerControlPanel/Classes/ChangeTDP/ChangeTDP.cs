@@ -496,25 +496,27 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 string processRyzenAdj = "";
                 string result = "";
                 string commandArguments = "";
-                if (processorName.Contains("6800U"))
+                if (processorName.Contains("6800U") ^ processorName.Contains("APU 0405"))
                 {
                     GlobalVariables.readPL1 = GlobalVariables.setPL1;
                     GlobalVariables.readPL2 = GlobalVariables.setPL2;
                 }
-                
-                try
+                else
                 {
-                     processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
-               
+                    try
+                    {
+                    processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
+
                     lock (objLock)
                     {
                         commandArguments = " -i";
                         //StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
 
                         result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
-       
+
                         if (result != null)
                         {
+                            result.Replace("|", "");
                             //StreamWriterLog.startStreamWriter("Read AMD result=" + result);
                             double dblPL1 = Convert.ToDouble(parseFromResultAMD(result, "PL1"));
                             GlobalVariables.readPL1 = dblPL1;
@@ -532,6 +534,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                     MessageBox.Show(errorMsg);
 
                 }
+                }
+          
 
 
             }

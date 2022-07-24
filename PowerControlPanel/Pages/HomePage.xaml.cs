@@ -176,7 +176,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void timerTick(object sender, EventArgs e)
         {
             #region tdp updates
-            loadTDPValues();
+            //loadTDPValues();
 
             #endregion tdp updates
             #region system updates
