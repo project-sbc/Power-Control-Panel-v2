@@ -35,7 +35,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                 process.StartInfo = startInfo;
                 process.Start();
 
-                process.WaitForExit(3000);
+                process.WaitForExit(8000);
                 if (readOutput)
                 {
                     int Errorlevel = process.ExitCode;
