@@ -29,7 +29,7 @@ namespace Power_Control_Panel
     public partial class QuickAccessMenu : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
-        WindowSinker sinker;
+        //WindowSinker sinker;
 
         DispatcherTimer timer = new DispatcherTimer();  
         
@@ -58,8 +58,8 @@ namespace Power_Control_Panel
 
        void initializeWindow()
         {
-            sinker = new WindowSinker(this);
-            sinker.Sink();
+            //sinker = new WindowSinker(this);
+            //sinker.Sink();
             InitializeComponent();
             this.ShowInTaskbar = false;
             this.Topmost = true;
