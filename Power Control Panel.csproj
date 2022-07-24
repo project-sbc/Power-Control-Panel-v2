@@ -9,6 +9,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>Resources\Pictures\PCP.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -90,6 +91,7 @@
     <Content Include="Resources\Intel\RW\Rw.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Pictures\PCP.ico" />
     <Content Include="Resources\QRes\QRes.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -74,14 +74,14 @@ namespace Power_Control_Panel
         public static Window overlay;
         public static Window osk;
 
-        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
         public MainWindow()
         {
             this.InitializeComponent();
 
             StartUp.runStartUp();
 
-            setUpNotifyIcon();
+       
 
             GlobalVariables.routineUpdate.startThread();
 
@@ -102,18 +102,24 @@ namespace Power_Control_Panel
 
         private void setUpNotifyIcon()
         {
-            notifyIcon = new System.Windows.Forms.NotifyIcon();
             notifyIcon.Click += notifyIcon_Click;
             notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(AppDomain.CurrentDomain.BaseDirectory + "\\Power Control Panel.exe");
+
+
             if (String.Equals("C:\\Windows\\System32", Directory.GetCurrentDirectory(), StringComparison.OrdinalIgnoreCase))
             {
 
-                this.WindowState = WindowState.Minimized;
+                
                 this.ShowInTaskbar = false;
                 notifyIcon.Visible = true;
-            }
             
+            }
+            else
+            {
+                this.WindowState = WindowState.Normal;
+            }
 
+            
 
         }
       
@@ -300,9 +306,14 @@ namespace Power_Control_Panel
             {
                 notifyIcon.Visible = true;
                 this.ShowInTaskbar = false;
-
+      
 
             }
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            setUpNotifyIcon();
         }
     }
 }

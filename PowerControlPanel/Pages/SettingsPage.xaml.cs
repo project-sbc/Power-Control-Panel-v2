@@ -90,26 +90,26 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     Microsoft.Win32.TaskScheduler.TaskService.Instance.RootFolder.RegisterTaskDefinition("Power_Control_Panel", td);
 
                 }
-
-
-                else
-                {
-                    if (systemAutoStart == "Disable")
-                    {
-                        task.RegisterChanges();
-                        ts.RootFolder.DeleteTask("Power_Control_Panel");
-                    }
-                }
-
-
-
-
-
-
-
-
-
             }
+
+            else
+            {
+                if (systemAutoStart == "Disable")
+                {
+                    task.RegisterChanges();
+                    ts.RootFolder.DeleteTask("Power_Control_Panel");
+                }
+            }
+
+
+
+
+
+
+
+
+
+
 
 
 
