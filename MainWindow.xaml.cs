@@ -81,6 +81,7 @@ namespace Power_Control_Panel
 
             StartUp.runStartUp();
 
+            setUpNotifyIcon();
 
             GlobalVariables.routineUpdate.startThread();
 
@@ -97,6 +98,23 @@ namespace Power_Control_Panel
             PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
 
         
+        }
+
+        private void setUpNotifyIcon()
+        {
+            notifyIcon = new System.Windows.Forms.NotifyIcon();
+            notifyIcon.Click += notifyIcon_Click;
+            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(AppDomain.CurrentDomain.BaseDirectory + "\\Power Control Panel.exe");
+            if (String.Equals("C:\\Windows\\System32", Directory.GetCurrentDirectory(), StringComparison.OrdinalIgnoreCase))
+            {
+
+                this.WindowState = WindowState.Minimized;
+                this.ShowInTaskbar = false;
+                notifyIcon.Visible = true;
+            }
+            
+
+
         }
       
         private void notifyIcon_Click(object sender, EventArgs e)
@@ -275,7 +293,8 @@ namespace Power_Control_Panel
 
         #endregion navigation
 
-        private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+
+        private void MetroWindow_StateChanged(object sender, EventArgs e)
         {
             if (this.WindowState == WindowState.Minimized)
             {
@@ -283,19 +302,6 @@ namespace Power_Control_Panel
                 this.ShowInTaskbar = false;
 
 
-            }
-        }
-
-        private void MetroWindow_Initialized(object sender, EventArgs e)
-        {
-            notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.Click += notifyIcon_Click;
-            if (String.Equals("C:\\Windows\\System32", Directory.GetCurrentDirectory(), StringComparison.OrdinalIgnoreCase))
-            {
-           
-                this.WindowState = WindowState.Minimized;
-                this.ShowInTaskbar = false;
-                notifyIcon.Visible = true;
             }
         }
     }
