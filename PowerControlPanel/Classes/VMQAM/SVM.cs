@@ -18,6 +18,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
             // Build the menus
             this.Menu.Add(new MI()
             {
+
+
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.SignOutAltSolid },
 
                 Label = "Hide",
@@ -36,7 +38,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.GamepadSolid },
                 Label = "Games",
                 NavigationType = typeof(ProfilesPage),
-                NavigationDestination = new Uri("PowerControlPanel/Pages/ProfilesPage.xaml", UriKind.RelativeOrAbsolute)
+                NavigationDestination = new Uri("PowerControlPanel/Pages/TileViewer.xaml", UriKind.RelativeOrAbsolute)
             });
             this.OptionsMenu.Add(new MI()
             {
