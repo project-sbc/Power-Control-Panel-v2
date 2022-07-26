@@ -48,6 +48,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             initializeTimer();
 
+            setMaxTDP();
+
             handleVisibility();
 
             loadTDPValues();
@@ -58,6 +60,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             //Add list of resolution refresh to combo box
             displayItemSourceBind();
+        }
+        private void setMaxTDP()
+        {
+            TDP1.Maximum = Properties.Settings.Default.maxTDP;
+            TDP2.Maximum = Properties.Settings.Default.maxTDP;
         }
 
         private void displayItemSourceBind()
@@ -168,7 +175,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void initializeTimer()
         {
-            timer.Interval = new TimeSpan(0, 0, 3);
+            timer.Interval = new TimeSpan(0, 0, 5);
             timer.Tick += timerTick;
             timer.Start();
 
@@ -176,7 +183,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void timerTick(object sender, EventArgs e)
         {
             #region tdp updates
-            //loadTDPValues();
+            loadTDPValues();
 
             #endregion tdp updates
             #region system updates
@@ -328,7 +335,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                 try
                 {
-                    if (!dragStartedTDP1)
+                    if (!dragStartedTDP1 & Math.Abs(TDP1.Value - GlobalVariables.readPL1) > 0.9)
                     { TDP1.Value = Math.Round(GlobalVariables.readPL1, 0, MidpointRounding.AwayFromZero); }
                 }
                 catch { }
@@ -345,7 +352,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                 try
                 {
-                    if (!dragStartedTDP2)
+                    if (!dragStartedTDP2 & Math.Abs(TDP2.Value - GlobalVariables.readPL2) > 0.9)
                     { TDP2.Value = Math.Round(GlobalVariables.readPL2, 0, MidpointRounding.AwayFromZero); }
                 }
                 catch { }

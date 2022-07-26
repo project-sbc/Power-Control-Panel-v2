@@ -12,7 +12,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="maxTDP" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">30</Value>
+      <Value Profile="(Default)">35</Value>
     </Setting>
     <Setting Name="IntelMMIOMSR" Type="System.String" Scope="User">
       <Value Profile="(Default)">MMIO</Value>

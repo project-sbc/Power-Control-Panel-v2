@@ -13,7 +13,7 @@
 
     <Page.Resources>
         <Style TargetType="ComboBoxItem">
-
+            <Setter Property="Background" Value="White" />
             <Setter Property="FontSize" Value="20"/>
         </Style>
         <Style TargetType="ComboBox">
@@ -22,6 +22,8 @@
             <Setter Property="SelectedValuePath" Value="Content"/>
         
         </Style>
+
+
     </Page.Resources>
     
     

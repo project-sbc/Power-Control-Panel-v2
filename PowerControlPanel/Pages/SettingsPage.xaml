@@ -12,7 +12,7 @@
 
     <Page.Resources>
         <Style TargetType="ComboBoxItem">
-
+            <Setter Property="Background" Value="White" />
             <Setter Property="FontSize" Value="20"/>
         </Style>
         <Style TargetType="ComboBox">
@@ -36,12 +36,12 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
-
+                        <RowDefinition Height="50" />
 
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
+                    <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
 
 
 
@@ -81,7 +81,7 @@
                         </ComboBox>
 
                     </DockPanel>
-                    <DockPanel Grid.Row="2"  >
+                    <DockPanel Grid.Row="1"  >
 
                         <Label Content="Start With Windows" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
           
@@ -94,7 +94,15 @@
 
 
                     </DockPanel>
+                    <DockPanel Grid.Row="2"  >
 
+                        <Label Content="Max TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <Label x:Name="txtsliderMaxTDP" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDPMAX, Path=Value}"/>
+                        <Slider x:Name="TDPMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="5" Maximum="60"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
+
+                    </DockPanel>
 
                 </Grid>
 

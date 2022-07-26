@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -44,7 +45,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 changeTaskService(cboAutoStart.Text);
             }
             
-
+            Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
 
 
 
@@ -64,7 +65,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             int intLengthTheme = Properties.Settings.Default.systemTheme.Length;
             cboAccentTheme.Text = Properties.Settings.Default.systemTheme.Substring(intPeriodLocation+1,intLengthTheme-(intPeriodLocation+1) );
             cboLightDarkTheme.Text = Properties.Settings.Default.systemTheme.Substring(0, intPeriodLocation);
-            
+            TDPMAX.Value = Properties.Settings.Default.maxTDP;
+
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
         }
         private void changeTaskService(string systemAutoStart)
@@ -116,5 +118,49 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
+
+        private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
+        {
+            int count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is FrameworkElement childframeworkelement && childframeworkelement.Name == childname)
+                    return child;
+
+                var FindRes = GetElementFromParent(child, childname);
+                if (FindRes != null)
+                    return FindRes;
+            }
+            return null;
+        }
+
+        private void Slider_Loaded(object sender, RoutedEventArgs e)
+        {
+            var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
+            if (SliderThumb != null)
+            {
+                if (SliderThumb is Thumb thumb)
+                {
+
+
+                    thumb.Width = 20;
+                    thumb.Height = 25;
+                }
+                else
+                {
+                    //SliderThumb is not an object of type Thumb
+                }
+            }
+            else
+            {
+                //SliderThumb is null
+            }
+        }
+
+        private void TDPMAX_Loaded(object sender, RoutedEventArgs e)
+        {
+            Slider_Loaded(sender, e);
+        }
     }
 }
