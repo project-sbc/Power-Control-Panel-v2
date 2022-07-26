@@ -377,33 +377,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         //MSR stuff here
 
 
-        string parseFromResultAMD(string result, string tdpLevel)
-        {
-            try
-            {
-
-                if (tdpLevel == "PL1")
-                {
-                    
-                    return result.Substring(result.IndexOf("STAPM LIMIT") + 25, 6).Trim();
-                }
-                if (tdpLevel == "PL2")
-                {
-  
-                    return result.Substring(result.IndexOf("PPT LIMIT SLOW") + 25, 6).Trim();
-                }
-                else { return "error"; }
-
-            }
-            catch (Exception ex)
-            {
-                string errorMsg = "Error: ChangeTDP.cs:  Parse AMD tdp from result: " + ex.Message + " result is " + result;
-                StreamWriterLog.startStreamWriter(errorMsg);
-                MessageBox.Show(errorMsg);
-                return "Error";
-            }
-
-        }
         string parseHexFromResultMSRConvertToTDP(string result, bool isPL1)
             {
                 int FindString = -1;
@@ -516,13 +489,36 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
                         if (result != null)
                         {
-                            result.Replace("|", "");
-                            //StreamWriterLog.startStreamWriter("Read AMD result=" + result);
-                            double dblPL1 = Convert.ToDouble(parseFromResultAMD(result, "PL1"));
-                            GlobalVariables.readPL1 = dblPL1;
-                            double dblPL2 = Convert.ToDouble(parseFromResultAMD(result, "PL2"));
-                            GlobalVariables.readPL2 = dblPL2;
-                            //StreamWriterLog.startStreamWriter("Read TDP AMD PL1=" + dblPL1.ToString() + "; PL1=" + dblPL2.ToString());
+
+                            using (StringReader reader = new StringReader(result))
+                            {
+                                string line;
+                                string tdp;
+                                while ((line = reader.ReadLine()) != null)
+                                {
+                                    if (line.Contains("STAPM LIMIT"))
+                                    {
+
+                                        tdp = line;
+                                        tdp = tdp.Replace("|", "");
+                                        tdp = tdp.Replace("STAPM LIMIT", "");
+                                        tdp = tdp.Replace(" ", "");
+                                        tdp = tdp.Replace("stapm-limit", "");
+                                        GlobalVariables.readPL1 = Convert.ToDouble(tdp);
+                                    }
+                                    if (line.Contains("PPT LIMIT SLOW"))
+                                    {
+                                        tdp = line;
+                                        tdp = tdp.Replace("|", "");
+                                        tdp = tdp.Replace("PPT LIMIT SLOW", "");
+                                        tdp = tdp.Replace(" ", "");
+                                        tdp = tdp.Replace("slow-limit", "");
+                                        GlobalVariables.readPL2 = Convert.ToDouble(tdp);
+                                        break;
+                                    }
+                                }
+                            }
+
                         }
                     }
 
