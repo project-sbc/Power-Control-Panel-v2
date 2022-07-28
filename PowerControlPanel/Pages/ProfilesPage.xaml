@@ -1,14 +1,62 @@
 ﻿<Page x:Class="Power_Control_Panel.PowerControlPanel.Pages.ProfilesPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ProfilesPage">
+      MinWidth="450"
+      Title="SettingsPage">
 
-    <Grid>
-        
-    </Grid>
+    <Page.Resources>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style TargetType="ComboBox">
+
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+    </Page.Resources>
+
+
+    <ScrollViewer Margin="5,10,0,0">
+        <StackPanel Orientation="Vertical" >
+            <GroupBox Name="GB_General_Settings" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="GENERAL SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                        
+                        
+                    </DockPanel>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  />
+               
+
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <XmlDataProvider x:Key="Profiles" Source="PowerControlPanel\ProfileData\Profiles.xml" XPath="/Configuration/Application"/>
+                    </Grid.Resources>
+
+                    <DataGrid />
+                 
+
+
+                  
+                </Grid>
+
+
+
+
+
+            </GroupBox>
+
+
+        </StackPanel>
+    </ScrollViewer>
 </Page>

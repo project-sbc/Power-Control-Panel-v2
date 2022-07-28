@@ -1,4 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Profiles>
-	
-</Profiles>
+<Configuration>
+	<Profiles>
+		<Profile Name="">
+			<Offline>
+				
+			</Offline>
+			<Online>
+				
+				
+			</Online>
+		</Profile>
+		
+	</Profiles>
+
+	<Applications>
+		<App DisplayName="OSFE" Exe="OSFE.exe" Path="" AppType="Game" GameType="Steam" Image="" Profile="" Order=""/>
+		<App DisplayName="VS2022" Exe="Visualstudio.exe" Path="" AppType="App" GameType="" Image="" Profile="" Order=""/>
+	</Applications>
+	<ApplicationTemplae>
+		<App DisplayName="" Exe="" Path="" AppType="" GameType="" Image="" Profile="" Order=""/>
+	</ApplicationTemplae>
+	<ProfileTemplate>
+		<Profile Name="">
+			<Offline>
+
+			</Offline>
+			<Online>
+
+
+			</Online>
+		</Profile>
+	</ProfileTemplate>
+</Configuration>
+

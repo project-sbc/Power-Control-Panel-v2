@@ -35,10 +35,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                 process.StartInfo = startInfo;
                 process.Start();
 
-                process.WaitForExit(8000);
+                process.WaitForExit(7000);
                 if (readOutput)
                 {
-                    int Errorlevel = process.ExitCode;
+                    //int Errorlevel = process.ExitCode;
                     
                     string output = process.StandardOutput.ReadToEnd();
                     process.Close();
@@ -56,7 +56,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
             catch (Exception ex)
             {
                 string error = "Error running CLI: " + ex.Message + " " + arguments; 
-                MessageBox.Show(error);
+                
                 return error;
                 
             }

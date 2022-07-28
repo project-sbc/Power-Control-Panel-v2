@@ -111,7 +111,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeDisplaySettings
             string result = QResCLIResult(commandArguments);
 
             GlobalVariables.resolutions.Add("Custom Scaling");
-    
+
             string resolution;
             string refreshrate;
 

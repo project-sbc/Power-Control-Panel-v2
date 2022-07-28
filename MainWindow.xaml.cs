@@ -95,7 +95,8 @@ namespace Power_Control_Panel
             setTheme();
 
             //test code here
-            PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
+           
+
 
         
         }
