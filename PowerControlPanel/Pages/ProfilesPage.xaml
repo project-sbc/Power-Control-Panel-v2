@@ -27,27 +27,33 @@
             <GroupBox Name="GB_General_Settings" Margin="0,0,0,10">
                 <GroupBox.Header >
                     <DockPanel Height="30">
-                        <Label Content="GENERAL SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                        <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
                         
                         
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition  />
-               
-
-                    </Grid.RowDefinitions>
-                    <Grid.Resources>
-                        <XmlDataProvider x:Key="Profiles" Source="PowerControlPanel\ProfileData\Profiles.xml" XPath="/Configuration/Application"/>
-                    </Grid.Resources>
-
-                    <DataGrid />
-                 
-
-
-                  
+                    <ListView View="{}"  x:Name="lvProfiles" Margin="10">
+                        <ListViewItem>
+                            <StackPanel Orientation="Horizontal">
+                                
+                                <TextBlock>Green</TextBlock>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem>
+                            <StackPanel Orientation="Horizontal">
+                               
+                                <TextBlock>Blue</TextBlock>
+                            </StackPanel>
+                        </ListViewItem>
+                        <ListViewItem IsSelected="True">
+                            <StackPanel Orientation="Horizontal">
+                                
+                                <TextBlock>Red</TextBlock>
+                            </StackPanel>
+                        </ListViewItem>
+                    </ListView>
                 </Grid>
 
 

@@ -22,7 +22,7 @@
     </Page.Resources>
 
 
-    <ScrollViewer Margin="5,10,0,0">
+    <ScrollViewer Margin="5,10,0,0" PanningMode="VerticalOnly">
         <StackPanel Orientation="Vertical" >
             <GroupBox Name="GB_General_Settings" Margin="0,0,0,10">
                    <GroupBox.Header >

@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Forms;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -23,6 +16,33 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         public ProfilesPage()
         {
             InitializeComponent();
+        }
+
+        private void loadListView()
+        {
+          
+
+            lvProfiles.View = View.Details;
+            lvProfiles.GridLines = true;
+            lvProfiles.Sorting = SortOrder.Descending;
+            lvProfiles.Columns.Add("Active", 80);
+            lvProfiles.Columns.Add("username", 120);
+            lvProfiles.Columns.Add("Last Logon", 120);
+
+            lvProfiles.Items.Clear();
+
+
+            var doc = XDocument.Parse(Properties.Resources.Profiles);
+            var output = from x in doc.Root.Elements("user")
+                         select new ListViewItem(new[]
+                         {
+                             x.Element("USERID").Value,
+                             x.Element("username").Value,
+                             x.Element("lastlogon").Value
+
+                         });
+            lvProfiles.Items.AddRange(output.ToArray());
+
         }
     }
 }

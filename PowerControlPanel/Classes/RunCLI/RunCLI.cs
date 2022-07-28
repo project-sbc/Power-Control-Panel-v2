@@ -12,7 +12,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
     public static class RunCLI
     {
 
-        public static string RunCommand(string arguments, bool readOutput, string processName = "cmd.exe")
+        public static string RunCommand(string arguments, bool readOutput, string processName = "cmd.exe",  int waitExit=6000)
         {
             //Runs CLI, if readOutput is true then returns output
 
