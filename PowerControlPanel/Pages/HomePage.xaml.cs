@@ -42,6 +42,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool changingRefreshRate = false;
         private bool changingScaling = false;
 
+        //AMD gpu clk
+        private bool dragStartedGPUCLK = false;
+        private bool changingGPUCLK = true;
+
+
         public HomePage()
         {
             InitializeComponent();
@@ -60,6 +65,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             //Add list of resolution refresh to combo box
             displayItemSourceBind();
+
+            loadGPUClock();
         }
         private void setMaxTDP()
         {
@@ -148,26 +155,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 //SliderThumb is null
             }
         }
+         
 
-        private void Brightness_Loaded(object sender, RoutedEventArgs e)
-        {
-            Slider_Loaded(sender, e);
-        }
 
-        private void Volume_Loaded(object sender, RoutedEventArgs e)
-        {
-            Slider_Loaded(sender, e);
-        }
-
-        private void TDP1_Loaded(object sender, RoutedEventArgs e)
-        {
-            Slider_Loaded(sender, e);
-        }
-
-        private void TDP2_Loaded(object sender, RoutedEventArgs e)
-        {
-            Slider_Loaded(sender, e);
-        }
         #endregion
 
 
@@ -191,6 +181,28 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             #endregion system updates
 
             updateDisplaySettings();
+
+            loadGPUClock();
+        }
+
+        private void loadGPUClock()
+        {
+            if (!dragStartedGPUCLK && !changingGPUCLK)
+            {
+                if (GlobalVariables.gpuclk == "Default")
+                {
+                    if (GPUCLK.Value != 100) { GPUCLK.Value = 100; }
+
+                }
+                else
+                {
+                    if (GPUCLK.Value != Int32.Parse(GlobalVariables.gpuclk))
+                    {
+                        GPUCLK.Value = Int32.Parse(GlobalVariables.gpuclk);
+                    }
+                }
+            }
+
         }
 
         #endregion timer controls
@@ -243,6 +255,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             dragStartedTDP1 = true;
         }
+
+
+
+
+
+
+
 
         private void TDP2_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -363,17 +382,34 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
+        private void enableControlGPUCLK_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (enableControlGPUCLK.IsOn)
+            {
+                GBAMDGPUCLK.Height = 100;
+            }
+            else
+            {
+                GBAMDGPUCLK.Height = 40;
+                
+            }
+        }
+        
+
         private void enableControlTDP_Toggled(object sender, RoutedEventArgs e)
         {
             if (enableControlTDP.IsOn)
             {
                 GBTDPControls.Height = 150;
+                Properties.Settings.Default.showTDP = true;
             }
             else
             {
                 GBTDPControls.Height = 40;
+                Properties.Settings.Default.showTDP = false;
                 loadTDPValues();
             }
+            Properties.Settings.Default.Save(); 
         }
 
         #endregion TDP controls
@@ -473,6 +509,49 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
         #endregion system controls
+
+
+
+        private void GPUCLK_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!dragStartedGPUCLK && !changingGPUCLK)
+            {
+                HandleChangingGPUCLK((int)GPUCLK.Value);
+            }
+        }
+        private void GPUCLK_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            dragStartedGPUCLK = false;
+            HandleChangingGPUCLK((int)GPUCLK.Value);
+        }
+        private void GPUCLK_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            dragStartedGPUCLK = true;
+        }
+        private void GPUCLK_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            dragStartedGPUCLK = false;
+            HandleChangingGPUCLK((int)GPUCLK.Value);
+        }
+        private void GPUCLK_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStartedGPUCLK = false;
+            HandleChangingGPUCLK((int)GPUCLK.Value);
+        }
+        private void GPUCLK_TouchDown(object sender, TouchEventArgs e)
+        {
+            dragStartedGPUCLK = true;
+        }
+
+        private void HandleChangingGPUCLK(int gpuclk)
+        {
+            changingGPUCLK = true;
+            PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk);
+           
+            txtsliderAMDGPUCLKDEF.Content = "";
+            changingGPUCLK = false;
+        }
+
 
         private void enableControlDisplay_Toggled(object sender, RoutedEventArgs e)
         {

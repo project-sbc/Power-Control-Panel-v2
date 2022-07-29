@@ -35,5 +35,11 @@
     <Setting Name="systemAutoStart" Type="System.String" Scope="User">
       <Value Profile="(Default)">Disable</Value>
     </Setting>
+    <Setting Name="showGPUCLK" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="enableGPUCLK" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

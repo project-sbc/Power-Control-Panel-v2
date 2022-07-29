@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
 	<Profiles>
-		<Profile Name="">
+		<Profile Name="Test">
+			<Name>Test</Name>
 			<Offline>
 				
 			</Offline>

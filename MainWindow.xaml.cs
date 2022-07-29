@@ -27,12 +27,19 @@ namespace Power_Control_Panel
 
     public static class GlobalVariables
     {
+
+        //Processor global
+        public static string cpuType = "";
+
         //TDP global
         public static double readPL1 = 0;
         public static double readPL2 = 0;
         public static double setPL1 = 0;
         public static double setPL2 = 0;
         public static bool needTDPRead = false;
+
+        //AMD GPU CLOCK
+        public static string gpuclk = "Default";
 
         //Shut down boolean to stop threads
         public static bool useRoutineThread = true;

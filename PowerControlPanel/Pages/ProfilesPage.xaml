@@ -19,6 +19,10 @@
 
             <Setter Property="FontSize" Value="20"/>
         </Style>
+
+
+        <XmlDataProvider x:Key="Profiles" Source="Profiles.xml" XPath="Configuration" IsInitialLoadEnabled="True"/>
+  
     </Page.Resources>
 
 
@@ -34,26 +38,15 @@
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid>
-                    <ListView View="{}"  x:Name="lvProfiles" Margin="10">
-                        <ListViewItem>
-                            <StackPanel Orientation="Horizontal">
-                                
-                                <TextBlock>Green</TextBlock>
-                            </StackPanel>
-                        </ListViewItem>
-                        <ListViewItem>
-                            <StackPanel Orientation="Horizontal">
-                               
-                                <TextBlock>Blue</TextBlock>
-                            </StackPanel>
-                        </ListViewItem>
-                        <ListViewItem IsSelected="True">
-                            <StackPanel Orientation="Horizontal">
-                                
-                                <TextBlock>Red</TextBlock>
-                            </StackPanel>
-                        </ListViewItem>
-                    </ListView>
+                    <DataGrid x:Name="profileDataGrid"
+                          Grid.Column="1"
+                          Margin="5"
+                          AutoGenerateColumns="True"
+                          ItemsSource="{Binding}"
+                          RowHeaderWidth="0"
+                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}">
+                
+                    </DataGrid>
                 </Grid>
 
 

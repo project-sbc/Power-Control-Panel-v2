@@ -154,5 +154,29 @@ namespace Power_Control_Panel.Properties {
                 this["systemAutoStart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showGPUCLK {
+            get {
+                return ((bool)(this["showGPUCLK"]));
+            }
+            set {
+                this["showGPUCLK"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool enableGPUCLK {
+            get {
+                return ((bool)(this["enableGPUCLK"]));
+            }
+            set {
+                this["enableGPUCLK"] = value;
+            }
+        }
     }
 }
