@@ -59,34 +59,5 @@ namespace Power_Control_Panel.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
-        ///&lt;Configuration&gt;
-        ///	&lt;Profiles&gt;
-        ///		&lt;Profile Name=&quot;&quot;&gt;
-        ///			&lt;Offline&gt;
-        ///				
-        ///			&lt;/Offline&gt;
-        ///			&lt;Online&gt;
-        ///				
-        ///				
-        ///			&lt;/Online&gt;
-        ///		&lt;/Profile&gt;
-        ///		
-        ///	&lt;/Profiles&gt;
-        ///
-        ///	&lt;Applications&gt;
-        ///		&lt;App DisplayName=&quot;OSFE&quot; Exe=&quot;OSFE.exe&quot; Path=&quot;&quot; AppType=&quot;Game&quot; GameType=&quot;Steam&quot; Image=&quot;&quot; Profile=&quot;&quot; Order=&quot;&quot;/&gt;
-        ///		&lt;App DisplayName=&quot;VS2022&quot; Exe=&quot;Visualstudio.exe&quot; Path=&quot;&quot; AppType=&quot;App&quot; GameType=&quot;&quot; Image=&quot;&quot; Profile=&quot;&quot; Order=&quot;&quot;/&gt;
-        ///	&lt;/Applications&gt;
-        ///	&lt;ApplicationTemplae&gt;
-        ///		&lt;App DisplayName=&quot;&quot; Ex [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string Profiles {
-            get {
-                return ResourceManager.GetString("Profiles", resourceCulture);
-            }
-        }
     }
 }

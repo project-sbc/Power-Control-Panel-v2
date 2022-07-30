@@ -55,7 +55,8 @@ namespace Power_Control_Panel
         public static string resolution = "";
         public static string refreshRate = "";
         public static string scaling = "Default";
-        
+    
+
         public static List<string> resolutions = new List<string>();
         public static List<string> refreshRates = new List<string>();
         //TDP change class
@@ -64,7 +65,7 @@ namespace Power_Control_Panel
         //Routine update class
         public static RoutineUpdate routineUpdate = new RoutineUpdate();
 
-        
+        public static string xmlFile = AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml";
     }
     
 

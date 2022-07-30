@@ -14,7 +14,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeGPUCLK
         {
             string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
 
-            if (gpuclk >= 100 && GlobalVariables.cpuType =="Intel")
+            if (gpuclk >= 100 && GlobalVariables.cpuType =="AMD")
             {
                 lock (objLock)
                 {
@@ -32,7 +32,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeGPUCLK
                             commandArguments = " --gfx-clk=" + gpuclk.ToString();
                             //StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
 
-                            //result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
+                            result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
 
                             GlobalVariables.gpuclk = gpuclk.ToString();
 

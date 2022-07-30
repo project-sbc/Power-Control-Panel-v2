@@ -88,7 +88,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeDisplaySettings
                 lock (objLock)
                 {
                     Thread.Sleep(100);
-                    result = RunCLI.RunCommand(commandArguments, true, processQRes,3000);
+                    result = RunCLI.RunCommand(commandArguments, true, processQRes,1000);
                     Thread.Sleep(100);
                 }
             }

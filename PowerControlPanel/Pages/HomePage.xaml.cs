@@ -546,8 +546,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void HandleChangingGPUCLK(int gpuclk)
         {
             changingGPUCLK = true;
-            PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk);
-           
+            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk));
+                       
             txtsliderAMDGPUCLKDEF.Content = "";
             changingGPUCLK = false;
         }

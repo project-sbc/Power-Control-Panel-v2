@@ -16,26 +16,21 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
     /// </summary>
     public partial class ProfilesPage : Page
     {
+        private Classes.ManageXML.ManageXML_Profiles xmlP;
         public ProfilesPage()
         {
             InitializeComponent();
+
+            xmlP = new Classes.ManageXML.ManageXML_Profiles();
             loadListView();
         }
 
         private void loadListView()
         {
-     
-
-         
-
-            DataSet dataSet = new DataSet();
-            StringReader theReader = new StringReader(Properties.Resources.Profiles);
-
-            dataSet.ReadXml(theReader);
-
-            profileDataGrid.DataContext = dataSet.Tables[1].DefaultView;
-       
-
+            profileDataGrid.Items.Clear();
+            DataTable dt = xmlP.profileList();
+            profileDataGrid.DataContext = dt.DefaultView;
+           
         }
     }
 }
