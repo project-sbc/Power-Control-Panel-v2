@@ -5,9 +5,33 @@ Hello everyone! This is the long awaited version 2 of my power control panel. Th
 PLEASE READ THIS:
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. MISUSE OF THIS SOFTWARE COULD CAUSE SYSTEM INSTABILITY OR MALFUNCTION.
 
-You need .net 6.0 desktop to run this software OR download the self contained zip in the releases (new versions only).
+Requirements:
+You need .net 6.0 desktop to run this software OR download the self contained zip in the releases (newer versions only).
 
-This software aims to add features wanted in the previous version while provided an updated modern user interface and featuring enhanced multithreading to provide the best user experience.
+Compatible Devices (Windows only)
+Aya
+-Aya Neo/Pro/Retro/Next/Air/Air Pro
+
+One Netbook
+-One Mix 4, T1, OneGx/Pro
+-One X Player AMD 4800U/5700U/5800U mini and big; Intel 1165G7/1195G7/1260p mini and big
+
+GPD
+-Win 2, Win 3, Win max 2020, Win Max 2021 Intel/AMD, Win Max 2 1260p, Pocket 2, Pocket 3
+
+Anbernic
+-Win600
+
+Intel Laptops
+-4th generation or newer laptops or mini PCs
+
+AMD Laptops
+-Most ryzen laptops or mini PCs
+
+Controller Shortcuts:
+QUICK ACCESS MENU:   LB+RB+DPAD RIGHT  Hold for 1 second
+KEYBOARD:   LB+RB+DPAD DOWN  Hold for 1 second
+
 
 Features that are working:
 -TDP changing for both AMD and Intel, including 12th gen alder lake
@@ -19,6 +43,8 @@ Features that are working:
 -Auto start
 -Minimize to tray
 
+
+As of now, this should work on all intel devices 4th generation or newer including 
 
 If you would like to donate you can at:
 https://ko-fi.com/project_sbc
