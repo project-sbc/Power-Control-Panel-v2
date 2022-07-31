@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ControlzEx.Theming;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,6 +24,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             xmlP = new Classes.ManageXML.ManageXML_Profiles();
             loadListView();
+
+            ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
         }
 
         private void loadListView()

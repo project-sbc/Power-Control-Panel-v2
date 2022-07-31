@@ -49,14 +49,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         public HomePage()
         {
-            InitializeComponent();
 
+            
+            InitializeComponent();
+            
             initializeTimer();
 
             setMaxTDP();
 
-            handleVisibility();
-
+           
             loadTDPValues();
             loadSystemValues();
 
@@ -211,13 +212,60 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void handleVisibility()
         {
-            if (Properties.Settings.Default.showTDP)
-            { enableControlTDP.IsOn = true; }
-            else { enableControlTDP.IsOn = false; }
+            //handle enabling and showing gpu clock
+            if (!Properties.Settings.Default.enableGPUCLK ^ GlobalVariables.cpuType == "Intel")
+            {
+                GBAMDGPUCLK.Visibility = Visibility.Collapsed;
+                GBAMDGPUCLK.Margin = new Thickness(0,0,0,0);
 
-            if (Properties.Settings.Default.showSystem)
-            { enableControlSystem.IsOn = true; }
-            else { enableControlSystem.IsOn = false; }
+            }
+            else
+            {
+                if (Properties.Settings.Default.showGPUCLK)
+                { enableControlGPUCLK.IsOn = true; }
+                else 
+                { enableControlGPUCLK.IsOn = false; GBAMDGPUCLK.Height = 40; enableControlGPUCLK.IsOn = false; }
+            }
+
+
+            if (!Properties.Settings.Default.enableTDP)
+            {
+                GBTDPControls.Visibility = Visibility.Collapsed;
+                GBTDPControls.Margin = new Thickness(0, 0, 0, 0);
+            }
+            else
+            {
+                if (Properties.Settings.Default.showTDP)
+                { enableControlTDP.IsOn = true; }
+                else { enableControlTDP.IsOn = false; GBTDPControls.Height = 40; enableControlTDP.IsOn = false; }
+            }
+
+            if (!Properties.Settings.Default.enableSystem)
+            {
+                GBSystemControls.Visibility = Visibility.Collapsed;
+                GBSystemControls.Margin = new Thickness(0, 0, 0, 0);
+            }
+            else
+            {
+                if (Properties.Settings.Default.showSystem)
+                { enableControlSystem.IsOn = true; }
+                else { enableControlSystem.IsOn = false; GBSystemControls.Height = 40; enableControlSystem.IsOn = false; }
+            }
+
+            if (!Properties.Settings.Default.enableDisplay)
+            {
+                GBDisplayControls.Visibility = Visibility.Collapsed;
+                GBDisplayControls.Margin = new Thickness(0, 0, 0, 0);
+            }
+            else
+            {
+                if (Properties.Settings.Default.showDisplay)
+                { enableControlDisplay.IsOn = true; }
+                else { enableControlDisplay.IsOn = false; GBDisplayControls.Height = 40; enableControlDisplay.IsOn = false; }
+            }
+
+
+
         }
 
 
@@ -384,32 +432,44 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void enableControlGPUCLK_Toggled(object sender, RoutedEventArgs e)
         {
-            if (enableControlGPUCLK.IsOn)
+            if (this.IsLoaded)
             {
-                GBAMDGPUCLK.Height = 100;
+                if (enableControlGPUCLK.IsOn)
+                {
+                    GBAMDGPUCLK.Height = 100;
+                    Properties.Settings.Default.showGPUCLK = true;
+                }
+                else
+                {
+                    GBAMDGPUCLK.Height = 40;
+                    Properties.Settings.Default.showGPUCLK = false;
+                }
+                Properties.Settings.Default.Save();
             }
-            else
-            {
-                GBAMDGPUCLK.Height = 40;
-                
-            }
+
+
         }
         
 
         private void enableControlTDP_Toggled(object sender, RoutedEventArgs e)
         {
-            if (enableControlTDP.IsOn)
+            if (this.IsLoaded)
             {
-                GBTDPControls.Height = 150;
-                Properties.Settings.Default.showTDP = true;
+                if (enableControlTDP.IsOn)
+                {
+                    GBTDPControls.Height = 150;
+                    Properties.Settings.Default.showTDP = true;
+                }
+                else
+                {
+                    GBTDPControls.Height = 40;
+                    Properties.Settings.Default.showTDP = false;
+                    loadTDPValues();
+                }
+                Properties.Settings.Default.Save();
             }
-            else
-            {
-                GBTDPControls.Height = 40;
-                Properties.Settings.Default.showTDP = false;
-                loadTDPValues();
-            }
-            Properties.Settings.Default.Save(); 
+
+
         }
 
         #endregion TDP controls
@@ -450,11 +510,20 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void enableControlSystem_Toggled(object sender, RoutedEventArgs e)
         {
-            if (enableControlSystem.IsOn)
+            if (this.IsLoaded)
             {
-                GBSystemControls.Height = 150;
+                if (enableControlSystem.IsOn)
+                {
+                    GBSystemControls.Height = 150;
+                    Properties.Settings.Default.showSystem = true;
+                }
+                else { GBSystemControls.Height = 40; Properties.Settings.Default.showSystem = false; }
+                Properties.Settings.Default.Save();
             }
-            else { GBSystemControls.Height = 40; }
+
+
+
+
         }
         void HandleChangingBrightness(double brightness)
         {
@@ -511,7 +580,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         #endregion system controls
 
 
-
+        #region GPU Clock Slider
         private void GPUCLK_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!dragStartedGPUCLK && !changingGPUCLK)
@@ -552,20 +621,27 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             changingGPUCLK = false;
         }
 
+#endregion GPU Clock Slider
 
         private void enableControlDisplay_Toggled(object sender, RoutedEventArgs e)
         {
-            if (enableControlDisplay.IsOn)
+            if (this.IsLoaded)
             {
-                GBDisplayControls.Height = 200;
+                if (enableControlDisplay.IsOn)
+                {
+                    GBDisplayControls.Height = 200;
+                    Properties.Settings.Default.showDisplay = true;
+                }
+                else
+                {
+                    GBDisplayControls.Height = 40;
+                    Properties.Settings.Default.showDisplay = false;
+                }
+                Properties.Settings.Default.Save();
             }
-            else
-            {
 
+    
 
-                GBDisplayControls.Height = 40;
-                
-            }
         }
 
         private void cboResolution_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -589,6 +665,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 changingScaling = false;
             }
             
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            handleVisibility();
         }
     }
 }
