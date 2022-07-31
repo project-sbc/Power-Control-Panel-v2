@@ -47,7 +47,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Button x:Name="btnAddProfile" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
-                    <Button x:Name="btnDeleteProfile" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}"/>
+                    <Button x:Name="btnDeleteProfile" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
                     <DataGrid x:Name="profileDataGrid"
                           Grid.Column="0"
                               Grid.Row="1"

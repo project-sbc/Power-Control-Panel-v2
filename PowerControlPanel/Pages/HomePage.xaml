@@ -156,8 +156,8 @@
                         <Label Content="GPU Clock (MHz)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <Label x:Name="txtsliderAMDGPUCLK"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content=""/>
-                        <Slider x:Name="GPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="GPUCLK_DragCompleted"  Thumb.DragStarted="GPUCLK_DragStarted" Width="230" Height="40" Minimum="100" Maximum="1700"  Value="{Binding ElementName=txtsliderAMDGPUCLK, Path=Content}" SmallChange="50" TickPlacement="None" ValueChanged="GPUCLK_ValueChanged" MouseLeftButtonUp="GPUCLK_MouseLeftButtonUp" TouchUp="GPUCLK_TouchUp" TouchDown="GPUCLK_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded" LargeChange="50" TickFrequency="50"  />
+                        <Label x:Name="txtsliderAMDGPUCLK"  DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="40" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content=""/>
+                        <Slider x:Name="GPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="GPUCLK_DragCompleted"  Thumb.DragStarted="GPUCLK_DragStarted" Width="230" Height="40" Minimum="200" Maximum="2000"  Value="{Binding ElementName=txtsliderAMDGPUCLK, Path=Content}" SmallChange="50" TickPlacement="None" ValueChanged="GPUCLK_ValueChanged" MouseLeftButtonUp="GPUCLK_MouseLeftButtonUp" TouchUp="GPUCLK_TouchUp" TouchDown="GPUCLK_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded" LargeChange="50" TickFrequency="50"  />
                         <Label x:Name="txtsliderAMDGPUCLKDEF"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="70" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Default"/>
                     </DockPanel>
 

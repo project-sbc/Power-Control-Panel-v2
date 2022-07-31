@@ -41,5 +41,22 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             xmlP.createProfile();
             loadListView();
         }
+
+        private void btnDeleteProfile_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            object item = profileDataGrid.SelectedItem;
+            string profileName = (profileDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
+
+            xmlP.deleteProfile(profileName);
+            loadListView();
+
+            if (GlobalVariables.ActiveProfile == profileName) 
+            { 
+                GlobalVariables.ActiveProfile = "None";
+                GlobalVariables.DefaultProfile = "None";
+
+
+            }
+        }
     }
 }
