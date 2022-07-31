@@ -547,10 +547,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 lock (objLock)
                 {
                     commandArguments = " --stapm-limit=" + (pl1TDP * 1000).ToString() + " --slow-limit=" + (pl2TDP * 1000).ToString() + " --fast-limit=" + (pl2TDP * 1000).ToString();
-                    StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAdj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
+                    //StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAdj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
                     result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
                     Thread.Sleep(100);
-                    StreamWriterLog.startStreamWriter("Read TDP AMD complete");
+                    //StreamWriterLog.startStreamWriter("Read TDP AMD complete");
                 }
 
 
