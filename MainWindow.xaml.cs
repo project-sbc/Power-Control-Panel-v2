@@ -51,11 +51,17 @@ namespace Power_Control_Panel
         public static bool needVolumeRead = false;
         public static bool needBrightnessRead = false;
 
+
+
+        //Profile and app settings
+        public static string ActiveProfile = "None";
+        public static string DefaultProfile = "None";
+        public static string ActiveApp = "None";
+
         //display settings
         public static string resolution = "";
         public static string refreshRate = "";
         public static string scaling = "Default";
-    
 
         public static List<string> resolutions = new List<string>();
         public static List<string> refreshRates = new List<string>();

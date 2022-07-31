@@ -1,24 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
 	<Profiles>
-		<Test >
-			
-			<Offline>
-				
-			</Offline>
-			<Online>
-				<PL1>5</PL1>
-				
-			</Online>
-		</Test>
 		<Profile >
-			
+			<ProfileName>Test</ProfileName>
 			<Offline>
-
+				<PL1>1</PL1>
+				<PL2></PL2>
+				<GPUCLK></GPUCLK>
 			</Offline>
 			<Online>
-				<PL1>5</PL1>
-
+				<PL1>1</PL1>
+				<PL2></PL2>
+				<GPUCLK></GPUCLK>
+			</Online>
+		</Profile>
+		<Profile >
+			<ProfileName>Test2</ProfileName>
+			<Offline>
+				<PL1>1</PL1>
+				<PL2></PL2>
+				<GPUCLK></GPUCLK>
+			</Offline>
+			<Online>
+				<PL1>1</PL1>
+				<PL2></PL2>
+				<GPUCLK></GPUCLK>
 			</Online>
 		</Profile>
 	</Profiles>
@@ -27,6 +33,20 @@
 		<App DisplayName="OSFE" Exe="OSFE.exe" Path="" AppType="Game" GameType="Steam" Image="" Profile="" Order=""/>
 		<App DisplayName="VS2022" Exe="Visualstudio.exe" Path="" AppType="App" GameType="" Image="" Profile="" Order=""/>
 	</Applications>
-	
+	<ProfileTemplate>
+		<Profile >
+			<ProfileName>ProfileTemplate</ProfileName>
+			<Offline>
+				<PL1></PL1>
+				<PL2></PL2>
+				<GPUCLK></GPUCLK>
+			</Offline>
+			<Online>
+				<PL1></PL1>
+				<PL2></PL2>
+				<GPUCLK></GPUCLK>
+			</Online>
+		</Profile>
+	</ProfileTemplate>
 </Configuration>
 

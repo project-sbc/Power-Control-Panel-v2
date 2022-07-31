@@ -30,10 +30,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void loadListView()
         {
-            profileDataGrid.Items.Clear();
+            
             DataTable dt = xmlP.profileList();
             profileDataGrid.DataContext = dt.DefaultView;
            
+        }
+
+        private void btnAddProfile_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            xmlP.createProfile();
+            loadListView();
         }
     }
 }

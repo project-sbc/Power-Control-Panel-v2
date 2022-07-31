@@ -669,7 +669,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             handleVisibility();
         }
     }
