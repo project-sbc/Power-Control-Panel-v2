@@ -44,7 +44,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         //AMD gpu clk
         private bool dragStartedGPUCLK = false;
-        private bool changingGPUCLK = true;
+        private bool changingGPUCLK = false;
 
 
         public HomePage()
@@ -188,7 +188,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void loadGPUClock()
         {
-            if (!dragStartedGPUCLK && !changingGPUCLK)
+            if (!dragStartedGPUCLK)
             {
                 if (GlobalVariables.gpuclk == "Default")
                 {
@@ -614,11 +614,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void HandleChangingGPUCLK(int gpuclk)
         {
-            changingGPUCLK = true;
-            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk));
-                       
-            txtsliderAMDGPUCLKDEF.Content = "";
-            changingGPUCLK = false;
+            if (this.IsLoaded) 
+            {
+                changingGPUCLK = true;
+                Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk));
+
+                txtsliderAMDGPUCLKDEF.Content = "";
+                changingGPUCLK = false;
+            }
+
         }
 
 #endregion GPU Clock Slider
