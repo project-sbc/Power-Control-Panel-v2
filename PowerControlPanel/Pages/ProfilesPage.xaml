@@ -25,33 +25,34 @@
   
     </Page.Resources>
 
+    <GroupBox VerticalAlignment="Stretch" Name="GB_General_Settings" Margin="0,0,0,10">
+        <GroupBox.Header >
+            <DockPanel Height="30">
+                <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-    <ScrollViewer Margin="5,10,0,0">
-        <StackPanel Orientation="Vertical" >
-            <GroupBox Name="GB_General_Settings" Margin="0,0,0,10">
-                <GroupBox.Header >
-                    <DockPanel Height="30">
-                        <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        
-                        
-                    </DockPanel>
-                </GroupBox.Header>
-                <Grid Height="370">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Button x:Name="btnAddProfile" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
-                    <Button x:Name="btnDeleteProfile" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
+
+            </DockPanel>
+        </GroupBox.Header>
+        <Grid VerticalAlignment="Top" Height="370">
+            <Grid.ColumnDefinitions>
+                
+                
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <DockPanel>
+                    <Button x:Name="btnAddProfile" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
+                    <Button x:Name="btnDeleteProfile" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
+
+                </DockPanel>
+                <ScrollViewer VerticalAlignment="Top" PanningMode="VerticalOnly" >
                     <DataGrid x:Name="profileDataGrid"
                           Grid.Column="0"
                               Grid.Row="1"
-                              Height="320"
+                              MinHeight="320"
+                              Height="Auto"
                               Width="245"
                           Margin="2"
                               HorizontalAlignment="Left"
@@ -61,9 +62,9 @@
                           Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectionMode="Single" IsReadOnly="True">
                         <DataGrid.CellStyle>
                             <Style TargetType="{x:Type DataGridCell}">
-                           
+
                                 <Setter Property="FontSize" Value="22"/>
-              
+
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.ColumnHeaderStyle>
@@ -77,15 +78,36 @@
 
                         </DataGrid.ColumnHeaderStyle>
                     </DataGrid>
-                </Grid>
+                </ScrollViewer>
+            </StackPanel>
+
+            <ScrollViewer Grid.Column="1" HorizontalAlignment="Stretch" PanningMode="VerticalOnly">
+                <GroupBox VerticalAlignment="Stretch" Name="GB_ProfileMain" Margin="0,0,0,10">
+                    <GroupBox.Header >
+                        <DockPanel Height="30">
+                            <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+
+
+                        </DockPanel>
+                    </GroupBox.Header>
+                   
 
 
 
 
 
-            </GroupBox>
+                </GroupBox>
 
 
-        </StackPanel>
-    </ScrollViewer>
+            </ScrollViewer>
+            
+        </Grid>
+
+
+
+
+
+    </GroupBox>
+    
 </Page>

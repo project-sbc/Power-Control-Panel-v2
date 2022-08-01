@@ -103,6 +103,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
                 else { if (cpuType == "AMD") {
                         //StreamWriterLog.startStreamWriter("Start AMD change TDP");
+                        MessageBox.Show("change TDP to " + pl1TDP.ToString() + ", " + pl2TDP.ToString() + ", " + processorName);
                        runAMDTDPChange(pl1TDP, pl2TDP); } }
                 GlobalVariables.setPL1 = pl1TDP;
                 GlobalVariables.setPL2 = pl2TDP;
@@ -543,14 +544,16 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 try
                 {
                 processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
-
+                MessageBox.Show("going to change TDP");
                 lock (objLock)
                 {
                     commandArguments = " --stapm-limit=" + (pl1TDP * 1000).ToString() + " --slow-limit=" + (pl2TDP * 1000).ToString() + " --fast-limit=" + (pl2TDP * 1000).ToString();
-                    StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAdj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
+                    //StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAdj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
+                    MessageBox.Show(commandArguments + ", " + processRyzenAdj);
                     result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
                     Thread.Sleep(100);
-                    StreamWriterLog.startStreamWriter("Read TDP AMD complete");
+                    MessageBox.Show(result);
+                    //StreamWriterLog.startStreamWriter("Read TDP AMD complete");
                 }
 
 

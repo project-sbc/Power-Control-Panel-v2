@@ -192,7 +192,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (GlobalVariables.gpuclk == "Default")
                 {
-                    if (GPUCLK.Value != 100) { GPUCLK.Value = 100; }
+                    if (GPUCLK.Value != 200) { GPUCLK.Value = 200; }
 
                 }
                 else
