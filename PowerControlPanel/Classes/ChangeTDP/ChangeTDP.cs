@@ -497,6 +497,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                                 string tdp;
                                 while ((line = reader.ReadLine()) != null)
                                 {
+                                    
                                     if (line.Contains("STAPM LIMIT"))
                                     {
 
