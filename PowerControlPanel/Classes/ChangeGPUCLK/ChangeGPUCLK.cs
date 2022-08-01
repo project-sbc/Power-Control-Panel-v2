@@ -25,7 +25,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeGPUCLK
 
                     try
                     {
-                        processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj6800U.exe";
+                        processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
 
                         lock (objLock)
                         {
