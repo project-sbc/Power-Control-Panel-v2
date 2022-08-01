@@ -21,8 +21,6 @@
     <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\libryzenadj.dll" />
     <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
-    <None Remove="Resources\AMD\RyzenAdj\ryzenadj6800U.exe" />
-    <None Remove="Resources\AMD\RyzenAdj\ryzenadjbat.exe" />
     <None Remove="Resources\AMD\RyzenAdj\ucrtbased.dll" />
     <None Remove="Resources\AMD\RyzenAdj\vcruntime140d.dll" />
     <None Remove="Resources\AMD\RyzenAdj\WinRing0x64.dll" />
@@ -56,12 +54,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\AMD\RyzenAdj\ryzenadj.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\AMD\RyzenAdj\ryzenadj6800U.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\AMD\RyzenAdj\ryzenadjbat.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\AMD\RyzenAdj\ucrtbased.dll">
