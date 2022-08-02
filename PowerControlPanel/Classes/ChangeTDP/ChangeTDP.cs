@@ -29,8 +29,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         public void readTDP()
         {
 
-
-
             try
             {
                 //add small delay to prevent write and read operations from interfering
@@ -470,8 +468,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 string processRyzenAdj = "";
                 string result = "";
                 string commandArguments = "";
+            //6800U MessageBox.Show(processorName);
                 if (processorName.Contains("6800U") ^ processorName.Contains("APU 0405"))
                 {
+                    //6800U MessageBox.Show("set 6800U tdp");
                     GlobalVariables.readPL1 = GlobalVariables.setPL1;
                     GlobalVariables.readPL2 = GlobalVariables.setPL2;
                 }
@@ -545,15 +545,15 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 try
                 {
                 processRyzenAdj = BaseDir + "\\Resources\\AMD\\RyzenAdj\\ryzenadj.exe";
-                MessageBox.Show("going to change TDP");
+                //6800U MessageBox.Show("going to change TDP");
                 lock (objLock)
                 {
                     commandArguments = " --stapm-limit=" + (pl1TDP * 1000).ToString() + " --slow-limit=" + (pl2TDP * 1000).ToString() + " --fast-limit=" + (pl2TDP * 1000).ToString();
                     //StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAdj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
-                    MessageBox.Show(commandArguments + ", " + processRyzenAdj);
+                    //6800U MessageBox.Show(commandArguments + ", " + processRyzenAdj);
                     result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
                     Thread.Sleep(100);
-                    MessageBox.Show(result);
+                    //6800U MessageBox.Show(result);
                     //StreamWriterLog.startStreamWriter("Read TDP AMD complete");
                 }
 
@@ -570,8 +570,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
             }
 
-            //retired RW.exe stuff here\
-            void Retired_runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
+        #region retired rw.exe
+        void Retired_runIntelTDPChangeMSR(int pl1TDP, int pl2TDP)
             {
                 try
                 {
@@ -786,7 +786,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
             }
         }
 
-    
+    #endregion
 
-    }
+}
 

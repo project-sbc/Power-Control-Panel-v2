@@ -46,6 +46,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool dragStartedGPUCLK = false;
         private bool changingGPUCLK = false;
 
+        //enabled booleans
+        private bool enableTDP = Properties.Settings.Default.enableTDP;
+        private bool enableGPUCLK = Properties.Settings.Default.enableGPUCLK;
+        private bool enableSystem = Properties.Settings.Default.enableSystem;
+        private bool enableDisplay = Properties.Settings.Default.enableDisplay;
 
         public HomePage()
         {
@@ -57,17 +62,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             setMaxTDP();
 
-
-            loadTDPValues();
-            loadSystemValues();
-
             //apply theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
 
             //Add list of resolution refresh to combo box
             displayItemSourceBind();
 
-            loadGPUClock();
+            loadUpdateValues();
         }
 
 
@@ -87,55 +88,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             changingResolution = true;
             cboResolution.SelectedIndex = 0;
             changingResolution = false;
-
-            updateDisplaySettings();
-
-
         }
 
-        private void updateDisplaySettings()
-        {
+      
 
 
-            if (cboRefreshRate.Text != GlobalVariables.refreshRate && !changingRefreshRate)
-            {
-                changingRefreshRate = true;
-                cboRefreshRate.Text = GlobalVariables.refreshRate;
-                changingRefreshRate = false;
-
-            }
-            if (cboResolution.Text != GlobalVariables.resolution && !changingResolution && GlobalVariables.resolution != "")
-            {
-                changingResolution = true;
-                cboResolution.Text = GlobalVariables.resolution;
-                changingResolution = false;
-
-            }
-            if (cboScaling.Text != GlobalVariables.scaling && !changingScaling)
-            {
-                changingScaling = true;
-                cboScaling.Text = GlobalVariables.scaling;
-                changingScaling = false;
-
-            }
-
-        }
-
-        private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
-        {
-            int count = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < count; i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                if (child is FrameworkElement childframeworkelement && childframeworkelement.Name == childname)
-                    return child;
-
-                var FindRes = GetElementFromParent(child, childname);
-                if (FindRes != null)
-                    return FindRes;
-            }
-            return null;
-        }
         #region slider loaded change thumb
         private void Slider_Loaded(object sender, RoutedEventArgs e)
         {
@@ -151,8 +108,25 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
             else  { }
         }
+        private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
+        {
 
+            //Use element parent for thumb size control on slider
+            int count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is FrameworkElement childframeworkelement && childframeworkelement.Name == childname)
+                    return child;
 
+                var FindRes = GetElementFromParent(child, childname);
+                if (FindRes != null)
+                    return FindRes;
+            }
+            return null;
+        }
+    
+   
 
         #endregion
 
@@ -169,29 +143,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void timerTick(object sender, EventArgs e)
         {
 
-
-
-            #region tdp updates
-            loadTDPValues();
-
-            #endregion tdp updates
-            #region system updates
-            loadSystemValues();
-            #endregion system updates
-
-            updateDisplaySettings();
-
-            loadGPUClock();
+            loadUpdateValues();
         }
 
         private void loadUpdateValues()
         {
             //GPU clock updates
-            if (!dragStartedGPUCLK)
+            if (!dragStartedGPUCLK && enableGPUCLK)
             {
                 if (GlobalVariables.gpuclk == "Default")
                 {
-                    if (GPUCLK.Value != 100) { GPUCLK.Value = 100; }
+                    if (GPUCLK.Value != 200) { GPUCLK.Value = 200; }
 
                 }
                 else
@@ -204,15 +166,56 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
 
-            //
+            //display updates
+            if (enableDisplay)
+            {
+                if (cboRefreshRate.Text != GlobalVariables.refreshRate && !changingRefreshRate)
+                {
+                    changingRefreshRate = true;
+                    cboRefreshRate.Text = GlobalVariables.refreshRate;
+                    changingRefreshRate = false;
+
+                }
+                if (cboResolution.Text != GlobalVariables.resolution && !changingResolution && GlobalVariables.resolution != "")
+                {
+                    changingResolution = true;
+                    cboResolution.Text = GlobalVariables.resolution;
+                    changingResolution = false;
+
+                }
+                if (cboScaling.Text != GlobalVariables.scaling && !changingScaling)
+                {
+                    changingScaling = true;
+                    cboScaling.Text = GlobalVariables.scaling;
+                    changingScaling = false;
+
+                }
+            }
+  
+            //system values
+            if (enableSystem)
+            {
+                if (!dragStartedBrightness && !GlobalVariables.needBrightnessRead) { Brightness.Value = GlobalVariables.brightness; }
+                if (!dragStartedVolume && !GlobalVariables.needVolumeRead)
+                { Volume.Value = GlobalVariables.volume; }
+            }
+
+            //TPD
+            if (enableTDP)
+            {
+                if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
+                {
+                    changingTDP = true;
+                    updateFromGlobalTDPPL1();
+                    updateFromGlobalTDPPL2();
+                    changingTDP = false;
+                }
+
+            }
 
         }
 
-        private void loadGPUClock()
-        {
-            
-
-        }
+ 
 
         #endregion timer controls
 
@@ -312,7 +315,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 {
                     GBTDPControls.Height = 40;
                     Properties.Settings.Default.showTDP = false;
-                    loadTDPValues();
                 }
                 Properties.Settings.Default.Save();
             }
@@ -735,7 +737,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
         {
-
+            //6800U MessageBox.Show("can change tdp:" + !changingTDP);
             if (!changingTDP)
             {
                 changingTDP = true;
@@ -773,18 +775,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
 
-        void loadTDPValues()
-        {
-            //If global tdp is not zero meaning it was read within 10 seconds, load those instead of calling a update
-            if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
-            {
-                changingTDP = true;
-                updateFromGlobalTDPPL1();
-                updateFromGlobalTDPPL2();
-                changingTDP = false;
-            }
-
-        }
 
         void updateFromGlobalTDPPL1()
         {
@@ -848,13 +838,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
 
-        void loadSystemValues()
-        {
-            if (!dragStartedBrightness && !GlobalVariables.needBrightnessRead) { Brightness.Value = GlobalVariables.brightness; }
-            if (!dragStartedVolume && !GlobalVariables.needVolumeRead)
-            { Volume.Value = GlobalVariables.volume; }
 
-        }
 
 
 
