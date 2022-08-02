@@ -22,7 +22,7 @@
 
 
         <XmlDataProvider x:Key="Profiles" Source="Profiles.xml" XPath="Configuration" IsInitialLoadEnabled="True"/>
-  
+
     </Page.Resources>
 
     <GroupBox VerticalAlignment="Stretch" Name="GB_General_Settings" Margin="0,0,0,10">
@@ -34,26 +34,24 @@
 
             </DockPanel>
         </GroupBox.Header>
-        <Grid VerticalAlignment="Top" Height="370">
-            <Grid.ColumnDefinitions>
-                
-                
-                <ColumnDefinition Width="250" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <StackPanel>
+
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left">
                 <DockPanel>
                     <Button x:Name="btnAddProfile" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
                     <Button x:Name="btnDeleteProfile" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
 
                 </DockPanel>
-                <ScrollViewer VerticalAlignment="Top" PanningMode="VerticalOnly" >
+
+                <ScrollViewer VerticalContentAlignment="Stretch" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
                     <DataGrid x:Name="profileDataGrid"
                           Grid.Column="0"
                               Grid.Row="1"
                               MinHeight="320"
-                              Height="Auto"
+                          
                               Width="245"
+                              VerticalContentAlignment="Stretch"
+                              VerticalAlignment="Stretch"
                           Margin="2"
                               HorizontalAlignment="Left"
                           AutoGenerateColumns="True"
@@ -81,33 +79,96 @@
                 </ScrollViewer>
             </StackPanel>
 
-            <ScrollViewer Grid.Column="1" HorizontalAlignment="Stretch" PanningMode="VerticalOnly">
-                <GroupBox VerticalAlignment="Stretch" Name="GB_ProfileMain" Margin="0,0,0,10">
-                    <GroupBox.Header >
-                        <DockPanel Height="30">
-                            <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+            <ScrollViewer HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" PanningMode="VerticalOnly"  Width="Auto">
+                <StackPanel>
+                    <GroupBox Height="90"  Name="GB_ProfileMain" Margin="0,0,0,10" VerticalAlignment="Top">
+                        <GroupBox.Header >
+                            <DockPanel Height="30">
+                                <Label Content="PROFILE DETAILS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
 
 
-                        </DockPanel>
-                    </GroupBox.Header>
-                   
+                            </DockPanel>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <DockPanel Height="40">
+                                <Label  Content="Profile Name" DockPanel.Dock="Left" FontSize="22" />
+                                <TextBox x:Name="txtbxProfileName" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                            </DockPanel>
+
+
+                        </StackPanel>
 
 
 
 
 
-                </GroupBox>
+                    </GroupBox>
+                    <GroupBox Height="Auto"  Name="GB_ProfileOnline" Margin="0,0,0,10" VerticalAlignment="Top">
+                        <GroupBox.Header >
+                            <DockPanel Height="30">
+                                <Label Content="ON CHARGER VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xE83E;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
 
+                            </DockPanel>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <DockPanel Height="40">
+                                <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
+                                <TextBox x:Name="txt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                            </DockPanel>
+                            <DockPanel Height="40">
+                                <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
+                                <TextBox x:Name="tdxt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                            </DockPanel>
+
+                        </StackPanel>
+
+
+
+
+
+                    </GroupBox>
+
+
+                    <GroupBox Height="Auto"  Name="GB_ProfileOffline" Margin="0,0,0,10" VerticalAlignment="Top">
+                        <GroupBox.Header >
+                            <DockPanel Height="30">
+                                <Label Content="ON BATTERY VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                <TextBlock Name="txtblkddPower" FontFamily="Segoe MDL2 Assets" Text="&#xE856;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+
+                            </DockPanel>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <DockPanel Height="40">
+                                <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
+                                <TextBox x:Name="tdddxt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                            </DockPanel>
+                            <DockPanel Height="40">
+                                <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
+                                <TextBox x:Name="tddxt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                            </DockPanel>
+
+                        </StackPanel>
+
+
+
+
+
+                    </GroupBox>
+
+
+                </StackPanel>
 
             </ScrollViewer>
-            
-        </Grid>
+
+
+        </DockPanel>
 
 
 
 
 
     </GroupBox>
-    
+
 </Page>
