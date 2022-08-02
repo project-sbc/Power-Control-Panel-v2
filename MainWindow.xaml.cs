@@ -91,9 +91,12 @@ namespace Power_Control_Panel
         private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
         public MainWindow()
         {
-            this.InitializeComponent();
 
             StartUp.runStartUp();
+
+            this.InitializeComponent();
+
+            
 
        
 

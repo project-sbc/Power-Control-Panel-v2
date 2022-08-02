@@ -46,7 +46,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 
             if (cpuType == "Intel")
             {
-                //Properties.Settings.Default.enableGPUCLK = false;
+                Properties.Settings.Default.enableGPUCLK = false;
 
             }
             if (cpuType == "AMD")
