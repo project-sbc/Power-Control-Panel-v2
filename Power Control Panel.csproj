@@ -56,12 +56,6 @@
     <Content Include="Resources\AMD\RyzenAdj\ryzenadj.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\AMD\RyzenAdj\ucrtbased.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\AMD\RyzenAdj\vcruntime140d.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\AMD\RyzenAdj\WinRing0x64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

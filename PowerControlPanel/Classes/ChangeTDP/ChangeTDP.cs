@@ -101,7 +101,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 }
                 else { if (cpuType == "AMD") {
                         //StreamWriterLog.startStreamWriter("Start AMD change TDP");
-                        MessageBox.Show("change TDP to " + pl1TDP.ToString() + ", " + pl2TDP.ToString() + ", " + processorName);
+                        //6800U MessageBox.Show("change TDP to " + pl1TDP.ToString() + ", " + pl2TDP.ToString() + ", " + processorName);
                        runAMDTDPChange(pl1TDP, pl2TDP); } }
                 GlobalVariables.setPL1 = pl1TDP;
                 GlobalVariables.setPL2 = pl2TDP;
