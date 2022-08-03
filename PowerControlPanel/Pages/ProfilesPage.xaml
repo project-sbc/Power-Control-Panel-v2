@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="1000"
       MinWidth="450"
       Title="ProfilesPage">
 
@@ -86,7 +86,7 @@
                             <DockPanel Height="30">
                                 <Label Content="PROFILE DETAILS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-
+                                <Button x:Name="btnSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click"></Button>
 
                             </DockPanel>
                         </GroupBox.Header>
@@ -115,11 +115,17 @@
                         <StackPanel>
                             <DockPanel Height="40">
                                 <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <TextBox x:Name="txt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                <mah:ToggleSwitch Foreground="Black"  DockPanel.Dock="Right" Name="enable_onlineSliderTDP1"  Toggled="enableControlTDP_Toggled" IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <Label x:Name="online_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
+                                <Slider x:Name="online_sliderTDP1"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
                             </DockPanel>
                             <DockPanel Height="40">
+
                                 <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <TextBox x:Name="tdxt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                <mah:ToggleSwitch Foreground="Black" DockPanel.Dock="Right" Name="enable_onlineSliderTDP2"  Toggled="enableControlTDP_Toggled" IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <Label x:Name="online_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
+                                <Slider x:Name="online_sliderTDP2"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
                             </DockPanel>
 
                         </StackPanel>
