@@ -4,6 +4,7 @@
       xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="1000"
@@ -11,13 +12,10 @@
       Title="ProfilesPage">
 
     <Page.Resources>
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <Style TargetType="ComboBox">
 
-            <Setter Property="FontSize" Value="20"/>
+        <Style TargetType="DockPanel">
+
+            
         </Style>
 
 
@@ -35,7 +33,7 @@
             </DockPanel>
         </GroupBox.Header>
 
-        <DockPanel>
+        <StackPanel Orientation="Horizontal">
             <StackPanel DockPanel.Dock="Left">
                 <DockPanel>
                     <Button x:Name="btnAddProfile" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
@@ -57,7 +55,7 @@
                           AutoGenerateColumns="True"
                           ItemsSource="{Binding}"
                           RowHeaderWidth="0"
-                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectionMode="Single" IsReadOnly="True">
+                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectionMode="Single" IsReadOnly="True" SelectionChanged="profileDataGrid_SelectionChanged">
                         <DataGrid.CellStyle>
                             <Style TargetType="{x:Type DataGridCell}">
 
@@ -80,13 +78,13 @@
             </StackPanel>
 
             <ScrollViewer HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" PanningMode="VerticalOnly"  Width="Auto">
-                <StackPanel>
+                <StackPanel x:Name="ProfileSP" IsEnabled="False">
                     <GroupBox Height="90"  Name="GB_ProfileMain" Margin="0,0,0,10" VerticalAlignment="Top">
                         <GroupBox.Header >
                             <DockPanel Height="30">
                                 <Label Content="PROFILE DETAILS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                                <Button x:Name="btnSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click"></Button>
+                                <Button x:Name="btnSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" ></Button>
 
                             </DockPanel>
                         </GroupBox.Header>
@@ -106,25 +104,33 @@
                     </GroupBox>
                     <GroupBox Height="Auto"  Name="GB_ProfileOnline" Margin="0,0,0,10" VerticalAlignment="Top">
                         <GroupBox.Header >
-                            <DockPanel Height="30">
+                            <DockPanel Height="30" >
                                 <Label Content="ON CHARGER VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
                                 <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xE83E;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
 
                             </DockPanel>
                         </GroupBox.Header>
                         <StackPanel>
-                            <DockPanel Height="40">
+                            <DockPanel Height="40" >
                                 <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black"  DockPanel.Dock="Right" Name="enable_onlineSliderTDP1"  Toggled="enableControlTDP_Toggled" IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <mah:ToggleSwitch Foreground="Black" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_TDP1"   IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                 <Label x:Name="online_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
                                 <Slider x:Name="online_sliderTDP1"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
                             </DockPanel>
                             <DockPanel Height="40">
 
                                 <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black" DockPanel.Dock="Right" Name="enable_onlineSliderTDP2"  Toggled="enableControlTDP_Toggled" IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <mah:ToggleSwitch Foreground="Black" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Online_TDP2"   IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                 <Label x:Name="online_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
                                 <Slider x:Name="online_sliderTDP2"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                            </DockPanel>
+                            <DockPanel Height="40">
+
+                                <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                <mah:ToggleSwitch Foreground="Black" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <Label x:Name="online_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderGPUCLK, Path=Value}"/>
+                                <Slider x:Name="online_sliderGPUCLK"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
 
                             </DockPanel>
 
@@ -148,13 +154,26 @@
                         <StackPanel>
                             <DockPanel Height="40">
                                 <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <TextBox x:Name="tdddxt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                <mah:ToggleSwitch Foreground="Black" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Offline_TDP1"  IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <Label x:Name="offline_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
+                                <Slider x:Name="offline_sliderTDP1"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
                             </DockPanel>
                             <DockPanel Height="40">
-                                <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <TextBox x:Name="tddxt" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
-                            </DockPanel>
 
+                                <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
+                                <mah:ToggleSwitch Foreground="Black" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_TDP2"  IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <Label x:Name="offline_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
+                                <Slider x:Name="offline_sliderTDP2"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  Value="{Binding ElementName=txtsliderTDP2, Path=Content}" SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                            </DockPanel>
+                            <DockPanel Height="40">
+
+                                <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                <mah:ToggleSwitch Foreground="Black" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_GPUCLK"   IsOn="False" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                <Label x:Name="offline_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderGPUCLK, Path=Value}"/>
+                                <Slider x:Name="offline_sliderGPUCLK"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                            </DockPanel>
                         </StackPanel>
 
 
@@ -169,7 +188,7 @@
             </ScrollViewer>
 
 
-        </DockPanel>
+        </StackPanel>
 
 
 

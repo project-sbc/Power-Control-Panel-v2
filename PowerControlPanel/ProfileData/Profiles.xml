@@ -4,26 +4,26 @@
 		<Profile >
 			<ProfileName>Test</ProfileName>
 			<Offline>
-				<PL1>1</PL1>
-				<PL2></PL2>
+				<TDP1>1</TDP1>
+				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
 			</Offline>
 			<Online>
-				<PL1>1</PL1>
-				<PL2></PL2>
+				<TDP1>1</TDP1>
+				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
 			</Online>
 		</Profile>
 		<Profile >
 			<ProfileName>Test2</ProfileName>
 			<Offline>
-				<PL1>1</PL1>
-				<PL2></PL2>
+				<TDP1>1</TDP1>
+				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
 			</Offline>
 			<Online>
-				<PL1>1</PL1>
-				<PL2></PL2>
+				<TDP1>1</TDP1>
+				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
 			</Online>
 		</Profile>
@@ -37,13 +37,13 @@
 		<Profile >
 			<ProfileName>ProfileTemplate</ProfileName>
 			<Offline>
-				<PL1></PL1>
-				<PL2></PL2>
+				<TDP1></TDP1>
+				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
 			</Offline>
 			<Online>
-				<PL1></PL1>
-				<PL2></PL2>
+				<TDP1></TDP1>
+				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
 			</Online>
 		</Profile>

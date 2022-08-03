@@ -403,26 +403,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             }
         }
-        private void TDP1_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider_ValueChanged(sender, e);
-        }
-        private void TDP2_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider_ValueChanged(sender, e);
-        }
-        private void Brightness_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider_ValueChanged(sender, e);
-        }
-        private void GPUCLK_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider_ValueChanged(sender, e);
-        }
-        private void Volume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Slider_ValueChanged(sender, e);
-        }
+      
         #endregion
 
         #region slider drag completed
@@ -464,29 +445,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
         }
-        private void TDP1_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-        {
-            Slider_DragCompleted(sender, e);
-        }
-        private void TDP2_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-        {
-            Slider_DragCompleted(sender, e);
-        }
-        private void Brightness_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-        {
-            Slider_DragCompleted(sender, e);
-
-        }
-        private void Volume_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-        {
-            Slider_DragCompleted(sender, e);
-
-        }
-        private void GPUCLK_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
-        {
-            Slider_DragCompleted(sender, e);
-
-        }
+     
+     
         #endregion
 
         #region slider drag started
@@ -523,26 +483,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
-        private void TDP1_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-        {
-            Slider_DragStarted(sender, e);
-        }
-        private void TDP2_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-        {
-            Slider_DragStarted(sender, e);
-        }
-        private void Brightness_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-        {
-            Slider_DragStarted(sender, e);
-        }
-        private void Volume_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-        {
-            Slider_DragStarted(sender, e);
-        }
-        private void GPUCLK_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
-        {
-            Slider_DragStarted(sender, e);
-        }
+  
         #endregion
 
         #region slider mouse left up
@@ -895,5 +836,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             handleVisibility();
         }
+
+  
     }
 }
