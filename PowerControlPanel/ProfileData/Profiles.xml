@@ -4,13 +4,13 @@
 		<Profile >
 			<ProfileName>Test</ProfileName>
 			<Offline>
-				<TDP1>1</TDP1>
-				<TDP2></TDP2>
+				<TDP1>9</TDP1>
+				<TDP2>12</TDP2>
 				<GPUCLK></GPUCLK>
 			</Offline>
 			<Online>
-				<TDP1>1</TDP1>
-				<TDP2></TDP2>
+				<TDP1>10</TDP1>
+				<TDP2>11</TDP2>
 				<GPUCLK></GPUCLK>
 			</Online>
 		</Profile>

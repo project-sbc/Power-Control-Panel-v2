@@ -73,6 +73,86 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             xmlDocument.Save(GlobalVariables.xmlFile);
             xmlDocument = null;
         }
+
+
+        public void saveProfileArray(string[] result, string profileName)
+        {
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("Profile/ProfileName[text()='" + profileName + "']");
+            if (xmlSelectedNode != null)
+            {
+                XmlNode parentNode = xmlSelectedNode.ParentNode;
+
+                if (parentNode != null)
+                {
+                    XmlNode onlineNode = parentNode.SelectSingleNode("Online");
+                    foreach (XmlNode node in onlineNode.ChildNodes)
+                    {
+                        if (node.Name == "TDP1") { node.InnerText = result[0]; }
+                        if (node.Name == "TDP2") { node.InnerText = result[1]; }
+                        if (node.Name == "GPUCLK") { node.InnerText = result[2]; }
+                    }
+
+
+
+                    XmlNode offlineNode = parentNode.SelectSingleNode("Offline");
+                    foreach (XmlNode node in offlineNode.ChildNodes)
+                    {
+                        if (node.Name == "TDP1") { node.InnerText = result[3];  }
+                        if (node.Name == "TDP2") { node.InnerText = result[4]; }
+                        if (node.Name == "GPUCLK") { node.InnerText = result[5]; }
+                    }
+                }
+
+
+            }
+            xmlDocument.Save(GlobalVariables.xmlFile);
+
+            xmlDocument = null;
+     
+
+        }
+        public string[] loadProfileArray(string profileName)
+        {
+            string[] result = new string [6];
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("Profile/ProfileName[text()='" + profileName + "']");
+            if (xmlSelectedNode != null)
+            {
+                XmlNode parentNode = xmlSelectedNode.ParentNode;
+
+                if (parentNode != null)
+                {
+                    XmlNode onlineNode = parentNode.SelectSingleNode("Online");
+                    foreach (XmlNode node in onlineNode.ChildNodes)
+                    {
+                        if (node.Name == "TDP1") { result[0] = node.InnerText; }
+                        if (node.Name == "TDP2") { result[1] = node.InnerText; }
+                        if (node.Name == "GPUCLK") { result[2] = node.InnerText; }
+                    }
+
+
+
+                    XmlNode offlineNode = parentNode.SelectSingleNode("Offline");
+                    foreach (XmlNode node in offlineNode.ChildNodes)
+                    {
+                        if (node.Name == "TDP1") { result[3] = node.InnerText; }
+                        if (node.Name == "TDP2") { result[4] = node.InnerText; }
+                        if (node.Name == "GPUCLK") { result[5] = node.InnerText; }
+                    }
+                }
+
+           
+            }
+
+            xmlDocument = null;
+            return result;
+        }
+
         public string loadProfileParameter(string powerStatus, string parameter, string profileName)
         {
             string result = "";
