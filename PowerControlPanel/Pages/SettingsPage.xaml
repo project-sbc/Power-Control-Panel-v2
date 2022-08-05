@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="800"
       MinWidth="450"
       Title="SettingsPage">
 
@@ -37,7 +37,7 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
-
+                        <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
@@ -103,7 +103,19 @@
                         <Slider x:Name="TDPMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="5" Maximum="60"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
 
                     </DockPanel>
+                    <DockPanel Grid.Row="3"  >
 
+                        <Label Content="Quick Access Menu Size (%)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox x:Name="cboQAMSize" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                            <ComboBoxItem Content="25" />
+                            <ComboBoxItem Content="33" />
+                            <ComboBoxItem Content="40" />
+                        </ComboBox>
+
+
+                    </DockPanel>
                 </Grid>
 
 

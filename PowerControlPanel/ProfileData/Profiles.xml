@@ -30,8 +30,17 @@
 	</Profiles>
 
 	<Applications>
-		<App DisplayName="OSFE" Exe="OSFE.exe" Path="" AppType="Game" GameType="Steam" Image="" Profile="" Order=""/>
-		<App DisplayName="VS2022" Exe="Visualstudio.exe" Path="" AppType="App" GameType="" Image="" Profile="" Order=""/>
+		<App>
+			<DisplayName></DisplayName>
+			<Exe></Exe>
+			<Path></Path>
+			<AppType></AppType>
+			<GameType></GameType>
+			<Image></Image>
+			<Profile></Profile>
+			<Order></Order>
+		</App>
+
 	</Applications>
 	<ProfileTemplate>
 		<Profile >
@@ -48,5 +57,17 @@
 			</Online>
 		</Profile>
 	</ProfileTemplate>
+	<AppTemplate>
+		<App>
+			<DisplayName></DisplayName>
+			<Exe></Exe>
+			<Path></Path>
+			<AppType></AppType>
+			<GameType></GameType>
+			<Image></Image>
+			<Profile></Profile>
+			<Order></Order>
+		</App>
+	</AppTemplate>
 </Configuration>
 

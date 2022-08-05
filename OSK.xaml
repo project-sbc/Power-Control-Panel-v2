@@ -22,7 +22,7 @@
 
         <DropShadowEffect x:Key="DropShadowEffect" ShadowDepth="1" Direction="-90" BlurRadius="3" />
         <Style TargetType="TextBlock">
-            <EventSetter Event="MouseDown" Handler="button_Click" />
+            
             <EventSetter Event="TouchDown" Handler="button_Click" />
             <Setter Property="Margin" Value="4"/>
       

@@ -200,7 +200,177 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
     }
     public class ManageXML_Apps
     {
+        public DataTable appList()
+        {
+            DataTable dt = new DataTable();
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
 
+            dt.Columns.Add("DisplayName");
+
+            foreach (XmlNode node in xmlNode.ChildNodes)
+            {
+
+                dt.Rows.Add(node.SelectSingleNode("DisplayName").InnerText);
+            }
+            xmlDocument = null;
+            return dt;
+
+
+        }
+        public void createApp()
+        {
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNodeTemplate = xmlDocument.SelectSingleNode("//Configuration/AppTemplate/App");
+            XmlNode xmlNodeProfiles = xmlDocument.SelectSingleNode("//Configuration/Applications");
+
+
+            string newAppName = "NewApp";
+
+
+            XmlNode newNode = xmlDocument.CreateNode(XmlNodeType.Element, "App", "");
+            newNode.InnerXml = xmlNodeTemplate.InnerXml;
+            newNode.SelectSingleNode("DisplayName").InnerText = newAppName;
+            xmlNodeProfiles.AppendChild(newNode);
+
+
+
+            xmlDocument.Save(GlobalVariables.xmlFile);
+
+            xmlDocument = null;
+
+        }
+        public void deleteApp(string appName)
+        {
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNodeProfiles = xmlDocument.SelectSingleNode("//Configuration/Applications");
+
+            foreach (XmlNode node in xmlNodeProfiles.ChildNodes)
+            {
+                if (node.SelectSingleNode("DisplayName").InnerText == appName)
+                {
+                    xmlNodeProfiles.RemoveChild(node);
+                    break;
+                }
+
+            }
+
+            xmlDocument.Save(GlobalVariables.xmlFile);
+            xmlDocument = null;
+        }
+
+
+        public void saveProfileArray(string[] result, string appName)
+        {
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("App/DisplayName[text()='" + appName + "']");
+            if (xmlSelectedNode != null)
+            {
+                XmlNode parentNode = xmlSelectedNode.ParentNode;
+
+                if (parentNode != null)
+                {
+                    
+                    foreach (XmlNode node in parentNode.ChildNodes)
+                    {
+                        if (node.Name == "DisplayName") { node.InnerText = result[0]; }
+                        if (node.Name == "Exe") { node.InnerText = result[1]; }
+                        if (node.Name == "Path") { node.InnerText = result[2]; }
+                        if (node.Name == "AppType") { node.InnerText = result[3]; }
+                        if (node.Name == "GameType") { node.InnerText = result[4]; }
+                        if (node.Name == "Image") { node.InnerText = result[5]; }
+                        if (node.Name == "Profile") { node.InnerText = result[6]; }
+                        if (node.Name == "Order") { node.InnerText = result[7]; }
+                    }
+
+          
+                }
+
+
+            }
+            xmlDocument.Save(GlobalVariables.xmlFile);
+
+            xmlDocument = null;
+
+
+        }
+        public string[] loadAppArray(string appName)
+        {
+            string[] result = new string[8];
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("App/DisplayName[text()='" + appName + "']");
+            if (xmlSelectedNode != null)
+            {
+                XmlNode parentNode = xmlSelectedNode.ParentNode;
+
+                if (parentNode != null)
+                {
+                   
+                    foreach (XmlNode node in parentNode.ChildNodes)
+                    {
+                        if (node.Name == "DisplayName") { result[0] = node.InnerText; }
+                        if (node.Name == "Exe") { result[1] = node.InnerText; }
+                        if (node.Name == "Path") { result[2] = node.InnerText; }
+                        if (node.Name == "AppType") { result[3] = node.InnerText; }
+                        if (node.Name == "GameType") { result[4] = node.InnerText; }
+                        if (node.Name == "Image") { result[5] = node.InnerText; }
+                        if (node.Name == "Profile") { result[6] = node.InnerText; }
+                        if (node.Name == "Order") { result[7] = node.InnerText; }
+                     
+                    }
+
+
+
+                }
+
+
+            }
+
+            xmlDocument = null;
+            return result;
+        }
+
+        public string loadAppParameter(string parameter, string appName)
+        {
+            string result = "";
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("App/DisplayName[text()='" + appName + "']");
+            if (xmlSelectedNode != null)
+            {
+          
+                XmlNode parameterNode = xmlSelectedNode.SelectSingleNode(parameter);
+                result = parameterNode.InnerText;
+            }
+
+            xmlDocument = null;
+            return result;
+        }
+        public void changeAppParameter(string parameter, string appName, string newValue)
+        {
+            string result = "";
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("App/DisplayName[text()='" + appName + "']");
+            if (xmlSelectedNode != null)
+            {
+             
+                XmlNode parameterNode = xmlSelectedNode.SelectSingleNode(parameter);
+                parameterNode.InnerText = newValue;
+            }
+
+            xmlDocument = null;
+
+        }
 
 
 

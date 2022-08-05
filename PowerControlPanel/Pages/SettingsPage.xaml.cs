@@ -47,6 +47,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             
             Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
 
+            Properties.Settings.Default.sizeQAM = cboQAMSize.Text;
 
 
             //Save
@@ -54,6 +55,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             //Reapply theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
+
+            MessageBox.Show("Settings saved!");
         }
 
         private void loadSettings()
@@ -66,6 +69,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboAccentTheme.Text = Properties.Settings.Default.systemTheme.Substring(intPeriodLocation+1,intLengthTheme-(intPeriodLocation+1) );
             cboLightDarkTheme.Text = Properties.Settings.Default.systemTheme.Substring(0, intPeriodLocation);
             TDPMAX.Value = Properties.Settings.Default.maxTDP;
+
+            cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
 
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
         }

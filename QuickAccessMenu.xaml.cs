@@ -146,7 +146,8 @@ namespace Power_Control_Panel
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Width = 0.33 * System.Windows.SystemParameters.PrimaryScreenWidth;
+            double width =(Convert.ToDouble(Properties.Settings.Default.sizeQAM) / 100);
+            this.Width = width * System.Windows.SystemParameters.PrimaryScreenWidth;
             this.Left = System.Windows.SystemParameters.PrimaryScreenWidth - this.Width;
             this.Top = 0;
 
