@@ -21,22 +21,33 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
     public partial class ProfilesPage : Page
     {
         private Classes.ManageXML.ManageXML_Profiles xmlP;
+        private Classes.ManageXML.ManageXML_Apps xmlA;
         private string ProfileName = "";
         public ProfilesPage()
         {
             InitializeComponent();
 
+            //initialize xml management class
             xmlP = new Classes.ManageXML.ManageXML_Profiles();
+            xmlA = new Classes.ManageXML.ManageXML_Apps();
+            //populate profile list
             loadListView();
-
+            //change theme to match general theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
 
-
+            //hide AMD specific stuff if cpu is intel
             if (GlobalVariables.cpuType =="Intel")
             {
                 online_GPUCLK_DP.Visibility = Visibility.Collapsed;
                 offline_GPUCLK_DP.Visibility = Visibility.Collapsed;
             }
+
+
+            //set max tdp on sliders
+            offline_sliderTDP1.Maximum = Properties.Settings.Default.maxTDP;
+            offline_sliderTDP2.Maximum = Properties.Settings.Default.maxTDP;
+            online_sliderTDP1.Maximum = Properties.Settings.Default.maxTDP;
+            online_sliderTDP2.Maximum = Properties.Settings.Default.maxTDP;
         }
 
         private void loadListView()
@@ -55,19 +66,32 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void btnDeleteProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-           
+            bool deleteProfile = true;
 
-            xmlP.deleteProfile(ProfileName);
-            loadListView();
-            clearProfile();
 
-            if (GlobalVariables.ActiveProfile == ProfileName) 
-            { 
-                GlobalVariables.ActiveProfile = "None";
- 
+
+            if (ProfileName == "Default")
+            {
+                if (System.Windows.Forms.MessageBox.Show("Deleting the Default profile will disable having a default. Do you still want to delete it?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    deleteProfile = false;
+                }
 
 
             }
+            
+            if (deleteProfile == true)
+            {
+                xmlP.deleteProfile(ProfileName);
+                loadListView();
+                clearProfile();
+                if (GlobalVariables.ActiveProfile == ProfileName)
+                {
+                    GlobalVariables.ActiveProfile = "None";
+
+                }
+            }
+
         }
         private void saveProfile()
         {
@@ -130,10 +154,18 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 //check if profile name has changed! if yes, update any applications or active profiles with new name
                 if (ProfileName != txtbxProfileName.Text)
                 {
-                    //if not match, then name was changed
-                    System.Windows.MessageBox.Show("ADD PROFILE NAME CHANGE CODE HERE");
+                    //if not match, then name was changed. Update profile name in profiles  section of XML. Update all apps with profilename
+                    xmlP.changeProfileName(ProfileName, txtbxProfileName.Text);
+                    xmlA.changeProfileNameInApps(ProfileName, txtbxProfileName.Text);
 
-                    if (GlobalVariables.ActiveProfile == ProfileName) { GlobalVariables.ActiveProfile = txtbxProfileName.Text; }
+                    loadListView();
+
+                    //if active profile name is the one changed, then update profile
+                    if (GlobalVariables.ActiveProfile == ProfileName) 
+                    { 
+                        GlobalVariables.ActiveProfile = txtbxProfileName.Text;
+                        System.Windows.MessageBox.Show("MAKE CODE TO RUN PROFILE AFTER PROFILE UPDATE");
+                    }
                 }
 
                 System.Windows.MessageBox.Show("Profile Saved");

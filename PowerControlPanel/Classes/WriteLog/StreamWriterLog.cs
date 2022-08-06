@@ -8,33 +8,30 @@ using System.Windows;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes
 {
-    public class StreamWriterLog
+    public static class StreamWriterLog
     {
-        //public static string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        
         public static string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
         public static Object objLock = new Object();
         public static void startStreamWriter(string newLog)
         {
             try
             {
-                if (!File.Exists(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt")) { createLogFile(); }
-                using (StreamWriter w = File.AppendText("PowerControlPanel/Logs/application_log.txt"))
+                lock (objLock)
                 {
-                    lock(objLock)
+                    if (!File.Exists(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt")) { createLogFile(); }
+                    using (StreamWriter w = File.AppendText(BaseDir + "\\PowerControlPanel\\Logs\\application_log.txt"))
                     {
                         Log(newLog, w);
+
                     }
-                    
+                   
                 }
-
-
-
-
             }
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                
             }
 
          

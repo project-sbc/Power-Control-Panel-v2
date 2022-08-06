@@ -30,6 +30,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             loadSettings();
 
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
+
+            hideSettings();
+        }
+
+        private void hideSettings()
+        {
+            if (GlobalVariables.cpuType == "AMD")
+            {
+                GB_INTEL_TDP.Visibility = Visibility.Collapsed;
+            }
+
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -48,6 +59,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
 
             Properties.Settings.Default.sizeQAM = cboQAMSize.Text;
+
+            Properties.Settings.Default.IntelMMIOMSR = cboTDPTypeIntel.Text;
 
 
             //Save
@@ -73,6 +86,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
 
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
+
+            cboTDPTypeIntel.Text = Properties.Settings.Default.IntelMMIOMSR;
         }
         private void changeTaskService(string systemAutoStart)
         {

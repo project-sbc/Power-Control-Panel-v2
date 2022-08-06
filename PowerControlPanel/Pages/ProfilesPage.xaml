@@ -68,6 +68,7 @@
                                 <Setter Property="FontWeight" Value="Bold"/>
                                 <Setter Property="FontSize" Value="22"/>
                                 <Setter Property="Width" Value="240"/>
+                                <Setter Property="Background" Value="DarkGray" />
                                 <Setter Property="HorizontalAlignment" Value="Center"/>
                                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                             </Style>

@@ -42,7 +42,7 @@
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
+                    <Border  Grid.Row="3" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
 
 
                     <DockPanel   >
@@ -105,13 +105,14 @@
                     </DockPanel>
                     <DockPanel Grid.Row="3"  >
 
-                        <Label Content="Quick Access Menu Size (%)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="Quick Access Menu Width (%)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboQAMSize" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="25" />
                             <ComboBoxItem Content="33" />
                             <ComboBoxItem Content="40" />
+                            <ComboBoxItem Content="45" />
                         </ComboBox>
 
 
@@ -124,7 +125,46 @@
 
             </GroupBox>
 
-          
+            <GroupBox Name="GB_INTEL_TDP" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="INTEL TDP SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                        
+                    </DockPanel>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+
+
+                 
+
+                  
+                    <DockPanel Grid.Row="0"  >
+
+                        <Label Content="TDP Set Type" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox x:Name="cboTDPTypeIntel" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                            <ComboBoxItem Content="MMIO" />
+                            <ComboBoxItem Content="MSR" />
+                            <ComboBoxItem Content="MMIO + MSR" />
+                  
+                        </ComboBox>
+
+
+                    </DockPanel>
+                </Grid>
+
+
+
+
+
+            </GroupBox>
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -249,6 +249,7 @@ namespace Power_Control_Panel
             checkNetworkInterface();
             checkPowerStatus();
 
+            txtblkDateTime.Text = DateTime.Now.ToString();
            
             //game pad stuff here
             //if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }

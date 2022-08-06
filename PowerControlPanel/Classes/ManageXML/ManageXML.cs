@@ -188,11 +188,36 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
            
         }
 
-        public void updateProfile(string address)
+        public void changeProfileName(string oldName, string newName)
         {
+            
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
+            XmlNodeList xmlSelectedNodes = xmlNode.SelectNodes("Profile/ProfileName[text()='" + oldName + "']");
+            if (xmlSelectedNodes != null)
+            {
+                foreach (XmlNode xmlNode1 in xmlSelectedNodes)
+                {
+                    XmlNode nameNode = xmlNode1.SelectSingleNode("ProfileName");
+                    if (nameNode != null)
+                    {
+                        if (nameNode.InnerText == oldName) { nameNode.InnerText = newName; }
 
+                    }
+
+                }
+
+
+            }
+
+            xmlDocument.Save(GlobalVariables.xmlFile);
+
+            xmlDocument = null;
 
         }
+
+
         public void applyProfile()
         {
 
@@ -219,6 +244,36 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
 
         }
+
+        public void changeProfileNameInApps(string oldName, string newName)
+        {
+
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
+            XmlNodeList xmlSelectedNodes = xmlNode.SelectNodes("App/Profile[text()='" + oldName + "']");
+            if (xmlSelectedNodes != null)
+            {
+                foreach (XmlNode xmlNode1 in xmlSelectedNodes)
+                {
+                    XmlNode nameNode = xmlNode1.SelectSingleNode("Profile");
+                    if (nameNode != null)
+                    {
+                        if (nameNode.InnerText == oldName) { nameNode.InnerText = newName; }
+
+                    }
+
+                }
+
+
+            }
+
+            xmlDocument.Save(GlobalVariables.xmlFile);
+
+            xmlDocument = null;
+
+        }
+
         public void createApp()
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();

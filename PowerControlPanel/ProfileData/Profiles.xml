@@ -2,7 +2,7 @@
 <Configuration>
 	<Profiles>
 		<Profile >
-			<ProfileName>Test</ProfileName>
+			<ProfileName>Default</ProfileName>
 			<Offline>
 				<TDP1>9</TDP1>
 				<TDP2>12</TDP2>
@@ -14,32 +14,11 @@
 				<GPUCLK></GPUCLK>
 			</Online>
 		</Profile>
-		<Profile >
-			<ProfileName>Test2</ProfileName>
-			<Offline>
-				<TDP1>1</TDP1>
-				<TDP2></TDP2>
-				<GPUCLK></GPUCLK>
-			</Offline>
-			<Online>
-				<TDP1>1</TDP1>
-				<TDP2></TDP2>
-				<GPUCLK></GPUCLK>
-			</Online>
-		</Profile>
+	
 	</Profiles>
 
 	<Applications>
-		<App>
-			<DisplayName></DisplayName>
-			<Exe></Exe>
-			<Path></Path>
-			<AppType></AppType>
-			<GameType></GameType>
-			<Image></Image>
-			<Profile></Profile>
-			<Order></Order>
-		</App>
+
 
 	</Applications>
 	<ProfileTemplate>

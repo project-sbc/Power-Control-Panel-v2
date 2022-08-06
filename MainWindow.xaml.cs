@@ -57,6 +57,7 @@ namespace Power_Control_Panel
         public static string ActiveProfile = "None";
         public static string DefaultProfile = "None";
         public static string ActiveApp = "None";
+        public static string powerStatus = "";
 
         //display settings
         public static string resolution = "";
@@ -194,6 +195,17 @@ namespace Power_Control_Panel
                 setTheme();
                 theme = Properties.Settings.Default.systemTheme;
             }
+
+
+
+            //Profile or power status change updater
+            string Power = SystemParameters.PowerLineStatus.ToString();
+            if (Power != GlobalVariables.powerStatus & GlobalVariables.powerStatus != "" & GlobalVariables.ActiveProfile != "None")
+            {
+                MessageBox.Show("run change profile here");
+
+            }
+
         }
         private void OSKEvent(object sender, EventArgs e)
         {

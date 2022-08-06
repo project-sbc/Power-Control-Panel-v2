@@ -22,7 +22,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         string RWDelay = "800"; //legacy value, RW.exe is not used anymore
         private  Object objLock = new Object();
         private string processorName = "";
-        //public  string BaseDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        
         public string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
 
         //Read TDP routines
@@ -88,6 +88,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 //StreamWriterLog.startStreamWriter("Start TDP change");
                 determineCPU();
                 //StreamWriterLog.startStreamWriter("CPU type is " + cpuType);
+
+                //check to make sure input TDP is not above maximum set and minimum 5
+                if (pl1TDP < 5) { pl1TDP = 5; }
+                if (pl2TDP < 5) { pl2TDP = 5; }
+                if (pl1TDP > Properties.Settings.Default.maxTDP) { pl1TDP = Properties.Settings.Default.maxTDP; }
+                if (pl2TDP > Properties.Settings.Default.maxTDP) { pl2TDP = Properties.Settings.Default.maxTDP; }
+
+
                 if (cpuType == "Intel")
                 {
                     if (Properties.Settings.Default.IntelMMIOMSR.Contains("MMIO"))
