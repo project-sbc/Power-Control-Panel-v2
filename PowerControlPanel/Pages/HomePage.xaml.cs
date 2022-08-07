@@ -51,6 +51,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool enableGPUCLK = Properties.Settings.Default.enableGPUCLK;
         private bool enableSystem = Properties.Settings.Default.enableSystem;
         private bool enableDisplay = Properties.Settings.Default.enableDisplay;
+        private bool enableCPU = Properties.Settings.Default.enableCPU;
+
+
+        private bool dragStartedMAXCPU = false;
+        private bool changingMAXCPU = false;
+
+        private bool dragStartedActiveCores = false;
+        private bool changingActiveCores = false;
 
         public HomePage()
         {
@@ -59,7 +67,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             InitializeComponent();
             //set max cpu core count here
-            MAXCPU.Maximum = Environment.ProcessorCount;
+            ActiveCores.Maximum = GlobalVariables.maxCpuCores;
+            MAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
             initializeTimer();
 
             setMaxTDP();
@@ -165,6 +174,35 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         GPUCLK.Value = Int32.Parse(GlobalVariables.gpuclk);
                     }
                 }
+            }
+
+            //max cpu clock updates
+            if (!dragStartedMAXCPU && enableCPU)
+            {
+                if (GlobalVariables.cpuMaxFrequency == 0)
+                {
+                    MAXCPU.Value = MAXCPU.Maximum;
+                    txtsliderMAXCPU.Visibility = Visibility.Collapsed;
+                    txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
+ 
+             
+                }
+                else
+                {
+                    MAXCPU.Value = GlobalVariables.cpuMaxFrequency;
+
+                    txtsliderMAXCPUAuto.Visibility = Visibility.Collapsed;
+                    txtsliderMAXCPU.Visibility = Visibility.Visible;
+                }
+            }
+
+
+            //active core updates
+            if (!dragStartedActiveCores && enableCPU)
+            {
+
+                    ActiveCores.Value = GlobalVariables.cpuActiveCores;
+  
             }
 
 
@@ -434,6 +472,28 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                             HandleChangingGPUCLK((int)GPUCLK.Value);
                         }
                         break;
+                    case "MAXCPU":
+                        if (!dragStartedMAXCPU && !changingMAXCPU)
+                        {
+                            HandleChangingMAXCPU((int)MAXCPU.Value);
+                        }
+                        if (MAXCPU.Value == MAXCPU.Maximum) 
+                        {
+                            txtsliderMAXCPU.Visibility = Visibility.Collapsed;
+                            txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
+                        } 
+                        else 
+                        {
+                            txtsliderMAXCPUAuto.Visibility = Visibility.Collapsed;
+                            txtsliderMAXCPU.Visibility = Visibility.Visible;
+                        }
+                        break;
+                    case "ActiveCores":
+                        if (!dragStartedActiveCores && !changingActiveCores)
+                        {
+                            HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -475,6 +535,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         dragStartedGPUCLK = false;
                         HandleChangingGPUCLK((int)GPUCLK.Value);
                         break;
+                    case "MAXCPU":
+                        dragStartedMAXCPU = false;
+                        HandleChangingMAXCPU((int)MAXCPU.Value);
+                        break;
+                    case "ActiveCores":
+                        dragStartedActiveCores = false;
+                        HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
+                        break;
                     default:
                         break;
                 }
@@ -511,6 +579,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         break;
                     case "GPUCLK":
                         dragStartedGPUCLK = true;
+                        break;
+                    case "MAXCPU":
+                        dragStartedMAXCPU = true;
+                        break;
+                    case "ActiveCores":
+                        dragStartedActiveCores = true;
                         break;
                     default:
                         break;
@@ -554,6 +628,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         dragStartedGPUCLK = false;
                         HandleChangingGPUCLK((int)GPUCLK.Value);
                         break;
+                    case "MAXCPU":
+                        dragStartedMAXCPU = false;
+                        HandleChangingMAXCPU((int)MAXCPU.Value);
+                        break;
+                    case "ActiveCores":
+                        dragStartedActiveCores = false;
+                        HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
+                        break;
                     default:
                         break;
                 }
@@ -561,27 +643,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
         }
 
-        private void TDP1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Slider_MouseLeftButtonUp(sender, e);
-
-        }
-        private void TDP2_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Slider_MouseLeftButtonUp(sender, e);
-        }
-        private void Brightness_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Slider_MouseLeftButtonUp(sender, e);
-        }
-        private void Volume_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Slider_MouseLeftButtonUp(sender, e);
-        }
-        private void GPUCLK_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Slider_MouseLeftButtonUp(sender, e);
-        }
+      
 
 
         #endregion
@@ -618,36 +680,21 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         dragStartedGPUCLK = false;
                         HandleChangingGPUCLK((int)GPUCLK.Value);
                         break;
+                    case "MAXCPU":
+                        dragStartedMAXCPU = false;
+                        HandleChangingMAXCPU((int)MAXCPU.Value);
+                        break;
+                    case "ActiveCores":
+                        dragStartedActiveCores = false;
+                        HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
+                        break;
                     default:
                         break;
                 }
 
             }
         }
-        private void TDP1_TouchUp(object sender, TouchEventArgs e)
-        {
-            Slider_TouchUp(sender, e);
-        }
-
-
-        private void TDP2_TouchUp(object sender, TouchEventArgs e)
-        {
-            Slider_TouchUp(sender, e);
-        }
-        private void GPUCLK_TouchUp(object sender, TouchEventArgs e)
-        {
-            Slider_TouchUp(sender, e);
-        }
-
-        private void Brightness_TouchUp(object sender, TouchEventArgs e)
-        {
-            Slider_TouchUp(sender, e);
-        }
-        private void Volume_TouchUp(object sender, TouchEventArgs e)
-        {
-            Slider_TouchUp(sender, e);
-        }
-
+  
         #endregion
 
         #region slider touchdown
@@ -676,41 +723,21 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     case "GPUCLK":
                         dragStartedGPUCLK = true;
                         break;
+                    case "MAXCPU":
+                        dragStartedMAXCPU = true;
+                        break;
+                    case "ActiveCores":
+                        dragStartedActiveCores = true;
+                        break;
                     default:
                         break;
                 }
 
             }
         }
-        private void TDP1_TouchDown(object sender, TouchEventArgs e)
-        {
-            Slider_TouchDown(sender, e);
-        }
-        private void TDP2_TouchDown(object sender, TouchEventArgs e)
-        {
-            Slider_TouchDown(sender, e);
-        }
-        private void Brightness_TouchDown(object sender, TouchEventArgs e)
-        {
-            Slider_TouchDown(sender, e);
-        }
-        private void Volume_TouchDown(object sender, TouchEventArgs e)
-        {
-            Slider_TouchDown(sender, e);
-        }
-        private void GPUCLK_TouchDown(object sender, TouchEventArgs e)
-        {
-            Slider_TouchDown(sender, e);
-        }
-
+  
 
         #endregion
-
-
-
-
-
-
 
 
         private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
@@ -814,9 +841,45 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
 
+        private void HandleChangingMAXCPU(int maxcpu)
+        {
+            if (this.IsLoaded)
+            {
+                if(dragStartedMAXCPU == false)
+                {
+                    changingMAXCPU = true;
+                    int sendMaxCPU = 0;
+                    if (maxcpu != MAXCPU.Maximum) { sendMaxCPU = maxcpu; }
+
+
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeCPUMaxFrequency(sendMaxCPU));
+
+                    changingMAXCPU = false;
+                }
+                
+            }
 
 
 
+        }
+
+        private void HandleChangingActiveCores(double cores)
+        {
+            if (this.IsLoaded)
+            {
+                if (dragStartedActiveCores == false)
+                {
+                    changingActiveCores = true;
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));
+
+                    changingActiveCores = false;
+                }
+
+            }
+
+
+
+        }
 
 
 

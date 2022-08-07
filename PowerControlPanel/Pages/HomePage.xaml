@@ -157,6 +157,8 @@
 
                         </Label>
                         <Label x:Name="txtsliderMAXCPU" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=MAXCPU, Path=Value}"/>
+                        <Label x:Name="txtsliderMAXCPUAuto" Visibility="Collapsed" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Auto"/>
+                      
                         <Slider x:Name="MAXCPU" DockPanel.Dock="Right"  LargeChange="100" TickFrequency="100"  HorizontalAlignment="Right" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" Minimum="1000" Maximum="5000"  SmallChange="100" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
 
                     </DockPanel>

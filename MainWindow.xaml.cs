@@ -17,6 +17,7 @@ using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using SharpDX.XInput;
 using ControlzEx.Theming;
 using System.IO;
+using System.Management;
 
 namespace Power_Control_Panel
 {
@@ -53,8 +54,11 @@ namespace Power_Control_Panel
 
         //cpu settings
         public static int cpuMaxFrequency = 0;
-        public static int cpuCores = 0;
-        
+        public static int cpuActiveCores = 0;
+        public static int maxCpuCores = new ManagementObjectSearcher("Select * from Win32_Processor").Get().Cast<ManagementBaseObject>().Sum(item => int.Parse(item["NumberOfCores"].ToString()));
+        public static int baseCPUSpeed = 1000;
+
+
 
 
         //Profile and app settings
@@ -117,9 +121,7 @@ namespace Power_Control_Panel
             setTheme();
 
             //test code here
-
-            PowerControlPanel.Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(2));
-
+            
 
         }
 

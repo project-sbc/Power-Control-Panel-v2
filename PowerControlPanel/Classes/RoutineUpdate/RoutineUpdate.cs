@@ -25,10 +25,25 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             while (GlobalVariables.useRoutineThread)
             {
 
-                ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
-                ChangeVolume.AudioManager.GetMasterVolume();
-                ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
-                if (counter > 10) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP()); counter = -1; }
+                //ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
+                //ChangeVolume.AudioManager.GetMasterVolume();
+                //ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
+                //changeCPU.ChangeCPU.readCPUMaxFrequency();
+                //changeCPU.ChangeCPU.readActiveCores();
+
+   
+                Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings());
+                Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeVolume.AudioManager.GetMasterVolume());
+                Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeBrightness.WindowsSettingsBrightnessController.getBrightness());
+
+                if (counter > 10) { 
+                    
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.readTDP()); 
+                    
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.readActiveCores());
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.readCPUMaxFrequency());
+                    counter = -1;
+                }
                 
                 Thread.Sleep(1000);
          

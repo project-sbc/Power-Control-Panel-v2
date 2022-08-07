@@ -100,7 +100,7 @@
 
                         </Label>
                         <Label x:Name="txtsliderMaxTDP" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDPMAX, Path=Value}"/>
-                        <Slider x:Name="TDPMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="5" Maximum="60"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
+                        <Slider x:Name="TDPMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="5" Maximum="80"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
 
                     </DockPanel>
                     <DockPanel Grid.Row="3"  >

@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler;
 using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
+using Power_Control_Panel.PowerControlPanel.Classes;
 using Microsoft.Win32;
+using System.Management;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 {
@@ -21,10 +23,17 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
             ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
             //ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
-
+            changeCPU.ChangeCPU.readCPUMaxFrequency();
+            changeCPU.ChangeCPU.readActiveCores();
             //Modify settings for CPU specific like gpu clock and intel power bal
             configureSettings();
 
+
+            //adjust base clock speed
+            int baseClockSpeed = new ManagementObjectSearcher("select MaxClockSpeed from Win32_Processor").Get().Cast<ManagementBaseObject>().Sum(item => int.Parse(item["MaxClockSpeed"].ToString()));
+            double roundClockSpeed = Math.Round(Convert.ToDouble(baseClockSpeed) / 100, 0) * 100;
+            GlobalVariables.baseCPUSpeed = (int)roundClockSpeed;
+           
 
         }
 
