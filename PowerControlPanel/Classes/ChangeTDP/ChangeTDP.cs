@@ -50,6 +50,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 else { if (cpuType == "AMD") 
                     {// StreamWriterLog.startStreamWriter("Read TDP start: read AMD");
                      runAMDReadTDP(); } }
+                Thread.Sleep(200);
                 GlobalVariables.needTDPRead = false;
 
 

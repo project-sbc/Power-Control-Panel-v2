@@ -23,7 +23,7 @@
 
     </Page.Resources>
     <StackPanel>
-        <GroupBox VerticalAlignment="Stretch" Name="GB_Profiles" Margin="0,0,0,10" Visibility="Visible">
+        <GroupBox VerticalAlignment="Stretch" Name="GB_Profiles" Margin="0,0,0,10" Visibility="Collapsed">
             <GroupBox.Header >
                 <DockPanel Height="30">
                     <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
@@ -189,7 +189,12 @@
                             <GroupBox.Header >
                                 <DockPanel Height="30">
                                     <Label Content="Profile Applications" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-                                    <TextBlock Name="txtblkApp" FontFamily="Segoe MDL2 Assets" Text="&#xE71D;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+
+                                  
+                                    <TextBlock Name="txtblkApp" FontFamily="Segoe MDL2 Assets" Text="&#xE71D;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="5,0,10,0" HorizontalAlignment="Right"/>
+                                    <Button x:Name="btnOpenAppProfile" Content="Edit App" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" Margin="5,0,0,0" ></Button>
+                                    <Button x:Name="btnAddAppProfile" Content="Add App" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" Margin="5,0,0,0" ></Button>
+                                    <Button x:Name="btnDeleteAppProfile" Content="Delete App" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" Margin="5,0,0,0" ></Button>
 
                                 </DockPanel>
                             </GroupBox.Header>
@@ -244,7 +249,7 @@
 
 
         </GroupBox>
-        <GroupBox VerticalAlignment="Stretch" Name="GB_Apps" Margin="0,0,0,10" Visibility="Collapsed">
+        <GroupBox VerticalAlignment="Stretch" Name="GB_Apps" Margin="0,0,0,10" Visibility="Visible">
             <GroupBox.Header >
                 <DockPanel Height="30">
                     <Label Content="APPLICATIONS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />

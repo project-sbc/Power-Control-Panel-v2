@@ -131,6 +131,55 @@
 
             </GroupBox>
 
+            <GroupBox Name="GBCPUControls" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="CPU CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlCPU"  Toggled="enableControlCPU_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                    </DockPanel>
+                </GroupBox.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+
+
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+
+
+
+                    <DockPanel   >
+                        <Label Content="Max CPU Frequency (MHz)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <Label x:Name="txtsliderMAXCPU" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=MAXCPU, Path=Value}"/>
+                        <Slider x:Name="MAXCPU" DockPanel.Dock="Right"  LargeChange="100" TickFrequency="100"  HorizontalAlignment="Right" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" Minimum="1000" Maximum="5000"  SmallChange="100" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
+
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1"  >
+                        <Label Content="Active Cores" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+
+                        <Label x:Name="txtsliderActiveCores" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=ActiveCores, Path=Value}"/>
+                        <Slider x:Name="ActiveCores" LargeChange="1" DockPanel.Dock="Right" Thumb.DragCompleted="Slider_DragCompleted" Height="25" Thumb.DragStarted="Slider_DragStarted" Width="230" Minimum="1" IsSnapToTickEnabled="True" Maximum="16"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" HorizontalAlignment="Right" TouchDown="Slider_TouchDown" TouchUp="Slider_TouchUp" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  >
+
+                        </Slider>
+                    </DockPanel>
+
+                </Grid>
+
+
+
+
+
+            </GroupBox>
+
             <GroupBox Name="GBAMDGPUCLK" Margin="0,0,0,10">
                 <GroupBox.Header >
                     <DockPanel Height="30">

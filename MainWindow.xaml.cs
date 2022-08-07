@@ -51,6 +51,10 @@ namespace Power_Control_Panel
         public static bool needVolumeRead = false;
         public static bool needBrightnessRead = false;
 
+        //cpu settings
+        public static int cpuMaxFrequency = 0;
+        public static int cpuCores = 0;
+        
 
 
         //Profile and app settings
@@ -113,10 +117,10 @@ namespace Power_Control_Panel
             setTheme();
 
             //test code here
-           
+
+            PowerControlPanel.Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(2));
 
 
-        
         }
 
         private void setUpNotifyIcon()

@@ -6,7 +6,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="enableCPU" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="enableIntelPB" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -49,6 +49,9 @@
     </Setting>
     <Setting Name="sizeQAM" Type="System.String" Scope="User">
       <Value Profile="(Default)">40</Value>
+    </Setting>
+    <Setting Name="showCPU" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

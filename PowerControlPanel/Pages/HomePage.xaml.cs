@@ -54,10 +54,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         public HomePage()
         {
-
+           
+            
 
             InitializeComponent();
-
+            //set max cpu core count here
+            MAXCPU.Maximum = Environment.ProcessorCount;
             initializeTimer();
 
             setMaxTDP();
@@ -251,6 +253,20 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 else { enableControlTDP.IsOn = false; GBTDPControls.Height = 40; enableControlTDP.IsOn = false; }
             }
 
+
+            if (!Properties.Settings.Default.enableCPU)
+            {
+                GBCPUControls.Visibility = Visibility.Collapsed;
+                GBCPUControls.Margin = new Thickness(0, 0, 0, 0);
+            }
+            else
+            {
+                if (Properties.Settings.Default.showTDP)
+                { enableControlCPU.IsOn = true; }
+                else { enableControlCPU.IsOn = false; GBCPUControls.Height = 40; enableControlCPU.IsOn = false; }
+            }
+
+
             if (!Properties.Settings.Default.enableSystem)
             {
                 GBSystemControls.Visibility = Visibility.Collapsed;
@@ -302,6 +318,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
         }
+
+
         private void enableControlTDP_Toggled(object sender, RoutedEventArgs e)
         {
             if (this.IsLoaded)
@@ -315,6 +333,25 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 {
                     GBTDPControls.Height = 40;
                     Properties.Settings.Default.showTDP = false;
+                }
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        
+        private void enableControlCPU_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                if (enableControlCPU.IsOn)
+                {
+                    GBCPUControls.Height = 150;
+                    Properties.Settings.Default.showCPU = true;
+                }
+                else
+                {
+                    GBCPUControls.Height = 40;
+                    Properties.Settings.Default.showCPU = false;
                 }
                 Properties.Settings.Default.Save();
             }
@@ -683,6 +720,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 changingTDP = true;
                 GlobalVariables.needTDPRead = true;
+                Thread.Sleep(150);
                 if (PL1started)
                 {
                     //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value

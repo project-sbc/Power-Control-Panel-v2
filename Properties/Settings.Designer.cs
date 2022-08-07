@@ -37,7 +37,7 @@ namespace Power_Control_Panel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool enableCPU {
             get {
                 return ((bool)(this["enableCPU"]));
@@ -212,6 +212,18 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["sizeQAM"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showCPU {
+            get {
+                return ((bool)(this["showCPU"]));
+            }
+            set {
+                this["showCPU"] = value;
             }
         }
     }
