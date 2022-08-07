@@ -18,7 +18,16 @@
 	</Profiles>
 
 	<Applications>
-
+		<App>
+			<DisplayName>Test123</DisplayName>
+			<Exe></Exe>
+			<Path></Path>
+			<AppType></AppType>
+			<GameType></GameType>
+			<Image></Image>
+			<Profile>Default</Profile>
+			<Order></Order>
+		</App>
 
 	</Applications>
 	<ProfileTemplate>
@@ -38,13 +47,13 @@
 	</ProfileTemplate>
 	<AppTemplate>
 		<App>
-			<DisplayName></DisplayName>
+			<DisplayName>Test</DisplayName>
 			<Exe></Exe>
 			<Path></Path>
 			<AppType></AppType>
 			<GameType></GameType>
 			<Image></Image>
-			<Profile></Profile>
+			<Profile>Default</Profile>
 			<Order></Order>
 		</App>
 	</AppTemplate>

@@ -15,34 +15,36 @@
 
         <Style TargetType="DockPanel">
 
-            
+
         </Style>
 
 
         <XmlDataProvider x:Key="Profiles" Source="Profiles.xml" XPath="Configuration" IsInitialLoadEnabled="True"/>
 
     </Page.Resources>
+    <StackPanel>
+        <GroupBox VerticalAlignment="Stretch" Name="GB_Profiles" Margin="0,0,0,10" Visibility="Visible">
+            <GroupBox.Header >
+                <DockPanel Height="30">
+                    <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-    <GroupBox VerticalAlignment="Stretch" Name="GB_General_Settings" Margin="0,0,0,10">
-        <GroupBox.Header >
-            <DockPanel Height="30">
-                <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
+                    <Button Content="Switch To Application Profiles" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="200" Click="ButtonSwitchViews_Click"  />
 
-
-            </DockPanel>
-        </GroupBox.Header>
-
-        <StackPanel Orientation="Horizontal">
-            <StackPanel DockPanel.Dock="Left">
-                <DockPanel>
-                    <Button x:Name="btnAddProfile" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
-                    <Button x:Name="btnDeleteProfile" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
 
                 </DockPanel>
+            </GroupBox.Header>
 
-                <ScrollViewer VerticalContentAlignment="Stretch" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
-                    <DataGrid x:Name="profileDataGrid"
+            <StackPanel Orientation="Horizontal">
+                <StackPanel DockPanel.Dock="Left">
+                    <DockPanel>
+                        <Button x:Name="btnAddProfile" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
+                        <Button x:Name="btnDeleteProfile" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
+
+                    </DockPanel>
+
+                    <ScrollViewer VerticalContentAlignment="Stretch" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
+                        <DataGrid x:Name="profileDataGrid"
                           Grid.Column="0"
                               Grid.Row="1"
                               MinHeight="320"
@@ -56,145 +58,292 @@
                           ItemsSource="{Binding}"
                           RowHeaderWidth="0"
                           Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectionMode="Single" IsReadOnly="True" SelectionChanged="profileDataGrid_SelectionChanged">
-                        <DataGrid.CellStyle>
-                            <Style TargetType="{x:Type DataGridCell}">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
 
-                                <Setter Property="FontSize" Value="22"/>
+                                    <Setter Property="FontSize" Value="22"/>
 
-                            </Style>
-                        </DataGrid.CellStyle>
-                        <DataGrid.ColumnHeaderStyle>
-                            <Style TargetType="{x:Type DataGridColumnHeader}">
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter Property="FontSize" Value="22"/>
-                                <Setter Property="Width" Value="240"/>
-                                <Setter Property="Background" Value="DarkGray" />
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            </Style>
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="FontSize" Value="22"/>
+                                    <Setter Property="Width" Value="240"/>
+                                    <Setter Property="Background" Value="DarkGray" />
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
 
-                        </DataGrid.ColumnHeaderStyle>
-                    </DataGrid>
-                </ScrollViewer>
-            </StackPanel>
-
-            <ScrollViewer HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" PanningMode="VerticalOnly"  Width="Auto">
-                <StackPanel x:Name="ProfileSP" IsEnabled="False">
-                    <GroupBox Height="90"  Name="GB_ProfileMain" Margin="0,0,0,10" VerticalAlignment="Top">
-                        <GroupBox.Header >
-                            <DockPanel Height="30">
-                                <Label Content="PROFILE DETAILS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-
-                                <Button x:Name="btnSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
-
-                            </DockPanel>
-                        </GroupBox.Header>
-                        <StackPanel>
-                            <DockPanel Height="40">
-                                <Label  Content="Profile Name" DockPanel.Dock="Left" FontSize="22" />
-                                <TextBox x:Name="txtbxProfileName" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
-                            </DockPanel>
-
-
-                        </StackPanel>
-
-
-
-
-
-                    </GroupBox>
-                    <GroupBox Height="Auto"  Name="GB_ProfileOnline" Margin="0,0,0,10" VerticalAlignment="Top">
-                        <GroupBox.Header >
-                            <DockPanel Height="30" >
-                                <Label Content="ON CHARGER VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-                                <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xE83E;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-
-                            </DockPanel>
-                        </GroupBox.Header>
-                        <StackPanel>
-                            <DockPanel Height="40" >
-                                <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_TDP1" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_TDP1"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                <Label x:Name="online_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP1, Path=Value}"/>
-                                <Slider x:Name="online_sliderTDP1"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
-                            </DockPanel>
-                            <DockPanel Height="40">
-
-                                <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_TDP2" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Online_TDP2"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                <Label x:Name="online_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
-                                <Slider x:Name="online_sliderTDP2"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
-
-                            </DockPanel>
-                            <DockPanel x:Name="online_GPUCLK_DP" Height="40">
-
-                                <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                <Label x:Name="online_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderGPUCLK, Path=Value}"/>
-                                <Slider x:Name="online_sliderGPUCLK"   DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
-
-                            </DockPanel>
-
-                        </StackPanel>
-
-
-
-
-
-                    </GroupBox>
-
-
-                    <GroupBox Height="Auto"  Name="GB_ProfileOffline" Margin="0,0,0,10" VerticalAlignment="Top">
-                        <GroupBox.Header >
-                            <DockPanel Height="30">
-                                <Label Content="ON BATTERY VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-                                <TextBlock Name="txtblkddPower" FontFamily="Segoe MDL2 Assets" Text="&#xE856;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
-
-                            </DockPanel>
-                        </GroupBox.Header>
-                        <StackPanel>
-                            <DockPanel Height="40">
-                                <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_TDP1" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Offline_TDP1"  IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                <Label x:Name="offline_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderTDP1, Path=Value}"/>
-                                <Slider x:Name="offline_sliderTDP1"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
-                            </DockPanel>
-                            <DockPanel Height="40">
-
-                                <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_TDP2" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_TDP2"  IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                <Label x:Name="offline_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderTDP2, Path=Value}"/>
-                                <Slider x:Name="offline_sliderTDP2"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
-
-                            </DockPanel>
-                            <DockPanel x:Name="offline_GPUCLK_DP" Height="40">
-
-                                <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
-                                <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                <Label x:Name="offline_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderGPUCLK, Path=Value}"/>
-                                <Slider x:Name="offline_sliderGPUCLK"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
-
-                            </DockPanel>
-                        </StackPanel>
-
-
-
-
-
-                    </GroupBox>
-
-
+                            </DataGrid.ColumnHeaderStyle>
+                        </DataGrid>
+                    </ScrollViewer>
                 </StackPanel>
 
-            </ScrollViewer>
+                <ScrollViewer HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" PanningMode="VerticalOnly"  Width="Auto">
+                    <StackPanel x:Name="ProfileSP" IsEnabled="False">
+                        <GroupBox Height="90"  Name="GB_ProfileMain" Margin="0,0,0,10" VerticalAlignment="Top">
+                            <GroupBox.Header >
+                                <DockPanel Height="30">
+                                    <Label Content="PROFILE DETAILS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                                    <Button x:Name="btnSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
+
+                                </DockPanel>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <DockPanel Height="40">
+                                    <Label  Content="Profile Name" DockPanel.Dock="Left" FontSize="22" />
+                                    <TextBox x:Name="txtbxProfileName" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                </DockPanel>
 
 
-        </StackPanel>
+                            </StackPanel>
 
 
 
 
 
-    </GroupBox>
+                        </GroupBox>
+                        <GroupBox Height="Auto"  Name="GB_ProfileOnline" Margin="0,0,0,10" Visibility="Collapsed" VerticalAlignment="Top">
+                            <GroupBox.Header >
+                                <DockPanel Height="30" >
+                                    <Label Content="ON CHARGER VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xE83E;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+
+                                </DockPanel>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <DockPanel Height="40" >
+                                    <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_TDP1" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_TDP1"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="online_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP1, Path=Value}"/>
+                                    <Slider x:Name="online_sliderTDP1"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+                                </DockPanel>
+                                <DockPanel Height="40">
+
+                                    <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_TDP2" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Online_TDP2"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="online_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
+                                    <Slider x:Name="online_sliderTDP2"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                                </DockPanel>
+                                <DockPanel x:Name="online_GPUCLK_DP" Height="40">
+
+                                    <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="online_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderGPUCLK, Path=Value}"/>
+                                    <Slider x:Name="online_sliderGPUCLK"   DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                                </DockPanel>
+
+                            </StackPanel>
+
+
+
+
+
+                        </GroupBox>
+
+
+                        <GroupBox Height="Auto"  Name="GB_ProfileOffline" Margin="0,0,0,10" Visibility="Collapsed" VerticalAlignment="Top">
+                            <GroupBox.Header >
+                                <DockPanel Height="30">
+                                    <Label Content="ON BATTERY VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <TextBlock Name="txtblkddPower" FontFamily="Segoe MDL2 Assets" Text="&#xE856;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+
+                                </DockPanel>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <DockPanel Height="40">
+                                    <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_TDP1" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Offline_TDP1"  IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="offline_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderTDP1, Path=Value}"/>
+                                    <Slider x:Name="offline_sliderTDP1"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+                                </DockPanel>
+                                <DockPanel Height="40">
+
+                                    <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_TDP2" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_TDP2"  IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="offline_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderTDP2, Path=Value}"/>
+                                    <Slider x:Name="offline_sliderTDP2"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                                </DockPanel>
+                                <DockPanel x:Name="offline_GPUCLK_DP" Height="40">
+
+                                    <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="offline_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderGPUCLK, Path=Value}"/>
+                                    <Slider x:Name="offline_sliderGPUCLK"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                                </DockPanel>
+                            </StackPanel>
+
+
+
+
+
+                        </GroupBox>
+
+                        <GroupBox Height="300"  Name="GB_ProfileApps" Margin="0,0,0,10" Visibility="Visible" VerticalAlignment="Top">
+                            <GroupBox.Header >
+                                <DockPanel Height="30">
+                                    <Label Content="Profile Applications" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <TextBlock Name="txtblkApp" FontFamily="Segoe MDL2 Assets" Text="&#xE71D;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" HorizontalAlignment="Right"/>
+
+                                </DockPanel>
+                            </GroupBox.Header>
+
+                            <ScrollViewer VerticalContentAlignment="Stretch" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
+                                <DataGrid x:Name="profileAppDataGrid"
+
+                              MinHeight="320"
+                          
+                              Width="538"
+                              VerticalContentAlignment="Stretch"
+                          Margin="2"
+                          AutoGenerateColumns="True"
+                          ItemsSource="{Binding}"
+                          RowHeaderWidth="0"
+                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectionMode="Single" IsReadOnly="True" >
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}">
+
+                                            <Setter Property="FontSize" Value="22"/>
+
+                                        </Style>
+                                    </DataGrid.CellStyle>
+                                    <DataGrid.ColumnHeaderStyle>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="FontSize" Value="22"/>
+                                            <Setter Property="Width" Value="240"/>
+                                            <Setter Property="Background" Value="DarkGray" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+
+                                    </DataGrid.ColumnHeaderStyle>
+                                </DataGrid>
+                            </ScrollViewer>
+
+
+
+
+
+                        </GroupBox>
+                    </StackPanel>
+
+                </ScrollViewer>
+
+
+            </StackPanel>
+
+
+
+
+
+        </GroupBox>
+        <GroupBox VerticalAlignment="Stretch" Name="GB_Apps" Margin="0,0,0,10" Visibility="Collapsed">
+            <GroupBox.Header >
+                <DockPanel Height="30">
+                    <Label Content="APPLICATIONS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                    <Button Content="Switch To Profiles" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="200" Click="ButtonSwitchViews_Click"  />
+
+
+
+                </DockPanel>
+            </GroupBox.Header>
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel DockPanel.Dock="Left">
+                    <DockPanel>
+                        <Button x:Name="btnAddApp" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
+                        <Button x:Name="btnDeleteApp" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
+
+                    </DockPanel>
+
+                    <ScrollViewer VerticalContentAlignment="Stretch" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
+                        <DataGrid x:Name="appDataGrid"
+                          Grid.Column="0"
+                              Grid.Row="1"
+                              MinHeight="320"
+                          
+                              Width="245"
+                              VerticalContentAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                          Margin="2"
+                              HorizontalAlignment="Left"
+                          AutoGenerateColumns="True"
+                          ItemsSource="{Binding}"
+                          RowHeaderWidth="0"
+                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectionMode="Single" IsReadOnly="True" SelectionChanged="profileDataGrid_SelectionChanged">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
+
+                                    <Setter Property="FontSize" Value="22"/>
+
+                                </Style>
+                            </DataGrid.CellStyle>
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="FontSize" Value="22"/>
+                                    <Setter Property="Width" Value="240"/>
+                                    <Setter Property="Background" Value="DarkGray" />
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+
+                            </DataGrid.ColumnHeaderStyle>
+                        </DataGrid>
+                    </ScrollViewer>
+                </StackPanel>
+
+                <ScrollViewer HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" PanningMode="VerticalOnly"  Width="Auto">
+                    <StackPanel x:Name="AppSP" IsEnabled="False">
+                        <GroupBox Height="90"  Name="GB_AppMain" Margin="0,0,0,10" VerticalAlignment="Top">
+                            <GroupBox.Header >
+                                <DockPanel Height="30">
+                                    <Label Content="APPLICATION DETAILS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                                    <Button x:Name="btnAppSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
+
+                                </DockPanel>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <DockPanel Height="40">
+                                    <Label  Content="Profile Name" DockPanel.Dock="Left" FontSize="22" />
+                                    <TextBox x:Name="txtbxAppName" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                </DockPanel>
+
+
+                            </StackPanel>
+
+
+
+
+
+                        </GroupBox>
+
+
+
+
+
+                    </StackPanel>
+
+                </ScrollViewer>
+
+
+            </StackPanel>
+
+
+
+
+
+        </GroupBox>
+    </StackPanel>
+
 
 </Page>

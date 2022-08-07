@@ -16,6 +16,9 @@ using SharpDX.XInput;
 using System.Net.NetworkInformation;
 using System.Management;
 using ControlzEx.Theming;
+using System.Drawing;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
 namespace Power_Control_Panel
 {
@@ -66,6 +69,11 @@ namespace Power_Control_Panel
             this.WindowStyle = WindowStyle.None;
             this.AllowsTransparency = true;
 
+
+            using (Icon ico = System.Drawing.Icon.ExtractAssociatedIcon(AppDomain.CurrentDomain.BaseDirectory + "\\Power Control Panel.exe"))
+            {
+                icon.Source = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
         }
 
 
@@ -249,8 +257,8 @@ namespace Power_Control_Panel
             checkNetworkInterface();
             checkPowerStatus();
 
-            txtblkDateTime.Text = DateTime.Now.ToString();
-           
+            txtblkDateTime.Text = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
+
             //game pad stuff here
             //if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }
         }

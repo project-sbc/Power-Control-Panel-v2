@@ -31,7 +31,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             xmlP = new Classes.ManageXML.ManageXML_Profiles();
             xmlA = new Classes.ManageXML.ManageXML_Apps();
             //populate profile list
-            loadListView();
+            loadProfileListView();
+            loadAppListView();
             //change theme to match general theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
 
@@ -50,18 +51,25 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             online_sliderTDP2.Maximum = Properties.Settings.Default.maxTDP;
         }
 
-        private void loadListView()
+        private void loadProfileListView()
         {
             
             DataTable dt = xmlP.profileList();
             profileDataGrid.DataContext = dt.DefaultView;
            
         }
+        private void loadAppListView()
+        {
+
+            DataTable dt = xmlA.appList();
+            appDataGrid.DataContext = dt.DefaultView;
+
+        }
 
         private void btnAddProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             xmlP.createProfile();
-            loadListView();
+            loadProfileListView();
         }
 
         private void btnDeleteProfile_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -83,7 +91,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (deleteProfile == true)
             {
                 xmlP.deleteProfile(ProfileName);
-                loadListView();
+                loadProfileListView();
                 clearProfile();
                 if (GlobalVariables.ActiveProfile == ProfileName)
                 {
@@ -158,7 +166,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     xmlP.changeProfileName(ProfileName, txtbxProfileName.Text);
                     xmlA.changeProfileNameInApps(ProfileName, txtbxProfileName.Text);
 
-                    loadListView();
+                    loadProfileListView();
 
                     //if active profile name is the one changed, then update profile
                     if (GlobalVariables.ActiveProfile == ProfileName) 
@@ -180,6 +188,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 txtbxProfileName.Text = ProfileName;
                 string[] result = xmlP.loadProfileArray(ProfileName);
 
+
+
+                DataTable dt = xmlA.appListByProfile(ProfileName);
+                profileAppDataGrid.DataContext = dt.DefaultView;
 
                 if (result[0] != string.Empty)
                 {
@@ -379,6 +391,20 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             saveProfile();
+        }
+
+        private void ButtonSwitchViews_Click(object sender, RoutedEventArgs e)
+        {
+            if (GB_Apps.Visibility== Visibility.Collapsed)
+            { 
+                GB_Apps.Visibility = Visibility.Visible;
+                GB_Profiles.Visibility= Visibility.Collapsed;
+            }
+            else
+            {
+                GB_Apps.Visibility = Visibility.Collapsed;
+                GB_Profiles.Visibility = Visibility.Visible;
+            }
         }
     }
 }

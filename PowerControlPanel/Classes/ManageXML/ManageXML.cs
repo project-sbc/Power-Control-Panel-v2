@@ -244,7 +244,25 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
 
         }
+        public DataTable appListByProfile(string profileName)
+        {
+            DataTable dt = new DataTable();
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNodeList xmlNodes = xmlDocument.SelectSingleNode("//Configuration/Applications").SelectNodes("App/Profile[text()='" + profileName + "']"); ;
 
+            dt.Columns.Add("DisplayName");
+
+            foreach (XmlNode node in xmlNodes)
+            {
+                MessageBox.Show(node.ParentNode.SelectSingleNode("DisplayName").InnerText);
+                dt.Rows.Add(node.ParentNode.SelectSingleNode("DisplayName").InnerText);
+            }
+            xmlDocument = null;
+            return dt;
+
+
+        }
         public void changeProfileNameInApps(string oldName, string newName)
         {
 

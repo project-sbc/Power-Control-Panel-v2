@@ -505,7 +505,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                                 string tdp;
                                 while ((line = reader.ReadLine()) != null)
                                 {
-                                    
+                                    double n = 0;
                                     if (line.Contains("STAPM LIMIT"))
                                     {
 
@@ -523,6 +523,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                                         tdp = tdp.Replace("PPT LIMIT SLOW", "");
                                         tdp = tdp.Replace(" ", "");
                                         tdp = tdp.Replace("slow-limit", "");
+                                    
                                         GlobalVariables.readPL2 = Convert.ToDouble(tdp);
                                         break;
                                     }
