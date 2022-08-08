@@ -29,6 +29,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             InitializeComponent();
 
+            offline_sliderActiveCores.Maximum = GlobalVariables.maxCpuCores;
+            online_sliderActiveCores.Maximum = GlobalVariables.maxCpuCores;
+            offline_sliderMAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
+            online_sliderMAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
+
             //initialize xml management class
             xmlP = new Classes.ManageXML.ManageXML_Profiles();
             xmlA = new Classes.ManageXML.ManageXML_Apps();
@@ -104,7 +109,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
               
-                string[] result = new string[6];
+                string[] result = new string[10];
 
 
                 if (toggle_Online_TDP1.IsOn == true)
@@ -152,6 +157,36 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                 }
                 else { result[5] = ""; }
+                //
+             
+                if (toggle_Online_MAXCPU.IsOn == true)
+                {
+                    if (online_sliderMAXCPU.Value == online_sliderMAXCPU.Maximum) { result[6] = "0"; }
+                    else { result[6] = online_sliderMAXCPU.Value.ToString(); }
+                 }
+                else { result[6] = ""; }
+
+                if (toggle_Offline_MAXCPU.IsOn == true)
+                {
+                    if (offline_sliderMAXCPU.Value == offline_sliderMAXCPU.Maximum) { result[8] = "0"; }
+                    else { result[8] = offline_sliderMAXCPU.Value.ToString(); }
+                }
+                else { result[8] = ""; }
+
+
+                if (toggle_Online_ActiveCores.IsOn == true)
+                {
+                    result[7] = online_sliderActiveCores.Value.ToString();
+
+                }
+                else { result[7] = ""; }
+                if (toggle_Offline_ActiveCores.IsOn == true)
+                {
+                    result[9] = offline_sliderActiveCores.Value.ToString();
+
+                }
+                else { result[9] = ""; }
+
 
                 xmlP.saveProfileArray(result,ProfileName);
 
@@ -257,7 +292,54 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     toggle_Offline_GPUCLK.IsOn = false;
                     offline_sliderGPUCLK.Value = offline_sliderTDP2.Minimum;
                 }
+                //
+                if (result[6] != string.Empty)
+                {
+                    toggle_Online_MAXCPU.IsOn = true;
+                    if (result[6] == "0") { online_sliderMAXCPU.Value = online_sliderMAXCPU.Maximum; }
+                    else { online_sliderMAXCPU.Value = Int32.Parse(result[6]); }
+                }
+                else
+                {
+                    toggle_Online_MAXCPU.IsOn = false;
+                    online_sliderMAXCPU.Value = online_sliderMAXCPU.Minimum;
+                }
+                if (result[8] != string.Empty)
+                {
+                    toggle_Offline_MAXCPU.IsOn = true;
+                    if (result[8] == "0") { offline_sliderMAXCPU.Value = offline_sliderMAXCPU.Maximum; }
+                    else { offline_sliderMAXCPU.Value = Int32.Parse(result[8]); }
+                   
+                }
+                else
+                {
+                    toggle_Offline_MAXCPU.IsOn = false;
+                    offline_sliderMAXCPU.Value = offline_sliderMAXCPU.Minimum;
+                }
 
+
+
+
+                if (result[7] != string.Empty)
+                {
+                    toggle_Online_ActiveCores.IsOn = true;
+                    online_sliderActiveCores.Value = Int32.Parse(result[7]);
+                }
+                else
+                {
+                    toggle_Online_ActiveCores.IsOn = false;
+                    online_sliderActiveCores.Value = online_sliderActiveCores.Minimum;
+                }
+                if (result[9] != string.Empty)
+                {
+                    toggle_Offline_ActiveCores.IsOn = true;
+                    offline_sliderActiveCores.Value = Int32.Parse(result[9]);
+                }
+                else
+                {
+                    toggle_Offline_ActiveCores.IsOn = false;
+                    offline_sliderActiveCores.Value = offline_sliderActiveCores.Minimum;
+                }
 
             }
 
@@ -273,7 +355,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             online_sliderTDP2.Value = online_sliderTDP2.Minimum;
             offline_sliderGPUCLK.Value = offline_sliderGPUCLK.Minimum;
             online_sliderGPUCLK.Value = online_sliderGPUCLK.Minimum;
-
+            offline_sliderActiveCores.Value = offline_sliderActiveCores.Minimum;
+            online_sliderActiveCores.Value = online_sliderActiveCores.Minimum;
+            offline_sliderMAXCPU.Value = offline_sliderMAXCPU.Minimum;
+            online_sliderMAXCPU.Value = online_sliderMAXCPU.Minimum;
             toggle_Offline_TDP1.IsOn = false;
             toggle_Offline_TDP2.IsOn = false;
             toggle_Online_TDP1.IsOn = false;
@@ -281,6 +366,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             toggle_Offline_GPUCLK.IsOn = false;
             toggle_Online_GPUCLK.IsOn=false;
 
+            toggle_Offline_ActiveCores.IsOn=false;
+            toggle_Online_ActiveCores.IsOn = false;
+            toggle_Offline_MAXCPU.IsOn=false;
+            toggle_Online_MAXCPU.IsOn = false;
         }
    
         private void ToggleSwitch_Toggled(object sender, System.Windows.RoutedEventArgs e)
@@ -447,6 +536,42 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 loadProfileAppList();
             }
            
+        }
+
+        private void sliderMAXCPU_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = (Slider)sender;
+            switch(slider.Name)
+            {
+                case "offline_sliderMAXCPU":
+                    if (slider.Value == slider.Maximum)
+                    {
+                        offline_txtMAXCPUAuto.Visibility = Visibility.Visible;
+                        offline_txtMAXCPU.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        offline_txtMAXCPUAuto.Visibility = Visibility.Collapsed;
+                        offline_txtMAXCPU.Visibility = Visibility.Visible;
+                    }
+                    break;
+                case "online_sliderMAXCPU":
+                    if (slider.Value == slider.Maximum)
+                    {
+                        online_txtMAXCPUAuto.Visibility = Visibility.Visible;
+                        online_txtMAXCPU.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        online_txtMAXCPUAuto.Visibility = Visibility.Collapsed;
+                        online_txtMAXCPU.Visibility = Visibility.Visible;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+                
         }
     }
 }

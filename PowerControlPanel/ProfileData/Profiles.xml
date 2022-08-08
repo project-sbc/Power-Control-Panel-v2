@@ -7,11 +7,15 @@
 				<TDP1>9</TDP1>
 				<TDP2>12</TDP2>
 				<GPUCLK></GPUCLK>
+				<MAXCPU></MAXCPU>
+				<ActiveCores></ActiveCores>
 			</Offline>
 			<Online>
 				<TDP1>10</TDP1>
 				<TDP2>11</TDP2>
 				<GPUCLK></GPUCLK>
+				<MAXCPU></MAXCPU>
+				<ActiveCores></ActiveCores>
 			</Online>
 		</Profile>
 	
@@ -37,11 +41,15 @@
 				<TDP1></TDP1>
 				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
+				<MAXCPU></MAXCPU>
+				<ActiveCores></ActiveCores>
 			</Offline>
 			<Online>
 				<TDP1></TDP1>
 				<TDP2></TDP2>
 				<GPUCLK></GPUCLK>
+				<MAXCPU></MAXCPU>
+				<ActiveCores></ActiveCores>
 			</Online>
 		</Profile>
 	</ProfileTemplate>

@@ -118,8 +118,25 @@
 
                                     <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                    <Label x:Name="online_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderGPUCLK, Path=Value}"/>
-                                    <Slider x:Name="online_sliderGPUCLK"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+                                    <Label x:Name="online_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderGPUCLK, Path=Value}"/>
+                                    <Slider x:Name="online_sliderGPUCLK" Minimum="200" Maximum="2200"   SmallChange="50" LargeChange="50" TickFrequency="50"   Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230"  IsSnapToTickEnabled="True" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+
+                                </DockPanel>
+                                <DockPanel x:Name="online_MAXCPU_DP" Height="40">
+
+                                    <Label  Content="Max CPU Frequency (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_MAXCPU" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="online_txtMAXCPU" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderMAXCPU, Path=Value}"/>
+                                    <Label x:Name="online_txtMAXCPUAuto" Visibility="Collapsed" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Auto"/>
+                                    <Slider x:Name="online_sliderMAXCPU" ValueChanged="sliderMAXCPU_ValueChanged"    Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" LargeChange="100" TickFrequency="100" Minimum="1000" Maximum="5000" IsSnapToTickEnabled="True" SmallChange="100" TickPlacement="None"  HorizontalAlignment="Right"    />
+
+                                </DockPanel>
+                                <DockPanel x:Name="online_ActiveCores_DP" Height="40">
+
+                                    <Label  Content="Active Cores" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_ActiveCores" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="online_txtActiveCores" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderActiveCores, Path=Value}"/>
+                                    <Slider x:Name="online_sliderActiveCores"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="1" LargeChange="1" IsSnapToTickEnabled="True" Maximum="8"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"     />
 
                                 </DockPanel>
 
@@ -159,10 +176,29 @@
 
                                     <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
-                                    <Label x:Name="offline_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderGPUCLK, Path=Value}"/>
-                                    <Slider x:Name="offline_sliderGPUCLK"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
+                                    <Label x:Name="offline_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderGPUCLK, Path=Value}"/>
+                                    <Slider x:Name="offline_sliderGPUCLK" Minimum="200" Maximum="2200"   SmallChange="50" LargeChange="50" TickFrequency="50" TickPlacement="None"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" IsSnapToTickEnabled="True"   HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
 
                                 </DockPanel>
+
+                                <DockPanel x:Name="offline_MAXCPU_DP" Height="40">
+
+                                    <Label  Content="Max CPU Frequency (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_MAXCPU" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="offline_txtMAXCPU" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderMAXCPU, Path=Value}"/>
+                                    <Label x:Name="offline_txtMAXCPUAuto" Visibility="Collapsed" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Auto"/>
+                                    <Slider x:Name="offline_sliderMAXCPU"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" LargeChange="100" TickFrequency="100" Minimum="1000" Maximum="5000" IsSnapToTickEnabled="True" SmallChange="100" TickPlacement="None"  HorizontalAlignment="Right" ValueChanged="sliderMAXCPU_ValueChanged"    />
+
+                                </DockPanel>
+                                <DockPanel x:Name="offline_ActiveCores_DP" Height="40">
+
+                                    <Label  Content="Active Cores" DockPanel.Dock="Left" FontSize="22" />
+                                    <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_ActiveCores" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
+                                    <Label x:Name="offline_txtActiveCores" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderActiveCores, Path=Value}"/>
+                                    <Slider x:Name="offline_sliderActiveCores"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="1" LargeChange="1" IsSnapToTickEnabled="True" Maximum="8"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"     />
+
+                                </DockPanel>
+
                             </StackPanel>
 
 

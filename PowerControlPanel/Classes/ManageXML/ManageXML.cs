@@ -127,6 +127,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                         if (node.Name == "TDP1") { node.InnerText = result[0]; }
                         if (node.Name == "TDP2") { node.InnerText = result[1]; }
                         if (node.Name == "GPUCLK") { node.InnerText = result[2]; }
+                        if (node.Name == "MAXCPU") { node.InnerText = result[6]; }
+                        if (node.Name == "ActiveCores") { node.InnerText = result[7]; }
                     }
 
 
@@ -137,6 +139,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                         if (node.Name == "TDP1") { node.InnerText = result[3];  }
                         if (node.Name == "TDP2") { node.InnerText = result[4]; }
                         if (node.Name == "GPUCLK") { node.InnerText = result[5]; }
+                        if (node.Name == "MAXCPU") { node.InnerText = result[8]; }
+                        if (node.Name == "ActiveCores") { node.InnerText = result[9]; }
                     }
                 }
 
@@ -150,7 +154,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
         }
         public string[] loadProfileArray(string profileName)
         {
-            string[] result = new string [6];
+            string[] result = new string [10];
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
             XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
@@ -167,6 +171,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                         if (node.Name == "TDP1") { result[0] = node.InnerText; }
                         if (node.Name == "TDP2") { result[1] = node.InnerText; }
                         if (node.Name == "GPUCLK") { result[2] = node.InnerText; }
+                        if (node.Name == "MAXCPU") { result[6] = node.InnerText; }
+                        if (node.Name == "ActiveCores") { result[7] = node.InnerText; }
                     }
 
 
@@ -177,6 +183,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                         if (node.Name == "TDP1") { result[3] = node.InnerText; }
                         if (node.Name == "TDP2") { result[4] = node.InnerText; }
                         if (node.Name == "GPUCLK") { result[5] = node.InnerText; }
+                        if (node.Name == "MAXCPU") { result[8] = node.InnerText; }
+                        if (node.Name == "ActiveCores") { result[9] = node.InnerText; }
                     }
                 }
 
