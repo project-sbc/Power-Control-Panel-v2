@@ -393,7 +393,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
         }
 
 
-        public void saveProfileArray(string[] result, string appName)
+        public void saveAppArray(string[] result, string appName)
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
@@ -408,14 +408,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                     
                     foreach (XmlNode node in parentNode.ChildNodes)
                     {
-                        if (node.Name == "DisplayName") { node.InnerText = result[0]; }
-                        if (node.Name == "Exe") { node.InnerText = result[1]; }
-                        if (node.Name == "Path") { node.InnerText = result[2]; }
-                        if (node.Name == "AppType") { node.InnerText = result[3]; }
-                        if (node.Name == "GameType") { node.InnerText = result[4]; }
-                        if (node.Name == "Image") { node.InnerText = result[5]; }
-                        if (node.Name == "Profile") { node.InnerText = result[6]; }
-                        if (node.Name == "Order") { node.InnerText = result[7]; }
+                        
+                        if (node.Name == "Exe") { node.InnerText = result[0]; }
+                        if (node.Name == "Path") { node.InnerText = result[1]; }
+                        if (node.Name == "AppType") { node.InnerText = result[2]; }
+                        if (node.Name == "GameType") { node.InnerText = result[3]; }
+                        if (node.Name == "Image") { node.InnerText = result[4]; }
+                        if (node.Name == "Profile") { node.InnerText = result[5]; }
+  
                     }
 
           

@@ -49,13 +49,36 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             appDataGrid.DataContext = dt.DefaultView;
 
         }
+        private void loadProcessNameCBO()
+        {
+            List<string> listProcesses = new List<string>();
 
-    
+            Process[] pList = Process.GetProcesses();
+            foreach (Process p in pList)
+            {
+                if (p.MainWindowHandle != IntPtr.Zero)
+                {
+                    if (!listProcesses.Contains(p.ProcessName))
+                    {
+                        listProcesses.Add(p.ProcessName);
+                   
+                    }
+             
+                }
+
+            }
+       
+            cboProcessName.ItemsSource = listProcesses;
+
+
+        }
+
 
         private void loadApp()
         {
             if (AppName != "")
             {
+                loadProcessNameCBO();
 
                 txtbxAppName.Text = AppName;
                 string[] result = xmlA.loadAppArray(AppName);
@@ -120,6 +143,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 {
                     txtbxImagePath.Text = String.Empty;
                 }
+                if (result[2] == string.Empty & result[1] == string.Empty & result[4] == string.Empty & result[3] == string.Empty)
+                {
+                    enableExeStart.IsOn = false;
+                }
+                else
+                {
+                    enableExeStart.IsOn = true;
+
+                }
 
             }
 
@@ -144,7 +176,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
          
             object item = appDataGrid.SelectedItem;
-  
+   
             if (item != null)
             {
                 string objectName = (appDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
@@ -170,7 +202,38 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         }
         private void saveProfile()
         {
+            if (AppName != "")
+            {
 
+                string[] result = new string[6];
+
+                result[0] = cboProcessName.Text;
+                result[1] = txtbxExePath.Text;
+                result[2] = cboAppType.Text;
+                result[3] = cboGameType.Text;
+                result[4] = txtbxImagePath.Text;
+                result[5] = cboAppProfile.Text;
+                
+                xmlA.saveAppArray(result, AppName);
+
+                //check if profile name has changed! if yes, update any applications or active profiles with new name
+                if (AppName != txtbxAppName.Text)
+                {
+                    //if not match, then name was changed. Update profile name in profiles  section of XML. Update all apps with profilename
+                     xmlA.changeAppParameter("DisplayName", AppName, txtbxAppName.Text);
+
+                    loadAppListView();
+
+                    //if active profile name is the one changed, then update profile
+                    if (GlobalVariables.ActiveApp == AppName)
+                    {
+                        GlobalVariables.ActiveApp = txtbxAppName.Text;
+                        
+                    }
+                }
+
+                System.Windows.MessageBox.Show("App Settings Saved");
+            }
 
         }
         private void btnAddProfile_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -195,7 +258,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (enableExeStart.IsOn)
                 {
-                    GB_AppExePath.Height = 100;
+                    GB_AppExePath.Height = Double.NaN;
 
                 }
                 else

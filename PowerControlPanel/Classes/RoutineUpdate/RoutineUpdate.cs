@@ -10,6 +10,7 @@ using System.Windows;
 using System.Management;
 using System.Threading;
 using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 {
@@ -51,7 +52,18 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             }
 
         }
+        private void runProfileChecker()
+        {
 
+            Process[] pList = Process.GetProcesses();
+
+            foreach (Process p in pList)
+            {
+                
+
+            }
+
+        }
 
 
         public void startThread()

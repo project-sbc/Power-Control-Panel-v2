@@ -10,7 +10,12 @@
       d:DesignHeight="450" d:DesignWidth="1000"
       MinWidth="450"
       Title="AppSettingsPage">
-
+    <Page.Resources>
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="White" />
+        </Style>
+    </Page.Resources>
     <Grid>
         <GroupBox VerticalAlignment="Stretch" Name="GB_Apps" Margin="0,0,0,10" Visibility="Visible">
             <GroupBox.Header >
@@ -103,7 +108,7 @@
                                 <DockPanel Height="30">
                                     <Label Content="RUN APPLICATION" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                                    <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableExeStart"  Toggled="enableExeStart_Toggled" IsOn="False" OffContent="Disabled" OnContent="Enabled" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                                    <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableExeStart"  Toggled="enableExeStart_Toggled" IsOn="True" OffContent="Disabled" OnContent="Enabled" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
 
 
                                 </DockPanel>
