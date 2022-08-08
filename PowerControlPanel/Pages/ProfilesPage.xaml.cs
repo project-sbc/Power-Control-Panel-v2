@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Controls.Primitives;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -23,6 +24,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private Classes.ManageXML.ManageXML_Profiles xmlP;
         private Classes.ManageXML.ManageXML_Apps xmlA;
         private string ProfileName = "";
+        private string AppName = "";
         public ProfilesPage()
         {
             InitializeComponent();
@@ -32,7 +34,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             xmlA = new Classes.ManageXML.ManageXML_Apps();
             //populate profile list
             loadProfileListView();
-            loadAppListView();
+
             //change theme to match general theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
 
@@ -58,13 +60,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             profileDataGrid.DataContext = dt.DefaultView;
            
         }
-        private void loadAppListView()
-        {
 
-            DataTable dt = xmlA.appList();
-            appDataGrid.DataContext = dt.DefaultView;
-
-        }
 
         private void btnAddProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -189,9 +185,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 string[] result = xmlP.loadProfileArray(ProfileName);
 
 
-
-                DataTable dt = xmlA.appListByProfile(ProfileName);
-                profileAppDataGrid.DataContext = dt.DefaultView;
+                loadProfileAppList();   
 
                 if (result[0] != string.Empty)
                 {
@@ -268,6 +262,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
         }
+
+    
         private void clearProfile()
         {
             txtbxProfileName.Text = string.Empty;
@@ -286,7 +282,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             toggle_Online_GPUCLK.IsOn=false;
 
         }
-
+   
         private void ToggleSwitch_Toggled(object sender, System.Windows.RoutedEventArgs e)
         {
             ToggleSwitch toggleSwitch = sender as ToggleSwitch;
@@ -335,7 +331,37 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 }
             }
         }
+        private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
+        {
 
+            //Use element parent for thumb size control on slider
+            int count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is FrameworkElement childframeworkelement && childframeworkelement.Name == childname)
+                    return child;
+
+                var FindRes = GetElementFromParent(child, childname);
+                if (FindRes != null)
+                    return FindRes;
+            }
+            return null;
+        }
+        private void Slider_Loaded(object sender, RoutedEventArgs e)
+        {
+            var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
+            if (SliderThumb != null)
+            {
+                if (SliderThumb is Thumb thumb)
+                {
+                    thumb.Width = 20;
+                    thumb.Height = 25;
+                }
+                else { }
+            }
+            else { }
+        }
 
         private DockPanel getParentDockPanel(DependencyObject toggle)
         {
@@ -356,7 +382,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 }
 
                 returnDP = (DockPanel)parent;
-
+           
 
 
             }
@@ -366,26 +392,32 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
-        private void profileDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-     
-            object item = profileDataGrid.SelectedItem;
+            DataGrid dataGrid = sender as DataGrid;
+            string dgName = dataGrid.Name;
+            object item = dataGrid.SelectedItem;
+            
             if (item != null)
             {
-                string profileName = (profileDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
 
-                if (profileName != null)
-                { ProfileSP.IsEnabled = true;
-                    ProfileName = profileName;
+                string objectName = (dataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
+                if (objectName != null)
+                {
+                    ProfileSP.IsEnabled = true;
+                    ProfileName = objectName;
                     loadProfile();
                 }
-                else { ProfileSP.IsEnabled = false;
+                else
+                {
+                    ProfileSP.IsEnabled = false;
                     ProfileName = "";
                     clearProfile();
                 }
 
             }
 
+    
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -393,18 +425,28 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             saveProfile();
         }
 
-        private void ButtonSwitchViews_Click(object sender, RoutedEventArgs e)
+        private void loadProfileAppList()
         {
-            if (GB_Apps.Visibility== Visibility.Collapsed)
-            { 
-                GB_Apps.Visibility = Visibility.Visible;
-                GB_Profiles.Visibility= Visibility.Collapsed;
-            }
-            else
+            DataTable dt = xmlA.appListByProfile(ProfileName);
+            profileAppDataGrid.DataContext = dt.DefaultView;
+        }
+        private void btnAddAppProfile_Click(object sender, RoutedEventArgs e)
+        {
+            xmlA.createApp(ProfileName);
+            loadProfileAppList();
+        }
+
+        private void btnDeleteAppProfile_Click(object sender, RoutedEventArgs e)
+        {
+            object item = profileAppDataGrid.SelectedItem;
+
+            if (item != null)
             {
-                GB_Apps.Visibility = Visibility.Collapsed;
-                GB_Profiles.Visibility = Visibility.Visible;
+                string objectName = (profileAppDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
+                xmlA.changeAppParameter("Profile", objectName, "");
+                loadProfileAppList();
             }
+           
         }
     }
 }

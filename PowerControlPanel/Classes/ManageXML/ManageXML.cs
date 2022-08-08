@@ -31,6 +31,27 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             
         }
+
+        public List<string> profileListForAppCBO()
+        {
+            List<string> cboAppProfile = new List<string>();
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
+
+          
+
+            foreach (XmlNode node in xmlNode.ChildNodes)
+            {
+
+                cboAppProfile.Add(node.SelectSingleNode("ProfileName").InnerText);
+            }
+            xmlDocument = null;
+            return cboAppProfile;
+
+
+        }
+
         public void createProfile()
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -40,8 +61,21 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
           
       
             string newProfileName = "NewProfile";
-                        
+            int countProfile = 0;
+            XmlNodeList xmlNodesByName = xmlNodeProfiles.SelectNodes("Profile/ProfileName[text()='" + newProfileName + "']");
 
+            if (xmlNodesByName.Count > 0)
+            {
+                while (xmlNodesByName.Count > 0)
+                {
+                    countProfile++;
+                    xmlNodesByName = xmlNodeProfiles.SelectNodes("Profile/ProfileName[text()='" + newProfileName + countProfile.ToString() + "']");
+
+                }
+                newProfileName = newProfileName + countProfile.ToString();
+            }
+
+   
             XmlNode newNode = xmlDocument.CreateNode(XmlNodeType.Element,"Profile", "");
             newNode.InnerXml = xmlNodeTemplate.InnerXml;
             newNode.SelectSingleNode("ProfileName").InnerText = newProfileName;
@@ -199,10 +233,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             {
                 foreach (XmlNode xmlNode1 in xmlSelectedNodes)
                 {
-                    XmlNode nameNode = xmlNode1.SelectSingleNode("ProfileName");
-                    if (nameNode != null)
+                    
+                    if (xmlNode1.Name == "ProfileName")
                     {
-                        if (nameNode.InnerText == oldName) { nameNode.InnerText = newName; }
+                        if (xmlNode1.InnerText == oldName) { xmlNode1.InnerText = newName; }
 
                     }
 
@@ -255,7 +289,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             foreach (XmlNode node in xmlNodes)
             {
-                MessageBox.Show(node.ParentNode.SelectSingleNode("DisplayName").InnerText);
+      
                 dt.Rows.Add(node.ParentNode.SelectSingleNode("DisplayName").InnerText);
             }
             xmlDocument = null;
@@ -274,10 +308,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             {
                 foreach (XmlNode xmlNode1 in xmlSelectedNodes)
                 {
-                    XmlNode nameNode = xmlNode1.SelectSingleNode("Profile");
-                    if (nameNode != null)
+                    
+                    if (xmlNode1.Name == "Profile")
                     {
-                        if (nameNode.InnerText == oldName) { nameNode.InnerText = newName; }
+                        if (xmlNode1.InnerText == oldName) { xmlNode1.InnerText = newName; }
 
                     }
 
@@ -292,23 +326,38 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
         }
 
-        public void createApp()
+        public void createApp(string ProfileName = "")
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
             XmlNode xmlNodeTemplate = xmlDocument.SelectSingleNode("//Configuration/AppTemplate/App");
             XmlNode xmlNodeProfiles = xmlDocument.SelectSingleNode("//Configuration/Applications");
 
-
             string newAppName = "NewApp";
+            if (ProfileName != "")
+            {
+                newAppName = ProfileName + "_App";
+            }
+            
+            int countApp = 0;
+            XmlNodeList xmlNodesByName = xmlNodeProfiles.SelectNodes("App/DisplayName[text()='" + newAppName + "']");
 
+            if (xmlNodesByName.Count > 0)
+            {
+                while (xmlNodesByName.Count > 0)
+                {
+                    countApp++;
+                    xmlNodesByName = xmlNodeProfiles.SelectNodes("App/DisplayName[text()='" + newAppName + countApp.ToString() + "']");
+
+                }
+                newAppName = newAppName + countApp.ToString();
+            }
 
             XmlNode newNode = xmlDocument.CreateNode(XmlNodeType.Element, "App", "");
             newNode.InnerXml = xmlNodeTemplate.InnerXml;
             newNode.SelectSingleNode("DisplayName").InnerText = newAppName;
+            newNode.SelectSingleNode("Profile").InnerText = ProfileName;
             xmlNodeProfiles.AppendChild(newNode);
-
-
 
             xmlDocument.Save(GlobalVariables.xmlFile);
 
@@ -374,7 +423,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
         }
         public string[] loadAppArray(string appName)
         {
-            string[] result = new string[8];
+            string[] result = new string[6];
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
             XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
@@ -388,14 +437,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                    
                     foreach (XmlNode node in parentNode.ChildNodes)
                     {
-                        if (node.Name == "DisplayName") { result[0] = node.InnerText; }
-                        if (node.Name == "Exe") { result[1] = node.InnerText; }
-                        if (node.Name == "Path") { result[2] = node.InnerText; }
-                        if (node.Name == "AppType") { result[3] = node.InnerText; }
-                        if (node.Name == "GameType") { result[4] = node.InnerText; }
-                        if (node.Name == "Image") { result[5] = node.InnerText; }
-                        if (node.Name == "Profile") { result[6] = node.InnerText; }
-                        if (node.Name == "Order") { result[7] = node.InnerText; }
+                        // not needed, already gotten if (node.Name == "DisplayName") { result[0] = node.InnerText; }
+                        if (node.Name == "Exe") { result[0] = node.InnerText; }
+                        if (node.Name == "Path") { result[1] = node.InnerText; }
+                        if (node.Name == "AppType") { result[2] = node.InnerText; }
+                        if (node.Name == "GameType") { result[3] = node.InnerText; }
+                        if (node.Name == "Image") { result[4] = node.InnerText; }
+                        if (node.Name == "Profile") { result[5] = node.InnerText; }
+                        
                      
                     }
 
@@ -429,18 +478,19 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
         }
         public void changeAppParameter(string parameter, string appName, string newValue)
         {
-            string result = "";
+    
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
             XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
             XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("App/DisplayName[text()='" + appName + "']");
             if (xmlSelectedNode != null)
             {
-             
-                XmlNode parameterNode = xmlSelectedNode.SelectSingleNode(parameter);
+
+                XmlNode parameterNode = xmlSelectedNode.ParentNode.SelectSingleNode(parameter);
+          
                 parameterNode.InnerText = newValue;
             }
-
+            xmlDocument.Save(GlobalVariables.xmlFile);
             xmlDocument = null;
 
         }

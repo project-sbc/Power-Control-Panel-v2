@@ -1,0 +1,174 @@
+﻿<Page x:Class="Power_Control_Panel.PowerControlPanel.Pages.AppSettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      
+      xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1000"
+      MinWidth="450"
+      Title="AppSettingsPage">
+
+    <StackPanel>
+        <ScrollViewer PanningMode="VerticalOnly">
+            <StackPanel>
+              
+                <GroupBox VerticalAlignment="Stretch" Name="GB_Apps" Margin="0,0,0,10" Visibility="Visible">
+                    <GroupBox.Header >
+                        <DockPanel Height="30">
+                            <Label Content="APPLICATIONS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                           
+
+                        </DockPanel>
+                    </GroupBox.Header>
+
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel DockPanel.Dock="Left">
+                            <DockPanel>
+                                <Button x:Name="btnAddApp" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
+                                <Button x:Name="btnDeleteApp" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
+
+                            </DockPanel>
+
+                            <ScrollViewer VerticalContentAlignment="Stretch" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
+                                <DataGrid x:Name="appDataGrid"
+                          Grid.Column="0"
+                              Grid.Row="1"
+                              MinHeight="320"
+                          
+                              Width="245"
+                              VerticalContentAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                          Margin="2"
+                              HorizontalAlignment="Left"
+                          AutoGenerateColumns="True"
+                          ItemsSource="{Binding}"
+                          RowHeaderWidth="0"
+                          Style="{DynamicResource MahApps.Styles.DataGrid.Azure}" SelectionMode="Single" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}">
+
+                                            <Setter Property="FontSize" Value="22"/>
+
+                                        </Style>
+                                    </DataGrid.CellStyle>
+                                    <DataGrid.ColumnHeaderStyle>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="FontSize" Value="22"/>
+                                            <Setter Property="Width" Value="240"/>
+                                            <Setter Property="Background" Value="DarkGray" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+
+                                    </DataGrid.ColumnHeaderStyle>
+                                </DataGrid>
+                            </ScrollViewer>
+                        </StackPanel>
+
+                        <ScrollViewer HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" PanningMode="VerticalOnly"  Width="Auto">
+                            <StackPanel x:Name="AppSP" IsEnabled="False">
+                                <GroupBox Height="Auto"  Name="GB_AppMain" Margin="0,0,0,10" VerticalAlignment="Top">
+                                    <GroupBox.Header >
+                                        <DockPanel Height="30">
+                                            <Label Content="APPLICATION MAIN" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                                            <Button x:Name="btnAppSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
+
+                                        </DockPanel>
+                                    </GroupBox.Header>
+                                    <StackPanel>
+                                        <DockPanel Height="40">
+                                            <Label  Content="App Name" DockPanel.Dock="Left" FontSize="22" />
+                                            <TextBox x:Name="txtbxAppName" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                        </DockPanel>
+                                        <DockPanel Height="40">
+                                            <Label  Content="Process Name" DockPanel.Dock="Left" FontSize="22" />
+                                            <ComboBox x:Name="cboProcessName" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="True" HorizontalAlignment="Right"   />
+                                        </DockPanel>
+                                        <DockPanel Height="40">
+                                            <Label  Content="Profile" DockPanel.Dock="Left" FontSize="22" />
+                                            <ComboBox x:Name="cboAppProfile" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"   />
+                                        </DockPanel>
+                                    </StackPanel>
+
+
+
+
+
+                                </GroupBox>
+                                <GroupBox Height="Auto"  Name="GB_AppExePath" Margin="0,0,0,10" VerticalAlignment="Top">
+                                    <GroupBox.Header >
+                                        <DockPanel Height="30">
+                                            <Label Content="RUN APPLICATION" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                                            <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableExeStart"  Toggled="enableExeStart_Toggled" IsOn="False" OffContent="Disabled" OnContent="Enabled" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+
+
+                                        </DockPanel>
+                                    </GroupBox.Header>
+                                    <StackPanel>
+                                        <DockPanel Height="40">
+                                            <Label  Content="App Type" DockPanel.Dock="Left" FontSize="22" />
+                                            <ComboBox x:Name="cboAppType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"  >
+                                                <ComboBoxItem Content="Application"/>
+                                                <ComboBoxItem Content="Game" />
+
+                                            </ComboBox>
+
+                                        </DockPanel>
+                                        <DockPanel Height="40">
+                                            <Label  Content="Game Type" DockPanel.Dock="Left" FontSize="22" />
+                                            <ComboBox x:Name="cboGameType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"  >
+                                                <ComboBoxItem Content="Steam"/>
+                                                <ComboBoxItem Content="Microsoft Store" />
+                                                <ComboBoxItem Content="Epic" />
+                                                <ComboBoxItem Content="General" />
+
+                                            </ComboBox>
+
+                                        </DockPanel>
+                                        <DockPanel Height="40">
+                                            <Label  Content="Exe Path" DockPanel.Dock="Left" FontSize="22" />
+                                            <TextBox x:Name="txtbxExePath" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                        </DockPanel>
+
+                                        <DockPanel Height="40">
+                                            <Label  Content="Image Path" DockPanel.Dock="Left" FontSize="22" />
+                                            <TextBox x:Name="txtbxImagePath" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+
+                                        </DockPanel>
+                                        <Image x:Name="imageViewer" />
+                                    </StackPanel>
+
+
+
+
+
+                                </GroupBox>
+
+
+
+
+                            </StackPanel>
+
+                        </ScrollViewer>
+
+
+                    </StackPanel>
+
+
+
+
+
+                </GroupBox>
+            </StackPanel>
+
+        </ScrollViewer>
+
+    </StackPanel>
+</Page>

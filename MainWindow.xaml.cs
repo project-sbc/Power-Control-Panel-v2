@@ -245,6 +245,7 @@ namespace Power_Control_Panel
                 {
 
                     handleOpenCloseQAM();
+                   
                 }
                 if (menuItem.Label == "On Screen Keyboard")
                 {

@@ -26,7 +26,7 @@
 			<GameType></GameType>
 			<Image></Image>
 			<Profile>Default</Profile>
-			<Order></Order>
+			
 		</App>
 
 	</Applications>
@@ -47,14 +47,14 @@
 	</ProfileTemplate>
 	<AppTemplate>
 		<App>
-			<DisplayName>Test</DisplayName>
+			<DisplayName></DisplayName>
 			<Exe></Exe>
 			<Path></Path>
 			<AppType></AppType>
 			<GameType></GameType>
 			<Image></Image>
-			<Profile>Default</Profile>
-			<Order></Order>
+			<Profile></Profile>
+	
 		</App>
 	</AppTemplate>
 </Configuration>

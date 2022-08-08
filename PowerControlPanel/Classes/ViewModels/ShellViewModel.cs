@@ -33,6 +33,13 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
             });
             this.Menu.Add(new MenuItem()
             {
+                Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.ListAltRegular },
+                Label = "Application Settings",
+                NavigationType = typeof(ProfilesPage),
+                NavigationDestination = new Uri("PowerControlPanel/Pages/AppSettingsPage.xaml", UriKind.RelativeOrAbsolute)
+            });
+            this.Menu.Add(new MenuItem()
+            {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.WindowRestoreSolid },
                 Label = "Quick Access Menu",
                
