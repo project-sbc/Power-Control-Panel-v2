@@ -1,0 +1,202 @@
+﻿<Page x:Class="Power_Control_Panel.PowerControlPanel.Pages.QAMHomePage"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="450"
+      MinWidth="370"
+      Title="QAMHomePage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LargeTileStyle" TargetType="mah:Tile">
+                <Setter Property="Height" Value="130" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TitleFontSize" Value="14" />
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+
+                <Setter Property="HorizontalTitleAlignment" Value="Center"/>
+                <Setter Property="Width" Value="130" />
+                <EventSetter  Event="Click" Handler="Tile_Click"/>
+            </Style>
+
+            <Style x:Key="SmallTileStyle" TargetType="mah:Tile">
+                <Setter Property="Height" Value="150" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TitleFontSize" Value="10" />
+                <Setter Property="Width" Value="150" />
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+    <GroupBox Name="GBSystemControls" VerticalAlignment="Top" Margin="6,6,0,6">
+
+        <GroupBox.Header >
+            <DockPanel Height="30">
+                <Label Content="SYSTEM CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" x:Name="enablePowerControl"  Toggled="enableGroup_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
+            </DockPanel>
+        </GroupBox.Header>
+
+        <ScrollViewer PanningMode="VerticalFirst" >
+            <DockPanel>
+                <WrapPanel HorizontalAlignment="Center" x:Name="wrapPanel" 
+
+                   DockPanel.Dock="Top">
+
+                    <mah:Tile Title="TDP Sustain"
+                      Margin="3"
+                      Count=""
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center" x:Name="labelTDPSustainValue" Content="30 W" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="BoltSolid" />
+                        </StackPanel>
+
+
+                    </mah:Tile>
+
+                    <mah:Tile Title="TDP Boost"
+                      Margin="3"
+                      
+                      Count=""
+                      Background="Orange"
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center" x:Name="labelTDPBoostValue" Content="" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="BoltSolid" />
+                        </StackPanel>
+
+
+
+
+                    </mah:Tile>
+                    <mah:Tile Title="Max CPU Freq"
+                      Margin="3"
+                      Count=""
+                      Background="Green"
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center"  x:Name="labelMAXCPUValue" Content="2300 MHz" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="Memory" />
+                        </StackPanel>
+
+                    </mah:Tile>
+
+                    <mah:Tile Title="Active CPU Cores"
+                      Margin="3"
+                      Count=""
+                      Background="DarkRed"
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center"  x:Name="labelActiveCoresValue" Content="8" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="Memory" />
+                        </StackPanel>
+
+                    </mah:Tile>
+
+                    <mah:Tile Title="Volume"
+                      Margin="3"
+                      Count=""
+                      Background="Gray"
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center" x:Name="labelVolumeValue" Content="8 %" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="VolumeUpSolid" />
+                        </StackPanel>
+
+                    </mah:Tile>
+                    <mah:Tile Title="Brightness"
+                      Margin="3"
+                      Count=""
+                      Background="DarkBlue"
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center"  x:Name="labelBrightnessValue" Content="8 %" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="SunRegular" />
+                        </StackPanel>
+
+                    </mah:Tile>
+                </WrapPanel>
+                <GroupBox Name="GBChangeValue" Visibility="Collapsed" VerticalAlignment="Top" Margin="6,6,0,6">
+
+                    <GroupBox.Header >
+                        <DockPanel Height="30">
+                            <Label x:Name="labelSlider" Content="CHANGE VALUE" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                            <Button x:Name="btnCloseSlider" Width="100" Content="Close" HorizontalAlignment="Right" />
+
+                        </DockPanel>
+                    </GroupBox.Header>
+                    <DockPanel x:Name="dpSlider" DockPanel.Dock="Top" VerticalAlignment="Top"  >
+                        
+                        <Grid DockPanel.Dock="Bottom">
+                            <Slider Name="generalSlider" Width="250"  HorizontalAlignment="Center"
+                        Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" 
+                        TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  
+      
+                        />
+                            <Label x:Name="labelSliderMessage" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center"  Content="" />
+
+                            <Label x:Name="labelSliderValue" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center"   Content="{Binding ElementName=generalSlider, Path=Value}" />
+
+                        </Grid>
+
+                    </DockPanel>
+
+
+
+
+                </GroupBox>
+               
+            </DockPanel>
+
+
+        </ScrollViewer>
+
+
+
+
+
+    </GroupBox>
+  
+    
+</Page>

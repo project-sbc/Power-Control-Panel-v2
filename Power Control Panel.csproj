@@ -109,6 +109,7 @@
     <PackageReference Include="InputSimulatorCore" Version="1.0.5" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageReference Include="SecretNest.SequentialScheduler" Version="1.0.2" />
     <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
     <PackageReference Include="squirrel.windows" Version="2.0.1" />

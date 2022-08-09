@@ -100,7 +100,7 @@
 
                         </Label>
                         <Label x:Name="txtsliderMaxTDP" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDPMAX, Path=Value}"/>
-                        <Slider x:Name="TDPMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="5" Maximum="80"  Value="{Binding ElementName=txtsliderTDP1, Path=Content}" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
+                        <Slider x:Name="TDPMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="5" Maximum="80"   SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
 
                     </DockPanel>
                     <DockPanel Grid.Row="3"  >
@@ -155,6 +155,44 @@
                             <ComboBoxItem Content="MMIO + MSR" />
                   
                         </ComboBox>
+
+
+                    </DockPanel>
+                </Grid>
+
+
+
+
+
+            </GroupBox>
+
+            <GroupBox Name="GB_AMD_GPUCLK" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="AMD GPU CLOCK SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+
+                    </DockPanel>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+
+
+
+
+
+                    <DockPanel Grid.Row="0"  >
+
+                        <Label Content="Set Max GPU Clock (MHz)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <Label x:Name="txtsliderMaxGPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=GPUCLKMAX, Path=Value}"/>
+                        <Slider x:Name="GPUCLKMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="300" Maximum="2200" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
+
 
 
                     </DockPanel>

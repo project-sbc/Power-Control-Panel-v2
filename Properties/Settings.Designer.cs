@@ -226,5 +226,17 @@ namespace Power_Control_Panel.Properties {
                 this["showCPU"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1500")]
+        public int maxGPUCLK {
+            get {
+                return ((int)(this["maxGPUCLK"]));
+            }
+            set {
+                this["maxGPUCLK"] = value;
+            }
+        }
     }
 }

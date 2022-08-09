@@ -116,14 +116,14 @@
                             <StackPanel>
                                 <DockPanel Height="40">
                                     <Label  Content="App Type" DockPanel.Dock="Left" FontSize="22" />
-                                    <ComboBox x:Name="cboAppType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"  >
+                                    <ComboBox x:Name="cboAppType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right" SelectionChanged="cboAppType_SelectionChanged"  >
                                         <ComboBoxItem Content="Application"/>
                                         <ComboBoxItem Content="Game" />
 
                                     </ComboBox>
 
                                 </DockPanel>
-                                <DockPanel Height="40">
+                                <DockPanel x:Name="dpGameType" Height="40">
                                     <Label  Content="Game Type" DockPanel.Dock="Left" FontSize="22" />
                                     <ComboBox x:Name="cboGameType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"  >
                                         <ComboBoxItem Content="Steam"/>
@@ -134,15 +134,21 @@
                                     </ComboBox>
 
                                 </DockPanel>
-                                <DockPanel Height="40">
+                                <DockPanel x:Name="dpExePath" Height="40">
                                     <Label  Content="Exe Path" DockPanel.Dock="Left" FontSize="22" />
-                                    <TextBox x:Name="txtbxExePath" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+
+                                    <TextBox x:Name="txtbxExePath" FontSize="20"  Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
+                                    <Button x:Name="dbExePath" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="50" Click="db_Click"  >
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Text="&#xED25;" FontSize="16"/>
+                                    </Button>
                                 </DockPanel>
 
-                                <DockPanel Height="40">
+                                <DockPanel x:Name="dpImagePath" Height="40">
                                     <Label  Content="Image Path" DockPanel.Dock="Left" FontSize="22" />
                                     <TextBox x:Name="txtbxImagePath" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
-
+                                    <Button x:Name="dbImagePath" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="db_Click"  Width="50"  >
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Text="&#xED25;" FontSize="16"/>
+                                    </Button>
                                 </DockPanel>
                                 <Image x:Name="imageViewer" />
                             </StackPanel>

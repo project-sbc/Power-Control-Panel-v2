@@ -40,7 +40,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 GB_INTEL_TDP.Visibility = Visibility.Collapsed;
             }
-
+            if (GlobalVariables.cpuType == "Intel")
+            {
+                GB_AMD_GPUCLK.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -62,6 +65,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             Properties.Settings.Default.IntelMMIOMSR = cboTDPTypeIntel.Text;
 
+            Properties.Settings.Default.maxGPUCLK = (int)GPUCLKMAX.Value;
 
             //Save
             Properties.Settings.Default.Save();
@@ -82,7 +86,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboAccentTheme.Text = Properties.Settings.Default.systemTheme.Substring(intPeriodLocation+1,intLengthTheme-(intPeriodLocation+1) );
             cboLightDarkTheme.Text = Properties.Settings.Default.systemTheme.Substring(0, intPeriodLocation);
             TDPMAX.Value = Properties.Settings.Default.maxTDP;
-
+            GPUCLKMAX.Value = Properties.Settings.Default.maxGPUCLK;
             cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
 
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;

@@ -108,10 +108,19 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (result[2] != string.Empty)
                 {
                     cboAppType.Text = result[2];
+                    if (result[2] == "Game") { dpGameType.Visibility = Visibility.Visible; } else { dpGameType.Visibility = Visibility.Collapsed; }
+ 
+                    dpImagePath.Visibility = Visibility.Visible;
+                    dpExePath.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     cboAppType.Text = String.Empty;
+                    dpGameType.Visibility = Visibility.Collapsed;
+                    dpImagePath.Visibility = Visibility.Collapsed;
+                    dpExePath.Visibility = Visibility.Collapsed;
+
+
                 }
 
                 if (result[3] != string.Empty)
@@ -268,6 +277,82 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 }
 
             }
+        }
+
+        private void cboAppType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem cboI = cboAppType.SelectedItem as ComboBoxItem;
+            string value = (string)cboI.Content;
+
+            if (value == "Game")
+            {
+                dpGameType.Visibility = Visibility.Visible;
+                dpImagePath.Visibility = Visibility.Visible;
+                dpExePath.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                dpGameType.Visibility = Visibility.Collapsed;
+            }
+            if (value == "")
+            {
+                dpGameType.Visibility= Visibility.Collapsed;
+                dpImagePath.Visibility = Visibility.Collapsed;
+                dpExePath.Visibility = Visibility.Collapsed;
+            }
+            if (value == "Application")
+            {
+                dpImagePath.Visibility = Visibility.Visible;
+                dpExePath.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void db_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
+
+            // Create OpenFileDialog
+            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
+      
+            openFileDlg.InitialDirectory = @"C:\";
+    
+            // Launch OpenFileDialog by calling ShowDialog method
+            
+            // Get the selected file name and display in a TextBox.
+            // Load content of file in a TextBlock
+
+            if (button.Name == "dbExePath")
+            {
+                openFileDlg.DefaultExt = ".exe";
+                openFileDlg.Filter = "Executables (.exe)|*.exe";
+
+            }
+            if (button.Name == "dbImagePath")
+            {
+                openFileDlg.Filter = "Image jpeg(*.jpg)|*.jpg|Image png(*.png)|*.png";
+                openFileDlg.DefaultExt = ".jpeg";
+
+            }
+   
+
+            Nullable<bool> result = openFileDlg.ShowDialog();
+
+            if (result == true)
+            {
+
+                if (button.Name == "dbExePath")
+                {
+                    txtbxExePath.Text = openFileDlg.FileName;
+
+                }
+                if (button.Name == "dbImagePath")
+                {
+                    txtbxImagePath.Text = openFileDlg.FileName;
+
+                }
+
+            }
+
         }
     }
 }
