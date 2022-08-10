@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,6 +28,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private string currentControl;
         private bool controlActive = false;
         private DispatcherTimer timer = new DispatcherTimer();
+        private bool dragStarted = false;
 
         public QAMHomePage()
         {
@@ -39,7 +41,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void initializeTimer()
         {
-            timer.Interval = new TimeSpan(0, 0, 5);
+            timer.Interval = new TimeSpan(0, 0, 3);
             timer.Tick += timerTick;
             timer.Start();
 
@@ -53,7 +55,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void loadUpdateValues()
         {
             //GPU clock updates
-
+            labelGPUCLKValue.Content = GlobalVariables.gpuclk;
 
             //max cpu clock updates
             if (GlobalVariables.cpuMaxFrequency == 0)
@@ -82,10 +84,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void Tile_Click(object sender, RoutedEventArgs e)
         {
+            controlActive = false;
+         
+
             Tile tile = (Tile)sender;
             currentControl = tile.Title;
             GBChangeValue.Visibility = Visibility.Visible;
-            controlActive = false;
+            clearSlider();
             switch (currentControl)
             {
                 case ("TDP Sustain"):
@@ -93,10 +98,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
                     generalSlider.Value = GlobalVariables.readPL1;
                     generalSlider.SmallChange = 1;
+                    generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = currentControl;
+                    labelSlider.Content = "Change " + currentControl;
                     Task.Delay(100);
                     controlActive = true;
+                    iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BoltSolid;
+                    iconAwesome.Visibility = Visibility.Visible;
                     break;
 
                 case "TDP Boost":
@@ -104,20 +112,26 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
                     generalSlider.Value = GlobalVariables.readPL2;
                     generalSlider.SmallChange = 1;
+                    generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = currentControl;
+                    labelSlider.Content = "Change " + currentControl;
                     Task.Delay(100);
                     controlActive = true;
+                    iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BoltSolid;
+                    iconAwesome.Visibility = Visibility.Visible;
                     break;
                 case "Brightness":
                     generalSlider.Minimum = 1;
                     generalSlider.Maximum = 100;
                     generalSlider.Value = GlobalVariables.brightness;
                     generalSlider.SmallChange = 1;
+                    generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = currentControl;
+                    labelSlider.Content = "Change " + currentControl;
                     Task.Delay(100);
                     controlActive = true;
+                    iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.SunRegular;
+                    iconAwesome.Visibility = Visibility.Visible;
                     break;
 
                 case "Volume":
@@ -125,20 +139,36 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.Maximum = 100;
                     generalSlider.Value = GlobalVariables.volume;
                     generalSlider.SmallChange = 1;
+                    generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = currentControl;
+                    labelSlider.Content = "Change " + currentControl;
                     Task.Delay(100);
                     controlActive = true;
+                    iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.VolumeUpSolid;
+                    iconAwesome.Visibility = Visibility.Visible;
                     break;
                 case "GPUCLK":
                     generalSlider.Minimum = 300;
                     generalSlider.Maximum = Properties.Settings.Default.maxGPUCLK;
-                    //generalSlider.Value = GlobalVariables.gpuclk;
-                    generalSlider.SmallChange = 1;
-                    generalSlider.LargeChange = 1;
-                    labelSlider.Content = currentControl;
+                    if (GlobalVariables.gpuclk == "Default")
+                    {
+                        labelSliderMessage.Visibility = Visibility.Visible;
+                        labelSliderMessage.Content = "Default";
+                    }
+                    else
+                    { 
+                        generalSlider.Value = Int32.Parse(GlobalVariables.gpuclk);
+                    }
+                    
+                    
+                    generalSlider.SmallChange = 50;
+                    generalSlider.LargeChange = 50;
+                    generalSlider.TickFrequency = 50;
+                    labelSlider.Content = "Change " + currentControl;
                     Task.Delay(100);
                     controlActive = true;
+                    //iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.VolumeUpSolid;
+                    //iconAwesome.Visibility = Visibility.Visible;
                     break;
                 case "Max CPU Freq":
                     generalSlider.Minimum = GlobalVariables.baseCPUSpeed;
@@ -146,17 +176,32 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     if (GlobalVariables.cpuMaxFrequency == 0)
                     {
                         generalSlider.Value = generalSlider.Maximum;
+                        labelSliderMessage.Visibility = Visibility.Visible;
+                        labelSliderMessage.Content = "Auto";
+                        labelSliderValue.Visibility = Visibility.Collapsed;
                     }
                     else
                     { generalSlider.Value = GlobalVariables.cpuMaxFrequency; }
                     generalSlider.SmallChange = 100;
                     generalSlider.LargeChange = 100;
-                    labelSlider.Content = currentControl;
+                    generalSlider.TickFrequency = 100;
+                    labelSlider.Content = "Change " + currentControl;
                     Task.Delay(100);
                     controlActive = true;
+                    iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Memory;
+                    iconMaterial.Visibility = Visibility.Visible;
                     break;
                 case "Active CPU Cores":
-
+                    generalSlider.Minimum = 1;
+                    generalSlider.Maximum = GlobalVariables.maxCpuCores;
+                    generalSlider.Value = GlobalVariables.cpuActiveCores;
+                    generalSlider.SmallChange = 1;
+                    generalSlider.LargeChange = 1;
+                    labelSlider.Content = "Change " + currentControl;
+                    Task.Delay(100);
+                    controlActive = true;
+                    iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Memory;
+                    iconMaterial.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
@@ -167,23 +212,21 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         }
         private void clearSlider()
         {
-            dpSlider.Visibility = Visibility.Collapsed;
+
             labelSlider.Content = "";
             generalSlider.Minimum = 1;
             generalSlider.Maximum = 100;
             generalSlider.Value = 1;
+            generalSlider.TickFrequency = 1;
             labelSliderMessage.Visibility = Visibility.Collapsed;
+            labelSliderValue.Visibility = Visibility.Visible;
 
-
+            iconAwesome.Visibility = Visibility.Collapsed;
+            iconMaterial.Visibility = Visibility.Collapsed;
 
         }
 
-        private void configureSlider(string labelContent)
-        {
 
-
-            dpSlider.Visibility = Visibility.Visible;
-        }
         private void Slider_Loaded(object sender, RoutedEventArgs e)
         {
             var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
@@ -191,8 +234,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (SliderThumb is Thumb thumb)
                 {
-                    thumb.Width = 20;
-                    thumb.Height = 25;
+                    thumb.Width = 35;
+                    thumb.Height = 50;
                 }
                 else { }
             }
@@ -219,242 +262,193 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Slider slider = sender as Slider;
-
-         
-
-            if (this.IsLoaded)
+            if (controlActive)
             {
-                switch (currentControl)
-                {
-                    case "TDP Sustain":
-
-                        break;
-                    case "TDP Boost":
-
-                        break;
-                    case "Brightness":
-
-                        break;
-
-                    case "Volume":
-
-                        break;
-                    case "GPUCLK":
-
-                        break;
-                    case "Max CPU Freq":
-
-                        break;
-                    case "Active CPU Cores":
-
-                        break;
-                    default:
-                        break;
-                }
-
+                handleChangeValues();
             }
+    
         }
 
         private void Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP Sustain":
-
-                        break;
-                    case "TDP Boost":
-
-                        break;
-                    case "Brightness":
-
-                        break;
-
-                    case "Volume":
-
-                        break;
-                    case "GPUCLK":
-
-                        break;
-                    case "Max CPU Freq":
-
-                        break;
-                    case "Active CPU Cores":
-
-                        break;
-                    default:
-                        break;
-                }
-
-            }
+            dragStarted = false;
+            handleChangeValues();
 
         }
 
 
         private void Slider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP Sustain":
-
-                        break;
-                    case "TDP Boost":
-
-                        break;
-                    case "Brightness":
-
-                        break;
-
-                    case "Volume":
-
-                        break;
-                    case "GPUCLK":
-
-                        break;
-                    case "Max CPU Freq":
-
-                        break;
-                    case "Active CPU Cores":
-
-                        break;
-                    default:
-                        break;
-                }
-
-            }
+            dragStarted = true;
         }
+        private void Slider_TouchDown(object sender, TouchEventArgs e)
+        {
+            //dragStarted = true;
 
+        }
 
         private void Slider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
+            //dragStarted = false;
+            //handleChangeValues();
+        }
+        private void handleChangeValues()
+        {
 
             if (this.IsLoaded)
             {
-                switch (sliderName)
+                if (!dragStarted & controlActive)
                 {
-                    case "TDP Sustain":
+                    switch (currentControl)
+                    {
+                        case "TDP Sustain":
+                            HandleChangingTDP((int)generalSlider.Value, (int)GlobalVariables.readPL2, true);
+                            break;
+                        case "TDP Boost":
+                            HandleChangingTDP((int)GlobalVariables.readPL1, (int)generalSlider.Value, false);
+                            break;
+                        case "Brightness":
+                            HandleChangingBrightness(generalSlider.Value);
+                            break;
 
-                        break;
-                    case "TDP Boost":
-
-                        break;
-                    case "Brightness":
-
-                        break;
-
-                    case "Volume":
-
-                        break;
-                    case "GPUCLK":
-
-                        break;
-                    case "Max CPU Freq":
-
-                        break;
-                    case "Active CPU Cores":
-
-                        break;
-                    default:
-                        break;
+                        case "Volume":
+                            HandleChangingVolume((int)generalSlider.Value);
+                            break;
+                        case "GPUCLK":
+                            HandleChangingGPUCLK((int)generalSlider.Value);
+                            labelSliderMessage.Visibility = Visibility.Collapsed;
+                            break;
+                        case "Max CPU Freq":
+                            HandleChangingMAXCPU((int)generalSlider.Value);
+                            break;
+                        case "Active CPU Cores":
+                            HandleChangingActiveCores((int)generalSlider.Value);
+                            break;
+                        default:
+                            break;
+                    }
+                    dragStarted = false;
+                    Task.Delay(500);
+                    GBChangeValue.Visibility = Visibility.Collapsed;
                 }
+                else
+                {
+                    switch (currentControl)
+                    {
 
+                        case "GPUCLK":
+
+                            labelSliderMessage.Visibility = Visibility.Collapsed;
+                            break;
+                        case "Max CPU Freq":
+                            if (generalSlider.Value == generalSlider.Maximum)
+                            {
+                                labelSliderMessage.Visibility = Visibility.Visible;
+                                labelSliderMessage.Content = "Auto";
+                                labelSliderValue.Visibility = Visibility.Collapsed;
+                            }
+                            else
+                            {
+                                labelSliderMessage.Visibility = Visibility.Collapsed;
+
+                                labelSliderValue.Visibility = Visibility.Visible;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
             }
+         
         }
-
 
         private void Slider_TouchUp(object sender, TouchEventArgs e)
         {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP Sustain":
-
-                        break;
-                    case "TDP Boost":
-
-                        break;
-                    case "Brightness":
-
-                        break;
-
-                    case "Volume":
-
-                        break;
-                    case "GPUCLK":
-
-                        break;
-                    case "Max CPU Freq":
-
-                        break;
-                    case "Active CPU Cores":
-
-                        break;
-                    default:
-                        break;
-                }
-
-            }
+            dragStarted = false;
+            //handleChangeValues();
         }
-
-        private void Slider_TouchDown(object sender, TouchEventArgs e)
+        private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
         {
-            Slider slider = sender as Slider;
 
-            string sliderName = slider.Name;
+            GlobalVariables.needTDPRead = true;
+            Thread.Sleep(150);
+            if (PL1started)
+            {
+                //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value
 
+                if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
+                else
+                {
+                    tdpPL2 = tdpPL1;
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
+                };
+            }
+            else
+            {
+                //If PL2 is less than PL1 drop PL1 down to PL2 new value
+                if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
+                else
+                {
+                    tdpPL1 = tdpPL2;
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
+                };
+            }
+
+          
+        }
+
+        void HandleChangingBrightness(double brightness)
+        {
+            GlobalVariables.needBrightnessRead = true;
+            Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)brightness);
+        }
+        void HandleChangingVolume(int volume)
+        {
+            GlobalVariables.needVolumeRead = true;
+            Classes.ChangeVolume.AudioManager.SetMasterVolume((float)volume);
+        }
+
+
+
+        private void HandleChangingMAXCPU(int maxcpu)
+        {
             if (this.IsLoaded)
             {
-                switch (sliderName)
-                {
-                    case "TDP Sustain":
+                int sendMaxCPU = 0;
+                if (maxcpu != generalSlider.Maximum) { sendMaxCPU = maxcpu; }
 
-                        break;
-                    case "TDP Boost":
 
-                        break;
-                    case "Brightness":
+                Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeCPUMaxFrequency(sendMaxCPU));
+            }
 
-                        break;
 
-                    case "Volume":
 
-                        break;
-                    case "GPUCLK":
+        }
 
-                        break;
-                    case "Max CPU Freq":
+        private void HandleChangingActiveCores(double cores)
+        {
+            if (this.IsLoaded)
+            {
+                Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));
+            }
 
-                        break;
-                    case "Active CPU Cores":
 
-                        break;
-                    default:
-                        break;
-                }
+
+        }
+
+
+        private void HandleChangingGPUCLK(int gpuclk)
+        {
+            if (this.IsLoaded)
+            {
+
+                Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk));
 
             }
 
         }
+
 
         private void enableGroup_Toggled(object sender, RoutedEventArgs e)
         {
@@ -478,6 +472,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
         }
-     
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+   
 }

@@ -67,11 +67,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             InitializeComponent();
             //set max cpu core count here
-            ActiveCores.Maximum = GlobalVariables.maxCpuCores;
-            MAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
+
             initializeTimer();
 
-            setMaxTDP();
+            setMinMaxSliderValues();
 
             //apply theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
@@ -84,10 +83,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
 
-        private void setMaxTDP()
+        private void setMinMaxSliderValues()
         {
             TDP1.Maximum = Properties.Settings.Default.maxTDP;
             TDP2.Maximum = Properties.Settings.Default.maxTDP;
+            ActiveCores.Maximum = GlobalVariables.maxCpuCores;
+            MAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
+            GPUCLK.Maximum = Properties.Settings.Default.maxGPUCLK;
         }
 
         private void displayItemSourceBind()
@@ -740,43 +742,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         #endregion
 
 
-        private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
-        {
-            //6800U MessageBox.Show("can change tdp:" + !changingTDP);
-            if (!changingTDP)
-            {
-                changingTDP = true;
-                GlobalVariables.needTDPRead = true;
-                Thread.Sleep(150);
-                if (PL1started)
-                {
-                    //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value
-
-                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
-                    else
-                    {
-                        TDP2.Value = tdpPL1;
-                        tdpPL2 = tdpPL1;
-                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
-                    };
-                }
-                else
-                {
-                    //If PL2 is less than PL1 drop PL1 down to PL2 new value
-                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
-                    else
-                    {
-                        TDP1.Value = tdpPL2;
-                        tdpPL1 = tdpPL2;
-                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
-                    };
-                }
-
-                changingTDP = false;
-            }
-
-
-        }
+      
 
 
 
@@ -826,7 +792,43 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
 
+        private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
+        {
+            //6800U MessageBox.Show("can change tdp:" + !changingTDP);
+            if (!changingTDP)
+            {
+                changingTDP = true;
+                GlobalVariables.needTDPRead = true;
+                Thread.Sleep(150);
+                if (PL1started)
+                {
+                    //If PL1 is greater than PL2 then PL2 needs to be set to the PL1 value
 
+                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
+                    else
+                    {
+                        TDP2.Value = tdpPL1;
+                        tdpPL2 = tdpPL1;
+                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
+                    };
+                }
+                else
+                {
+                    //If PL2 is less than PL1 drop PL1 down to PL2 new value
+                    if (tdpPL1 < tdpPL2) { Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2)); }
+                    else
+                    {
+                        TDP1.Value = tdpPL2;
+                        tdpPL1 = tdpPL2;
+                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(tdpPL1, tdpPL2));
+                    };
+                }
+
+                changingTDP = false;
+            }
+
+
+        }
 
         void HandleChangingBrightness(double brightness)
         {
@@ -882,17 +884,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         }
 
 
-
-
-        #endregion system controls
-
-
-        #region GPU Clock Slider
-
-
-
-
-
         private void HandleChangingGPUCLK(int gpuclk)
         {
             if (this.IsLoaded)
@@ -905,6 +896,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
         }
+
+
+        #endregion system controls
+
+
+        #region GPU Clock Slider
+
+
+
+
+
 
         #endregion GPU Clock Slider
 

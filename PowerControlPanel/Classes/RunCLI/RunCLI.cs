@@ -27,7 +27,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                 startInfo.FileName = processName;
                 //startInfo.Arguments = "/c " + arguments;
                 startInfo.Arguments = arguments;
-                startInfo.CreateNoWindow = true;    
+                startInfo.CreateNoWindow = true;
+         
                 startInfo.Verb = "runas";
                 startInfo.RedirectStandardError = readOutput;
                 startInfo.RedirectStandardOutput = readOutput;
