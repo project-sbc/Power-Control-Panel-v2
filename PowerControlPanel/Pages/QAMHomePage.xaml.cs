@@ -33,9 +33,19 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         public QAMHomePage()
         {
             InitializeComponent();
+
+
+            if (Properties.Settings.Default.enableCombineTDP == "Disable")
+            {
+                TDP.Visibility = Visibility.Collapsed;
+                TDPBoost.Visibility = Visibility.Visible;
+                TDPSustain.Visibility = Visibility.Visible;
+            }
+
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
             initializeTimer();
             loadUpdateValues();
+            GBChangeValue.Visibility = Visibility.Collapsed;
         }
 
 
@@ -71,6 +81,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
             //display updates
+            labelDisplayRefreshValue.Content = GlobalVariables.refreshRate + " Hz";
+            labelDisplayScalingValue.Content = GlobalVariables.scaling + " %";
+            labelDisplayResolutionValue.Content = GlobalVariables.resolution;
+
 
 
             //system values
@@ -79,21 +93,38 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             //TPD
             labelTDPBoostValue.Content = GlobalVariables.readPL2.ToString() + " W";
+            labelTDPValue.Content = GlobalVariables.readPL1.ToString() + " W";
             labelTDPSustainValue.Content = GlobalVariables.readPL1.ToString()+ " W";
         }
 
         private void Tile_Click(object sender, RoutedEventArgs e)
         {
             controlActive = false;
-         
 
+         
             Tile tile = (Tile)sender;
             currentControl = tile.Title;
+            
+            clearGB();
             GBChangeValue.Visibility = Visibility.Visible;
-            clearSlider();
             switch (currentControl)
             {
                 case ("TDP Sustain"):
+                    dpSlider.Visibility = Visibility.Visible;
+                    generalSlider.Minimum = 5;
+                    generalSlider.Maximum = Properties.Settings.Default.maxTDP;
+                    generalSlider.Value = GlobalVariables.readPL1;
+                    generalSlider.SmallChange = 1;
+                    generalSlider.TickFrequency = 1;
+                    generalSlider.LargeChange = 1;
+                    labelSlider.Content = "Change " + currentControl;
+                    Task.Delay(100);
+                    controlActive = true;
+                    iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BoltSolid;
+                    iconAwesome.Visibility = Visibility.Visible;
+                    break;
+                case ("TDP"):
+                    dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 5;
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
                     generalSlider.Value = GlobalVariables.readPL1;
@@ -108,6 +139,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     break;
 
                 case "TDP Boost":
+                    dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 5;
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
                     generalSlider.Value = GlobalVariables.readPL2;
@@ -121,6 +153,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
                 case "Brightness":
+                    dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 1;
                     generalSlider.Maximum = 100;
                     generalSlider.Value = GlobalVariables.brightness;
@@ -135,6 +168,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     break;
 
                 case "Volume":
+                    dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 1;
                     generalSlider.Maximum = 100;
                     generalSlider.Value = GlobalVariables.volume;
@@ -147,13 +181,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.VolumeUpSolid;
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
-                case "GPUCLK":
+                case "GPU Clock":
+                    dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 300;
                     generalSlider.Maximum = Properties.Settings.Default.maxGPUCLK;
                     if (GlobalVariables.gpuclk == "Default")
                     {
                         labelSliderMessage.Visibility = Visibility.Visible;
                         labelSliderMessage.Content = "Default";
+                        labelSliderValue.Visibility = Visibility.Collapsed;
                     }
                     else
                     { 
@@ -167,10 +203,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     labelSlider.Content = "Change " + currentControl;
                     Task.Delay(100);
                     controlActive = true;
-                    //iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.VolumeUpSolid;
-                    //iconAwesome.Visibility = Visibility.Visible;
+                    iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.ExpansionCard;
+                    iconMaterial.Visibility = Visibility.Visible;
                     break;
                 case "Max CPU Freq":
+                    dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = GlobalVariables.baseCPUSpeed;
                     generalSlider.Maximum = 5000;
                     if (GlobalVariables.cpuMaxFrequency == 0)
@@ -192,6 +229,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
                 case "Active CPU Cores":
+                    dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 1;
                     generalSlider.Maximum = GlobalVariables.maxCpuCores;
                     generalSlider.Value = GlobalVariables.cpuActiveCores;
@@ -203,6 +241,36 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Memory;
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
+                case "Display Resolution":
+                    dpCombobox.Visibility = Visibility.Visible;
+                    labelSlider.Content = "Change " + currentControl;
+                    cbochangeValue.ItemsSource = GlobalVariables.resolutions;
+                    cbochangeValue.Text = GlobalVariables.resolution;
+                    Task.Delay(100);
+                    controlActive = true;
+                    iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Monitor;
+                    iconMaterialcbo.Visibility = Visibility.Visible;
+                    break;
+                case "Display Refresh":
+                    dpCombobox.Visibility = Visibility.Visible;
+                    labelSlider.Content = "Change " + currentControl;
+                    cbochangeValue.ItemsSource = GlobalVariables.refreshRates;
+                    cbochangeValue.Text = GlobalVariables.refreshRate;
+                    Task.Delay(100);
+                    controlActive = true;
+                    iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorShimmer;
+                    iconMaterialcbo.Visibility = Visibility.Visible;
+                    break;
+                case "Display Scaling":
+                    dpCombobox.Visibility = Visibility.Visible;
+                    labelSlider.Content = "Change " + currentControl;
+                    cbochangeValue.ItemsSource = GlobalVariables.scalings;
+                    cbochangeValue.Text = GlobalVariables.scaling;
+                    Task.Delay(100);
+                    controlActive = true;
+                    iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorScreenshot;
+                    iconMaterialcbo.Visibility = Visibility.Visible;
+                    break;
                 default:
                     break;
 
@@ -210,8 +278,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
         }
-        private void clearSlider()
+        private void clearGB()
         {
+            GBChangeValue.Visibility = Visibility.Collapsed;
+            dpSlider.Visibility=Visibility.Collapsed;
+            dpCombobox.Visibility = Visibility.Collapsed;
 
             labelSlider.Content = "";
             generalSlider.Minimum = 1;
@@ -223,6 +294,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             iconAwesome.Visibility = Visibility.Collapsed;
             iconMaterial.Visibility = Visibility.Collapsed;
+
+           
+            cbochangeValue.ItemsSource = null;
+            iconAwesomecbo.Visibility = Visibility.Collapsed;
+            iconMaterialcbo.Visibility = Visibility.Collapsed;
+
 
         }
 
@@ -307,6 +384,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         case "TDP Boost":
                             HandleChangingTDP((int)GlobalVariables.readPL1, (int)generalSlider.Value, false);
                             break;
+                        case "TDP":
+                            HandleChangingTDP((int)generalSlider.Value, (int)generalSlider.Value, true);
+                            break;
                         case "Brightness":
                             HandleChangingBrightness(generalSlider.Value);
                             break;
@@ -314,7 +394,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         case "Volume":
                             HandleChangingVolume((int)generalSlider.Value);
                             break;
-                        case "GPUCLK":
+                        case "GPU Clock":
                             HandleChangingGPUCLK((int)generalSlider.Value);
                             labelSliderMessage.Visibility = Visibility.Collapsed;
                             break;
@@ -336,9 +416,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     switch (currentControl)
                     {
 
-                        case "GPUCLK":
+                        case "GPU Clock":
 
                             labelSliderMessage.Visibility = Visibility.Collapsed;
+                            labelSliderValue.Visibility = Visibility.Visible;
                             break;
                         case "Max CPU Freq":
                             if (generalSlider.Value == generalSlider.Maximum)
@@ -476,6 +557,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void button_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnCloseCombobox_Click(object sender, RoutedEventArgs e)
+        {
+            clearGB();
+        }
+
+        private void btnCloseSlider_Click(object sender, RoutedEventArgs e)
+        {
+            clearGB();
         }
     }
    

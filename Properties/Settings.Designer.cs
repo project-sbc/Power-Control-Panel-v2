@@ -238,5 +238,17 @@ namespace Power_Control_Panel.Properties {
                 this["maxGPUCLK"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Disable")]
+        public string enableCombineTDP {
+            get {
+                return ((string)(this["enableCombineTDP"]));
+            }
+            set {
+                this["enableCombineTDP"] = value;
+            }
+        }
     }
 }

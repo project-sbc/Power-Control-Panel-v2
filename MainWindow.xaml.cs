@@ -74,6 +74,7 @@ namespace Power_Control_Panel
 
         public static List<string> resolutions = new List<string>();
         public static List<string> refreshRates = new List<string>();
+        public static List<string> scalings = new List<string>();
         //TDP change class
         public static PowerControlPanel.Classes.ChangeTDP.ChangeTDP tdp = new PowerControlPanel.Classes.ChangeTDP.ChangeTDP();
 
@@ -233,7 +234,7 @@ namespace Power_Control_Panel
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
-            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
+            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)

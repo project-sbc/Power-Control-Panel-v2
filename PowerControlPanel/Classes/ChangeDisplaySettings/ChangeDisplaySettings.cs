@@ -130,7 +130,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeDisplaySettings
                 }
             }
 
-
+            GlobalVariables.scalings.Clear();
+            GlobalVariables.scalings.Add("Default");
+            GlobalVariables.scalings.Add("100");
+            GlobalVariables.scalings.Add("125");
+            GlobalVariables.scalings.Add("150");
+            GlobalVariables.scalings.Add("175");
+            GlobalVariables.scalings.Add("200");
+            GlobalVariables.scalings.Add("225");
         }
 
 
