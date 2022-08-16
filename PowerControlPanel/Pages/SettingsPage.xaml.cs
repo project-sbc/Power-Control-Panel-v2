@@ -194,5 +194,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             Slider_Loaded(sender, e);
         }
+
+  
     }
 }

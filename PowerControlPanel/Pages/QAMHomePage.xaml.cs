@@ -250,6 +250,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         }
         private void clearGB()
         {
+            controlActive = false;
+
             GBChangeValue.Visibility = Visibility.Collapsed;
             dpSlider.Visibility=Visibility.Collapsed;
             dpCombobox.Visibility = Visibility.Collapsed;
@@ -265,7 +267,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             iconAwesome.Visibility = Visibility.Collapsed;
             iconMaterial.Visibility = Visibility.Collapsed;
 
-            controlActive = false;
+     
             
            
             cbochangeValue.ItemsSource = null;

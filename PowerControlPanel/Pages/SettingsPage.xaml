@@ -46,8 +46,9 @@
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="3" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
-
+                    <Border  Grid.Row="4" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+                    <Border  Grid.Row="5" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+                    <Border  Grid.Row="6" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <DockPanel   >
 
                         <Label Content="Theme" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
@@ -122,7 +123,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="4"  >
 
-                        <Label Content="Combine Sustained and Turbo TDP?" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="Combine Sustained and Turbo TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboCombineTDP" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -130,7 +131,7 @@
                             <ComboBoxItem Content="Disable" />
      
                         </ComboBox>
-
+                     
 
                     </DockPanel>
                     <DockPanel Grid.Row="5"  >

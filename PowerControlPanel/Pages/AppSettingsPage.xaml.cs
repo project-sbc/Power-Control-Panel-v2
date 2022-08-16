@@ -282,29 +282,36 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void cboAppType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem cboI = cboAppType.SelectedItem as ComboBoxItem;
-            string value = (string)cboI.Content;
 
-            if (value == "Game")
+            if (cboI != null)
             {
-                dpGameType.Visibility = Visibility.Visible;
-                dpImagePath.Visibility = Visibility.Visible;
-                dpExePath.Visibility = Visibility.Visible;
+                string value = (string)cboI.Content;
+
+                if (value == "Game")
+                {
+                    dpGameType.Visibility = Visibility.Visible;
+                    dpImagePath.Visibility = Visibility.Visible;
+                    dpExePath.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    dpGameType.Visibility = Visibility.Collapsed;
+                }
+                if (value == "")
+                {
+                    dpGameType.Visibility = Visibility.Collapsed;
+                    dpImagePath.Visibility = Visibility.Collapsed;
+                    dpExePath.Visibility = Visibility.Collapsed;
+                }
+                if (value == "Application")
+                {
+                    dpImagePath.Visibility = Visibility.Visible;
+                    dpExePath.Visibility = Visibility.Visible;
+                }
+
+
             }
-            else
-            {
-                dpGameType.Visibility = Visibility.Collapsed;
-            }
-            if (value == "")
-            {
-                dpGameType.Visibility= Visibility.Collapsed;
-                dpImagePath.Visibility = Visibility.Collapsed;
-                dpExePath.Visibility = Visibility.Collapsed;
-            }
-            if (value == "Application")
-            {
-                dpImagePath.Visibility = Visibility.Visible;
-                dpExePath.Visibility = Visibility.Visible;
-            }
+         
         }
 
         private void db_Click(object sender, RoutedEventArgs e)
