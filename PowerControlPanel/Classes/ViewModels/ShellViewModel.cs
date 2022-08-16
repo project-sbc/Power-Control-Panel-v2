@@ -16,14 +16,36 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
         public ShellViewModel()
         {
             // Build the menus
-            this.Menu.Add(new MenuItem()
+
+            if (Properties.Settings.Default.homePageTypeMW == "Slider")
             {
-                Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid  },
-          
-                Label = "Home",
-                NavigationType = typeof(MainPage),
-                NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute)
-            });
+                this.Menu.Add(new MenuItem()
+                {
+                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid },
+
+                    Label = "Home",
+                    NavigationType = typeof(MainPage),
+
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute),
+
+
+                });
+            }
+            else
+            {
+                this.Menu.Add(new MenuItem()
+                {
+                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid },
+
+                    Label = "Home",
+                    NavigationType = typeof(MainPage),
+
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute),
+
+
+                });
+            }
+
             this.Menu.Add(new MenuItem()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.BookSolid },

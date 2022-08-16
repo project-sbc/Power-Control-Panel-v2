@@ -93,9 +93,9 @@
   
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" />
-
+                        <RowDefinition x:Name="rdTDP1" Height="50" />
+                        <RowDefinition x:Name="rdTDP2" Height="50" />
+                        <RowDefinition x:Name="rdTDP" Height="50" />
 
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
@@ -103,7 +103,7 @@
 
 
 
-                    <DockPanel   >
+                    <DockPanel  x:Name="dpTDP1" >
                         <Label Content="TDP Sustained (W)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
   
                         </Label>
@@ -112,7 +112,7 @@
 
                     </DockPanel>
 
-                    <DockPanel Grid.Row="1"  >
+                    <DockPanel Grid.Row="1" x:Name="dpTDP2"  >
                         <Label Content="TDP Boost (W)" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
      
                         </Label>
@@ -122,7 +122,16 @@
 
                         </Slider>
                     </DockPanel>
+                    <DockPanel Grid.Row="2" x:Name="dpTDP"  >
+                        <Label Content="TDP" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
+                        </Label>
+
+                        <Label x:Name="txtsliderTDP" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP, Path=Value}"/>
+                        <Slider x:Name="TDP"  DockPanel.Dock="Right" Thumb.DragCompleted="Slider_DragCompleted" Height="25" Thumb.DragStarted="Slider_DragStarted" Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" HorizontalAlignment="Right" TouchDown="Slider_TouchDown" TouchUp="Slider_TouchUp" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  >
+
+                        </Slider>
+                    </DockPanel>
                 </Grid>
 
 

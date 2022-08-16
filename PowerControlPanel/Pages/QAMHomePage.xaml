@@ -278,7 +278,7 @@
                         </Grid>
                         <Grid x:Name="dpCombobox" Height="80"  DockPanel.Dock="Bottom" VerticalAlignment="Top"  >
 
-                            <ComboBox x:Name="cbochangeValue" FontSize="22" Width="200"/>
+                            <ComboBox x:Name="cbochangeValue" FontSize="22" Width="200" SelectionChanged="cbochangeValue_SelectionChanged"/>
 
                             <iconPacks:PackIconFontAwesome x:Name="iconAwesomecbo" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50"
                                                Height="40" Margin="10,0,0,0"

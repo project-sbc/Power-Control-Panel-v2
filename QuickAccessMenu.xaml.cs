@@ -86,7 +86,15 @@ namespace Power_Control_Panel
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
-            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute));
+            if (Properties.Settings.Default.homePageTypeQAM == "Slider")
+            {
+                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute));
+            }
+           
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)

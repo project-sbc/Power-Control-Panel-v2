@@ -99,13 +99,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void Tile_Click(object sender, RoutedEventArgs e)
         {
-            controlActive = false;
-
-         
-            Tile tile = (Tile)sender;
-            currentControl = tile.Title;
-            
+      
             clearGB();
+
+            Tile tile = (Tile)sender;
+
+            
+         
+            currentControl = tile.Title;
             GBChangeValue.Visibility = Visibility.Visible;
             switch (currentControl)
             {
@@ -117,9 +118,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.SmallChange = 1;
                     generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BoltSolid;
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
@@ -131,9 +129,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.SmallChange = 1;
                     generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BoltSolid;
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
@@ -146,9 +141,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.SmallChange = 1;
                     generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BoltSolid;
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
@@ -160,9 +152,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.SmallChange = 1;
                     generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.SunRegular;
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
@@ -175,9 +164,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.SmallChange = 1;
                     generalSlider.TickFrequency = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.VolumeUpSolid;
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
@@ -200,9 +186,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.SmallChange = 50;
                     generalSlider.LargeChange = 50;
                     generalSlider.TickFrequency = 50;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.ExpansionCard;
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
@@ -222,9 +205,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.SmallChange = 100;
                     generalSlider.LargeChange = 100;
                     generalSlider.TickFrequency = 100;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Memory;
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
@@ -235,48 +215,38 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     generalSlider.Value = GlobalVariables.cpuActiveCores;
                     generalSlider.SmallChange = 1;
                     generalSlider.LargeChange = 1;
-                    labelSlider.Content = "Change " + currentControl;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Memory;
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
                 case "Display Resolution":
                     dpCombobox.Visibility = Visibility.Visible;
-                    labelSlider.Content = "Change " + currentControl;
                     cbochangeValue.ItemsSource = GlobalVariables.resolutions;
                     cbochangeValue.Text = GlobalVariables.resolution;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Monitor;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
                 case "Display Refresh":
                     dpCombobox.Visibility = Visibility.Visible;
-                    labelSlider.Content = "Change " + currentControl;
                     cbochangeValue.ItemsSource = GlobalVariables.refreshRates;
                     cbochangeValue.Text = GlobalVariables.refreshRate;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorShimmer;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
                 case "Display Scaling":
                     dpCombobox.Visibility = Visibility.Visible;
-                    labelSlider.Content = "Change " + currentControl;
                     cbochangeValue.ItemsSource = GlobalVariables.scalings;
                     cbochangeValue.Text = GlobalVariables.scaling;
-                    Task.Delay(100);
-                    controlActive = true;
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorScreenshot;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
                 default:
                     break;
 
-
             }
 
+            labelSlider.Content = "Change " + currentControl;
+            Task.Delay(100);
+            controlActive = true;
         }
         private void clearGB()
         {
@@ -295,6 +265,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             iconAwesome.Visibility = Visibility.Collapsed;
             iconMaterial.Visibility = Visibility.Collapsed;
 
+            controlActive = false;
+            
            
             cbochangeValue.ItemsSource = null;
             iconAwesomecbo.Visibility = Visibility.Collapsed;
@@ -409,7 +381,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     }
                     dragStarted = false;
                     Task.Delay(500);
-                    GBChangeValue.Visibility = Visibility.Collapsed;
+                    clearGB();
                 }
                 else
                 {
@@ -567,6 +539,42 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void btnCloseSlider_Click(object sender, RoutedEventArgs e)
         {
             clearGB();
+        }
+
+        private void cbochangeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+
+            if (this.IsLoaded)
+            {
+                if (controlActive)
+                {
+                    switch (currentControl)
+                    {
+                        case "Display Refresh":
+                            if (GlobalVariables.refreshRate != cbochangeValue.SelectedItem)
+                            { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayRefreshRate(cbochangeValue.SelectedItem.ToString()); }
+
+                            break;
+                        case "Display Resolution":
+                            if (GlobalVariables.resolution != cbochangeValue.SelectedItem && cbochangeValue.SelectedItem != "Custom Scaling")
+                            { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayResolution(cbochangeValue.SelectedItem.ToString()); }
+
+                            break;
+                        case "Display Scaling":
+                            if (cbochangeValue.SelectedValue.ToString() != "Default")
+                            {
+                                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cbochangeValue.SelectedValue.ToString());
+                            }
+                            break;
+                        default:
+                            break;
+
+                    }
+                    clearGB();
+                }
+            }
+
         }
     }
    

@@ -250,5 +250,29 @@ namespace Power_Control_Panel.Properties {
                 this["enableCombineTDP"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Slider")]
+        public string homePageTypeMW {
+            get {
+                return ((string)(this["homePageTypeMW"]));
+            }
+            set {
+                this["homePageTypeMW"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Slider")]
+        public string homePageTypeQAM {
+            get {
+                return ((string)(this["homePageTypeQAM"]));
+            }
+            set {
+                this["homePageTypeQAM"] = value;
+            }
+        }
     }
 }

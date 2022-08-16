@@ -31,6 +31,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         //tdp variables
         private bool dragStartedTDP1 = false;
         private bool dragStartedTDP2 = false;
+        private bool dragStartedTDP = false;
         private bool changingTDP = false;
 
         //system variables
@@ -250,6 +251,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     changingTDP = true;
                     updateFromGlobalTDPPL1();
                     updateFromGlobalTDPPL2();
+                    updateFromGlobalTDP();
                     changingTDP = false;
                 }
 
@@ -291,6 +293,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (Properties.Settings.Default.showTDP)
                 { enableControlTDP.IsOn = true; }
                 else { enableControlTDP.IsOn = false; GBTDPControls.Height = 40; enableControlTDP.IsOn = false; }
+
+                //handle if they want combined tdp or pl1 and pl2 separate
+                if (Properties.Settings.Default.enableCombineTDP == "Enable")
+                {
+                    dpTDP1.Visibility = Visibility.Collapsed;
+                    dpTDP2.Visibility = Visibility.Collapsed;
+                    rdTDP1.Height = new GridLength(0);
+                    rdTDP2.Height = new GridLength(0);
+                }
+                else { dpTDP.Visibility = Visibility.Collapsed; rdTDP.Height = new GridLength(0); }
             }
 
 
@@ -366,7 +378,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (enableControlTDP.IsOn)
                 {
-                    GBTDPControls.Height = 150;
+                    GBTDPControls.Height = double.NaN;
                     Properties.Settings.Default.showTDP = true;
                 }
                 else
@@ -449,6 +461,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                             HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
                         }
                         break;
+                    case "TDP":
+                        if (!dragStartedTDP && !changingTDP)
+                        {
+                            HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
+                        }
+                        break;
                     case "TDP2":
                         if (!dragStartedTDP2 && !changingTDP)
                         {
@@ -524,6 +542,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         dragStartedTDP2 = false;
                         HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
                         break;
+                    case "TDP":
+                        dragStartedTDP = false;
+                        HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
+                        break;
                     case "Brightness":
                         dragStartedBrightness = false;
                         HandleChangingBrightness(Brightness.Value);
@@ -570,6 +592,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     case "TDP1":
                         dragStartedTDP1 = true;
                         break;
+                    case "TDP":
+                        dragStartedTDP = true;
+                        break;
                     case "TDP2":
                         dragStartedTDP2 = true;
                         break;
@@ -613,6 +638,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     case "TDP1":
                         dragStartedTDP1 = false;
                         HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+                        break;
+                    case "TDP":
+                        dragStartedTDP = false;
+                        HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
                         break;
                     case "TDP2":
                         dragStartedTDP2 = false;
@@ -666,6 +695,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         dragStartedTDP1 = false;
                         HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
                         break;
+                    case "TDP":
+                        dragStartedTDP = false;
+                        HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
+                        break;
                     case "TDP2":
                         dragStartedTDP2 = false;
                         HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
@@ -713,6 +746,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     case "TDP1":
                         dragStartedTDP1 = true;
                         break;
+                    case "TDP":
+                        dragStartedTDP = true;
+                        break;
                     case "TDP2":
                         dragStartedTDP2 = true;
                         break;
@@ -737,16 +773,31 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             }
         }
-  
+
 
         #endregion
 
 
-      
 
 
 
 
+        void updateFromGlobalTDP()
+        {
+            //Make changingTDP boolean true to prevent slider event from updating TDP
+            if (GlobalVariables.needTDPRead == false)
+            {
+
+                try
+                {
+                    if (!dragStartedTDP & Math.Abs(TDP.Value - GlobalVariables.readPL1) > 0.9)
+                    { TDP.Value = Math.Round(GlobalVariables.readPL1, 0, MidpointRounding.AwayFromZero); }
+                }
+                catch { }
+
+            }
+
+        }
 
         void updateFromGlobalTDPPL1()
         {

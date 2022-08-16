@@ -25,14 +25,35 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                 Label = "Hide",
 
             });
-            this.Menu.Add(new MI()
+            if (Properties.Settings.Default.homePageTypeQAM == "Slider")
             {
-                Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
+                this.Menu.Add(new MI()
+                {
+                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
 
-                Label = "System",
-                NavigationType = typeof(MainPage),
-                NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute)
-            });
+                    Label = "System",
+                    NavigationType = typeof(MainPage),
+
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute),
+
+
+                });
+            }
+            else
+            {
+                this.Menu.Add(new MI()
+                {
+                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
+
+                    Label = "System",
+                    NavigationType = typeof(MainPage),
+
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute),
+
+
+                });
+            }
+ 
             this.Menu.Add(new MI()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.GamepadSolid },

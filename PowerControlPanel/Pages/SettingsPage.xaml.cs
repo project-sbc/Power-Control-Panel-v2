@@ -69,7 +69,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             Properties.Settings.Default.enableCombineTDP = cboCombineTDP.Text;
 
-         
+            Properties.Settings.Default.homePageTypeMW = cboMWHomePageStyle.Text;
+
+            Properties.Settings.Default.homePageTypeQAM = cboQAMHomePageStyle.Text;
             //Save
             Properties.Settings.Default.Save();
 
@@ -94,6 +96,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboCombineTDP.Text = Properties.Settings.Default.enableCombineTDP;
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
 
+            cboMWHomePageStyle.Text = Properties.Settings.Default.homePageTypeMW;
+
+            cboQAMHomePageStyle.Text = Properties.Settings.Default.homePageTypeQAM;
             cboTDPTypeIntel.Text = Properties.Settings.Default.IntelMMIOMSR;
         }
         private void changeTaskService(string systemAutoStart)

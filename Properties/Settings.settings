@@ -59,5 +59,11 @@
     <Setting Name="enableCombineTDP" Type="System.String" Scope="User">
       <Value Profile="(Default)">Disable</Value>
     </Setting>
+    <Setting Name="homePageTypeMW" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Slider</Value>
+    </Setting>
+    <Setting Name="homePageTypeQAM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Slider</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
