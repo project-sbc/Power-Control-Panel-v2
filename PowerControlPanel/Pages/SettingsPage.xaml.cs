@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -78,9 +79,24 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //Reapply theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
 
-            MessageBox.Show("Settings saved!");
-        }
+            savedMessage();
 
+        }
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        private void savedMessage()
+        {
+            lblSaved.Visibility = Visibility.Visible;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+            dispatcherTimer.Tick += timerTickHideLabel;
+            dispatcherTimer.Start();
+
+
+        }
+        private void timerTickHideLabel(object sender, EventArgs e)
+        {
+            dispatcherTimer.Stop();
+            lblSaved.Visibility = Visibility.Collapsed;
+        }
         private void loadSettings()
         {
             //Load general settings

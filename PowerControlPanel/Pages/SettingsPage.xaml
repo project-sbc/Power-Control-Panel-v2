@@ -30,6 +30,8 @@
                         <Label Content="GENERAL SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
                         <Button x:Name="btnSave" Content="Save Settings" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click"></Button>
+                        <Label Content="Settings saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right" Background="White"  Foreground="Black" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
+
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid>

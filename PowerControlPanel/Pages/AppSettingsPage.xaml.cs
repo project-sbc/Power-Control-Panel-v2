@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -241,9 +242,25 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     }
                 }
 
-                System.Windows.MessageBox.Show("App Settings Saved");
+                savedMessage();
             }
 
+        }
+
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        private void savedMessage()
+        {
+            lblSaved.Visibility = Visibility.Visible;
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 4);
+            dispatcherTimer.Tick += timerTickHideLabel;
+            dispatcherTimer.Start();
+
+
+        }
+        private void timerTickHideLabel(object sender, EventArgs e)
+        {
+            dispatcherTimer.Stop();
+            lblSaved.Visibility = Visibility.Collapsed;
         }
         private void btnAddProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -253,8 +270,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void btnDeleteProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            bool deleteApp = true;
-
+            
             xmlA.deleteApp(AppName);
             loadAppListView();
             clearApp();
