@@ -33,8 +33,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             int baseClockSpeed = new ManagementObjectSearcher("select MaxClockSpeed from Win32_Processor").Get().Cast<ManagementBaseObject>().Sum(item => int.Parse(item["MaxClockSpeed"].ToString()));
             double roundClockSpeed = Math.Round(Convert.ToDouble(baseClockSpeed) / 100, 0) * 100;
             GlobalVariables.baseCPUSpeed = (int)roundClockSpeed;
-           
 
+            //unhide core parking from power plan
+            RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMAXCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
+            RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMINCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
         }
 
         private static void configureSettings()

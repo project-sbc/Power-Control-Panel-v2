@@ -17,7 +17,7 @@
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
                 <Setter Property="TitleFontSize" Value="14" />
                 <Setter Property="VerticalContentAlignment" Value="Top"/>
-                <Setter Property="local:ContextMenuLeftClickBehavior.IsLeftClickEnabled" Value="False"/>
+
                 <Setter Property="HorizontalTitleAlignment" Value="Center"/>
                 <Setter Property="Width" Value="130" />
                 <EventSetter  Event="Click" Handler="Tile_Click"/>
@@ -53,7 +53,7 @@
                       Margin="3"
                       Count=""
                       VerticalTitleAlignment="Bottom"
-                              Background="Orange"
+                             
                         mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
 
@@ -73,7 +73,7 @@
                       Count=""
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                      Style="{StaticResource LargeTileStyle}" Background="#FFFD7F00">
+                      Style="{StaticResource LargeTileStyle}" >
 
                         <StackPanel Orientation="Vertical">
                             <Label HorizontalAlignment="Center" x:Name="labelTDPValue" Content="30 W" FontSize="20" Foreground="White"/>
@@ -93,7 +93,7 @@
                       Count=""
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
-                      Style="{StaticResource LargeTileStyle}" Background="#FFFD7F00">
+                      Style="{StaticResource LargeTileStyle}" >
 
                         <StackPanel Orientation="Vertical">
                             <Label HorizontalAlignment="Center" x:Name="labelTDPBoostValue" Content="" FontSize="20" Foreground="White"/>
@@ -109,7 +109,7 @@
                     <mah:Tile Title="Max CPU Freq"
                       Margin="3"
                       Count=""
-                      Background="Green"
+                   
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
@@ -127,7 +127,7 @@
                     <mah:Tile Title="Active CPU Cores"
                       Margin="3"
                       Count=""
-                      Background="Teal"
+                   
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
@@ -145,7 +145,7 @@
                     <mah:Tile Title="Volume"
                       Margin="3"
                       Count=""
-                      Background="Gray"
+                
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
@@ -162,7 +162,7 @@
                     <mah:Tile Title="Brightness"
                       Margin="3"
                       Count=""
-                      Background="DarkGray"
+        
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
@@ -179,7 +179,7 @@
                     <mah:Tile Title="GPU Clock"
                       Margin="3"
                       Count=""
-                      Background="DarkRed"
+              
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
@@ -195,7 +195,7 @@
                     <mah:Tile Title="Display Resolution"
                       Margin="3"
                       Count=""
-                      Background="Blue"
+                 
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
@@ -212,7 +212,7 @@
                     <mah:Tile Title="Display Scaling"
                       Margin="3"
                       Count=""
-                      Background="DarkBlue"
+                
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
@@ -229,7 +229,7 @@
                     <mah:Tile Title="Display Refresh"
                       Margin="3"
                       Count=""
-                      Background="DeepSkyBlue"
+                   
                       VerticalTitleAlignment="Bottom"
                       mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
                       Style="{StaticResource LargeTileStyle}">
