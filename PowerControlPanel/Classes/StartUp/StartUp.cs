@@ -8,6 +8,7 @@ using Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using Microsoft.Win32;
 using System.Management;
+using System.Windows.Input;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 {
@@ -18,7 +19,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
         {
             TaskScheduler.TaskScheduler.startScheduler();
             GlobalVariables.tdp.readTDP();
-            
+
+            //force touch due to wpf bug 
+            _ = Tablet.TabletDevices;
+
+            //set max cpu cores
+            GlobalVariables.maxCpuCores = new ManagementObjectSearcher("Select * from Win32_Processor").Get().Cast<ManagementBaseObject>().Sum(item => int.Parse(item["NumberOfCores"].ToString()));
+            GlobalVariables.manufacturer = PowerControlPanel.Classes.MotherboardInfo.MotherboardInfo.Manufacturer.ToUpper();
+            GlobalVariables.product = PowerControlPanel.Classes.MotherboardInfo.MotherboardInfo.Product.ToUpper();
 
             ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
             ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
@@ -37,6 +45,26 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             //unhide core parking from power plan
             RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMAXCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
             RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMINCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
+
+        
+
+            //check if device is one netbook one x player for fan control capability
+            if (GlobalVariables.manufacturer.Contains("ONE") && GlobalVariables.manufacturer.Contains("NETBOOK"))
+            {
+                if (GlobalVariables.product.Contains("ONE") && GlobalVariables.product.Contains("X") && GlobalVariables.product.Contains("PLAYER"))
+                {
+                    GlobalVariables.fanControlDevice = true;
+                    if (GlobalVariables.cpuType == "Intel") { GlobalVariables.fanRangeBase = 255; }
+                    if (GlobalVariables.cpuType == "AMD") { GlobalVariables.fanRangeBase = 100; }
+                    ChangeFanSpeedOXP.ChangeFanSpeed.readSoftwareFanControl();
+                    ChangeFanSpeedOXP.ChangeFanSpeed.readFanSpeed();
+                }
+            }
+
+        
+
+
+
         }
 
         private static void configureSettings()

@@ -52,18 +52,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             }
 
         }
-        private void runProfileChecker()
-        {
-
-            Process[] pList = Process.GetProcesses();
-
-            foreach (Process p in pList)
-            {
-                
-
-            }
-
-        }
 
 
         public void startThread()

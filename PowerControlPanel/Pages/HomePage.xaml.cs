@@ -80,6 +80,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             displayItemSourceBind();
 
             loadUpdateValues();
+
+            //force touch due to wpf bug 
+            _ = Tablet.TabletDevices;
         }
 
 

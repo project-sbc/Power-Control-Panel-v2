@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
 {
@@ -28,7 +29,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
 
         public static void ThreadHandler()
         {
-            
+
 
             scheduler.Run(); //This will block this thread until the scheduler disposed.
         }

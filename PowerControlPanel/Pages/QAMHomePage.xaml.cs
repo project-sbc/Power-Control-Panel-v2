@@ -46,6 +46,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             initializeTimer();
             loadUpdateValues();
             GBChangeValue.Visibility = Visibility.Collapsed;
+
+
+            //force touch due to wpf bug 
+            _ = Tablet.TabletDevices;
         }
 
 

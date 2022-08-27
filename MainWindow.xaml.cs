@@ -18,6 +18,8 @@ using SharpDX.XInput;
 using ControlzEx.Theming;
 using System.IO;
 using System.Management;
+using System.Windows.Input;
+using System.Diagnostics;
 
 namespace Power_Control_Panel
 {
@@ -55,7 +57,7 @@ namespace Power_Control_Panel
         //cpu settings
         public static int cpuMaxFrequency = 0;
         public static int cpuActiveCores = 0;
-        public static int maxCpuCores = new ManagementObjectSearcher("Select * from Win32_Processor").Get().Cast<ManagementBaseObject>().Sum(item => int.Parse(item["NumberOfCores"].ToString()));
+        public static int maxCpuCores = 1;
         public static int baseCPUSpeed = 1000;
 
 
@@ -82,6 +84,13 @@ namespace Power_Control_Panel
         public static RoutineUpdate routineUpdate = new RoutineUpdate();
 
         public static string xmlFile = AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml";
+
+        //Motherboard info
+        public static string manufacturer = "";
+        public static string product = "";
+        public static bool fanControlDevice = false;
+        public static bool fanControlEnable = false;
+        public static int fanRangeBase = 100;
     }
     
 
@@ -122,8 +131,10 @@ namespace Power_Control_Panel
             setTheme();
 
             //test code here
-            
 
+            PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.readSoftwareFanControl();
+            //force touch due to wpf bug 
+            _ = Tablet.TabletDevices;
         }
 
         private void setUpNotifyIcon()
@@ -210,7 +221,13 @@ namespace Power_Control_Panel
             if (Power != GlobalVariables.powerStatus & GlobalVariables.powerStatus != "" & GlobalVariables.ActiveProfile != "None")
             {
                 MessageBox.Show("run change profile here");
+                Process[] pList = Process.GetProcesses();
 
+                foreach (Process p in pList)
+                {
+
+
+                }
             }
 
         }
