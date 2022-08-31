@@ -26,16 +26,18 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             while (GlobalVariables.useRoutineThread)
             {
 
-                //ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
-                //ChangeVolume.AudioManager.GetMasterVolume();
-                //ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
-                //changeCPU.ChangeCPU.readCPUMaxFrequency();
-                //changeCPU.ChangeCPU.readActiveCores();
+
 
    
                 Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings());
                 Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeVolume.AudioManager.GetMasterVolume());
                 Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeBrightness.WindowsSettingsBrightnessController.getBrightness());
+
+                if (GlobalVariables.fanControlDevice && GlobalVariables.fanControlEnable)
+                {
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeFanSpeedOXP.ChangeFanSpeed.readFanSpeed());
+                    Classes.TaskScheduler.TaskScheduler.runTask(() => PIDandCPUMonitor.PIDCPUMonitor.MonitorCPU());
+                }
 
                 if (counter > 10) { 
                     

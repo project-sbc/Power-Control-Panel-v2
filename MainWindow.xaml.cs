@@ -21,6 +21,11 @@ using System.Management;
 using System.Windows.Input;
 using System.Diagnostics;
 
+
+
+using System.Text;
+
+
 namespace Power_Control_Panel
 {
     /// <summary>
@@ -88,9 +93,17 @@ namespace Power_Control_Panel
         //Motherboard info
         public static string manufacturer = "";
         public static string product = "";
+
+        //fan controls
         public static bool fanControlDevice = false;
         public static bool fanControlEnable = false;
         public static int fanRangeBase = 100;
+        public static int fanSpeed = 0;
+
+        //cpu values
+        public static double cpuTemp = 0;
+        public static double cpuPower = 0;
+
     }
     
 
@@ -130,13 +143,14 @@ namespace Power_Control_Panel
             //set theme
             setTheme();
 
-            //test code here
-
-            PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.readSoftwareFanControl();
             //force touch due to wpf bug 
             _ = Tablet.TabletDevices;
+
+            //test code here
+       
         }
 
+ 
         private void setUpNotifyIcon()
         {
             notifyIcon.Click += notifyIcon_Click;
@@ -257,7 +271,7 @@ namespace Power_Control_Panel
             }
             else
             {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute));
+                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute));
             }
             
         }

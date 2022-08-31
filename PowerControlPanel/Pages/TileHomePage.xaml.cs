@@ -23,14 +23,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
     /// <summary>
     /// Interaction logic for QAMHomePage.xaml
     /// </summary>
-    public partial class QAMHomePage : Page
+    public partial class TileHomePage : Page
     {
         private string currentControl;
         private bool controlActive = false;
         private DispatcherTimer timer = new DispatcherTimer();
         private bool dragStarted = false;
 
-        public QAMHomePage()
+        public TileHomePage()
         {
             InitializeComponent();
 

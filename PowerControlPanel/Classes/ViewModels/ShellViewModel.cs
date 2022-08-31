@@ -40,7 +40,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
                     Label = "Home",
                     NavigationType = typeof(MainPage),
 
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute),
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute),
 
 
                 });

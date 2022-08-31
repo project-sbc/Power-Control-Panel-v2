@@ -4,7 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
+      xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="800"
       MinWidth="450"
@@ -27,8 +27,9 @@
     </Page.Resources>
     
     
-    <ScrollViewer Margin="5,10,0,0" PanningMode="VerticalOnly">
+    <ScrollViewer  PanningMode="VerticalOnly">
         <StackPanel Orientation="Vertical" >
+         
             <GroupBox Name="GBSystemControls" Margin="0,0,0,10">
 
                 <GroupBox.Header >
@@ -100,17 +101,16 @@
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
-
+                    <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
 
                     <DockPanel  x:Name="dpTDP1" >
-                        <Label Content="TDP Sustained (W)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-  
-                        </Label>
+                        <Label Content="TDP Sustained (W)" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
+
                         <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
-                        <Slider x:Name="TDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
+                        <Slider x:Name="TDP1"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
 
                     </DockPanel>
+
 
                     <DockPanel Grid.Row="1" x:Name="dpTDP2"  >
                         <Label Content="TDP Boost (W)" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
+using System.Diagnostics;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFanSpeedOXP
 {
@@ -47,6 +48,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFanSpeedOXP
                 int decValue = Convert.ToInt32(result, 16);
            
                 double fanPercentage = Math.Round(100*((double)decValue / (double)GlobalVariables.fanRangeBase),0);
+                GlobalVariables.fanSpeed = (int)fanPercentage;
             }
 
 

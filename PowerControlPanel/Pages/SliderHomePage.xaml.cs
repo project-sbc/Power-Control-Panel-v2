@@ -24,7 +24,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
     /// <summary>
     /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class SliderHomePage : Page
     {
         private DispatcherTimer timer = new DispatcherTimer();
 
@@ -61,10 +61,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool dragStartedActiveCores = false;
         private bool changingActiveCores = false;
 
-        public HomePage()
+        public SliderHomePage()
         {
-           
-            
+
+
 
             InitializeComponent();
             //set max cpu core count here
@@ -107,7 +107,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             changingResolution = false;
         }
 
-      
+
 
 
         #region slider loaded change thumb
@@ -116,16 +116,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
             if (SliderThumb != null)
             {
-                
+
                 if (SliderThumb is Thumb thumb)
                 {
-                    
-                    thumb.Width = 20;
-                    thumb.Height = 25;
+
+                    thumb.Width = 25;
+                    thumb.Height = 35;
                 }
                 else { }
             }
-            else  { }
+            else { }
         }
         private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
         {
@@ -144,8 +144,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
             return null;
         }
-    
-   
+
+
 
         #endregion
 
@@ -192,8 +192,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     MAXCPU.Value = MAXCPU.Maximum;
                     txtsliderMAXCPU.Visibility = Visibility.Collapsed;
                     txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
- 
-             
+
+
                 }
                 else
                 {
@@ -209,8 +209,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (!dragStartedActiveCores && enableCPU)
             {
 
-                    ActiveCores.Value = GlobalVariables.cpuActiveCores;
-  
+                ActiveCores.Value = GlobalVariables.cpuActiveCores;
+
             }
 
 
@@ -239,7 +239,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                 }
             }
-  
+
             //system values
             if (enableSystem)
             {
@@ -264,7 +264,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
- 
+
 
         #endregion timer controls
 
@@ -273,180 +273,28 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void handleVisibility()
         {
             //handle enabling and showing gpu clock
-            if (!Properties.Settings.Default.enableGPUCLK ^ GlobalVariables.cpuType == "Intel")
+            if (GlobalVariables.cpuType == "Intel")
             {
-                GBAMDGPUCLK.Visibility = Visibility.Collapsed;
-                GBAMDGPUCLK.Margin = new Thickness(0, 0, 0, 0);
+                bdGPUCLK.Visibility = Visibility.Collapsed;
+            }
+          
+
+            if (Properties.Settings.Default.enableCombineTDP == "Enable")
+            {
+                bdTDP1.Visibility = Visibility.Collapsed;
+                bdTDP2.Visibility = Visibility.Collapsed;
 
             }
-            else
-            {
-                if (Properties.Settings.Default.showGPUCLK)
-                { enableControlGPUCLK.IsOn = true; }
-                else
-                { enableControlGPUCLK.IsOn = false; GBAMDGPUCLK.Height = 40; enableControlGPUCLK.IsOn = false; }
-            }
-
-
-            if (!Properties.Settings.Default.enableTDP)
-            {
-                GBTDPControls.Visibility = Visibility.Collapsed;
-                GBTDPControls.Margin = new Thickness(0, 0, 0, 0);
-            }
-            else
-            {
-                if (Properties.Settings.Default.showTDP)
-                { enableControlTDP.IsOn = true; }
-                else { enableControlTDP.IsOn = false; GBTDPControls.Height = 40; enableControlTDP.IsOn = false; }
-
-                //handle if they want combined tdp or pl1 and pl2 separate
-                if (Properties.Settings.Default.enableCombineTDP == "Enable")
-                {
-                    dpTDP1.Visibility = Visibility.Collapsed;
-                    dpTDP2.Visibility = Visibility.Collapsed;
-                    rdTDP1.Height = new GridLength(0);
-                    rdTDP2.Height = new GridLength(0);
-                }
-                else { dpTDP.Visibility = Visibility.Collapsed; rdTDP.Height = new GridLength(0); }
-            }
-
-
-            if (!Properties.Settings.Default.enableCPU)
-            {
-                GBCPUControls.Visibility = Visibility.Collapsed;
-                GBCPUControls.Margin = new Thickness(0, 0, 0, 0);
-            }
-            else
-            {
-                if (Properties.Settings.Default.showTDP)
-                { enableControlCPU.IsOn = true; }
-                else { enableControlCPU.IsOn = false; GBCPUControls.Height = 40; enableControlCPU.IsOn = false; }
-            }
-
-
-            if (!Properties.Settings.Default.enableSystem)
-            {
-                GBSystemControls.Visibility = Visibility.Collapsed;
-                GBSystemControls.Margin = new Thickness(0, 0, 0, 0);
-            }
-            else
-            {
-                if (Properties.Settings.Default.showSystem)
-                { enableControlSystem.IsOn = true; }
-                else { enableControlSystem.IsOn = false; GBSystemControls.Height = 40; enableControlSystem.IsOn = false; }
-            }
-
-            if (!Properties.Settings.Default.enableDisplay)
-            {
-                GBDisplayControls.Visibility = Visibility.Collapsed;
-                GBDisplayControls.Margin = new Thickness(0, 0, 0, 0);
-            }
-            else
-            {
-                if (Properties.Settings.Default.showDisplay)
-                { enableControlDisplay.IsOn = true; }
-                else { enableControlDisplay.IsOn = false; GBDisplayControls.Height = 40; enableControlDisplay.IsOn = false; }
-            }
-
-
-
+            else { bdTDP.Visibility = Visibility.Collapsed; }
+         
         }
 
 
         #endregion handle visibility
 
         #region toggle group box
-        private void enableControlGPUCLK_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (this.IsLoaded)
-            {
-                if (enableControlGPUCLK.IsOn)
-                {
-                    GBAMDGPUCLK.Height = 100;
-                    Properties.Settings.Default.showGPUCLK = true;
-                }
-                else
-                {
-                    GBAMDGPUCLK.Height = 40;
-                    Properties.Settings.Default.showGPUCLK = false;
-                }
-                Properties.Settings.Default.Save();
-            }
 
-
-        }
-
-
-        private void enableControlTDP_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (this.IsLoaded)
-            {
-                if (enableControlTDP.IsOn)
-                {
-                    GBTDPControls.Height = double.NaN;
-                    Properties.Settings.Default.showTDP = true;
-                }
-                else
-                {
-                    GBTDPControls.Height = 40;
-                    Properties.Settings.Default.showTDP = false;
-                }
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        
-        private void enableControlCPU_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (this.IsLoaded)
-            {
-                if (enableControlCPU.IsOn)
-                {
-                    GBCPUControls.Height = 150;
-                    Properties.Settings.Default.showCPU = true;
-                }
-                else
-                {
-                    GBCPUControls.Height = 40;
-                    Properties.Settings.Default.showCPU = false;
-                }
-                Properties.Settings.Default.Save();
-            }
-        }
-        private void enableControlSystem_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (this.IsLoaded)
-            {
-                if (enableControlSystem.IsOn)
-                {
-                    GBSystemControls.Height = 150;
-                    Properties.Settings.Default.showSystem = true;
-                }
-                else { GBSystemControls.Height = 40; Properties.Settings.Default.showSystem = false; }
-                Properties.Settings.Default.Save();
-            }
-        }
-        private void enableControlDisplay_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (this.IsLoaded)
-            {
-                if (enableControlDisplay.IsOn)
-                {
-                    GBDisplayControls.Height = 200;
-                    Properties.Settings.Default.showDisplay = true;
-                }
-                else
-                {
-                    GBDisplayControls.Height = 40;
-                    Properties.Settings.Default.showDisplay = false;
-                }
-                Properties.Settings.Default.Save();
-            }
-
-
-
-        }
-
+ 
         #endregion
 
         #region slider value changed
@@ -502,12 +350,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         {
                             HandleChangingMAXCPU((int)MAXCPU.Value);
                         }
-                        if (MAXCPU.Value == MAXCPU.Maximum) 
+                        if (MAXCPU.Value == MAXCPU.Maximum)
                         {
                             txtsliderMAXCPU.Visibility = Visibility.Collapsed;
                             txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
-                        } 
-                        else 
+                        }
+                        else
                         {
                             txtsliderMAXCPUAuto.Visibility = Visibility.Collapsed;
                             txtsliderMAXCPU.Visibility = Visibility.Visible;
@@ -525,7 +373,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             }
         }
-      
+
         #endregion
 
         #region slider drag completed
@@ -579,8 +427,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
         }
-     
-     
+
+
         #endregion
 
         #region slider drag started
@@ -626,7 +474,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
-  
+
         #endregion
 
         #region slider mouse left up
@@ -679,7 +527,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
         }
 
-      
+
 
 
         #endregion
@@ -734,7 +582,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             }
         }
-  
+
         #endregion
 
         #region slider touchdown
@@ -903,7 +751,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             if (this.IsLoaded)
             {
-                if(dragStartedMAXCPU == false)
+                if (dragStartedMAXCPU == false)
                 {
                     changingMAXCPU = true;
                     int sendMaxCPU = 0;
@@ -914,7 +762,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                     changingMAXCPU = false;
                 }
-                
+
             }
 
 
@@ -946,8 +794,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 changingGPUCLK = true;
                 Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk));
-
-                txtsliderAMDGPUCLKDEF.Content = "";
+                txtsliderAMDGPUCLK.Visibility = Visibility.Visible;
+                txtsliderAMDGPUCLKDEF.Visibility = Visibility.Collapsed;
                 changingGPUCLK = false;
             }
 
@@ -996,6 +844,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             handleVisibility();
         }
 
-  
+
     }
 }

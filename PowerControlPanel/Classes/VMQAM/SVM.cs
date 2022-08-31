@@ -48,7 +48,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                     Label = "System",
                     NavigationType = typeof(MainPage),
 
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute),
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute),
 
 
                 });
