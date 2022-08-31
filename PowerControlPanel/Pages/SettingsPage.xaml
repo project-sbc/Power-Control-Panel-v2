@@ -43,6 +43,7 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
@@ -51,6 +52,7 @@
                     <Border  Grid.Row="4" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="5" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="6" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+                    <Border  Grid.Row="7" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <DockPanel   >
 
                         <Label Content="Theme" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
@@ -102,6 +104,15 @@
                     </DockPanel>
                     <DockPanel Grid.Row="2"  >
 
+                        <Label Content="Min TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <Label x:Name="txtsliderMinTDP" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDPMIN, Path=Value}"/>
+                        <Slider x:Name="TDPMIN" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="1" Maximum="80"   SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMIN_Loaded" />
+
+                    </DockPanel>
+                    <DockPanel Grid.Row="3"  >
+
                         <Label Content="Max TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
@@ -109,7 +120,7 @@
                         <Slider x:Name="TDPMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="5" Maximum="80"   SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
 
                     </DockPanel>
-                    <DockPanel Grid.Row="3"  >
+                    <DockPanel Grid.Row="4"  >
 
                         <Label Content="Quick Access Menu Width (%)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
@@ -123,7 +134,7 @@
 
 
                     </DockPanel>
-                    <DockPanel Grid.Row="4"  >
+                    <DockPanel Grid.Row="5"  >
 
                         <Label Content="Combine Sustained and Turbo TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
@@ -136,7 +147,7 @@
                      
 
                     </DockPanel>
-                    <DockPanel Grid.Row="5"  >
+                    <DockPanel Grid.Row="6"  >
 
                         <Label Content="Main window home page style (restart app)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
@@ -149,7 +160,7 @@
 
 
                     </DockPanel>
-                    <DockPanel Grid.Row="6"  >
+                    <DockPanel Grid.Row="7"  >
 
                         <Label Content="Quick access menu home page style" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
@@ -159,8 +170,6 @@
                             <ComboBoxItem Content="Tile" />
 
                         </ComboBox>
-
-
                     </DockPanel>
                 </Grid>
 
@@ -236,7 +245,7 @@
 
                         </Label>
                         <Label x:Name="txtsliderMaxGPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=GPUCLKMAX, Path=Value}"/>
-                        <Slider x:Name="GPUCLKMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="300" Maximum="2200" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMAX_Loaded" />
+                        <Slider x:Name="GPUCLKMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="300" Maximum="2200" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="TDPMIN_Loaded" />
 
 
 

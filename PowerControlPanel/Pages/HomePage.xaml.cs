@@ -89,6 +89,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void setMinMaxSliderValues()
         {
+            TDP1.Minimum = Properties.Settings.Default.minTDP;
+            TDP2.Minimum = Properties.Settings.Default.minTDP;
             TDP1.Maximum = Properties.Settings.Default.maxTDP;
             TDP2.Maximum = Properties.Settings.Default.maxTDP;
             ActiveCores.Maximum = GlobalVariables.maxCpuCores;

@@ -31,9 +31,13 @@ You can find it in the releases tab here https://github.com/project-sbc/Power-Co
 ## AMD Laptops
 -Most ryzen laptops or mini PCs
 
-# Controller Shortcuts:
-QUICK ACCESS MENU:   LB+RB+DPAD RIGHT  Hold for 1 second
-KEYBOARD:   LB+RB+DPAD DOWN  Hold for 1 second
+# Controller Shortcuts (hold key for 1 second in order to trigger):
+QUICK ACCESS MENU:				  LB+RB+DPAD RIGHT
+KEYBOARD:						  LB+RB+DPAD DOWN
+TDP INCREASE (+1W):				  LB+RB+B
+TDP DECREASE (-1W):				  LB+RB+A
+REFRESH RATE TOGGLE (30/40/60HZ): RB+RB+R3 (Right thumbstick press)
+
 
 
 # Features that are working:
