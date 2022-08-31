@@ -20,10 +20,13 @@ using System.IO;
 using System.Management;
 using System.Windows.Input;
 using System.Diagnostics;
+using RTSSSharedMemoryNET;
 
 
 
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
+using System.Security.Cryptography;
 
 
 namespace Power_Control_Panel
@@ -58,6 +61,7 @@ namespace Power_Control_Panel
         public static int volume = 0;
         public static bool needVolumeRead = false;
         public static bool needBrightnessRead = false;
+        public static int refreshRateToggleMode = 1;
 
         //cpu settings
         public static int cpuMaxFrequency = 0;
@@ -105,8 +109,6 @@ namespace Power_Control_Panel
         public static double cpuPower = 0;
 
     }
-    
-
     public partial class MainWindow : MetroWindow
     {
         private NavigationServiceEx navigationServiceEx;
@@ -127,10 +129,10 @@ namespace Power_Control_Panel
             StartUp.runStartUp();
 
             this.InitializeComponent();
-
             
 
-       
+
+
 
             GlobalVariables.routineUpdate.startThread();
 
@@ -147,10 +149,12 @@ namespace Power_Control_Panel
             _ = Tablet.TabletDevices;
 
             //test code here
-       
+         
+
+
         }
 
- 
+
         private void setUpNotifyIcon()
         {
             notifyIcon.Click += notifyIcon_Click;
@@ -185,6 +189,7 @@ namespace Power_Control_Panel
         private void setTheme()
         {
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
+
         }
         private void initializeTimer()
         {
@@ -195,8 +200,10 @@ namespace Power_Control_Panel
         }
         private void timerTick(object sender, EventArgs e)
         {
-            //Controller input handler
-            controller = new Controller(UserIndex.One);
+         
+                //Controller input handler
+                controller = new Controller(UserIndex.One);
+            
             if (controller != null)
             { 
                 if (controller.IsConnected)
@@ -208,15 +215,48 @@ namespace Power_Control_Panel
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight))
                         {
                             handleOpenCloseQAM();
-
                         }
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown))
                         {
                             handleOpenCloseOSK();
-
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.B))
+                        {
+                            GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 + 1, (int)GlobalVariables.setPL2 + 1);
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.A))
+                        {
+                            GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 - 1, (int)GlobalVariables.setPL2 - 1);
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.Y))
+                        {
+                            PowerControlPanel.Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness(GlobalVariables.brightness + 5);
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.X))
+                        {
+                            PowerControlPanel.Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness(GlobalVariables.brightness - 5);
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.RightThumb))
+                        {
+                            GlobalVariables.refreshRateToggleMode++;
+                            if (GlobalVariables.refreshRateToggleMode >= 4)
+                            {
+                                GlobalVariables.refreshRateToggleMode = 1;
+                            } 
+                            switch(GlobalVariables.refreshRateToggleMode)
+                            {
+                                case 1:
+                                    PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayRefreshRate("30");
+                                    break;
+                                case 2:
+                                    PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayRefreshRate("40");
+                                    break;
+                                case 3:
+                                    PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayRefreshRate("60");
+                                    break;
+                            }
                         }
                     }
-
                 }
             }
 
@@ -392,5 +432,6 @@ namespace Power_Control_Panel
         {
             setUpNotifyIcon();
         }
+
     }
 }

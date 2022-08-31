@@ -59,7 +59,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 Properties.Settings.Default.systemAutoStart = cboAutoStart.Text;
                 changeTaskService(cboAutoStart.Text);
             }
-            
+            Properties.Settings.Default.minTDP = (int)TDPMIN.Value;
+
             Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
 
             Properties.Settings.Default.sizeQAM = cboQAMSize.Text;
@@ -106,6 +107,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             int intLengthTheme = Properties.Settings.Default.systemTheme.Length;
             cboAccentTheme.Text = Properties.Settings.Default.systemTheme.Substring(intPeriodLocation+1,intLengthTheme-(intPeriodLocation+1) );
             cboLightDarkTheme.Text = Properties.Settings.Default.systemTheme.Substring(0, intPeriodLocation);
+            TDPMIN.Value = Properties.Settings.Default.minTDP;
             TDPMAX.Value = Properties.Settings.Default.maxTDP;
             GPUCLKMAX.Value = Properties.Settings.Default.maxGPUCLK;
             cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
@@ -204,6 +206,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 //SliderThumb is null
             }
+        }
+
+        private void TDPMIN_Loaded(object sender, RoutedEventArgs e)
+        {
+            Slider_Loaded(sender, e);
         }
 
         private void TDPMAX_Loaded(object sender, RoutedEventArgs e)

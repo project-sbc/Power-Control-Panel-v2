@@ -11,12 +11,15 @@ using System.Management;
 using System.Threading;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.Reflection.Metadata;
+using RTSSSharedMemoryNET;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 {
     public class RoutineUpdate
     {
         private Thread routineThread;
+        private Thread osdThread;
 
         private int counter = 0;
 
@@ -55,6 +58,16 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
 
         }
 
+        private void handleOSD()
+        {
+            using (var osd = new OSD("PowerControlPanel"))
+                while (GlobalVariables.useRoutineThread)
+                {
+                    osd.Update(getOsdLine());
+                    Thread.Sleep(1000);
+                }
+        }
+
 
         public void startThread()
         {
@@ -62,7 +75,31 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             routineThread.IsBackground = true;
             routineThread.Name = "Dispatch background thread";
             routineThread.Start();
+            osdThread = new Thread(handleOSD);
+            osdThread.IsBackground = true;
+            osdThread.Name = "Dispatch OSD thread";
+            osdThread.Start();
+        }
 
+        string getOsdLine()
+        {
+            var tdps = $"<C0>TDP<S0>S<S><C> <A0>{GlobalVariables.readPL1}<A><A1><S1> W<S><A>";
+            var tdpb = $"<C0>TDP<S0>B<S><C> <A0>{GlobalVariables.readPL2}<A><A1><S1> W<S><A>";
+            var gpuclk = $"<C0>GPU<S0>CLK<S><C> <A0>{GlobalVariables.gpuclk}<A><A1><S1> W<S><A>";
+
+            var rr = $"<C0>RR<C>  <A0>{GlobalVariables.refreshRate}<A><A1><S1> Hz<S><A>";
+
+            string[] osdArr = { tdps, tdpb };
+
+            if (GlobalVariables.refreshRate != "")
+            {
+                osdArr.Append(rr);
+            }
+            if (GlobalVariables.gpuclk != "")
+            {
+                osdArr.Append(gpuclk);
+            }
+            return String.Join("\n", osdArr);
         }
 
 

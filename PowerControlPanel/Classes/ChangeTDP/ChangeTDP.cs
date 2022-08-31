@@ -20,7 +20,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
         public string cpuType = "";
         public string MCHBAR = "";
         string RWDelay = "800"; //legacy value, RW.exe is not used anymore
-        private  Object objLock = new Object();
+        private Object objLock = new Object();
         private string processorName = "";
         
         public string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -90,9 +90,9 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                 determineCPU();
                 //StreamWriterLog.startStreamWriter("CPU type is " + cpuType);
 
-                //check to make sure input TDP is not above maximum set and minimum 5
-                if (pl1TDP < 5) { pl1TDP = 5; }
-                if (pl2TDP < 5) { pl2TDP = 5; }
+                //check to make sure input TDP is not above minimum set and minimum set
+                if (pl1TDP < Properties.Settings.Default.minTDP) { pl1TDP = Properties.Settings.Default.minTDP; }
+                if (pl2TDP < Properties.Settings.Default.minTDP) { pl2TDP = Properties.Settings.Default.minTDP; }
                 if (pl1TDP > Properties.Settings.Default.maxTDP) { pl1TDP = Properties.Settings.Default.maxTDP; }
                 if (pl2TDP > Properties.Settings.Default.maxTDP) { pl2TDP = Properties.Settings.Default.maxTDP; }
 

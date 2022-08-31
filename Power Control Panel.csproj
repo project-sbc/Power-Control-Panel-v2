@@ -12,6 +12,7 @@
     <ApplicationIcon>Resources\Pictures\PCP.ico</ApplicationIcon>
     <Version>1.0.0</Version>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -125,6 +126,12 @@
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="TaskScheduler" Version="2.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="RTSSSharedMemoryNET">
+      <HintPath>Resources\RTSS\RTSSSharedMemoryNET.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
