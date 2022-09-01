@@ -116,7 +116,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 case ("TDP Sustain"):
                     dpSlider.Visibility = Visibility.Visible;
-                    generalSlider.Minimum = 5;
+                    generalSlider.Minimum = Properties.Settings.Default.minTDP;
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
                     generalSlider.Value = GlobalVariables.readPL1;
                     generalSlider.SmallChange = 1;
@@ -127,7 +127,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     break;
                 case ("TDP"):
                     dpSlider.Visibility = Visibility.Visible;
-                    generalSlider.Minimum = 5;
+                    generalSlider.Minimum = Properties.Settings.Default.minTDP;
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
                     generalSlider.Value = GlobalVariables.readPL1;
                     generalSlider.SmallChange = 1;
@@ -139,7 +139,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                 case "TDP Boost":
                     dpSlider.Visibility = Visibility.Visible;
-                    generalSlider.Minimum = 5;
+                    generalSlider.Minimum = Properties.Settings.Default.minTDP;
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
                     generalSlider.Value = GlobalVariables.readPL2;
                     generalSlider.SmallChange = 1;

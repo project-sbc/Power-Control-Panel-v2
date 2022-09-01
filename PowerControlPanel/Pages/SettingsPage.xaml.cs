@@ -61,7 +61,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
             
             Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
-
+            Properties.Settings.Default.minTDP = (int)TDPMIN.Value;
             Properties.Settings.Default.sizeQAM = cboQAMSize.Text;
 
             Properties.Settings.Default.IntelMMIOMSR = cboTDPTypeIntel.Text;
@@ -107,11 +107,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboAccentTheme.Text = Properties.Settings.Default.systemTheme.Substring(intPeriodLocation+1,intLengthTheme-(intPeriodLocation+1) );
             cboLightDarkTheme.Text = Properties.Settings.Default.systemTheme.Substring(0, intPeriodLocation);
             TDPMAX.Value = Properties.Settings.Default.maxTDP;
+            TDPMIN.Value = Properties.Settings.Default.minTDP;
             GPUCLKMAX.Value = Properties.Settings.Default.maxGPUCLK;
             cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
             cboCombineTDP.Text = Properties.Settings.Default.enableCombineTDP;
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
-
+         
             cboMWHomePageStyle.Text = Properties.Settings.Default.homePageTypeMW;
 
             cboQAMHomePageStyle.Text = Properties.Settings.Default.homePageTypeQAM;
@@ -206,10 +207,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
         }
 
-        private void TDPMAX_Loaded(object sender, RoutedEventArgs e)
-        {
-            Slider_Loaded(sender, e);
-        }
+  
 
   
     }

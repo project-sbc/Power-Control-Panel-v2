@@ -274,5 +274,17 @@ namespace Power_Control_Panel.Properties {
                 this["homePageTypeQAM"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int minTDP {
+            get {
+                return ((int)(this["minTDP"]));
+            }
+            set {
+                this["minTDP"] = value;
+            }
+        }
     }
 }

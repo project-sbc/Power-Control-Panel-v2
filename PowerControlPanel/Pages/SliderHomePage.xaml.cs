@@ -91,6 +91,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             TDP1.Maximum = Properties.Settings.Default.maxTDP;
             TDP2.Maximum = Properties.Settings.Default.maxTDP;
+            TDP1.Minimum = Properties.Settings.Default.minTDP;
+            TDP2.Minimum = Properties.Settings.Default.minTDP;
             ActiveCores.Maximum = GlobalVariables.maxCpuCores;
             MAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
             GPUCLK.Maximum = Properties.Settings.Default.maxGPUCLK;

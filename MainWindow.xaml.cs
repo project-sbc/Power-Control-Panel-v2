@@ -214,6 +214,22 @@ namespace Power_Control_Panel
                             handleOpenCloseOSK();
 
                         }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.B))
+                        {
+                            GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 + 1, (int)GlobalVariables.setPL2 + 1);
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.A))
+                        {
+                            GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 - 1, (int)GlobalVariables.setPL2 - 1);
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.Y))
+                        {
+                            PowerControlPanel.Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness(GlobalVariables.brightness + 10);
+                        }
+                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.X))
+                        {
+                            PowerControlPanel.Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness(GlobalVariables.brightness - 10);
+                        }
                     }
 
                 }
@@ -242,9 +258,6 @@ namespace Power_Control_Panel
                 {
                     profile = dr[0].ToString();
                     exe = dr[1].ToString();
-
-
-
 
 
                 }
