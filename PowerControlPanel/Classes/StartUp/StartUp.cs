@@ -9,6 +9,7 @@ using Power_Control_Panel.PowerControlPanel.Classes;
 using Microsoft.Win32;
 using System.Management;
 using System.Windows.Input;
+using System.Windows;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 {
@@ -61,7 +62,22 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
                 }
             }
 
+            string language = Properties.Settings.Default.Language;
             
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (language.ToLower())
+            {
+                default:
+                case "een":
+                    dict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.xaml", UriKind.RelativeOrAbsolute);
+                    break;
+              
+                case "en":
+                    dict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.zh-Hans.xaml", UriKind.Relative);
+                    break;
+            }
+            Application.Current.Resources.MergedDictionaries.Add(dict);
 
 
 
