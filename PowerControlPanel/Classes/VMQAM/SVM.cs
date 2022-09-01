@@ -25,7 +25,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                 Label = "Hide",
 
             });
-            if (Properties.Settings.Default.homePageTypeQAM == "Slider")
+            if (Properties.Settings.Default.homePageTypeQAM == "Grouped Slider")
             {
                 this.Menu.Add(new MI()
                 {
@@ -39,7 +39,21 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
 
                 });
             }
-            else
+            if (Properties.Settings.Default.homePageTypeQAM == "Slider")
+            {
+                this.Menu.Add(new MI()
+                {
+                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
+
+                    Label = "System",
+                    NavigationType = typeof(MainPage),
+
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute),
+
+
+                });
+            }
+            if (Properties.Settings.Default.homePageTypeQAM == "Tile")
             {
                 this.Menu.Add(new MI()
                 {
@@ -53,7 +67,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
 
                 });
             }
- 
             this.Menu.Add(new MI()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.GamepadSolid },

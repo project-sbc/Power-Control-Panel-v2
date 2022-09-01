@@ -12,7 +12,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 {
     public class ManageXML_Profiles
     {
-        public DataTable profileList()
+        public static DataTable profileList()
         {
             DataTable dt = new DataTable();
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -32,7 +32,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             
         }
 
-        public List<string> profileListForAppCBO()
+        public static List<string> profileListForAppCBO()
         {
             List<string> cboAppProfile = new List<string>();
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -52,7 +52,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
         }
 
-        public void createProfile()
+        public static void createProfile()
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
@@ -88,7 +88,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             xmlDocument = null;
 
         }
-        public void deleteProfile(string profileName)
+        public static void deleteProfile(string profileName)
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
@@ -109,7 +109,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
         }
 
 
-        public void saveProfileArray(string[] result, string profileName)
+        public static void saveProfileArray(string[] result, string profileName)
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
@@ -152,7 +152,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
      
 
         }
-        public string[] loadProfileArray(string profileName)
+        public static string[] loadProfileArray(string profileName)
         {
             string[] result = new string [10];
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -195,7 +195,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             return result;
         }
 
-        public string loadProfileParameter(string powerStatus, string parameter, string profileName)
+        public static string loadProfileParameter(string powerStatus, string parameter, string profileName)
         {
             string result = "";
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -212,7 +212,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             xmlDocument = null;
             return result;
         }
-        public void changeProfileParameter(string powerStatus, string parameter, string profileName, string newValue)
+        public static void changeProfileParameter(string powerStatus, string parameter, string profileName, string newValue)
         {
             string result = "";
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -230,7 +230,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
            
         }
 
-        public void changeProfileName(string oldName, string newName)
+        public static void changeProfileName(string oldName, string newName)
         {
             
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -260,14 +260,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
         }
 
 
-        public void applyProfile()
+        public static void applyProfile()
         {
 
         }
     }
-    public class ManageXML_Apps
+    public static class ManageXML_Apps
     {
-        public DataTable appList()
+        public static DataTable appList()
         {
             DataTable dt = new DataTable();
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -286,12 +286,32 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
 
         }
-        public DataTable appListByProfile(string profileName)
+
+        public static DataTable appListProfileExe()
         {
             DataTable dt = new DataTable();
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
-            XmlNodeList xmlNodes = xmlDocument.SelectSingleNode("//Configuration/Applications").SelectNodes("App/Profile[text()='" + profileName + "']"); ;
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Applications");
+
+            dt.Columns.Add("Profile");
+            dt.Columns.Add("Exe");
+
+            foreach (XmlNode node in xmlNode.ChildNodes)
+            {
+                dt.Rows.Add(node.SelectSingleNode("Profile").InnerText, node.SelectSingleNode("Exe").InnerText);
+            }
+            xmlDocument = null;
+            return dt;
+
+
+        }
+        public static DataTable appListByProfile(string profileName)
+        {
+            DataTable dt = new DataTable();
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNodeList xmlNodes = xmlDocument.SelectSingleNode("//Configuration/Applications").SelectNodes("App/Profile[text()='" + profileName + "']");
 
             dt.Columns.Add("DisplayName");
 
@@ -305,7 +325,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
 
         }
-        public void changeProfileNameInApps(string oldName, string newName)
+        public static void changeProfileNameInApps(string oldName, string newName)
         {
 
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -334,7 +354,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
         }
 
-        public void createApp(string ProfileName = "")
+        public static void createApp(string ProfileName = "")
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
@@ -372,7 +392,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             xmlDocument = null;
 
         }
-        public void deleteApp(string appName)
+        public static void deleteApp(string appName)
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
@@ -393,7 +413,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
         }
 
 
-        public void saveAppArray(string[] result, string appName)
+        public static void saveAppArray(string[] result, string appName)
         {
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
@@ -429,7 +449,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
 
         }
-        public string[] loadAppArray(string appName)
+        public static string[] loadAppArray(string appName)
         {
             string[] result = new string[6];
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -467,7 +487,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             return result;
         }
 
-        public string loadAppParameter(string parameter, string appName)
+        public static string loadAppParameter(string parameter, string appName)
         {
             string result = "";
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
@@ -484,7 +504,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             xmlDocument = null;
             return result;
         }
-        public void changeAppParameter(string parameter, string appName, string newValue)
+        public static void changeAppParameter(string parameter, string appName, string newValue)
         {
     
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();

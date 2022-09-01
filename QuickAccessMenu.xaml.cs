@@ -88,13 +88,16 @@ namespace Power_Control_Panel
             // Navigate to the home page.
             if (Properties.Settings.Default.homePageTypeQAM == "Slider")
             {
+                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/sliderHomePage.xaml", UriKind.RelativeOrAbsolute));
+            }
+            if (Properties.Settings.Default.homePageTypeQAM == "Grouped Slider")
+            {
                 this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
             }
-            else
+            if (Properties.Settings.Default.homePageTypeQAM == "Tile")
             {
                 this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute));
             }
-           
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)

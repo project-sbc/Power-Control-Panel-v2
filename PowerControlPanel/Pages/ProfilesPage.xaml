@@ -75,7 +75,7 @@
 
                                    
                                     <Button x:Name="btnSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
-                                    <Label Content="Profile saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right" Background="White"  Foreground="Black" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
+                                    <Label Content="Profile saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right"  Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
 
                                 </DockPanel>
                             </GroupBox.Header>

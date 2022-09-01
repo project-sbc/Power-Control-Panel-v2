@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using Power_Control_Panel.PowerControlPanel.Classes.ManageXML;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -23,8 +24,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
     /// </summary>
     public partial class ProfilesPage : Page
     {
-        private Classes.ManageXML.ManageXML_Profiles xmlP;
-        private Classes.ManageXML.ManageXML_Apps xmlA;
+
         private string ProfileName = "";
         private string AppName = "";
         public ProfilesPage()
@@ -36,9 +36,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             offline_sliderMAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
             online_sliderMAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
 
-            //initialize xml management class
-            xmlP = new Classes.ManageXML.ManageXML_Profiles();
-            xmlA = new Classes.ManageXML.ManageXML_Apps();
+
             //populate profile list
             loadProfileListView();
 
@@ -63,7 +61,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void loadProfileListView()
         {
             
-            DataTable dt = xmlP.profileList();
+            DataTable dt = ManageXML_Profiles.profileList();
             profileDataGrid.DataContext = dt.DefaultView;
            
         }
@@ -71,7 +69,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void btnAddProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            xmlP.createProfile();
+            ManageXML_Profiles.createProfile();
             loadProfileListView();
         }
 
@@ -93,7 +91,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             
             if (deleteProfile == true)
             {
-                xmlP.deleteProfile(ProfileName);
+                ManageXML_Profiles.deleteProfile(ProfileName);
                 loadProfileListView();
                 clearProfile();
                 if (GlobalVariables.ActiveProfile == ProfileName)
@@ -190,16 +188,19 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 else { result[9] = ""; }
 
 
-                xmlP.saveProfileArray(result,ProfileName);
+                ManageXML_Profiles.saveProfileArray(result,ProfileName);
 
                 //check if profile name has changed! if yes, update any applications or active profiles with new name
                 if (ProfileName != txtbxProfileName.Text)
                 {
                     //if not match, then name was changed. Update profile name in profiles  section of XML. Update all apps with profilename
-                    xmlP.changeProfileName(ProfileName, txtbxProfileName.Text);
-                    xmlA.changeProfileNameInApps(ProfileName, txtbxProfileName.Text);
+                    ManageXML_Profiles.changeProfileName(ProfileName, txtbxProfileName.Text);
+                    ManageXML_Apps.changeProfileNameInApps(ProfileName, txtbxProfileName.Text);
 
                     loadProfileListView();
+
+                    //make app profile reload just in case for picking active profile
+                    GlobalVariables.updateProfileAppTable = true;
 
                     //if active profile name is the one changed, then update profile
                     if (GlobalVariables.ActiveProfile == ProfileName) 
@@ -235,7 +236,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
 
                 txtbxProfileName.Text = ProfileName;
-                string[] result = xmlP.loadProfileArray(ProfileName);
+                string[] result = ManageXML_Profiles.loadProfileArray(ProfileName);
 
 
                 loadProfileAppList();   
@@ -423,8 +424,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     else
                     {
                         DockPanel parentDP = getParentDockPanel(toggleSwitch);
-        
-                        xmlP.changeProfileParameter(charger, parameter, ProfileName, "");
+
+                        ManageXML_Profiles.changeProfileParameter(charger, parameter, ProfileName, "");
                         foreach (System.Windows.Controls.Control child in parentDP.Children)
                         {
                             if (child is Slider)
@@ -534,12 +535,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void loadProfileAppList()
         {
-            DataTable dt = xmlA.appListByProfile(ProfileName);
+            DataTable dt = ManageXML_Apps.appListByProfile(ProfileName);
             profileAppDataGrid.DataContext = dt.DefaultView;
         }
         private void btnAddAppProfile_Click(object sender, RoutedEventArgs e)
         {
-            xmlA.createApp(ProfileName);
+            ManageXML_Apps.createApp(ProfileName);
             loadProfileAppList();
         }
 
@@ -550,7 +551,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (item != null)
             {
                 string objectName = (profileAppDataGrid.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
-                xmlA.changeAppParameter("Profile", objectName, "");
+                ManageXML_Apps.changeAppParameter("Profile", objectName, "");
                 loadProfileAppList();
             }
            

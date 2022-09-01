@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
-
+using Power_Control_Panel.PowerControlPanel.Classes.ManageXML;
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
     /// <summary>
@@ -23,8 +23,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
     {
   
 
-        private Classes.ManageXML.ManageXML_Profiles xmlP;
-        private Classes.ManageXML.ManageXML_Apps xmlA;
 
         private string AppName = "";
         public AppSettingsPage()
@@ -32,8 +30,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             InitializeComponent();
 
             //initialize xml management class
-            xmlP = new Classes.ManageXML.ManageXML_Profiles();
-            xmlA = new Classes.ManageXML.ManageXML_Apps();
+
             //populate profile list
    
             loadAppListView();
@@ -46,7 +43,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private void loadAppListView()
         {
 
-            DataTable dt = xmlA.appList();
+            DataTable dt = ManageXML_Apps.appList();
             appDataGrid.DataContext = dt.DefaultView;
 
         }
@@ -62,15 +59,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     if (!listProcesses.Contains(p.ProcessName))
                     {
                         listProcesses.Add(p.ProcessName);
-                   
+
                     }
-             
+
                 }
 
             }
-       
-            cboProcessName.ItemsSource = listProcesses;
 
+            cboProcessName.ItemsSource = listProcesses;
 
         }
 
@@ -82,10 +78,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 loadProcessNameCBO();
 
                 txtbxAppName.Text = AppName;
-                string[] result = xmlA.loadAppArray(AppName);
+                string[] result = ManageXML_Apps.loadAppArray(AppName);
 
 
-                List<string> listProfiles = xmlP.profileListForAppCBO();
+                List<string> listProfiles = ManageXML_Profiles.profileListForAppCBO();
                 cboAppProfile.ItemsSource = listProfiles;
 
                 if (result[0] != string.Empty)
@@ -223,14 +219,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 result[3] = cboGameType.Text;
                 result[4] = txtbxImagePath.Text;
                 result[5] = cboAppProfile.Text;
-                
-                xmlA.saveAppArray(result, AppName);
+
+                GlobalVariables.updateProfileAppTable = true;
+
+                ManageXML_Apps.saveAppArray(result, AppName);
 
                 //check if profile name has changed! if yes, update any applications or active profiles with new name
                 if (AppName != txtbxAppName.Text)
                 {
                     //if not match, then name was changed. Update profile name in profiles  section of XML. Update all apps with profilename
-                     xmlA.changeAppParameter("DisplayName", AppName, txtbxAppName.Text);
+                    ManageXML_Apps.changeAppParameter("DisplayName", AppName, txtbxAppName.Text);
 
                     loadAppListView();
 
@@ -264,14 +262,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         }
         private void btnAddProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            xmlA.createApp();
+            ManageXML_Apps.createApp();
             loadAppListView();
         }
 
         private void btnDeleteProfile_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            
-            xmlA.deleteApp(AppName);
+
+            ManageXML_Apps.deleteApp(AppName);
             loadAppListView();
             clearApp();
           

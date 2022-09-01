@@ -17,7 +17,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
         {
             // Build the menus
 
-            if (Properties.Settings.Default.homePageTypeMW == "Slider")
+            if (Properties.Settings.Default.homePageTypeMW == "Grouped Slider")
             {
                 this.Menu.Add(new MenuItem()
                 {
@@ -31,7 +31,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
 
                 });
             }
-            else
+            if (Properties.Settings.Default.homePageTypeMW == "Tile")
             {
                 this.Menu.Add(new MenuItem()
                 {
@@ -45,7 +45,20 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
 
                 });
             }
+            if (Properties.Settings.Default.homePageTypeMW == "Slider")
+            {
+                this.Menu.Add(new MenuItem()
+                {
+                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid },
 
+                    Label = "Home",
+                    NavigationType = typeof(MainPage),
+
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute),
+
+
+                });
+            }
             this.Menu.Add(new MenuItem()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.BookSolid },

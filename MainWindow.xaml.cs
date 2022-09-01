@@ -24,7 +24,8 @@ using System.Diagnostics;
 
 
 using System.Text;
-
+using System.Data;
+using Power_Control_Panel.PowerControlPanel.Classes.ManageXML;
 
 namespace Power_Control_Panel
 {
@@ -70,9 +71,9 @@ namespace Power_Control_Panel
 
         //Profile and app settings
         public static string ActiveProfile = "None";
-        public static string DefaultProfile = "None";
         public static string ActiveApp = "None";
         public static string powerStatus = "";
+        public static bool updateProfileAppTable = false;
 
         //display settings
         public static string resolution = "";
@@ -104,6 +105,8 @@ namespace Power_Control_Panel
         public static double cpuTemp = 0;
         public static double cpuPower = 0;
 
+
+        
     }
     
 
@@ -127,10 +130,6 @@ namespace Power_Control_Panel
             StartUp.runStartUp();
 
             this.InitializeComponent();
-
-            
-
-       
 
             GlobalVariables.routineUpdate.startThread();
 
@@ -234,8 +233,22 @@ namespace Power_Control_Panel
             string Power = SystemParameters.PowerLineStatus.ToString();
             if (Power != GlobalVariables.powerStatus & GlobalVariables.powerStatus != "" & GlobalVariables.ActiveProfile != "None")
             {
-                MessageBox.Show("run change profile here");
+                DataTable dtApps = ManageXML_Apps.appListProfileExe();
+
                 Process[] pList = Process.GetProcesses();
+                string profile = "";
+                string exe = "";
+                foreach (DataRow dr in dtApps.Rows)
+                {
+                    profile = dr[0].ToString();
+                    exe = dr[1].ToString();
+
+
+
+
+
+                }
+        
 
                 foreach (Process p in pList)
                 {
@@ -265,15 +278,18 @@ namespace Power_Control_Panel
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
-            if (Properties.Settings.Default.homePageTypeMW == "Slider")
+            if (Properties.Settings.Default.homePageTypeMW == "Grouped Slider")
             {
                 this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
             }
-            else
+            if (Properties.Settings.Default.homePageTypeMW == "Slider")
             {
                 this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute));
             }
-            
+            if (Properties.Settings.Default.homePageTypeMW == "Tile")
+            {
+                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute));
+            }
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
