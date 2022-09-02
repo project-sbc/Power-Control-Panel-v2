@@ -60,6 +60,26 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 changeTaskService(cboAutoStart.Text);
             }
             
+
+            if (Properties.Settings.Default.Language != cboLanguage.Text)
+            {
+                Application.Current.Resources.MergedDictionaries.Remove(GlobalVariables.languageDict);
+                switch (cboLanguage.Text)
+                {
+                    default:
+                    case "English":
+                        GlobalVariables.languageDict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.xaml", UriKind.RelativeOrAbsolute);
+                        break;
+
+                    case "中文":
+                        GlobalVariables.languageDict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.zh-Hans.xaml", UriKind.RelativeOrAbsolute);
+                        break;
+                }
+                Application.Current.Resources.MergedDictionaries.Add(GlobalVariables.languageDict);
+                Properties.Settings.Default.Language = cboLanguage.Text;
+            }
+
+
             Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
             Properties.Settings.Default.minTDP = (int)TDPMIN.Value;
             Properties.Settings.Default.sizeQAM = cboQAMSize.Text;
@@ -112,7 +132,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
             cboCombineTDP.Text = Properties.Settings.Default.enableCombineTDP;
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
-         
+            cboLanguage.Text = Properties.Settings.Default.Language;
             cboMWHomePageStyle.Text = Properties.Settings.Default.homePageTypeMW;
 
             cboQAMHomePageStyle.Text = Properties.Settings.Default.homePageTypeQAM;

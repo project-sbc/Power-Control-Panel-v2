@@ -54,7 +54,7 @@
 
                     <DockPanel   >
 
-                        <Label Content="Brightness" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+                        <Label Content="{DynamicResource HomePage_Brightness}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
 
                         <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE706;" FontSize="30" Margin="8,0,0,0"/>
                         <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded" TouchUp="Slider_TouchUp" TouchDown="Slider_TouchDown"  />
@@ -63,7 +63,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="2"  >
 
-                        <Label Content="Volume" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Volume}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE767;" FontSize="30" Margin="8,0,0,0"/>
@@ -104,7 +104,7 @@
                     <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
 
                     <DockPanel  x:Name="dpTDP1" >
-                        <Label Content="TDP Sustained (W)" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
+                        <Label Content="{DynamicResource TDP_Sustained}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
 
                         <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
                         <Slider x:Name="TDP1"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
@@ -113,7 +113,7 @@
 
 
                     <DockPanel Grid.Row="1" x:Name="dpTDP2"  >
-                        <Label Content="TDP Boost (W)" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource TDP_Boost}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
      
                         </Label>
 
@@ -123,7 +123,7 @@
                         </Slider>
                     </DockPanel>
                     <DockPanel Grid.Row="2" x:Name="dpTDP"  >
-                        <Label Content="TDP" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource TDP}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
 
@@ -162,7 +162,7 @@
 
 
                     <DockPanel   >
-                        <Label Content="Max CPU Frequency (MHz)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Max_CPU}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <Label x:Name="txtsliderMAXCPU" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=MAXCPU, Path=Value}"/>
@@ -173,7 +173,7 @@
                     </DockPanel>
 
                     <DockPanel Grid.Row="1"  >
-                        <Label Content="Active Cores" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Active_CPU_Cores}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
 
@@ -213,7 +213,7 @@
 
 
                     <DockPanel   >
-                        <Label Content="GPU Clock (MHz)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource GPU_Clock}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <Label x:Name="txtsliderAMDGPUCLK"  DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content=""/>
@@ -251,7 +251,7 @@
 
 
                     <DockPanel   >
-                        <Label Content="Display Resolution" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Display_Resolution}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
@@ -263,7 +263,7 @@
                     </DockPanel>
 
                     <DockPanel Grid.Row="1"  >
-                        <Label Content="Display Refresh Rate" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Display_Refresh}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged">
@@ -273,7 +273,7 @@
                        
                     </DockPanel>
                     <DockPanel Grid.Row="2"  >
-                        <Label Content="Display Scaling" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Display_Scaling}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">

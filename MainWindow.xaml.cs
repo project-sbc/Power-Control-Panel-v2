@@ -105,8 +105,9 @@ namespace Power_Control_Panel
         public static double cpuTemp = 0;
         public static double cpuPower = 0;
 
+        //language pack
+        public static ResourceDictionary languageDict = new ResourceDictionary();
 
-        
     }
     
 
@@ -146,7 +147,7 @@ namespace Power_Control_Panel
             _ = Tablet.TabletDevices;
 
             //test code here
-       
+          
         }
 
  
@@ -212,7 +213,7 @@ namespace Power_Control_Panel
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown))
                         {
                             handleOpenCloseOSK();
-
+                            initializeNavigationFrame();
                         }
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.B))
                         {
@@ -274,6 +275,7 @@ namespace Power_Control_Panel
         private void OSKEvent(object sender, EventArgs e)
         {
             handleOpenCloseOSK();
+            
 
         }
 

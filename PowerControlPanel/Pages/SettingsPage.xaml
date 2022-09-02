@@ -44,6 +44,7 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
@@ -170,6 +171,19 @@
                             <ComboBoxItem Content="Slider" />
                             <ComboBoxItem Content="Grouped Slider" />
                             <ComboBoxItem Content="Tile" />
+
+                        </ComboBox>
+
+
+                    </DockPanel>
+                    <DockPanel Grid.Row="8"  >
+
+                        <Label Content="Language" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox x:Name="cboLanguage" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                            <ComboBoxItem Content="English" />
+                            <ComboBoxItem Content="中文" />
 
                         </ComboBox>
 

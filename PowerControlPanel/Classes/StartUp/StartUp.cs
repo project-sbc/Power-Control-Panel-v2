@@ -62,22 +62,19 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
                 }
             }
 
-            string language = Properties.Settings.Default.Language;
-            
-
-            ResourceDictionary dict = new ResourceDictionary();
-            switch (language.ToLower())
+             
+            switch (Properties.Settings.Default.Language)
             {
                 default:
-                case "een":
-                    dict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.xaml", UriKind.RelativeOrAbsolute);
+                case "English":
+                    GlobalVariables.languageDict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.xaml", UriKind.RelativeOrAbsolute);
                     break;
               
-                case "en":
-                    dict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.zh-Hans.xaml", UriKind.Relative);
+                case "中文":
+                    GlobalVariables.languageDict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.zh-Hans.xaml", UriKind.RelativeOrAbsolute);
                     break;
             }
-            Application.Current.Resources.MergedDictionaries.Add(dict);
+            Application.Current.Resources.MergedDictionaries.Add(GlobalVariables.languageDict);
 
 
 

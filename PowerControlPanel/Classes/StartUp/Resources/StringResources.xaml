@@ -1,6 +1,27 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-    <system:String x:Key="name">Name</system:String>
-    <system:String x:Key="gender">Gender</system:String>
+    <system:String x:Key="MainWindow_Menu_Home">Home</system:String>
+    <system:String x:Key="MainWindow_Menu_Profiles">Profiles</system:String>
+    <system:String x:Key="MainWindow_Menu_AppSettings">Application Settings</system:String>
+    <system:String x:Key="MainWindow_Menu_QAM">Quick Access Menu</system:String>
+    <system:String x:Key="MainWindow_Menu_OSK">On Screen Keyboard</system:String>
+    <system:String x:Key="MainWindow_Menu_About">About</system:String>
+    <system:String x:Key="MainWindow_Menu_Settings">Settings</system:String>
+    <system:String x:Key="QAM_Menu_Hide">Hide</system:String>
+    <system:String x:Key="QAM_Menu_System">System</system:String>
+    <system:String x:Key="QAM_Menu_Games">Games</system:String>
+    <system:String x:Key="QAM_Menu_Settings">Settings</system:String>
+    <system:String x:Key="Brightness">Brightness</system:String>
+    <system:String x:Key="Volume">Volume</system:String>
+    <system:String x:Key="TDP">TDP (W)</system:String>
+    <system:String x:Key="TDP_Sustained">TDP Sustained (W)</system:String>
+    <system:String x:Key="TDP_Boost">TDP Boost (W)</system:String>
+    <system:String x:Key="Max_CPU">Max CPU Frequency (MHz)</system:String>
+    <system:String x:Key="Active_CPU_Cores">Active CPU Cores</system:String>
+    <system:String x:Key="GPU_Clock">GPU Clock (MHz)</system:String>
+    <system:String x:Key="Display_Resolution">Display Resolution</system:String>
+    <system:String x:Key="Display_Refresh">Display Refresh Rate</system:String>
+    <system:String x:Key="Display_Scaling">Display Scaling (%)</system:String>
+    
 </ResourceDictionary>

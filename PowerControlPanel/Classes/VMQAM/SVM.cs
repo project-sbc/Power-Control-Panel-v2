@@ -4,6 +4,7 @@ using MahApps.Metro.IconPacks;
 using Power_Control_Panel.PowerControlPanel.Classes.Mvvm;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using Power_Control_Panel.PowerControlPanel.Pages;
+using System.Windows;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
 {
@@ -22,7 +23,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
 
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.SignOutAltSolid },
 
-                Label = "Hide",
+                Label = Application.Current.Resources["QAM_Menu_Hide"].ToString(),
 
             });
             if (Properties.Settings.Default.homePageTypeQAM == "Grouped Slider")
@@ -31,7 +32,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                 {
                     Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
 
-                    Label = "System",
+                    Label = Application.Current.Resources["QAM_Menu_System"].ToString(),
                     NavigationType = typeof(MainPage),
 
                     NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute),
@@ -45,7 +46,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                 {
                     Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
 
-                    Label = "System",
+                    Label = Application.Current.Resources["QAM_Menu_System"].ToString(),
                     NavigationType = typeof(MainPage),
 
                     NavigationDestination = new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute),
@@ -59,7 +60,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                 {
                     Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
 
-                    Label = "System",
+                    Label = Application.Current.Resources["QAM_Menu_System"].ToString(),
                     NavigationType = typeof(MainPage),
 
                     NavigationDestination = new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute),
@@ -70,14 +71,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
             this.Menu.Add(new MI()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.GamepadSolid },
-                Label = "Games",
+                Label = Application.Current.Resources["QAM_Menu_Games"].ToString(),
                 NavigationType = typeof(ProfilesPage),
                 NavigationDestination = new Uri("PowerControlPanel/Pages/TileViewer.xaml", UriKind.RelativeOrAbsolute)
             });
             this.OptionsMenu.Add(new MI()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.CogSolid },
-                Label = "Settings",
+                Label = Application.Current.Resources["QAM_Menu_Settings"].ToString(),
                 NavigationType = typeof(SettingsPage),
                 NavigationDestination = new Uri("PowerControlPanel/Pages/SettingsPage.xaml", UriKind.RelativeOrAbsolute)
             });
