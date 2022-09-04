@@ -515,6 +515,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                                         tdp = tdp.Replace("STAPM LIMIT", "");
                                         tdp = tdp.Replace(" ", "");
                                         tdp = tdp.Replace("stapm-limit", "");
+                                        if (tdp.Contains(",")) { tdp = tdp.Replace(",", "."); }
                                         GlobalVariables.readPL1 = Convert.ToDouble(tdp);
                                     }
                                     if (line.Contains("PPT LIMIT SLOW"))
@@ -524,7 +525,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
                                         tdp = tdp.Replace("PPT LIMIT SLOW", "");
                                         tdp = tdp.Replace(" ", "");
                                         tdp = tdp.Replace("slow-limit", "");
-                                    
+                                        if (tdp.Contains(",")) { tdp = tdp.Replace(",", "."); }
                                         GlobalVariables.readPL2 = Convert.ToDouble(tdp);
                                         break;
                                     }

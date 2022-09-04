@@ -15,7 +15,7 @@
         <GroupBox Name="GB_Profiles" Margin="0,0,0,10" Visibility="Visible" >
             <GroupBox.Header >
                 <DockPanel Height="30">
-                    <Label Content="PROFILES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                    <Label Content="{DynamicResource Profiles_Header}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
 
                 </DockPanel>
@@ -24,8 +24,8 @@
             <DockPanel >
                 <StackPanel DockPanel.Dock="Left">
                     <DockPanel>
-                        <Button x:Name="btnAddProfile" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
-                        <Button x:Name="btnDeleteProfile" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
+                        <Button x:Name="btnAddProfile" DockPanel.Dock="Left" Content="{DynamicResource Profiles_AddProfile}" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
+                        <Button x:Name="btnDeleteProfile" DockPanel.Dock="Right" Content="{DynamicResource Profiles_DeleteProfile}" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
 
                     </DockPanel>
 
@@ -71,17 +71,17 @@
                         <GroupBox Height="90"  Name="GB_ProfileMain" Margin="0,0,0,10" VerticalAlignment="Top">
                             <GroupBox.Header >
                                 <DockPanel Height="30">
-                                    <Label Content="PROFILE DETAILS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <Label Content="{DynamicResource Profiles_HeaderDetails}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                                   
-                                    <Button x:Name="btnSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
+
+                                    <Button x:Name="btnSave" Content="{DynamicResource Profiles_SaveProfile}" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
                                     <Label Content="Profile saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right"  Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
 
                                 </DockPanel>
                             </GroupBox.Header>
                             <StackPanel>
                                 <DockPanel Height="40">
-                                    <Label  Content="Profile Name" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource Profiles_ProfileName}" DockPanel.Dock="Left" FontSize="22" />
                                     <TextBox x:Name="txtbxProfileName" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
                                 </DockPanel>
 
@@ -96,21 +96,21 @@
                         <GroupBox Height="Auto"  Name="GB_ProfileOnline" Margin="0,0,0,10"  VerticalAlignment="Top">
                             <GroupBox.Header >
                                 <DockPanel Height="30" >
-                                    <Label Content="ON CHARGER VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <Label Content="{DynamicResource Profiles_OnCharger}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
                                     <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xE83E;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
 
                                 </DockPanel>
                             </GroupBox.Header>
                             <StackPanel>
                                 <DockPanel Height="40" >
-                                    <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource TDP_Sustained}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_TDP1" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_TDP1"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="online_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP1, Path=Value}"/>
                                     <Slider x:Name="online_sliderTDP1" Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
                                 </DockPanel>
                                 <DockPanel Height="40">
 
-                                    <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource TDP_Boost}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_TDP2" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Online_TDP2"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="online_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderTDP2, Path=Value}"/>
                                     <Slider x:Name="online_sliderTDP2" Loaded="Slider_Loaded"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
@@ -118,7 +118,7 @@
                                 </DockPanel>
                                 <DockPanel x:Name="online_GPUCLK_DP" Height="40">
 
-                                    <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource GPU_Clock}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="online_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderGPUCLK, Path=Value}"/>
                                     <Slider x:Name="online_sliderGPUCLK" Minimum="200" Maximum="2200"   SmallChange="50" LargeChange="50" TickFrequency="50"   Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230"  IsSnapToTickEnabled="True" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
@@ -126,7 +126,7 @@
                                 </DockPanel>
                                 <DockPanel x:Name="online_MAXCPU_DP" Height="40">
 
-                                    <Label  Content="Max CPU Frequency (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource Max_CPU}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_MAXCPU" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="online_txtMAXCPU" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderMAXCPU, Path=Value}"/>
                                     <Label x:Name="online_txtMAXCPUAuto" Visibility="Collapsed" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Auto"/>
@@ -135,7 +135,7 @@
                                 </DockPanel>
                                 <DockPanel x:Name="online_ActiveCores_DP" Height="40">
 
-                                    <Label  Content="Active Cores" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource Active_CPU_Cores}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Online_ActiveCores" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="online_txtActiveCores" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=online_sliderActiveCores, Path=Value}"/>
                                     <Slider x:Name="online_sliderActiveCores"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="1" LargeChange="1" IsSnapToTickEnabled="True" Maximum="8"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"     />
@@ -154,21 +154,21 @@
                         <GroupBox Height="Auto"  Name="GB_ProfileOffline" Margin="0,0,0,10"  VerticalAlignment="Top">
                             <GroupBox.Header >
                                 <DockPanel Height="30">
-                                    <Label Content="ON BATTERY VALUES" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <Label Content="{DynamicResource Profiles_OnBattery}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
                                     <TextBlock Name="txtblkddPower" FontFamily="Segoe MDL2 Assets" Text="&#xE856;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="35" Margin="0,0,10,0" HorizontalAlignment="Right"/>
 
                                 </DockPanel>
                             </GroupBox.Header>
                             <StackPanel>
                                 <DockPanel Height="40">
-                                    <Label  Content="TDP Sustained (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource TDP_Sustained}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_TDP1" Toggled="ToggleSwitch_Toggled"  DockPanel.Dock="Right" CommandParameter="Offline_TDP1"  IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="offline_txtTDP1" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderTDP1, Path=Value}"/>
                                     <Slider x:Name="offline_sliderTDP1" Loaded="Slider_Loaded"  DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
                                 </DockPanel>
                                 <DockPanel Height="40">
 
-                                    <Label  Content="TDP Boost (W)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource TDP_Boost}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_TDP2" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_TDP2"  IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="offline_txtTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderTDP2, Path=Value}"/>
                                     <Slider x:Name="offline_sliderTDP2"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
@@ -176,7 +176,7 @@
                                 </DockPanel>
                                 <DockPanel x:Name="offline_GPUCLK_DP" Height="40">
 
-                                    <Label  Content="GPU Clock (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource GPU_Clock}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_GPUCLK" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Offline_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="offline_txtGPUCLK" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderGPUCLK, Path=Value}"/>
                                     <Slider x:Name="offline_sliderGPUCLK" Minimum="200" Maximum="2200"   SmallChange="50" LargeChange="50" TickFrequency="50" TickPlacement="None"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" IsSnapToTickEnabled="True"   HorizontalAlignment="Right"  AutoToolTipPlacement="TopLeft"   />
@@ -185,7 +185,7 @@
 
                                 <DockPanel x:Name="offline_MAXCPU_DP" Height="40">
 
-                                    <Label  Content="Max CPU Frequency (MHz)" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource Max_CPU}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_MAXCPU" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="offline_txtMAXCPU" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderMAXCPU, Path=Value}"/>
                                     <Label x:Name="offline_txtMAXCPUAuto" Visibility="Collapsed" DockPanel.Dock="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Auto"/>
@@ -194,7 +194,7 @@
                                 </DockPanel>
                                 <DockPanel x:Name="offline_ActiveCores_DP" Height="40">
 
-                                    <Label  Content="Active Cores" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource Active_CPU_Cores}" DockPanel.Dock="Left" FontSize="22" />
                                     <mah:ToggleSwitch Foreground="Black" x:Name="toggle_Offline_ActiveCores" Toggled="ToggleSwitch_Toggled" DockPanel.Dock="Right" CommandParameter="Online_GPUCLK"   IsOn="True" OffContent="Disable" OnContent="Enable" MaxHeight="35" HorizontalContentAlignment="Right"  Width="110" HorizontalAlignment="Right" MinWidth="90" MinHeight="1"  />
                                     <Label x:Name="offline_txtActiveCores" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=offline_sliderActiveCores, Path=Value}"/>
                                     <Slider x:Name="offline_sliderActiveCores"  Loaded="Slider_Loaded" DockPanel.Dock="Right"  Height="25"  Width="230" Minimum="1" LargeChange="1" IsSnapToTickEnabled="True" Maximum="8"   SmallChange="1" TickPlacement="None"  HorizontalAlignment="Right"     />
@@ -212,13 +212,13 @@
                         <GroupBox Height="300"  Name="GB_ProfileApps" Margin="0,0,0,10" Visibility="Visible" VerticalAlignment="Top">
                             <GroupBox.Header >
                                 <DockPanel Height="30">
-                                    <Label Content="Profile Applications" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <Label Content="{DynamicResource Profiles_ProfileApplications}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
 
                                     <TextBlock Name="txtblkApp" FontFamily="Segoe MDL2 Assets" Text="&#xE71D;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="22" Margin="5,0,10,0" HorizontalAlignment="Right"/>
-                                
-                                    <Button x:Name="btnAddAppProfile" Content="Add App" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnAddAppProfile_Click" Margin="5,0,0,0" ></Button>
-                                    <Button x:Name="btnDeleteAppProfile" Content="Delete Profile From App" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnDeleteAppProfile_Click" Margin="5,0,0,0" ></Button>
+
+                                    <Button x:Name="btnAddAppProfile" Content="{DynamicResource Profiles_AddApp}" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnAddAppProfile_Click" Margin="5,0,0,0" ></Button>
+                                    <Button x:Name="btnDeleteAppProfile" Content="{DynamicResource Profiles_DeleteApp}" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnDeleteAppProfile_Click" Margin="5,0,0,0" ></Button>
 
                                 </DockPanel>
                             </GroupBox.Header>

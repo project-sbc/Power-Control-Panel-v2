@@ -54,6 +54,7 @@
                     <Border  Grid.Row="5" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="6" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="7" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
+                    <Border  Grid.Row="8" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <DockPanel   >
 
                         <Label Content="Theme" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>

@@ -23,5 +23,18 @@
     <system:String x:Key="Display_Resolution">Display Resolution</system:String>
     <system:String x:Key="Display_Refresh">Display Refresh Rate</system:String>
     <system:String x:Key="Display_Scaling">Display Scaling (%)</system:String>
-    
+
+
+    <system:String x:Key="Profiles_Header">Profiles</system:String>
+    <system:String x:Key="Profiles_AddProfile">Add Profile</system:String>
+    <system:String x:Key="Profiles_DeleteProfile">Delete Profile</system:String>
+    <system:String x:Key="Profiles_SaveProfile">Save Profile</system:String>
+    <system:String x:Key="Profiles_HeaderDetails">Profile Details</system:String>
+    <system:String x:Key="Profiles_Name">Profile Name</system:String>
+    <system:String x:Key="Profiles_OnCharger">On Charger Values</system:String>
+    <system:String x:Key="Profiles_OnBattery">On Battery Values</system:String>
+    <system:String x:Key="Profiles_ProfileApplications">Profile Applications</system:String>
+    <system:String x:Key="Profiles_AddApp">Add App</system:String>
+    <system:String x:Key="Profiles_DeleteApp">Delete App</system:String>
+
 </ResourceDictionary>
