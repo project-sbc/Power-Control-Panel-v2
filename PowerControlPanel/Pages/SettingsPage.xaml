@@ -6,7 +6,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       MinWidth="450"
       Title="SettingsPage">
 
@@ -27,9 +27,9 @@
             <GroupBox Name="GB_General_Settings" Margin="0,0,0,10">
                    <GroupBox.Header >
                     <DockPanel Height="30">
-                        <Label Content="GENERAL SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                        <Label Content="{DynamicResource Settings_GeneralSettings}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <Button x:Name="btnSave" Content="Save Settings" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click"></Button>
+                        <Button x:Name="btnSave" Content="{DynamicResource Settings_SaveSettings}" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click"></Button>
                         <Label Content="Settings saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right"  Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
 
                     </DockPanel>
@@ -57,7 +57,7 @@
                     <Border  Grid.Row="8" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <DockPanel   >
 
-                        <Label Content="Theme" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+                        <Label Content="{DynamicResource Settings_Theme}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <ComboBox x:Name="cboAccentTheme" Width="150" DockPanel.Dock="Right" HorizontalAlignment="Right" IsEditable="False">
                             <ComboBoxItem Content="Red"/>
                             <ComboBoxItem Content="Green"/>
@@ -93,7 +93,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="1"  >
 
-                        <Label Content="Start With Windows" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_StartWithWindows}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
           
                         </Label>
                         <ComboBox x:Name="cboAutoStart" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -106,7 +106,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="2"  >
 
-                        <Label Content="Min TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_MinimumTDP}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <Label x:Name="txtsliderMinTDP" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDPMIN, Path=Value}"/>
@@ -115,7 +115,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="3"  >
 
-                        <Label Content="Max TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_MaximumTDP}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <Label x:Name="txtsliderMaxTDP" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDPMAX, Path=Value}"/>
@@ -124,7 +124,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="4"  >
 
-                        <Label Content="Quick Access Menu Width (%)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_QuickAccessMenuWidth}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboQAMSize" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -138,7 +138,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="5"  >
 
-                        <Label Content="Combine Sustained and Turbo TDP" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_CombineTDP}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboCombineTDP" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -151,7 +151,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="6"  >
 
-                        <Label Content="Main window home page style (restart app)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_MainWindowStyle}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboMWHomePageStyle" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -165,7 +165,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="7"  >
 
-                        <Label Content="Quick access menu home page style" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_QAMStyle}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboQAMHomePageStyle" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -179,7 +179,7 @@
                     </DockPanel>
                     <DockPanel Grid.Row="8"  >
 
-                        <Label Content="Language" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_Language}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboLanguage" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -201,7 +201,7 @@
             <GroupBox Name="GB_INTEL_TDP" Margin="0,0,0,10">
                 <GroupBox.Header >
                     <DockPanel Height="30">
-                        <Label Content="INTEL TDP SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                        <Label Content="{DynamicResource Settings_IntelSettings}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
                         
                     </DockPanel>
@@ -219,7 +219,7 @@
                   
                     <DockPanel Grid.Row="0"  >
 
-                        <Label Content="TDP Set Type" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_IntelTDPType}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <ComboBox x:Name="cboTDPTypeIntel" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
@@ -242,7 +242,7 @@
             <GroupBox Name="GB_AMD_GPUCLK" Margin="0,0,0,10">
                 <GroupBox.Header >
                     <DockPanel Height="30">
-                        <Label Content="AMD GPU CLOCK SETTINGS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                        <Label Content="{DynamicResource Settings_AMDSettings}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
 
                     </DockPanel>
@@ -260,7 +260,7 @@
 
                     <DockPanel Grid.Row="0"  >
 
-                        <Label Content="Set Max GPU Clock (MHz)" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+                        <Label Content="{DynamicResource Settings_AMDMaxGPUClk}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
                         <Label x:Name="txtsliderMaxGPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=GPUCLKMAX, Path=Value}"/>

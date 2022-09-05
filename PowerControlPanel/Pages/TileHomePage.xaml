@@ -48,7 +48,7 @@
 
                    DockPanel.Dock="Top">
 
-                    <mah:Tile x:Name="TDPSustain" Title="TDP Sustain"
+                    <mah:Tile x:Name="TDPSustain" Title="{DynamicResource TileHomePage_TDPSustained}"
                               Visibility="Collapsed"
                       Margin="3"
                       Count=""
@@ -67,7 +67,7 @@
 
 
                     </mah:Tile>
-                    <mah:Tile x:Name="TDP"  Title="TDP"
+                    <mah:Tile x:Name="TDP"  Title="{DynamicResource TileHomePage_TDP}"
                       Margin="3"
                       
                       Count=""
@@ -87,7 +87,7 @@
 
                     </mah:Tile>
 
-                    <mah:Tile x:Name="TDPBoost"  Title="TDP Boost"
+                    <mah:Tile x:Name="TDPBoost"  Title="{DynamicResource TileHomePage_TDPBoost}"
                       Margin="3"
                         Visibility="Collapsed"
                       Count=""
@@ -106,7 +106,7 @@
 
 
                     </mah:Tile>
-                    <mah:Tile Title="Max CPU Freq"
+                    <mah:Tile Title="{DynamicResource TileHomePage_MaxCPU}"
                       Margin="3"
                       Count=""
                    
@@ -124,7 +124,7 @@
 
                     </mah:Tile>
 
-                    <mah:Tile Title="Active CPU Cores"
+                    <mah:Tile Title="{DynamicResource TileHomePage_ActiveCores}"
                       Margin="3"
                       Count=""
                    
@@ -142,7 +142,7 @@
 
                     </mah:Tile>
 
-                    <mah:Tile Title="Volume"
+                    <mah:Tile Title="{DynamicResource TileHomePage_Volume}"
                       Margin="3"
                       Count=""
                 
@@ -159,7 +159,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="Brightness"
+                    <mah:Tile Title="{DynamicResource TileHomePage_Brightness}"
                       Margin="3"
                       Count=""
         
@@ -176,7 +176,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="GPU Clock"
+                    <mah:Tile Title="{DynamicResource TileHomePage_GPUCLK}"
                       Margin="3"
                       Count=""
               
@@ -192,7 +192,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="Display Resolution"
+                    <mah:Tile Title="{DynamicResource TileHomePage_Resolution}"
                       Margin="3"
                       Count=""
                  
@@ -209,7 +209,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="Display Scaling"
+                    <mah:Tile Title="{DynamicResource TileHomePage_Scaling}"
                       Margin="3"
                       Count=""
                 
@@ -226,7 +226,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="Display Refresh"
+                    <mah:Tile Title="{DynamicResource TileHomePage_Refresh}"
                       Margin="3"
                       Count=""
                    
@@ -251,7 +251,7 @@
                     <GroupBox.Header >
                         <DockPanel >
                             <Label x:Name="labelSlider" Content="" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-                            <Button x:Name="btnCloseSlider" Width="100" Content="Close" HorizontalAlignment="Right" Click="btnCloseSlider_Click" />
+                            <Button x:Name="btnCloseSlider" Width="100" Content="{DynamicResource Close}" HorizontalAlignment="Right" Click="btnCloseSlider_Click" />
 
                         </DockPanel>
                     </GroupBox.Header>

@@ -20,7 +20,7 @@
         <GroupBox VerticalAlignment="Stretch" Name="GB_Apps" Margin="0,0,0,10" Visibility="Visible">
             <GroupBox.Header >
                 <DockPanel Height="30">
-                    <Label Content="APPLICATIONS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                    <Label Content="{DynamicResource AppSettings_Applications}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
 
 
@@ -30,8 +30,8 @@
             <DockPanel>
                 <StackPanel DockPanel.Dock="Left">
                     <DockPanel>
-                        <Button x:Name="btnAddApp" DockPanel.Dock="Left" Content="Add Profile" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
-                        <Button x:Name="btnDeleteApp" DockPanel.Dock="Right" Content="Delete Profile" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
+                        <Button x:Name="btnAddApp" DockPanel.Dock="Left" Content="{DynamicResource AppSettings_AddProfile}" Width="120" HorizontalAlignment="Left" Style="{StaticResource MahApps.Styles.Button}" Click="btnAddProfile_Click"/>
+                        <Button x:Name="btnDeleteApp" DockPanel.Dock="Right" Content="{DynamicResource AppSettings_DeleteProfile}" Width="120" HorizontalAlignment="Right" Style="{StaticResource MahApps.Styles.Button}" Click="btnDeleteProfile_Click"/>
 
                     </DockPanel>
 
@@ -77,24 +77,24 @@
                         <GroupBox Height="Auto"  Name="GB_AppMain" Margin="0,0,0,10" VerticalAlignment="Top">
                             <GroupBox.Header >
                                 <DockPanel Height="30">
-                                    <Label Content="APPLICATION MAIN" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <Label Content="{DynamicResource AppSettings_AppMain}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                                    <Button x:Name="btnAppSave" Content="Save Profile" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
+                                    <Button x:Name="btnAppSave" Content="{DynamicResource AppSettings_SaveApp}" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" ></Button>
                                     <Label Content="App settings saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right"   Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
 
                                 </DockPanel>
                             </GroupBox.Header>
                             <StackPanel>
                                 <DockPanel Height="40">
-                                    <Label  Content="App Name" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource AppSettings_AppName}" DockPanel.Dock="Left" FontSize="22" />
                                     <TextBox x:Name="txtbxAppName" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
                                 </DockPanel>
                                 <DockPanel Height="40">
-                                    <Label  Content="Process Name" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource AppSettings_ProcessName}" DockPanel.Dock="Left" FontSize="22" />
                                     <ComboBox x:Name="cboProcessName" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="True" HorizontalAlignment="Right"   />
                                 </DockPanel>
                                 <DockPanel Height="40">
-                                    <Label  Content="Profile" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource AppSettings_Profile}" DockPanel.Dock="Left" FontSize="22" />
                                     <ComboBox x:Name="cboAppProfile" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"   />
                                 </DockPanel>
                             </StackPanel>
@@ -107,7 +107,7 @@
                         <GroupBox Height="Auto"  Name="GB_AppExePath" Margin="0,0,0,10" VerticalAlignment="Top">
                             <GroupBox.Header >
                                 <DockPanel Height="30">
-                                    <Label Content="RUN APPLICATION" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                                    <Label Content="{DynamicResource AppSettings_RunApp}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
                                     <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableExeStart"  Toggled="enableExeStart_Toggled" IsOn="True" OffContent="Disabled" OnContent="Enabled" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
 
@@ -116,7 +116,7 @@
                             </GroupBox.Header>
                             <StackPanel>
                                 <DockPanel Height="40">
-                                    <Label  Content="App Type" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource AppSettings_AppType}" DockPanel.Dock="Left" FontSize="22" />
                                     <ComboBox x:Name="cboAppType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right" SelectionChanged="cboAppType_SelectionChanged"  >
                                         <ComboBoxItem Content="Application"/>
                                         <ComboBoxItem Content="Game" />
@@ -125,7 +125,7 @@
 
                                 </DockPanel>
                                 <DockPanel x:Name="dpGameType" Height="40">
-                                    <Label  Content="Game Type" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource AppSettings_GameType}" DockPanel.Dock="Left" FontSize="22" />
                                     <ComboBox x:Name="cboGameType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"  >
                                         <ComboBoxItem Content="Steam"/>
                                         <ComboBoxItem Content="Microsoft Store" />
@@ -136,7 +136,7 @@
 
                                 </DockPanel>
                                 <DockPanel x:Name="dpExePath" Height="40">
-                                    <Label  Content="Exe Path" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource AppSettings_ExePath}" DockPanel.Dock="Left" FontSize="22" />
 
                                     <TextBox x:Name="txtbxExePath" FontSize="20"  Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
                                     <Button x:Name="dbExePath" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="50" Click="db_Click"  >
@@ -145,7 +145,7 @@
                                 </DockPanel>
 
                                 <DockPanel x:Name="dpImagePath" Height="40">
-                                    <Label  Content="Image Path" DockPanel.Dock="Left" FontSize="22" />
+                                    <Label  Content="{DynamicResource AppSettings_ImagePath}" DockPanel.Dock="Left" FontSize="22" />
                                     <TextBox x:Name="txtbxImagePath" FontSize="20" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"   />
                                     <Button x:Name="dbImagePath" DockPanel.Dock="Right" HorizontalAlignment="Right" Click="db_Click"  Width="50"  >
                                         <TextBlock FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" Text="&#xED25;" FontSize="16"/>

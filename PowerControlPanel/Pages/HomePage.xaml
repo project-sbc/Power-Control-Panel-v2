@@ -36,7 +36,7 @@
                     <DockPanel Height="30">
                         <Label Content="SYSTEM CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" x:Name="enableControlSystem"  Toggled="enableControlSystem_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" x:Name="enableControlSystem"  Toggled="enableControlSystem_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid>
@@ -88,7 +88,7 @@
                     <DockPanel Height="30">
                         <Label Content="TDP CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlTDP"  Toggled="enableControlTDP_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlTDP"  Toggled="enableControlTDP_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
                     </DockPanel>
                 </GroupBox.Header>
   
@@ -145,7 +145,7 @@
                     <DockPanel Height="30">
                         <Label Content="CPU CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlCPU"  Toggled="enableControlCPU_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlCPU"  Toggled="enableControlCPU_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
                     </DockPanel>
                 </GroupBox.Header>
 
@@ -196,7 +196,7 @@
                     <DockPanel Height="30">
                         <Label Content="AMD GPU CLOCK CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlGPUCLK"  Toggled="enableControlGPUCLK_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlGPUCLK"  Toggled="enableControlGPUCLK_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
                     </DockPanel>
                 </GroupBox.Header>
 
@@ -234,7 +234,7 @@
                     <DockPanel Height="30">
                         <Label Content="DISPLAY CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlDisplay"  Toggled="enableControlDisplay_Toggled" IsOn="True" OffContent="Hide" OnContent="Show" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlDisplay"  Toggled="enableControlDisplay_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
                     </DockPanel>
                 </GroupBox.Header>
 
