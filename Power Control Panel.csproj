@@ -127,7 +127,11 @@
     <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
     <PackageReference Include="TaskScheduler" Version="2.10.1" />
   </ItemGroup>
-
+	<ItemGroup>
+		<Reference Include="RTSSSharedMemoryNET">
+			<HintPath>Resources\RTSS\RTSSSharedMemoryNET.dll</HintPath>
+		</Reference>
+	</ItemGroup>
   <ItemGroup>
     <Resource Include="PowerControlPanel\Pages\ProjectSBC.png" />
   </ItemGroup>
