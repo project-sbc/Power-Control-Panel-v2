@@ -58,12 +58,21 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
         }
         private void handleOSD()
         {
-            using (var osd = new OSD("PowerControlPanel"))
-                while (GlobalVariables.useRoutineThread)
-                {
-                    osd.Update(getOsdLine());
-                    Thread.Sleep(1000);
-                }
+            try
+            {
+                using (var osd = new OSD("PowerControlPanel"))
+                    while (GlobalVariables.useRoutineThread)
+                    {
+                        osd.Update(getOsdLine());
+                        Thread.Sleep(1000);
+                    }
+            }
+            catch (Exception ex)
+            {
+
+            }
+                
+
         }
 
         public void startThread()
