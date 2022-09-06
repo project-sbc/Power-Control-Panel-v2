@@ -70,7 +70,7 @@
     <system:String x:Key="Settings_Theme">Theme</system:String>
     <system:String x:Key="Settings_StartWithWindows">Start With Windows</system:String>
     <system:String x:Key="Settings_MinimumTDP">Minimum TDP</system:String>
-    <system:String x:Key="Settings_MaximumTDP">Maximum TPD</system:String>
+    <system:String x:Key="Settings_MaximumTDP">Maximum TDP</system:String>
     <system:String x:Key="Settings_QuickAccessMenuWidth">Quick Acess Menu Width (%)</system:String>
     <system:String x:Key="Settings_CombineTDP">Combine Sustained and Boost TDP</system:String>
     <system:String x:Key="Settings_MainWindowStyle">Main Window Home Page Style (Restart App)</system:String>

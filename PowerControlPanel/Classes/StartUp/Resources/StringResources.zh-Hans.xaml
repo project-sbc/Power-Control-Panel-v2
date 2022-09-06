@@ -16,17 +16,17 @@
     <system:String x:Key="QAM_Menu_Games">电玩</system:String>
     <system:String x:Key="QAM_Menu_Settings">设定</system:String>
     <!-- Home page values -->
-    <system:String x:Key="Brightness">光</system:String>
+    <system:String x:Key="Brightness">亮度</system:String>
     <system:String x:Key="Volume">音量</system:String>
     <system:String x:Key="TDP">TDP (W)</system:String>
     <system:String x:Key="TDP_Sustained">TDP持续 (W)</system:String>
     <system:String x:Key="TDP_Boost">TDP增压 (W)</system:String>
-    <system:String x:Key="Max_CPU">最多CPU频率 (MHz)</system:String>
+    <system:String x:Key="Max_CPU">最大CPU频率 (MHz)</system:String>
     <system:String x:Key="Active_CPU_Cores">Active CPU Cores</system:String>
     <system:String x:Key="GPU_Clock">GPU Clock (MHz)</system:String>
-    <system:String x:Key="Display_Resolution">分辨率</system:String>
-    <system:String x:Key="Display_Refresh">频率显示器</system:String>
-    <system:String x:Key="Display_Scaling">比例显示器</system:String>
+    <system:String x:Key="Display_Resolution">显示分辨率</system:String>
+    <system:String x:Key="Display_Refresh">屏幕刷新率</system:String>
+    <system:String x:Key="Display_Scaling">显示比例</system:String>
 
     <!-- profiles page -->
     <system:String x:Key="Profiles_Header">剖面</system:String>
@@ -52,14 +52,14 @@
     <system:String x:Key="TileHomePage_TDP">TDP</system:String>
     <system:String x:Key="TileHomePage_TDPBoost">TDP增压</system:String>
     <system:String x:Key="TileHomePage_TDPSustained">TDP持续</system:String>
-    <system:String x:Key="TileHomePage_MaxCPU">最多CPU频率</system:String>
+    <system:String x:Key="TileHomePage_MaxCPU">最大CPU频率</system:String>
     <system:String x:Key="TileHomePage_ActiveCores">Active Cores</system:String>
-    <system:String x:Key="TileHomePage_Brightness">光</system:String>
+    <system:String x:Key="TileHomePage_Brightness">亮度</system:String>
     <system:String x:Key="TileHomePage_Volume">音量</system:String>
     <system:String x:Key="TileHomePage_GPUCLK">GPU Clock</system:String>
-    <system:String x:Key="TileHomePage_Resolution">分辨率</system:String>
-    <system:String x:Key="TileHomePage_Scaling">比例显示器</system:String>
-    <system:String x:Key="TileHomePage_Refresh">频率显示器</system:String>
+    <system:String x:Key="TileHomePage_Resolution">显示分辨率</system:String>
+    <system:String x:Key="TileHomePage_Scaling">显示比例</system:String>
+    <system:String x:Key="TileHomePage_Refresh">屏幕刷新率</system:String>
 
     <!-- Settings {DynamicResource HomePage_Brightness} -->
     <system:String x:Key="Settings_GeneralSettings">设定</system:String>

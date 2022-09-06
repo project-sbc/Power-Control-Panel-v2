@@ -58,20 +58,18 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
         }
         private void handleOSD()
         {
-            try
+            Process[] pname = Process.GetProcessesByName("rtss");
+            if (pname.Length != 0)
             {
-                using (var osd = new OSD("PowerControlPanel"))
-                    while (GlobalVariables.useRoutineThread)
-                    {
-                        osd.Update(getOsdLine());
-                        Thread.Sleep(1000);
-                    }
+                var osd = new OSD("PowerControlPanel");
+                while (GlobalVariables.useRoutineThread)
+                {
+                    osd.Update(getOsdLine());
+                    Thread.Sleep(1000);
+                }
             }
-            catch (Exception ex)
-            {
-
-            }
-                
+    
+          
 
         }
 
