@@ -300,54 +300,87 @@ namespace Power_Control_Panel
 
             //Profile or power status change updater
             string Power = SystemParameters.PowerLineStatus.ToString();
-            string setProfile = "";
-            DataTable dtApps = ManageXML_Apps.appListProfileExe();
-                        
+
+            string profileCase = "";
             string profile = "";
             string exe = "";
-            string profileCase = "Nothing";
+            string setProfile = "";
+            string setApp = "";
+            string lookUpProfileByActiveApp = ManageXML_Apps.lookupProfileByAppExe(GlobalVariables.ActiveApp);
+            //look up all profiles to apps in XML and put in table
+            DataTable dtApps = ManageXML_Apps.appListProfileExe();
+
             foreach (DataRow dr in dtApps.Rows)
             {
                 profile = dr[0].ToString();
                 exe = dr[1].ToString();
 
                 Process[] pname = Process.GetProcessesByName(exe);
-                if (pname.Length != 0)
+                if (pname.Length != 0 && exe != "")
                 {
                     setProfile = profile;
+                    setApp = exe;
+                    if (exe == GlobalVariables.ActiveApp) 
+                    {
+                        //if exe name matches current active app then break so that app is always the one picked
+                        break;
+                    }
+               
                 }
             }
-            
+
+
+            //big split, is there an active app already?
+            if (GlobalVariables.ActiveApp != "None")
+            {
+                //if there is active app
+
+                //if power changed but set app and active app are same, reapply profile
+                if (profileCase == "" && setApp == GlobalVariables.ActiveApp && Power != GlobalVariables.powerStatus && GlobalVariables.ActiveApp != "None")
+                { profileCase = "Reapply Profile"; }
+
+                //if active app closes and no new app opens
+                if (profileCase == "" && setApp == "")
+                { profileCase = "Remove Profile"; }
+
+                //if active app closes and new app is detected
+                if (profileCase == "" && setApp != "" && setApp != GlobalVariables.ActiveApp)
+                { profileCase = "Apply Profile"; }
+
+
+            }
+            else
+            {
+                //if there no active app 
+
+                //if there was a detected app with an associated profile (setApp and setProfile arent null anymore), apply it
+                if (profileCase == "" && setApp != "" && setProfile != "")
+                { profileCase = "Apply Profile"; }
+
+
+                //if there is an active profile and the power changed, then reapply profile
+                if (profileCase == "" && GlobalVariables.ActiveProfile != "None" && Power != GlobalVariables.powerStatus)
+                { profileCase = "Reapply Profile"; }
+
+
+            }
+
+                    
+
+            //scenarios
+            //program opens,  key indicator is  
             
 
-            //if no profile is looked up, current profile is none, then do nothing
-            if (profile == "" && GlobalVariables.ActiveProfile == "None")
-            {
-                profileCase = "Nothing";
-            }
-            //if profile is same as active and power didn't change, then do nothing
-            if (profile == GlobalVariables.ActiveProfile && Power == GlobalVariables.powerStatus)
-            {
-                profileCase = "Nothing";
-            }
-            if (profile == GlobalVariables.ActiveProfile && Power != GlobalVariables.powerStatus)
-            {
-                profileCase = "Apply Profile";
-            }
-            if (profile != GlobalVariables.ActiveProfile && profile != "")
-            {
-                profileCase = "Apply Profile";
-            }
-            if (profile != GlobalVariables.ActiveProfile && profile == "")
-            {
-                profileCase = "Remove Profile";
-            }
+
 
             switch (profileCase)
             {
                 default:
                     break;
                 case "Nothing":
+                    break;
+                case "Reapply Profile":
+                    ManageXML_Profiles.applyProfile(GlobalVariables.ActiveProfile, Power);
                     break;
                 case "Apply Profile":
                     ManageXML_Profiles.applyProfile(profile, Power);

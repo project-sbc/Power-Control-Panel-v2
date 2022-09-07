@@ -216,15 +216,20 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                     {
                         powerNode = parentNode.SelectSingleNode("Offline");
                     }
-             
+                    string tdp1="";
+                    string tdp2="";
                     foreach (XmlNode node in powerNode.ChildNodes)
                     {
                         if (node.Name == "TDP1") 
                         { 
                             if (node.InnerText != "")
                             {
-                                
-                                //Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.ChangeTDP(tdpPL1, tdpPL2));
+                                tdp1 = node.InnerText;
+                                if (tdp2 != "")
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                }
+                                //
                             }
                         
                         }
@@ -232,7 +237,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                         {
                             if (node.InnerText != "")
                             {
-
+                                tdp2 = node.InnerText;
+                                if (tdp1 != "")
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                }
                             }
 
                         }
@@ -248,7 +257,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                         {
                             if (node.InnerText != "")
                             {
-                               //if (node.InnerText == "0")
+                                Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeCPUMaxFrequency(Convert.ToInt32(node.InnerText)));
                             }
 
                         }
@@ -256,11 +265,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                         {
                             if (node.InnerText != "")
                             {
-
+                                Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeActiveCores(Convert.ToInt32(node.InnerText)));
                             }
 
                         }
-                      
+                        GlobalVariables.ActiveProfile = profileName;
                     }
                                       
                 }
@@ -380,10 +389,33 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             foreach (XmlNode node in xmlNode.ChildNodes)
             {
-                dt.Rows.Add(node.SelectSingleNode("Profile").InnerText, node.SelectSingleNode("Exe").InnerText);
+                if (node.SelectSingleNode("Profile").InnerText != "")
+                {
+                    dt.Rows.Add(node.SelectSingleNode("Profile").InnerText, node.SelectSingleNode("Exe").InnerText);
+                }
+                
             }
             xmlDocument = null;
             return dt;
+
+
+        }
+
+        public static string lookupProfileByAppExe(string exe)
+        {
+           
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNodeList xmlNodes = xmlDocument.SelectSingleNode("//Configuration/Applications").SelectNodes("App/Exe[text()='" + exe + "']");
+            string profile = "";
+    
+
+            foreach (XmlNode node in xmlNodes)
+            {
+                profile = node.ParentNode.SelectSingleNode("Profile").InnerText;
+            }
+            xmlDocument = null;
+            return profile;
 
 
         }
