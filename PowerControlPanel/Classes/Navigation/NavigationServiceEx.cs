@@ -42,11 +42,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.Navigation
 
         public bool Navigate(Uri sourcePageUri, object extraData = null)
         {
-            if (this.Frame.CurrentSource != sourcePageUri)
+            if (this.Frame.CurrentSource != sourcePageUri )
             {
                 return this.Frame.Navigate(sourcePageUri, extraData);
             }
-
+            
             return false;
         }
 

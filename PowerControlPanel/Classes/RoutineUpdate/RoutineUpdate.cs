@@ -79,10 +79,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
             routineThread.IsBackground = true;
             routineThread.Name = "Dispatch background thread";
             routineThread.Start();
-            osdThread = new Thread(handleOSD);
-            osdThread.IsBackground = true;
-            osdThread.Name = "Dispatch OSD thread";
-            osdThread.Start();
+            //osdThread = new Thread(handleOSD);
+            //osdThread.IsBackground = true;
+            //osdThread.Name = "Dispatch OSD thread";
+            //osdThread.Start();
         }
         string getOsdLine()
         {

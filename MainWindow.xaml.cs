@@ -123,6 +123,8 @@ namespace Power_Control_Panel
         public static Window osk;
 
         private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
+
+        private Uri currentUri;
         public MainWindow()
         {
 
@@ -191,28 +193,62 @@ namespace Power_Control_Panel
             timer.Start();
 
         }
+
+        private void getController()
+        {
+            int controllerNum = 1;
+
+            while (controllerNum <5)
+            {
+                switch (controllerNum)
+                {
+                    default:
+                        break;
+                    case 1:
+                        controller = new Controller(UserIndex.One);
+                        break;
+                    case 2:
+                        controller = new Controller(UserIndex.Two);
+                        break;
+                    case 3:
+                        controller = new Controller(UserIndex.Three);
+                        break;
+                    case 4:
+                        controller = new Controller(UserIndex.Four);
+                        break;
+
+                }
+                
+                if (controller == null )
+                {
+                    controllerNum++;
+                }
+                else
+                {
+                    if (controller.IsConnected)
+                    {
+                        controllerNum = 5;
+                    }
+                    else
+                    {
+                        controllerNum++;
+                    }
+                }
+
+            }
+            
+
+
+          
+        }
         private void timerTick(object sender, EventArgs e)
         {
             //Controller input handler
-            if (controller == null)
-            {
-                controller = new Controller(UserIndex.One);
-                if (controller == null)
-                {
-                    controller = new Controller(UserIndex.Two);
-                    if (controller == null)
-                    {
-                        controller = new Controller(UserIndex.Three);
-                        if (controller == null)
-                        {
-                            controller = new Controller(UserIndex.Four);
-                        }
-                    }
-                }
-            }
+
+            getController();
 
 
-            
+
             if (controller != null)
             { 
                 if (controller.IsConnected)
@@ -264,38 +300,74 @@ namespace Power_Control_Panel
 
             //Profile or power status change updater
             string Power = SystemParameters.PowerLineStatus.ToString();
-            if (Power != GlobalVariables.powerStatus & GlobalVariables.powerStatus != "" & GlobalVariables.ActiveProfile != "None")
+            string setProfile = "";
+            DataTable dtApps = ManageXML_Apps.appListProfileExe();
+                        
+            string profile = "";
+            string exe = "";
+            string profileCase = "Nothing";
+            foreach (DataRow dr in dtApps.Rows)
             {
-                DataTable dtApps = ManageXML_Apps.appListProfileExe();
+                profile = dr[0].ToString();
+                exe = dr[1].ToString();
 
-                Process[] pList = Process.GetProcesses();
-
-                string[] process = Array.ConvertAll(Process.GetProcesses(), p => p.ToString());
-                string profile = "";
-                string exe = "";
-                foreach (DataRow dr in dtApps.Rows)
+                Process[] pname = Process.GetProcessesByName(exe);
+                if (pname.Length != 0)
                 {
-                    profile = dr[0].ToString();
-                    exe = dr[1].ToString();
-                    if (process.Contains(exe))
-                    {
-
-                    }
-
+                    setProfile = profile;
                 }
-        
+            }
+            
+            
 
+            //if no profile is looked up, current profile is none, then do nothing
+            if (profile == "" && GlobalVariables.ActiveProfile == "None")
+            {
+                profileCase = "Nothing";
+            }
+            //if profile is same as active and power didn't change, then do nothing
+            if (profile == GlobalVariables.ActiveProfile && Power == GlobalVariables.powerStatus)
+            {
+                profileCase = "Nothing";
+            }
+            if (profile == GlobalVariables.ActiveProfile && Power != GlobalVariables.powerStatus)
+            {
+                profileCase = "Apply Profile";
+            }
+            if (profile != GlobalVariables.ActiveProfile && profile != "")
+            {
+                profileCase = "Apply Profile";
+            }
+            if (profile != GlobalVariables.ActiveProfile && profile == "")
+            {
+                profileCase = "Remove Profile";
             }
 
+            switch (profileCase)
+            {
+                default:
+                    break;
+                case "Nothing":
+                    break;
+                case "Apply Profile":
+                    ManageXML_Profiles.applyProfile(profile, Power);
+                    break;
+                case "Remove Profile":
+                    //if no default profile exists, active profile of none is applied
+                    ManageXML_Profiles.applyProfile("Default", Power);
+                    break;
+            }
         }
-        private void OSKEvent(object sender, EventArgs e)
+
+
+        private void OSKEvent()
         {
             handleOpenCloseOSK();
             
 
         }
 
-        private void QAMEvent(object sender, EventArgs e)
+        private void QAMEvent()
         {
 
             handleOpenCloseQAM();
@@ -309,6 +381,7 @@ namespace Power_Control_Panel
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
+
             if (Properties.Settings.Default.homePageTypeMW == "Grouped Slider")
             {
                 this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
@@ -328,16 +401,19 @@ namespace Power_Control_Panel
 
             if (e.InvokedItem is MenuItem menuItem)
             {
-                if (menuItem.Label == "Quick Access Menu")
+                
+                if (menuItem.Label == "Quick Access Menu" || menuItem.Label == "接触选单")
                 {
 
                     handleOpenCloseQAM();
-                   
+           
+
+
                 }
-                if (menuItem.Label == "On Screen Keyboard")
+                if (menuItem.Label == "On Screen Keyboard" || menuItem.Label == "视窗键盘")
                 {
                     handleOpenCloseOSK();
-
+           
                 }
                 if (menuItem.IsNavigation)
                 {
@@ -397,6 +473,7 @@ namespace Power_Control_Panel
             //                                                     .FirstOrDefault(x => x.NavigationType == e.Content?.GetType());
 
             // update back button
+            currentUri = e.Uri;
             this.GoBackButton.SetCurrentValue(VisibilityProperty, this.navigationServiceEx.CanGoBack ? Visibility.Visible : Visibility.Collapsed);
         }
 
@@ -438,6 +515,15 @@ namespace Power_Control_Panel
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             setUpNotifyIcon();
+        
         }
+    }
+
+    public static class timerHandler
+    {
+
+
+
+
     }
 }

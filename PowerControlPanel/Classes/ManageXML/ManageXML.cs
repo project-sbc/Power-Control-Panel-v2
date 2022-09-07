@@ -195,6 +195,87 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             return result;
         }
 
+        public static void applyProfile(string profileName, string powerStatus)
+        {
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("Profile/ProfileName[text()='" + profileName + "']");
+            if (xmlSelectedNode != null)
+            {
+                XmlNode parentNode = xmlSelectedNode.ParentNode;
+
+                if (parentNode != null)
+                {
+                    XmlNode powerNode;
+                    if (powerStatus == "Online")
+                    {
+                        powerNode = parentNode.SelectSingleNode("Online");
+                    }
+                    else
+                    {
+                        powerNode = parentNode.SelectSingleNode("Offline");
+                    }
+             
+                    foreach (XmlNode node in powerNode.ChildNodes)
+                    {
+                        if (node.Name == "TDP1") 
+                        { 
+                            if (node.InnerText != "")
+                            {
+                                
+                                //Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeTDP.ChangeTDP(tdpPL1, tdpPL2));
+                            }
+                        
+                        }
+                        if (node.Name == "TDP2")
+                        {
+                            if (node.InnerText != "")
+                            {
+
+                            }
+
+                        }
+                        if (node.Name == "GPUCLK")
+                        {
+                            if (node.InnerText != "")
+                            {
+                                Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(Convert.ToInt32(node.InnerText)));
+                            }
+
+                        }
+                        if (node.Name == "MAXCPU")
+                        {
+                            if (node.InnerText != "")
+                            {
+                               //if (node.InnerText == "0")
+                            }
+
+                        }
+                        if (node.Name == "ActiveCores")
+                        {
+                            if (node.InnerText != "")
+                            {
+
+                            }
+
+                        }
+                      
+                    }
+                                      
+                }
+
+
+            }
+            else
+            {
+                //if profile is default and no profile was detected make activeprofile none
+                GlobalVariables.ActiveProfile = "None";
+            }
+            xmlDocument = null;
+
+        }
+
         public static string loadProfileParameter(string powerStatus, string parameter, string profileName)
         {
             string result = "";
