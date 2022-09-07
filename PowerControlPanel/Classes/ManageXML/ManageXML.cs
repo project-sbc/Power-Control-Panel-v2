@@ -197,6 +197,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
         public static void applyProfile(string profileName, string powerStatus)
         {
+
             System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
             xmlDocument.Load(GlobalVariables.xmlFile);
             XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
@@ -207,6 +208,9 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
                 if (parentNode != null)
                 {
+                    GlobalVariables.ActiveProfile = profileName;
+                  
+
                     XmlNode powerNode;
                     if (powerStatus == "Online")
                     {
@@ -269,7 +273,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
                             }
 
                         }
-                        GlobalVariables.ActiveProfile = profileName;
+                        
                     }
                                       
                 }
@@ -280,6 +284,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             {
                 //if profile is default and no profile was detected make activeprofile none
                 GlobalVariables.ActiveProfile = "None";
+                GlobalVariables.ActiveApp = "None";
             }
             xmlDocument = null;
 

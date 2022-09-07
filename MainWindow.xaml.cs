@@ -383,7 +383,9 @@ namespace Power_Control_Panel
                     ManageXML_Profiles.applyProfile(GlobalVariables.ActiveProfile, Power);
                     break;
                 case "Apply Profile":
+                    GlobalVariables.ActiveApp = setApp;
                     ManageXML_Profiles.applyProfile(profile, Power);
+
                     break;
                 case "Remove Profile":
                     //if no default profile exists, active profile of none is applied
