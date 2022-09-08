@@ -61,6 +61,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool dragStartedActiveCores = false;
         private bool changingActiveCores = false;
 
+
+
         public HomePage()
         {
            

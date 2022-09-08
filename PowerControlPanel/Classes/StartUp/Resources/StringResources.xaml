@@ -70,12 +70,12 @@
     <system:String x:Key="Settings_Theme">Theme</system:String>
     <system:String x:Key="Settings_StartWithWindows">Start With Windows</system:String>
     <system:String x:Key="Settings_MinimumTDP">Minimum TDP</system:String>
-    <system:String x:Key="Settings_MaximumTDP">Maximum TPD</system:String>
+    <system:String x:Key="Settings_MaximumTDP">Maximum TDP</system:String>
     <system:String x:Key="Settings_QuickAccessMenuWidth">Quick Acess Menu Width (%)</system:String>
     <system:String x:Key="Settings_CombineTDP">Combine Sustained and Boost TDP</system:String>
     <system:String x:Key="Settings_MainWindowStyle">Main Window Home Page Style (Restart App)</system:String>
     <system:String x:Key="Settings_QAMStyle">Quick Acces Mneu Home Page Style</system:String>
-    <system:String x:Key="Settings_Language">Language</system:String>
+    <system:String x:Key="Settings_Language">Language/语言</system:String>
     <system:String x:Key="Settings_IntelTDPType">TDP Set Type</system:String>
     <system:String x:Key="Settings_AMDMaxGPUClk">Set Max GPU Clock (MHz)</system:String>
 

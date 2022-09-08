@@ -1,27 +1,95 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- main window menu -->
     <system:String x:Key="MainWindow_Menu_Home">主页</system:String>
     <system:String x:Key="MainWindow_Menu_Profiles">剖面</system:String>
     <system:String x:Key="MainWindow_Menu_AppSettings">软件设定</system:String>
-    <system:String x:Key="MainWindow_Menu_QAM">Quick Access Menu</system:String>
-    <system:String x:Key="MainWindow_Menu_OSK">On Screen Keyboard</system:String>
+    <system:String x:Key="MainWindow_Menu_QAM">接触选单</system:String>
+    <system:String x:Key="MainWindow_Menu_OSK">视窗键盘</system:String>
     <system:String x:Key="MainWindow_Menu_About">关于</system:String>
     <system:String x:Key="MainWindow_Menu_Settings">设定</system:String>
+    <!-- QAM window menu -->
     <system:String x:Key="QAM_Menu_Hide">隐藏</system:String>
-    <system:String x:Key="QAM_Menu_System">System</system:String>
-    <system:String x:Key="QAM_Menu_Games">Games</system:String>
+    <system:String x:Key="QAM_Menu_System">系统</system:String>
+    <system:String x:Key="QAM_Menu_Games">电玩</system:String>
     <system:String x:Key="QAM_Menu_Settings">设定</system:String>
-    <system:String x:Key="Brightness">光</system:String>
+    <!-- Home page values -->
+    <system:String x:Key="Brightness">亮度</system:String>
     <system:String x:Key="Volume">音量</system:String>
     <system:String x:Key="TDP">TDP (W)</system:String>
     <system:String x:Key="TDP_Sustained">TDP持续 (W)</system:String>
-    <system:String x:Key="TDP_Boost">TDP Boost (W)</system:String>
-    <system:String x:Key="Max_CPU">Max CPU Frequency (MHz)</system:String>
+    <system:String x:Key="TDP_Boost">TDP增压 (W)</system:String>
+    <system:String x:Key="Max_CPU">最大CPU频率 (MHz)</system:String>
     <system:String x:Key="Active_CPU_Cores">Active CPU Cores</system:String>
     <system:String x:Key="GPU_Clock">GPU Clock (MHz)</system:String>
-    <system:String x:Key="Display_Resolution">分辨率</system:String>
-    <system:String x:Key="Display_Refresh">Display Refresh Rate</system:String>
-    <system:String x:Key="Display_Scaling">Display Scaling (%)</system:String>
+    <system:String x:Key="Display_Resolution">显示分辨率</system:String>
+    <system:String x:Key="Display_Refresh">屏幕刷新率</system:String>
+    <system:String x:Key="Display_Scaling">显示比例</system:String>
 
+    <!-- profiles page -->
+    <system:String x:Key="Profiles_Header">剖面</system:String>
+    <system:String x:Key="Profiles_AddProfile">加剖面</system:String>
+    <system:String x:Key="Profiles_DeleteProfile">删剖面</system:String>
+    <system:String x:Key="Profiles_SaveProfile">保存剖面</system:String>
+    <system:String x:Key="Profiles_HeaderDetails">剖面Details</system:String>
+    <system:String x:Key="Profiles_Name">剖面名字</system:String>
+    <system:String x:Key="Profiles_OnCharger">充电器</system:String>
+    <system:String x:Key="Profiles_OnBattery">电瓶</system:String>
+    <system:String x:Key="Profiles_ProfileApplications">剖面应用程序</system:String>
+    <system:String x:Key="Profiles_AddApp">加应用程序</system:String>
+    <system:String x:Key="Profiles_DeleteApp">删应用程序</system:String>
+
+    <!-- general words -->
+    <system:String x:Key="Enable">开启</system:String>
+    <system:String x:Key="Disable">禁用</system:String>
+    <system:String x:Key="Show">出现</system:String>
+    <system:String x:Key="Hide">隐蔽</system:String>
+    <system:String x:Key="Close">关闭</system:String>
+
+    <!-- Tile Homepage -->
+    <system:String x:Key="TileHomePage_TDP">TDP</system:String>
+    <system:String x:Key="TileHomePage_TDPBoost">TDP增压</system:String>
+    <system:String x:Key="TileHomePage_TDPSustained">TDP持续</system:String>
+    <system:String x:Key="TileHomePage_MaxCPU">最大CPU频率</system:String>
+    <system:String x:Key="TileHomePage_ActiveCores">Active Cores</system:String>
+    <system:String x:Key="TileHomePage_Brightness">亮度</system:String>
+    <system:String x:Key="TileHomePage_Volume">音量</system:String>
+    <system:String x:Key="TileHomePage_GPUCLK">GPU Clock</system:String>
+    <system:String x:Key="TileHomePage_Resolution">显示分辨率</system:String>
+    <system:String x:Key="TileHomePage_Scaling">显示比例</system:String>
+    <system:String x:Key="TileHomePage_Refresh">屏幕刷新率</system:String>
+
+    <!-- Settings {DynamicResource HomePage_Brightness} -->
+    <system:String x:Key="Settings_GeneralSettings">设定</system:String>
+    <system:String x:Key="Settings_AMDSettings">AMD设定</system:String>
+    <system:String x:Key="Settings_IntelSettings">INTEL设定</system:String>
+    <system:String x:Key="Settings_SaveSettings">保存设定</system:String>
+    <system:String x:Key="Settings_Theme">主题</system:String>
+    <system:String x:Key="Settings_StartWithWindows">Start With Windows</system:String>
+    <system:String x:Key="Settings_MinimumTDP">最少TDP</system:String>
+    <system:String x:Key="Settings_MaximumTDP">最多TPD</system:String>
+    <system:String x:Key="Settings_QuickAccessMenuWidth">Quick Acess Menu Width (%)</system:String>
+    <system:String x:Key="Settings_CombineTDP">Combine Sustained and Boost TDP</system:String>
+    <system:String x:Key="Settings_MainWindowStyle">Main Window Home Page Style (Restart App)</system:String>
+    <system:String x:Key="Settings_QAMStyle">Quick Acces Mneu Home Page Style</system:String>
+    <system:String x:Key="Settings_Language">Language/语言</system:String>
+    <system:String x:Key="Settings_IntelTDPType">TDP Set Type</system:String>
+    <system:String x:Key="Settings_AMDMaxGPUClk">Set Max GPU Clock (MHz)</system:String>
+
+    <!-- AppSettings  -->
+    <system:String x:Key="AppSettings_Applications">应用程序</system:String>
+    <system:String x:Key="AppSettings_AddProfile">加剖面</system:String>
+    <system:String x:Key="AppSettings_DeleteProfile">删剖面</system:String>
+    <system:String x:Key="AppSettings_AppMain">应用程序</system:String>
+    <system:String x:Key="AppSettings_RunApp">RUN 应用程序</system:String>
+    <system:String x:Key="AppSettings_AppName">应用程序名字</system:String>
+    <system:String x:Key="AppSettings_SaveApp">保存剖面</system:String>
+    <system:String x:Key="AppSettings_ProcessName">寄存器名字</system:String>
+    <system:String x:Key="AppSettings_Profile">剖面</system:String>
+    <system:String x:Key="AppSettings_AppType">应用程序种</system:String>
+    <system:String x:Key="AppSettings_GameType">电玩种</system:String>
+    <system:String x:Key="AppSettings_ExePath">Exe目录</system:String>
+    <system:String x:Key="AppSettings_ImagePath">图片目录</system:String>
 </ResourceDictionary>

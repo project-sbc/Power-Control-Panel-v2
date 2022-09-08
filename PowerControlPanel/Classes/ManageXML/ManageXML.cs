@@ -195,6 +195,101 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             return result;
         }
 
+        public static void applyProfile(string profileName, string powerStatus)
+        {
+
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
+            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("Profile/ProfileName[text()='" + profileName + "']");
+            if (xmlSelectedNode != null)
+            {
+                XmlNode parentNode = xmlSelectedNode.ParentNode;
+
+                if (parentNode != null)
+                {
+                    GlobalVariables.ActiveProfile = profileName;
+                  
+
+                    XmlNode powerNode;
+                    if (powerStatus == "Online")
+                    {
+                        powerNode = parentNode.SelectSingleNode("Online");
+                    }
+                    else
+                    {
+                        powerNode = parentNode.SelectSingleNode("Offline");
+                    }
+                    string tdp1="";
+                    string tdp2="";
+                    foreach (XmlNode node in powerNode.ChildNodes)
+                    {
+                        if (node.Name == "TDP1") 
+                        { 
+                            if (node.InnerText != "")
+                            {
+                                tdp1 = node.InnerText;
+                                if (tdp2 != "")
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                }
+                                //
+                            }
+                        
+                        }
+                        if (node.Name == "TDP2")
+                        {
+                            if (node.InnerText != "")
+                            {
+                                tdp2 = node.InnerText;
+                                if (tdp1 != "")
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                }
+                            }
+
+                        }
+                        if (node.Name == "GPUCLK")
+                        {
+                            if (node.InnerText != "")
+                            {
+                                Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(Convert.ToInt32(node.InnerText)));
+                            }
+
+                        }
+                        if (node.Name == "MAXCPU")
+                        {
+                            if (node.InnerText != "")
+                            {
+                                Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeCPUMaxFrequency(Convert.ToInt32(node.InnerText)));
+                            }
+
+                        }
+                        if (node.Name == "ActiveCores")
+                        {
+                            if (node.InnerText != "")
+                            {
+                                Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeActiveCores(Convert.ToInt32(node.InnerText)));
+                            }
+
+                        }
+                        
+                    }
+                                      
+                }
+
+
+            }
+            else
+            {
+                //if profile is default and no profile was detected make activeprofile none
+                GlobalVariables.ActiveProfile = "None";
+                GlobalVariables.ActiveApp = "None";
+            }
+            xmlDocument = null;
+
+        }
+
         public static string loadProfileParameter(string powerStatus, string parameter, string profileName)
         {
             string result = "";
@@ -299,10 +394,33 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             foreach (XmlNode node in xmlNode.ChildNodes)
             {
-                dt.Rows.Add(node.SelectSingleNode("Profile").InnerText, node.SelectSingleNode("Exe").InnerText);
+                if (node.SelectSingleNode("Profile").InnerText != "")
+                {
+                    dt.Rows.Add(node.SelectSingleNode("Profile").InnerText, node.SelectSingleNode("Exe").InnerText);
+                }
+                
             }
             xmlDocument = null;
             return dt;
+
+
+        }
+
+        public static string lookupProfileByAppExe(string exe)
+        {
+           
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNodeList xmlNodes = xmlDocument.SelectSingleNode("//Configuration/Applications").SelectNodes("App/Exe[text()='" + exe + "']");
+            string profile = "";
+    
+
+            foreach (XmlNode node in xmlNodes)
+            {
+                profile = node.ParentNode.SelectSingleNode("Profile").InnerText;
+            }
+            xmlDocument = null;
+            return profile;
 
 
         }
