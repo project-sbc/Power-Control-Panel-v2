@@ -243,8 +243,11 @@ namespace Power_Control_Panel
         }
         private void timerTick(object sender, EventArgs e)
         {
-            //Controller input handler
+            //update power status
+            
 
+
+            //Controller input handler
             getController();
 
 
@@ -340,7 +343,7 @@ namespace Power_Control_Panel
                 { profileCase = "Reapply Profile"; }
 
                 //if active app closes and no new app opens
-                if (profileCase == "" && setApp == "")
+                if (profileCase == "" && setApp == "" && GlobalVariables.ActiveProfile != "Default")
                 { profileCase = "Remove Profile"; }
 
                 //if active app closes and new app is detected
@@ -366,7 +369,7 @@ namespace Power_Control_Panel
             }
 
                     
-
+            GlobalVariables.powerStatus = Power;
             //scenarios
             //program opens,  key indicator is  
             
@@ -389,6 +392,7 @@ namespace Power_Control_Panel
                     break;
                 case "Remove Profile":
                     //if no default profile exists, active profile of none is applied
+                    GlobalVariables.ActiveApp = "None";
                     ManageXML_Profiles.applyProfile("Default", Power);
                     break;
             }

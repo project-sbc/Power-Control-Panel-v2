@@ -264,7 +264,7 @@
 
                         </Label>
                         <Label x:Name="txtsliderMaxGPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=GPUCLKMAX, Path=Value}"/>
-                        <Slider x:Name="GPUCLKMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="300" Maximum="2200" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="Slider_Loaded" />
+                        <Slider x:Name="GPUCLKMAX" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40" Minimum="300" Maximum="2400" SmallChange="1" TickPlacement="None" IsSnapToTickEnabled="True" Loaded="Slider_Loaded" />
 
 
 

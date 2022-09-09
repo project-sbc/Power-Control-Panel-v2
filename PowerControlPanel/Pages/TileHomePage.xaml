@@ -106,7 +106,7 @@
 
 
                     </mah:Tile>
-                    <mah:Tile Title="{DynamicResource TileHomePage_MaxCPU}"
+                    <mah:Tile x:Name="MaxCPU" Title="{DynamicResource TileHomePage_MaxCPU}"
                       Margin="3"
                       Count=""
                    
@@ -124,7 +124,7 @@
 
                     </mah:Tile>
 
-                    <mah:Tile Title="{DynamicResource TileHomePage_ActiveCores}"
+                    <mah:Tile x:Name="ActiveCores" Title="{DynamicResource TileHomePage_ActiveCores}"
                       Margin="3"
                       Count=""
                    
@@ -142,7 +142,7 @@
 
                     </mah:Tile>
 
-                    <mah:Tile Title="{DynamicResource TileHomePage_Volume}"
+                    <mah:Tile x:Name="Volume" Title="{DynamicResource TileHomePage_Volume}"
                       Margin="3"
                       Count=""
                 
@@ -159,7 +159,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="{DynamicResource TileHomePage_Brightness}"
+                    <mah:Tile x:Name="Brightness" Title="{DynamicResource TileHomePage_Brightness}"
                       Margin="3"
                       Count=""
         
@@ -176,7 +176,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="{DynamicResource TileHomePage_GPUCLK}"
+                    <mah:Tile x:Name="GPUCLK" Title="{DynamicResource TileHomePage_GPUCLK}"
                       Margin="3"
                       Count=""
               
@@ -192,7 +192,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="{DynamicResource TileHomePage_Resolution}"
+                    <mah:Tile x:Name="DisplayResolution" Title="{DynamicResource TileHomePage_Resolution}"
                       Margin="3"
                       Count=""
                  
@@ -209,7 +209,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="{DynamicResource TileHomePage_Scaling}"
+                    <mah:Tile x:Name="DisplayScaling" Title="{DynamicResource TileHomePage_Scaling}"
                       Margin="3"
                       Count=""
                 
@@ -226,7 +226,7 @@
                         </StackPanel>
 
                     </mah:Tile>
-                    <mah:Tile Title="{DynamicResource TileHomePage_Refresh}"
+                    <mah:Tile x:Name="DisplayRefresh" Title="{DynamicResource TileHomePage_Refresh}"
                       Margin="3"
                       Count=""
                    
