@@ -338,6 +338,10 @@ namespace Power_Control_Panel
             {
                 //if there is active app
 
+                //if active app profile changed in settings while running it
+                if (profileCase == "" && setApp == GlobalVariables.ActiveApp && setProfile != GlobalVariables.ActiveProfile)
+                { profileCase = "Apply Profile"; }
+
                 //if power changed but set app and active app are same, reapply profile
                 if (profileCase == "" && setApp == GlobalVariables.ActiveApp && Power != GlobalVariables.powerStatus && GlobalVariables.ActiveApp != "None")
                 { profileCase = "Reapply Profile"; }

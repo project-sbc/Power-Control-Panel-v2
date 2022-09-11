@@ -12,11 +12,13 @@
 
     <Page.Resources>
         <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="White" />
+            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
             <Setter Property="FontSize" Value="20"/>
         </Style>
         <Style TargetType="ComboBox">
-
+     
+      
             <Setter Property="FontSize" Value="20"/>
         </Style>
     </Page.Resources>
@@ -58,7 +60,7 @@
                     <DockPanel   >
 
                         <Label Content="{DynamicResource Settings_Theme}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
-                        <ComboBox x:Name="cboAccentTheme" Width="150" DockPanel.Dock="Right" HorizontalAlignment="Right" IsEditable="False">
+                        <ComboBox x:Name="cboAccentTheme" Width="150"  DockPanel.Dock="Right" HorizontalAlignment="Right" IsEditable="False">
                             <ComboBoxItem Content="Red"/>
                             <ComboBoxItem Content="Green"/>
                             <ComboBoxItem Content="Blue"/>

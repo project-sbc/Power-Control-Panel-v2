@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <None Remove="PowerControlPanel\Logs\application_log.txt" />
-    <None Remove="PowerControlPanel\Pages\ProjectSBC.png" />
     <None Remove="PowerControlPanel\ProfileData\Profiles.xml" />
     <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\libryzenadj.dll" />
@@ -38,6 +37,7 @@
     <None Remove="Resources\Intel\MSR\WinRing0x64.dll" />
     <None Remove="Resources\Intel\MSR\WinRing0x64.sys" />
     <None Remove="Resources\Intel\RW\Rw.exe" />
+    <None Remove="Resources\Pictures\ProjectSBC.png" />
     <None Remove="Resources\QRes\QRes.exe" />
     <None Remove="Resources\SetDPI\SetDpi.exe" />
   </ItemGroup>
@@ -132,9 +132,11 @@
 			<HintPath>Resources\RTSS\RTSSSharedMemoryNET.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-  <ItemGroup>
-    <Resource Include="PowerControlPanel\Pages\ProjectSBC.png" />
-  </ItemGroup>
+	<ItemGroup>
+	  <SplashScreen Include="Resources\Pictures\ProjectSBC.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </SplashScreen>
+	</ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
