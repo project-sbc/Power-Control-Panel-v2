@@ -78,7 +78,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
             else { labelMAXCPUValue.Content = GlobalVariables.cpuMaxFrequency + " MHz"; }
 
-
+            //active profile
+            labelActiveProfileValue.Content = GlobalVariables.ActiveProfile;
 
             //active core updates
             labelActiveCoresValue.Content = GlobalVariables.cpuActiveCores;
@@ -244,6 +245,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorScreenshot;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
+                case "ActiveProfile":
+                    dpCombobox.Visibility = Visibility.Visible;
+                    //cbochangeValue.ItemsSource = ;
+                    //cbochangeValue.Text = ;
+                    iconAwesomecbo.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BookSolid;
+                    iconAwesomecbo.Visibility = Visibility.Visible;
+                    break;
+
+                //
                 default:
                     break;
 

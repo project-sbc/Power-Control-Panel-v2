@@ -61,7 +61,8 @@
     <system:String x:Key="TileHomePage_Resolution">Display Resolution</system:String>
     <system:String x:Key="TileHomePage_Scaling">Display Scaling</system:String>
     <system:String x:Key="TileHomePage_Refresh">Display Refresh</system:String>
-
+    <system:String x:Key="TileHomePage_ActiveProfile">Active Profile</system:String>
+    
     <!-- Settings {DynamicResource HomePage_Brightness} -->
     <system:String x:Key="Settings_GeneralSettings">GENERAL SETTINGS</system:String>
     <system:String x:Key="Settings_AMDSettings">AMD SETTINGS</system:String>

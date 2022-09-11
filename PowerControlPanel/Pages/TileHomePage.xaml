@@ -245,6 +245,22 @@
                         </StackPanel>
 
                     </mah:Tile>
+                    <mah:Tile x:Name="ActiveProfile" Title="{DynamicResource TileHomePage_ActiveProfile}"
+                      Count=""
+                   
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center"  x:Name="labelActiveProfileValue" Content="Default" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="BookSolid" />
+                        </StackPanel>
+
+                    </mah:Tile>
                 </WrapPanel>
                 <GroupBox Name="GBChangeValue" Visibility="Visible" VerticalAlignment="Top">
 

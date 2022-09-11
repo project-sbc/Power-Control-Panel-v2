@@ -60,6 +60,7 @@
     <system:String x:Key="TileHomePage_Resolution">显示分辨率</system:String>
     <system:String x:Key="TileHomePage_Scaling">显示比例</system:String>
     <system:String x:Key="TileHomePage_Refresh">屏幕刷新率</system:String>
+    <system:String x:Key="TileHomePage_ActiveProfile">Active Profile</system:String>
 
     <!-- Settings {DynamicResource HomePage_Brightness} -->
     <system:String x:Key="Settings_GeneralSettings">设定</system:String>
