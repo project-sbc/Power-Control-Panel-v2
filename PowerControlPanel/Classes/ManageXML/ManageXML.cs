@@ -31,7 +31,25 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             
         }
+        public static List<string> profileListForHomePage()
+        {
+            List<string> cboAppProfile = new List<string>();
+            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+            xmlDocument.Load(GlobalVariables.xmlFile);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
 
+            cboAppProfile.Add("None");
+
+            foreach (XmlNode node in xmlNode.ChildNodes)
+            {
+
+                cboAppProfile.Add(node.SelectSingleNode("ProfileName").InnerText);
+            }
+            xmlDocument = null;
+            return cboAppProfile;
+
+
+        }
         public static List<string> profileListForAppCBO()
         {
             List<string> cboAppProfile = new List<string>();

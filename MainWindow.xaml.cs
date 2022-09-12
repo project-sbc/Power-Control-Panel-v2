@@ -72,6 +72,7 @@ namespace Power_Control_Panel
         public static string ActiveApp = "None";
         public static string powerStatus = "";
         public static bool updateProfileAppTable = false;
+        
 
         //display settings
         public static string resolution = "";

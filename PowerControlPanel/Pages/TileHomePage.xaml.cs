@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -90,8 +91,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             labelDisplayScalingValue.Content = GlobalVariables.scaling + " %";
             labelDisplayResolutionValue.Content = GlobalVariables.resolution;
 
-
-
+      
             //system values
             labelBrightnessValue.Content = GlobalVariables.brightness + " %";
             labelVolumeValue.Content = GlobalVariables.volume + " %";
@@ -247,8 +247,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     break;
                 case "ActiveProfile":
                     dpCombobox.Visibility = Visibility.Visible;
-                    //cbochangeValue.ItemsSource = ;
-                    //cbochangeValue.Text = ;
+                    cbochangeValue.ItemsSource = PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.profileListForAppCBO();
+
+                    cbochangeValue.Text = GlobalVariables.ActiveProfile;
                     iconAwesomecbo.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BookSolid;
                     iconAwesomecbo.Visibility = Visibility.Visible;
                     break;
@@ -582,6 +583,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                             if (cbochangeValue.SelectedValue.ToString() != "Default")
                             {
                                 PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cbochangeValue.SelectedValue.ToString());
+                            }
+                            break;
+                        case "ActiveProfile":
+                            if (cbochangeValue.SelectedValue.ToString() != "None")
+                            {
+                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cbochangeValue.SelectedValue.ToString(), SystemParameters.PowerLineStatus.ToString());
+                            }
+                            else
+                            {
+                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("Default", SystemParameters.PowerLineStatus.ToString());
                             }
                             break;
                         default:
