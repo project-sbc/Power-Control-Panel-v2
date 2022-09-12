@@ -12,16 +12,7 @@
 
 
     <Page.Resources>
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="SelectedValuePath" Value="Content"/>
-        
-        </Style>
+       
 
 
     </Page.Resources>
@@ -254,7 +245,7 @@
                         <Label Content="{DynamicResource Display_Resolution}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
 
 
                         </ComboBox>
@@ -266,7 +257,7 @@
                         <Label Content="{DynamicResource Display_Refresh}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged">
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged">
                             
                             
                         </ComboBox>
@@ -276,7 +267,7 @@
                         <Label Content="{DynamicResource Display_Scaling}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
                             <ComboBoxItem Content="Default" />
                             <ComboBoxItem Content="100" />
                             <ComboBoxItem Content="125" />

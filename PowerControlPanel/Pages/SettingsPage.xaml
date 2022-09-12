@@ -11,16 +11,7 @@
       Title="SettingsPage">
 
     <Page.Resources>
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <Style TargetType="ComboBox">
-     
-      
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
+       
     </Page.Resources>
 
 
@@ -60,7 +51,7 @@
                     <DockPanel   >
 
                         <Label Content="{DynamicResource Settings_Theme}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
-                        <ComboBox x:Name="cboAccentTheme" Width="150"  DockPanel.Dock="Right" HorizontalAlignment="Right" IsEditable="False">
+                        <ComboBox  x:Name="cboAccentTheme"  Width="150" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20"  DockPanel.Dock="Right" HorizontalAlignment="Right" IsEditable="False">
                             <ComboBoxItem Content="Red"/>
                             <ComboBoxItem Content="Green"/>
                             <ComboBoxItem Content="Blue"/>
@@ -86,7 +77,8 @@
                             <ComboBoxItem Content="Sienna"/>
 
                         </ComboBox>
-                        <ComboBox x:Name="cboLightDarkTheme" Width="120" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" x:Name="cboLightDarkTheme"  FontSize="20" Width="120" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right"  >
+
                             <ComboBoxItem Content="Light" />
                             <ComboBoxItem Content="Dark" />
 
@@ -98,7 +90,7 @@
                         <Label Content="{DynamicResource Settings_StartWithWindows}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
           
                         </Label>
-                        <ComboBox x:Name="cboAutoStart" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox x:Name="cboAutoStart" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="Enable" />
                             <ComboBoxItem Content="Disable" />
 
@@ -129,7 +121,7 @@
                         <Label Content="{DynamicResource Settings_QuickAccessMenuWidth}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboQAMSize" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox x:Name="cboQAMSize" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="25" />
                             <ComboBoxItem Content="33" />
                             <ComboBoxItem Content="40" />
@@ -143,7 +135,7 @@
                         <Label Content="{DynamicResource Settings_CombineTDP}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboCombineTDP" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox x:Name="cboCombineTDP" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="Enable" />
                             <ComboBoxItem Content="Disable" />
      
@@ -156,7 +148,7 @@
                         <Label Content="{DynamicResource Settings_MainWindowStyle}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboMWHomePageStyle" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox x:Name="cboMWHomePageStyle" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="Slider" />
                             <ComboBoxItem Content="Grouped Slider" />
                             <ComboBoxItem Content="Tile" />
@@ -170,7 +162,7 @@
                         <Label Content="{DynamicResource Settings_QAMStyle}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboQAMHomePageStyle" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox x:Name="cboQAMHomePageStyle" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="Slider" />
                             <ComboBoxItem Content="Grouped Slider" />
                             <ComboBoxItem Content="Tile" />
@@ -184,7 +176,7 @@
                         <Label Content="{DynamicResource Settings_Language}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboLanguage" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox x:Name="cboLanguage" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="English" />
                             <ComboBoxItem Content="中文" />
 
@@ -224,7 +216,7 @@
                         <Label Content="{DynamicResource Settings_IntelTDPType}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboTDPTypeIntel" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
+                        <ComboBox x:Name="cboTDPTypeIntel" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
                             <ComboBoxItem Content="MMIO" />
                             <ComboBoxItem Content="MSR" />
                             <ComboBoxItem Content="MMIO + MSR" />

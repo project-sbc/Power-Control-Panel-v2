@@ -91,11 +91,11 @@
                                 </DockPanel>
                                 <DockPanel Height="40">
                                     <Label  Content="{DynamicResource AppSettings_ProcessName}" DockPanel.Dock="Left" FontSize="22" />
-                                    <ComboBox x:Name="cboProcessName" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="True" HorizontalAlignment="Right"   />
+                                    <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" x:Name="cboProcessName" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="True" HorizontalAlignment="Right"   />
                                 </DockPanel>
                                 <DockPanel Height="40">
                                     <Label  Content="{DynamicResource AppSettings_Profile}" DockPanel.Dock="Left" FontSize="22" />
-                                    <ComboBox x:Name="cboAppProfile" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"   />
+                                    <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" x:Name="cboAppProfile" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"   />
                                 </DockPanel>
                             </StackPanel>
 
@@ -117,7 +117,7 @@
                             <StackPanel>
                                 <DockPanel Height="40">
                                     <Label  Content="{DynamicResource AppSettings_AppType}" DockPanel.Dock="Left" FontSize="22" />
-                                    <ComboBox x:Name="cboAppType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right" SelectionChanged="cboAppType_SelectionChanged"  >
+                                    <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" x:Name="cboAppType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right" SelectionChanged="cboAppType_SelectionChanged"  >
                                         <ComboBoxItem Content="Application"/>
                                         <ComboBoxItem Content="Game" />
 
@@ -126,7 +126,7 @@
                                 </DockPanel>
                                 <DockPanel x:Name="dpGameType" Height="40">
                                     <Label  Content="{DynamicResource AppSettings_GameType}" DockPanel.Dock="Left" FontSize="22" />
-                                    <ComboBox x:Name="cboGameType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"  >
+                                    <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" x:Name="cboGameType" FontSize="20" Width="200" DockPanel.Dock="Right" IsEditable="False" HorizontalAlignment="Right"  >
                                         <ComboBoxItem Content="Steam"/>
                                         <ComboBoxItem Content="Microsoft Store" />
                                         <ComboBoxItem Content="Epic" />
