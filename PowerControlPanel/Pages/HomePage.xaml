@@ -12,16 +12,7 @@
 
 
     <Page.Resources>
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="SelectedValuePath" Value="Content"/>
-        
-        </Style>
+       
 
 
     </Page.Resources>
@@ -54,7 +45,7 @@
 
                     <DockPanel   >
 
-                        <Label Content="{DynamicResource HomePage_Brightness}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+                        <Label Content="{DynamicResource Brightness}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
 
                         <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE706;" FontSize="30" Margin="8,0,0,0"/>
                         <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded" TouchUp="Slider_TouchUp" TouchDown="Slider_TouchDown"  />
@@ -254,7 +245,7 @@
                         <Label Content="{DynamicResource Display_Resolution}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
 
 
                         </ComboBox>
@@ -266,7 +257,7 @@
                         <Label Content="{DynamicResource Display_Refresh}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged">
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged">
                             
                             
                         </ComboBox>
@@ -276,7 +267,7 @@
                         <Label Content="{DynamicResource Display_Scaling}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
 
                         </Label>
-                        <ComboBox x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
                             <ComboBoxItem Content="Default" />
                             <ComboBoxItem Content="100" />
                             <ComboBoxItem Content="125" />
@@ -287,6 +278,46 @@
                         </ComboBox>
 
                     </DockPanel>
+                </Grid>
+
+
+
+
+
+            </GroupBox>
+
+            <GroupBox Name="GBProfiles" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="PROFILE CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlProfile"  Toggled="enableControlProfile_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                    </DockPanel>
+                </GroupBox.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                   
+
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                 
+
+
+                    <DockPanel   >
+                        <Label Content="{DynamicResource ActiveProfile}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboProfile" Text="" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboProfile_SelectionChanged">
+
+
+                        </ComboBox>
+
+
+                    </DockPanel>
+
+                  
                 </Grid>
 
 

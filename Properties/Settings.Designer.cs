@@ -298,5 +298,17 @@ namespace Power_Control_Panel.Properties {
                 this["Language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showProfiles {
+            get {
+                return ((bool)(this["showProfiles"]));
+            }
+            set {
+                this["showProfiles"] = value;
+            }
+        }
     }
 }

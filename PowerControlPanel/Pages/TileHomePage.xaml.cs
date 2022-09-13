@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -78,7 +79,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
             else { labelMAXCPUValue.Content = GlobalVariables.cpuMaxFrequency + " MHz"; }
 
-
+            //active profile
+            labelActiveProfileValue.Content = GlobalVariables.ActiveProfile;
 
             //active core updates
             labelActiveCoresValue.Content = GlobalVariables.cpuActiveCores;
@@ -89,8 +91,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             labelDisplayScalingValue.Content = GlobalVariables.scaling + " %";
             labelDisplayResolutionValue.Content = GlobalVariables.resolution;
 
-
-
+      
             //system values
             labelBrightnessValue.Content = GlobalVariables.brightness + " %";
             labelVolumeValue.Content = GlobalVariables.volume + " %";
@@ -110,11 +111,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             
          
-            currentControl = tile.Title;
+            currentControl = tile.Name;
+            string controlTitle = tile.Title;
             GBChangeValue.Visibility = Visibility.Visible;
             switch (currentControl)
             {
-                case ("TDP Sustain"):
+                case ("TDPSustain"):
                     dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = Properties.Settings.Default.minTDP;
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
@@ -137,7 +139,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
 
-                case "TDP Boost":
+                case "TDPBoost":
                     dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = Properties.Settings.Default.minTDP;
                     generalSlider.Maximum = Properties.Settings.Default.maxTDP;
@@ -171,7 +173,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.VolumeUpSolid;
                     iconAwesome.Visibility = Visibility.Visible;
                     break;
-                case "GPU Clock":
+                case "GPUCLK":
                     dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 300;
                     generalSlider.Maximum = Properties.Settings.Default.maxGPUCLK;
@@ -193,7 +195,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.ExpansionCard;
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
-                case "Max CPU Freq":
+                case "MaxCPU":
                     dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = GlobalVariables.baseCPUSpeed;
                     generalSlider.Maximum = 5000;
@@ -212,7 +214,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Memory;
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
-                case "Active CPU Cores":
+                case "ActiveCores":
                     dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = 1;
                     generalSlider.Maximum = GlobalVariables.maxCpuCores;
@@ -222,33 +224,43 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconMaterial.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Memory;
                     iconMaterial.Visibility = Visibility.Visible;
                     break;
-                case "Display Resolution":
+                case "DisplayResolution":
                     dpCombobox.Visibility = Visibility.Visible;
                     cbochangeValue.ItemsSource = GlobalVariables.resolutions;
                     cbochangeValue.Text = GlobalVariables.resolution;
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Monitor;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
-                case "Display Refresh":
+                case "DisplayRefresh":
                     dpCombobox.Visibility = Visibility.Visible;
                     cbochangeValue.ItemsSource = GlobalVariables.refreshRates;
                     cbochangeValue.Text = GlobalVariables.refreshRate;
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorShimmer;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
-                case "Display Scaling":
+                case "DisplayScaling":
                     dpCombobox.Visibility = Visibility.Visible;
                     cbochangeValue.ItemsSource = GlobalVariables.scalings;
                     cbochangeValue.Text = GlobalVariables.scaling;
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorScreenshot;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
+                case "ActiveProfile":
+                    dpCombobox.Visibility = Visibility.Visible;
+                    cbochangeValue.ItemsSource = PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.profileListForHomePage();
+
+                    cbochangeValue.Text = GlobalVariables.ActiveProfile;
+                    iconAwesomecbo.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BookSolid;
+                    iconAwesomecbo.Visibility = Visibility.Visible;
+                    break;
+
+                //
                 default:
                     break;
 
             }
 
-            labelSlider.Content = "Change " + currentControl;
+            labelSlider.Content = "Change " + controlTitle;
             Task.Delay(100);
             controlActive = true;
         }
@@ -356,10 +368,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 {
                     switch (currentControl)
                     {
-                        case "TDP Sustain":
+                        case "TDPSustain":
                             HandleChangingTDP((int)generalSlider.Value, (int)GlobalVariables.readPL2, true);
                             break;
-                        case "TDP Boost":
+                        case "TDPBoost":
                             HandleChangingTDP((int)GlobalVariables.readPL1, (int)generalSlider.Value, false);
                             break;
                         case "TDP":
@@ -372,14 +384,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         case "Volume":
                             HandleChangingVolume((int)generalSlider.Value);
                             break;
-                        case "GPU Clock":
+                        case "GPUCLK":
                             HandleChangingGPUCLK((int)generalSlider.Value);
                             labelSliderMessage.Visibility = Visibility.Collapsed;
                             break;
-                        case "Max CPU Freq":
+                        case "MaxCPU":
                             HandleChangingMAXCPU((int)generalSlider.Value);
                             break;
-                        case "Active CPU Cores":
+                        case "ActiveCores":
                             HandleChangingActiveCores((int)generalSlider.Value);
                             break;
                         default:
@@ -394,12 +406,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     switch (currentControl)
                     {
 
-                        case "GPU Clock":
+                        case "GPUCLK":
 
                             labelSliderMessage.Visibility = Visibility.Collapsed;
                             labelSliderValue.Visibility = Visibility.Visible;
                             break;
-                        case "Max CPU Freq":
+                        case "MaxCPU":
                             if (generalSlider.Value == generalSlider.Maximum)
                             {
                                 labelSliderMessage.Visibility = Visibility.Visible;
@@ -557,20 +569,30 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 {
                     switch (currentControl)
                     {
-                        case "Display Refresh":
+                        case "DisplayRefresh":
                             if (GlobalVariables.refreshRate != cbochangeValue.SelectedItem)
                             { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayRefreshRate(cbochangeValue.SelectedItem.ToString()); }
 
                             break;
-                        case "Display Resolution":
+                        case "DisplayResolution":
                             if (GlobalVariables.resolution != cbochangeValue.SelectedItem && cbochangeValue.SelectedItem != "Custom Scaling")
                             { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayResolution(cbochangeValue.SelectedItem.ToString()); }
 
                             break;
-                        case "Display Scaling":
+                        case "DisplayScaling":
                             if (cbochangeValue.SelectedValue.ToString() != "Default")
                             {
                                 PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cbochangeValue.SelectedValue.ToString());
+                            }
+                            break;
+                        case "ActiveProfile":
+                            if (cbochangeValue.SelectedValue.ToString() != "None")
+                            {
+                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cbochangeValue.SelectedValue.ToString());
+                            }
+                            else
+                            {
+                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("None");
                             }
                             break;
                         default:

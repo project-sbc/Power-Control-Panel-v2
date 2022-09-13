@@ -12,16 +12,7 @@
 
 
     <Page.Resources>
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="White" />
-            <Setter Property="FontSize" Value="20"/>
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="SelectedValuePath" Value="Content"/>
 
-        </Style>
 
 
     </Page.Resources>
@@ -247,7 +238,7 @@
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource Display_Resolution}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel   >
-                            <ComboBox x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
+                            <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" x:Name="cboResolution" FontSize="20" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
 
 
                             </ComboBox>
@@ -272,7 +263,7 @@
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource Display_Refresh}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel   >
-                            <ComboBox x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged"/>
+                            <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" x:Name="cboRefreshRate" FontSize="20" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged"/>
                         </DockPanel>
                     </StackPanel>
 
@@ -290,7 +281,7 @@
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource Display_Scaling}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel   >
-                            <ComboBox x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
+                            <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
                                 <ComboBoxItem Content="Default" />
                                 <ComboBoxItem Content="100" />
                                 <ComboBoxItem Content="125" />
@@ -310,10 +301,27 @@
             </Border>
 
 
+            <Border   x:Name="bdProfiles" BorderThickness="1" CornerRadius="15" Margin="5,5,5,5" DockPanel.Dock="Top" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}">
+                <DockPanel>
+
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="60"
+                                               Height="60" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
+                                               Kind="BookSolid" DockPanel.Dock="Left" />
+                    <StackPanel DockPanel.Dock="Right">
+                        <Label Content="{DynamicResource ActiveProfile}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+                        <DockPanel   >
+                            <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboProfile" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboProfile_SelectionChanged">
+                            </ComboBox>
+                        </DockPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
 
 
 
-         
+
+
+
         </StackPanel>
     </ScrollViewer>
 </Page>

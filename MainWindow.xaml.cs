@@ -72,6 +72,7 @@ namespace Power_Control_Panel
         public static string ActiveApp = "None";
         public static string powerStatus = "";
         public static bool updateProfileAppTable = false;
+        
 
         //display settings
         public static string resolution = "";
@@ -243,8 +244,11 @@ namespace Power_Control_Panel
         }
         private void timerTick(object sender, EventArgs e)
         {
-            //Controller input handler
+            //update power status
+            
 
+
+            //Controller input handler
             getController();
 
 
@@ -335,12 +339,16 @@ namespace Power_Control_Panel
             {
                 //if there is active app
 
+                //if active app profile changed in settings while running it
+                if (profileCase == "" && setApp == GlobalVariables.ActiveApp && setProfile != GlobalVariables.ActiveProfile)
+                { profileCase = "Apply Profile"; }
+
                 //if power changed but set app and active app are same, reapply profile
                 if (profileCase == "" && setApp == GlobalVariables.ActiveApp && Power != GlobalVariables.powerStatus && GlobalVariables.ActiveApp != "None")
                 { profileCase = "Reapply Profile"; }
 
                 //if active app closes and no new app opens
-                if (profileCase == "" && setApp == "")
+                if (profileCase == "" && setApp == "" && GlobalVariables.ActiveProfile != "Default")
                 { profileCase = "Remove Profile"; }
 
                 //if active app closes and new app is detected
@@ -366,7 +374,7 @@ namespace Power_Control_Panel
             }
 
                     
-
+            GlobalVariables.powerStatus = Power;
             //scenarios
             //program opens,  key indicator is  
             
@@ -380,16 +388,17 @@ namespace Power_Control_Panel
                 case "Nothing":
                     break;
                 case "Reapply Profile":
-                    ManageXML_Profiles.applyProfile(GlobalVariables.ActiveProfile, Power);
+                    ManageXML_Profiles.applyProfile(GlobalVariables.ActiveProfile);
                     break;
                 case "Apply Profile":
                     GlobalVariables.ActiveApp = setApp;
-                    ManageXML_Profiles.applyProfile(profile, Power);
+                    ManageXML_Profiles.applyProfile(setProfile);
 
                     break;
                 case "Remove Profile":
                     //if no default profile exists, active profile of none is applied
-                    ManageXML_Profiles.applyProfile("Default", Power);
+                    GlobalVariables.ActiveApp = "None";
+                    ManageXML_Profiles.applyProfile("Default");
                     break;
             }
         }

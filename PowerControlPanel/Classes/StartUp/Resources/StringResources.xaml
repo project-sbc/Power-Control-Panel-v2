@@ -26,7 +26,8 @@
     <system:String x:Key="Display_Resolution">Display Resolution</system:String>
     <system:String x:Key="Display_Refresh">Display Refresh Rate</system:String>
     <system:String x:Key="Display_Scaling">Display Scaling (%)</system:String>
-
+    <system:String x:Key="ActiveProfile">Active Profile</system:String>
+    
     <system:String x:Key="SystemControls">SYSTEM CONTROLS</system:String>
     
     <!-- profiles page -->
@@ -51,8 +52,8 @@
 
     <!-- Tile Homepage -->
     <system:String x:Key="TileHomePage_TDP">TDP</system:String>
-    <system:String x:Key="TileHomePage_TDPBoost">Max CPU Freq</system:String>
-    <system:String x:Key="TileHomePage_TDPSustained">Max CPU Freq</system:String>
+    <system:String x:Key="TileHomePage_TDPBoost">TDP Boost</system:String>
+    <system:String x:Key="TileHomePage_TDPSustained">TDP Sustained</system:String>
     <system:String x:Key="TileHomePage_MaxCPU">Max CPU Freq</system:String>
     <system:String x:Key="TileHomePage_ActiveCores">Active Cores</system:String>
     <system:String x:Key="TileHomePage_Brightness">Brightness</system:String>
@@ -61,7 +62,8 @@
     <system:String x:Key="TileHomePage_Resolution">Display Resolution</system:String>
     <system:String x:Key="TileHomePage_Scaling">Display Scaling</system:String>
     <system:String x:Key="TileHomePage_Refresh">Display Refresh</system:String>
-
+    <system:String x:Key="TileHomePage_ActiveProfile">Active Profile</system:String>
+    
     <!-- Settings {DynamicResource HomePage_Brightness} -->
     <system:String x:Key="Settings_GeneralSettings">GENERAL SETTINGS</system:String>
     <system:String x:Key="Settings_AMDSettings">AMD SETTINGS</system:String>

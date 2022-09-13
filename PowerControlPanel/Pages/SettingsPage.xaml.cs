@@ -98,7 +98,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             //Reapply theme
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
-
+            
             savedMessage();
 
         }
