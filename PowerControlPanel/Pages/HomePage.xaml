@@ -285,6 +285,46 @@
 
 
             </GroupBox>
+
+            <GroupBox Name="GBProfiles" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="PROFILE CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlProfile"  Toggled="enableControlProfile_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
+                    </DockPanel>
+                </GroupBox.Header>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                   
+
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                 
+
+
+                    <DockPanel   >
+                        <Label Content="Profiles" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboProfile" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboProfile_SelectionChanged">
+
+
+                        </ComboBox>
+
+
+                    </DockPanel>
+
+                  
+                </Grid>
+
+
+
+
+
+            </GroupBox>
         </StackPanel>
     </ScrollViewer>
 </Page>

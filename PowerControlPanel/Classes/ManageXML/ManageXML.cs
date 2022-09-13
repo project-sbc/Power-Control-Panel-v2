@@ -213,98 +213,107 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
             return result;
         }
 
-        public static void applyProfile(string profileName, string powerStatus)
+        public static void applyProfile(string profileName)
         {
-
-            System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
-            xmlDocument.Load(GlobalVariables.xmlFile);
-            XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
-            XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("Profile/ProfileName[text()='" + profileName + "']");
-            if (xmlSelectedNode != null)
+            if (profileName != "None")
             {
-                XmlNode parentNode = xmlSelectedNode.ParentNode;
-
-                if (parentNode != null)
+                string powerStatus = SystemParameters.PowerLineStatus.ToString();
+                System.Xml.XmlDocument xmlDocument = new System.Xml.XmlDocument();
+                xmlDocument.Load(GlobalVariables.xmlFile);
+                XmlNode xmlNode = xmlDocument.SelectSingleNode("//Configuration/Profiles");
+                XmlNode xmlSelectedNode = xmlNode.SelectSingleNode("Profile/ProfileName[text()='" + profileName + "']");
+                if (xmlSelectedNode != null)
                 {
-                    GlobalVariables.ActiveProfile = profileName;
-                  
+                    XmlNode parentNode = xmlSelectedNode.ParentNode;
 
-                    XmlNode powerNode;
-                    if (powerStatus == "Online")
+                    if (parentNode != null)
                     {
-                        powerNode = parentNode.SelectSingleNode("Online");
-                    }
-                    else
-                    {
-                        powerNode = parentNode.SelectSingleNode("Offline");
-                    }
-                    string tdp1="";
-                    string tdp2="";
-                    foreach (XmlNode node in powerNode.ChildNodes)
-                    {
-                        if (node.Name == "TDP1") 
-                        { 
-                            if (node.InnerText != "")
+                        GlobalVariables.ActiveProfile = profileName;
+
+
+                        XmlNode powerNode;
+                        if (powerStatus == "Online")
+                        {
+                            powerNode = parentNode.SelectSingleNode("Online");
+                        }
+                        else
+                        {
+                            powerNode = parentNode.SelectSingleNode("Offline");
+                        }
+                        string tdp1 = "";
+                        string tdp2 = "";
+                        foreach (XmlNode node in powerNode.ChildNodes)
+                        {
+                            if (node.Name == "TDP1")
                             {
-                                tdp1 = node.InnerText;
-                                if (tdp2 != "")
+                                if (node.InnerText != "")
                                 {
-                                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                    tdp1 = node.InnerText;
+                                    if (tdp2 != "")
+                                    {
+                                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                    }
+                                    //
                                 }
-                                //
+
                             }
-                        
-                        }
-                        if (node.Name == "TDP2")
-                        {
-                            if (node.InnerText != "")
+                            if (node.Name == "TDP2")
                             {
-                                tdp2 = node.InnerText;
-                                if (tdp1 != "")
+                                if (node.InnerText != "")
                                 {
-                                    Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                    tdp2 = node.InnerText;
+                                    if (tdp1 != "")
+                                    {
+                                        Classes.TaskScheduler.TaskScheduler.runTask(() => GlobalVariables.tdp.changeTDP(Convert.ToInt32(tdp1), Convert.ToInt32(tdp2)));
+                                    }
                                 }
-                            }
 
-                        }
-                        if (node.Name == "GPUCLK")
-                        {
-                            if (node.InnerText != "")
+                            }
+                            if (node.Name == "GPUCLK")
                             {
-                                Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(Convert.ToInt32(node.InnerText)));
-                            }
+                                if (node.InnerText != "")
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(Convert.ToInt32(node.InnerText)));
+                                }
 
-                        }
-                        if (node.Name == "MAXCPU")
-                        {
-                            if (node.InnerText != "")
+                            }
+                            if (node.Name == "MAXCPU")
                             {
-                                Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeCPUMaxFrequency(Convert.ToInt32(node.InnerText)));
-                            }
+                                if (node.InnerText != "")
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeCPUMaxFrequency(Convert.ToInt32(node.InnerText)));
+                                }
 
-                        }
-                        if (node.Name == "ActiveCores")
-                        {
-                            if (node.InnerText != "")
+                            }
+                            if (node.Name == "ActiveCores")
                             {
-                                Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeActiveCores(Convert.ToInt32(node.InnerText)));
+                                if (node.InnerText != "")
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => changeCPU.ChangeCPU.changeActiveCores(Convert.ToInt32(node.InnerText)));
+                                }
+
                             }
 
                         }
-                        
+
                     }
-                                      
+
+
                 }
-
-
+                else
+                {
+                    //if profile is default and no profile was detected make activeprofile none
+                    GlobalVariables.ActiveProfile = "None";
+                    GlobalVariables.ActiveApp = "None";
+                }
+                xmlDocument = null;
             }
             else
             {
-                //if profile is default and no profile was detected make activeprofile none
-                GlobalVariables.ActiveProfile = "None";
+                GlobalVariables.ActiveProfile = profileName;
                 GlobalVariables.ActiveApp = "None";
             }
-            xmlDocument = null;
+ 
 
         }
 

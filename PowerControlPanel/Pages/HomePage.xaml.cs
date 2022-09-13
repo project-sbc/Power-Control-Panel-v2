@@ -43,6 +43,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool changingRefreshRate = false;
         private bool changingScaling = false;
 
+        //profiles
+        private bool changingProfiles = false;
+
         //AMD gpu clk
         private bool dragStartedGPUCLK = false;
         private bool changingGPUCLK = false;
@@ -243,7 +246,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                 }
             }
-  
+
+            //profile
+            if (!changingProfiles)
+            {
+                changingProfiles = true;
+                cboProfile.Text = GlobalVariables.ActiveProfile;
+                changingProfiles = false;
+
+            }
+
             //system values
             if (enableSystem)
             {
@@ -1000,6 +1012,38 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             handleVisibility();
         }
 
-  
+        private void cboProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!changingProfiles)
+            {
+                if (cboProfile.SelectedValue.ToString() != "None")
+                {
+                    PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cboProfile.SelectedValue.ToString());
+                }
+                else
+                {
+                    PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("None");
+                }
+            }
+        }
+
+        private void enableControlProfile_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (this.IsLoaded)
+            {
+                if (enableControlProfile.IsOn)
+                {
+                    GBProfiles.Height = 200;
+                    Properties.Settings.Default.showProfiles = true;
+                }
+                else
+                {
+                    GBProfiles.Height = 40;
+                    Properties.Settings.Default.showProfiles = false;
+                }
+                Properties.Settings.Default.Save();
+            }
+
+        }
     }
 }

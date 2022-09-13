@@ -43,7 +43,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             double roundClockSpeed = Math.Round(Convert.ToDouble(baseClockSpeed) / 100, 0) * 100;
             GlobalVariables.baseCPUSpeed = (int)roundClockSpeed;
             GlobalVariables.powerStatus = SystemParameters.PowerLineStatus.ToString();
-            PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("Default", GlobalVariables.powerStatus);
+            PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("Default");
 
             //unhide core parking from power plan
             RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMAXCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);

@@ -104,6 +104,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Pictures\PCP.ico" />
+    <Content Include="Resources\Pictures\ProjectSBC.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\QRes\QRes.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -131,11 +134,6 @@
 		<Reference Include="RTSSSharedMemoryNET">
 			<HintPath>Resources\RTSS\RTSSSharedMemoryNET.dll</HintPath>
 		</Reference>
-	</ItemGroup>
-	<ItemGroup>
-	  <SplashScreen Include="Resources\Pictures\ProjectSBC.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </SplashScreen>
 	</ItemGroup>
 
   <ItemGroup>

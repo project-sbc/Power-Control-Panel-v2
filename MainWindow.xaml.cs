@@ -388,17 +388,17 @@ namespace Power_Control_Panel
                 case "Nothing":
                     break;
                 case "Reapply Profile":
-                    ManageXML_Profiles.applyProfile(GlobalVariables.ActiveProfile, Power);
+                    ManageXML_Profiles.applyProfile(GlobalVariables.ActiveProfile);
                     break;
                 case "Apply Profile":
                     GlobalVariables.ActiveApp = setApp;
-                    ManageXML_Profiles.applyProfile(setProfile, Power);
+                    ManageXML_Profiles.applyProfile(setProfile);
 
                     break;
                 case "Remove Profile":
                     //if no default profile exists, active profile of none is applied
                     GlobalVariables.ActiveApp = "None";
-                    ManageXML_Profiles.applyProfile("Default", Power);
+                    ManageXML_Profiles.applyProfile("Default");
                     break;
             }
         }

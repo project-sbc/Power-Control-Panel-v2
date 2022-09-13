@@ -247,7 +247,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     break;
                 case "ActiveProfile":
                     dpCombobox.Visibility = Visibility.Visible;
-                    cbochangeValue.ItemsSource = PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.profileListForAppCBO();
+                    cbochangeValue.ItemsSource = PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.profileListForHomePage();
 
                     cbochangeValue.Text = GlobalVariables.ActiveProfile;
                     iconAwesomecbo.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BookSolid;
@@ -588,11 +588,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         case "ActiveProfile":
                             if (cbochangeValue.SelectedValue.ToString() != "None")
                             {
-                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cbochangeValue.SelectedValue.ToString(), SystemParameters.PowerLineStatus.ToString());
+                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cbochangeValue.SelectedValue.ToString());
                             }
                             else
                             {
-                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("Default", SystemParameters.PowerLineStatus.ToString());
+                                PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("None");
                             }
                             break;
                         default:
