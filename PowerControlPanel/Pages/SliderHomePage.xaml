@@ -301,10 +301,27 @@
             </Border>
 
 
+            <Border   x:Name="bdProfiles" BorderThickness="1" CornerRadius="15" Margin="5,5,5,5" DockPanel.Dock="Top" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}">
+                <DockPanel>
+
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="60"
+                                               Height="60" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
+                                               Kind="BookSolid" DockPanel.Dock="Left" />
+                    <StackPanel DockPanel.Dock="Right">
+                        <Label Content="{DynamicResource ActiveProfile}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+                        <DockPanel   >
+                            <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboProfile" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboProfile_SelectionChanged">
+                            </ComboBox>
+                        </DockPanel>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
 
 
 
-         
+
+
+
         </StackPanel>
     </ScrollViewer>
 </Page>

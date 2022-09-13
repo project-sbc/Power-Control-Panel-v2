@@ -84,6 +84,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //Add list of resolution refresh to combo box
             displayItemSourceBind();
 
+            //set profile list
+            changingProfiles = true;
+            cboProfile.ItemsSource = PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.profileListForHomePage();
+            changingProfiles = false;
+
             loadUpdateValues();
 
             //force touch due to wpf bug 

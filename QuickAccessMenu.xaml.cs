@@ -105,7 +105,7 @@ namespace Power_Control_Panel
 
             if (e.InvokedItem is MenuItem menuItem)
             {
-                if (menuItem.Label == "Hide")
+                if (menuItem.Label == "Hide" ^ menuItem.Label == "隐藏")
                 {
                     this.Close();
 

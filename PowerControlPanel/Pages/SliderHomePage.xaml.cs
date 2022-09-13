@@ -53,7 +53,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool enableSystem = Properties.Settings.Default.enableSystem;
         private bool enableDisplay = Properties.Settings.Default.enableDisplay;
         private bool enableCPU = Properties.Settings.Default.enableCPU;
-
+        //profiles
+        private bool changingProfiles = false;
 
         private bool dragStartedMAXCPU = false;
         private bool changingMAXCPU = false;
@@ -78,6 +79,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             //Add list of resolution refresh to combo box
             displayItemSourceBind();
+
+            changingProfiles = true;
+            cboProfile.ItemsSource = PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.profileListForHomePage();
+            changingProfiles = false;
 
             loadUpdateValues();
 
@@ -215,6 +220,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             }
 
+            //profile
+            if (!changingProfiles)
+            {
+                changingProfiles = true;
+                cboProfile.Text = GlobalVariables.ActiveProfile;
+                changingProfiles = false;
+
+            }
 
             //display updates
             if (enableDisplay)
@@ -840,7 +853,20 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
         }
-
+        private void cboProfile_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!changingProfiles)
+            {
+                if (cboProfile.SelectedValue.ToString() != "None")
+                {
+                    PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cboProfile.SelectedValue.ToString());
+                }
+                else
+                {
+                    PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("None");
+                }
+            }
+        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             handleVisibility();
