@@ -35,14 +35,14 @@
                                         LineSmoothness="0" />
                     </lvc:CartesianChart.Series>
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Fan Percentage %" MinValue="0" MaxValue="100" FontSize="12" Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}">
+                        <lvc:Axis Title="Fan Percentage %"  MinValue="0" MaxValue="100" FontSize="12" Foreground="DarkGray">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Stroke="DarkGray"/>
                             </lvc:Axis.Separator>
                         </lvc:Axis>
                     </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="CPU Temperature Degree" MinValue="0" MaxValue="100" FontSize="12" Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}">
+                        <lvc:Axis Title="CPU Temperature Degree" MinValue="0" MaxValue="100" FontSize="12" Foreground="DarkGray">
                             <lvc:Axis.Separator>
                                 <lvc:Separator Stroke="DarkGray"/>
                             </lvc:Axis.Separator>
