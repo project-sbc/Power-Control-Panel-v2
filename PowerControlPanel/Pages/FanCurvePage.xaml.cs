@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using ControlzEx.Theming;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -28,6 +28,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         public FanCurvePage()
         {
             InitializeComponent();
+            //apply theme
+            ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
 
             CPUTempFanPercentagePoints = new();
             CPUTempFanPercentagePoints.Add(new ObservablePoint() { X = 0, Y = 50 });
