@@ -11,6 +11,8 @@
         Background="Transparent"
         AllowsTransparency="True"
         Focusable="False"
+                
+                 
         Title="OnScreenKeyboard" Height="450" Width="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}" x:Name="Keyboard"  ShowInTaskbar="False" Closing="Keyboard_Closing" >
 
     <Window.Resources>

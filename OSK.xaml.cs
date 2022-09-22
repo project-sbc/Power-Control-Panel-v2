@@ -22,6 +22,7 @@ using System.Text.RegularExpressions;
 using Power_Control_Panel.PowerControlPanel.Classes;
 using System.Diagnostics;
 using ControlzEx.Theming;
+using System.Windows.Interop;
 
 namespace Power_Control_Panel
 {
@@ -115,7 +116,20 @@ namespace Power_Control_Panel
        };
 
         private System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-  
+
+        [DllImport("user32.dll")]
+        static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        const UInt32 SWP_NOSIZE = 0x0001;
+        const UInt32 SWP_NOMOVE = 0x0010;
+        const UInt32 SWP_SHOWWINDOW = 0x0040;
+
+        // Call this way:
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
         public OSK()
         {
             InitializeComponent();
@@ -139,8 +153,8 @@ namespace Power_Control_Panel
 
             //swap upper and lower case letters
             swapAlphaUpperLower(false);
-
-
+            IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+            SetWindowPos(windowHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
         }
 
         #region Controller press events
