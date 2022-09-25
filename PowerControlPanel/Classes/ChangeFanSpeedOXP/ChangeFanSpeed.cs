@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Management;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFanSpeedOXP
 {
@@ -24,8 +25,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFanSpeedOXP
                 if (result.Contains("0x00"))
                 {
                     GlobalVariables.fanControlEnable = false;
+                    GlobalVariables.fanControlMode = "Hardware";
                 }
-                else { GlobalVariables.fanControlEnable = true; }
+                else 
+                { 
+                    GlobalVariables.fanControlEnable = true;
+                    GlobalVariables.fanControlMode = "Manual";
+
+                }
 
 
             }
@@ -34,40 +41,53 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFanSpeedOXP
         }
         public static void readFanSpeed()
         {
-            string processEC = AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\EC\\EC.exe";
-            string argument = " -winring0 -r 0x4B";
-
-            string result = "";
-
-            result = RunCLI.RunCommand(argument, true, processEC, 2000);
-
-            if (result != null)
+            try
             {
-                result = result.Replace("\r", "").Trim();
-                result = result.Replace("\n", "").ToUpper();
-                int decValue = Convert.ToInt32(result, 16);
-           
-                double fanPercentage = Math.Round(100*((double)decValue / (double)GlobalVariables.fanRangeBase),0);
-                GlobalVariables.fanSpeed = (int)fanPercentage;
+                string processEC = AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\EC\\EC.exe";
+                string argument = " -winring0 -r 0x4B";
+
+                string result = "";
+
+                result = RunCLI.RunCommand(argument, true, processEC, 2000);
+
+                if (result != null)
+                {
+                    result = result.Replace("\r", "").Trim();
+                    result = result.Replace("\n", "").ToUpper();
+                    int decValue = Convert.ToInt32(result, 16);
+
+                    double fanPercentage = Math.Round(100 * ((double)decValue / (double)GlobalVariables.fanRangeBase), 0);
+                    GlobalVariables.fanSpeed = (int)fanPercentage;
+                }
+            }
+            catch { 
+            
             }
 
+        }
+        public static void generateFanControlModeList()
+        {
+
+            GlobalVariables.FanModes.Add("Hardware");
+            GlobalVariables.FanModes.Add("Manual");
+      
 
         }
         public static void enableSoftwareFanControl()
         {
             string processEC = AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\EC\\EC.exe";
-            string argument = " -winring0 -W 0x4A 0x01";
+            string argument = " -winring0 -w 0x4A 0x01";
 
             string result = "";
 
             result = RunCLI.RunCommand(argument, false, processEC, 2000);
-
+            Thread.Sleep(400);
             readSoftwareFanControl();
         }
         public static void disableSoftwareFanControl()
         {
             string processEC = AppDomain.CurrentDomain.BaseDirectory + "\\Resources\\EC\\EC.exe";
-            string argument = " -winring0 -W 0x4A 0x00";
+            string argument = " -winring0 -w 0x4A 0x00";
 
             string result = "";
 
@@ -90,7 +110,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFanSpeedOXP
                     hexValue = normalizedFanSpeed.ToString("X");
                 }
                 
-                string argument = " -winring0 -W 0x4B " + hexValue;
+                string argument = " -winring0 -w 0x4B " + hexValue;
 
 
 

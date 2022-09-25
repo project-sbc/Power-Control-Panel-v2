@@ -43,10 +43,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 TDPSustain.Visibility = Visibility.Visible;
             }
 
+            //hide fan control if device is not fan control capable
+            if (!GlobalVariables.fanControlDevice)
+            {
+                FanSpeed.Visibility = Visibility.Collapsed;
+            }
+
+
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
             initializeTimer();
             loadUpdateValues();
-            GBChangeValue.Visibility = Visibility.Collapsed;
+
 
 
             //force touch due to wpf bug 
@@ -85,13 +92,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //active core updates
             labelActiveCoresValue.Content = GlobalVariables.cpuActiveCores;
 
+            //rtss fps limit
+            labelFPSLimitValue.Content = GlobalVariables.FPSLimit;
 
             //display updates
             labelDisplayRefreshValue.Content = GlobalVariables.refreshRate + " Hz";
             labelDisplayScalingValue.Content = GlobalVariables.scaling + " %";
             labelDisplayResolutionValue.Content = GlobalVariables.resolution;
 
-      
+            //label fan speed
+            labelFanSpeedValue.Content = GlobalVariables.fanSpeed + " %";
+
             //system values
             labelBrightnessValue.Content = GlobalVariables.brightness + " %";
             labelVolumeValue.Content = GlobalVariables.volume + " %";
@@ -231,6 +242,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.Monitor;
                     iconMaterialcbo.Visibility = Visibility.Visible;
                     break;
+                case "FPSLimit":
+                    dpCombobox.Visibility = Visibility.Visible;
+                    cbochangeValue.ItemsSource = GlobalVariables.FPSLimits;
+                    cbochangeValue.Text = GlobalVariables.FPSLimit;
+                    iconMaterialcbo.Kind = MahApps.Metro.IconPacks.PackIconMaterialKind.MonitorLock;
+                    iconMaterialcbo.Visibility = Visibility.Visible;
+                    break;
                 case "DisplayRefresh":
                     dpCombobox.Visibility = Visibility.Visible;
                     cbochangeValue.ItemsSource = GlobalVariables.refreshRates;
@@ -253,7 +271,32 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     iconAwesomecbo.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.BookSolid;
                     iconAwesomecbo.Visibility = Visibility.Visible;
                     break;
+                case "FanSpeed":
+                    dpCombobox.Visibility = Visibility.Visible;
+                    cbochangeValue.ItemsSource = GlobalVariables.FanModes;
 
+                    cbochangeValue.Text = GlobalVariables.fanControlMode;
+
+                    iconAwesome.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.FanSolid;
+                    iconAwesome.Visibility = Visibility.Visible;
+
+
+                    dpSlider.Visibility = Visibility.Visible;
+                    generalSlider.Minimum = 29;
+                    generalSlider.Maximum = 100;
+                    if (GlobalVariables.fanSpeed == 0) 
+                    { 
+                        generalSlider.Value = generalSlider.Minimum;
+                        labelSliderMessage.Visibility = Visibility.Visible;
+                        labelSliderMessage.Content = "Off";
+                        labelSliderValue.Visibility = Visibility.Collapsed;
+                    } else 
+                    { generalSlider.Value = GlobalVariables.fanSpeed; }
+                    
+                    generalSlider.SmallChange = 1;
+                    generalSlider.LargeChange = 1;
+
+                    break;
                 //
                 default:
                     break;
@@ -294,37 +337,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         }
 
 
-        private void Slider_Loaded(object sender, RoutedEventArgs e)
-        {
-            var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
-            if (SliderThumb != null)
-            {
-                if (SliderThumb is Thumb thumb)
-                {
-                    thumb.Width = 35;
-                    thumb.Height = 50;
-                }
-                else { }
-            }
-            else { }
-        }
-        private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
-        {
 
-            //Use element parent for thumb size control on slider
-            int count = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < count; i++)
-            {
-                var child = VisualTreeHelper.GetChild(parent, i);
-                if (child is FrameworkElement childframeworkelement && childframeworkelement.Name == childname)
-                    return child;
-
-                var FindRes = GetElementFromParent(child, childname);
-                if (FindRes != null)
-                    return FindRes;
-            }
-            return null;
-        }
 
         
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -366,34 +379,56 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (!dragStarted & controlActive)
                 {
+                    double sliderValue = generalSlider.Value;
                     switch (currentControl)
                     {
                         case "TDPSustain":
-                            HandleChangingTDP((int)generalSlider.Value, (int)GlobalVariables.readPL2, true);
+                            HandleChangingTDP((int)sliderValue, (int)GlobalVariables.readPL2, true);
                             break;
                         case "TDPBoost":
-                            HandleChangingTDP((int)GlobalVariables.readPL1, (int)generalSlider.Value, false);
+                            HandleChangingTDP((int)GlobalVariables.readPL1, (int)sliderValue, false);
                             break;
                         case "TDP":
-                            HandleChangingTDP((int)generalSlider.Value, (int)generalSlider.Value, true);
+                            HandleChangingTDP((int)sliderValue, (int)sliderValue, true);
                             break;
                         case "Brightness":
-                            HandleChangingBrightness(generalSlider.Value);
+                            GlobalVariables.needBrightnessRead = true;
+                            Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)sliderValue);
                             break;
 
                         case "Volume":
-                            HandleChangingVolume((int)generalSlider.Value);
+                            GlobalVariables.needVolumeRead = true;
+                            Classes.ChangeVolume.AudioManager.SetMasterVolume((float)sliderValue);
                             break;
                         case "GPUCLK":
-                            HandleChangingGPUCLK((int)generalSlider.Value);
+                            HandleChangingGPUCLK((int)sliderValue);
+                            //hide the default label for gpu clk
                             labelSliderMessage.Visibility = Visibility.Collapsed;
                             break;
                         case "MaxCPU":
-                            HandleChangingMAXCPU((int)generalSlider.Value);
+                            int sendMaxCPU = 0;
+                            if ((int)generalSlider.Value != generalSlider.Maximum) { sendMaxCPU = (int)sliderValue; }
+                            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeCPUMaxFrequency((int)sliderValue));
                             break;
                         case "ActiveCores":
-                            HandleChangingActiveCores((int)generalSlider.Value);
+                            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores((int)sliderValue));
                             break;
+                        case "FanSpeed":
+                            if (GlobalVariables.fanControlEnable)
+                            {
+                                if (generalSlider.Value == 29) 
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.setFanSpeed(0));
+                                }
+                                else
+                                {
+                                    Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.setFanSpeed((int)sliderValue));
+
+                                }
+                            }
+
+                            break;
+                            
                         default:
                             break;
                     }
@@ -425,7 +460,20 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                                 labelSliderValue.Visibility = Visibility.Visible;
                             }
                             break;
+                        case "FanSpeed":
+                            if (generalSlider.Value == generalSlider.Minimum)
+                            {
+                                labelSliderMessage.Visibility = Visibility.Visible;
+                                labelSliderMessage.Content = "Off";
+                                labelSliderValue.Visibility = Visibility.Collapsed;
+                            }
+                            else
+                            {
+                                labelSliderMessage.Visibility = Visibility.Collapsed;
 
+                                labelSliderValue.Visibility = Visibility.Visible;
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -469,44 +517,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
           
         }
 
-        void HandleChangingBrightness(double brightness)
-        {
-            GlobalVariables.needBrightnessRead = true;
-            Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)brightness);
-        }
-        void HandleChangingVolume(int volume)
-        {
-            GlobalVariables.needVolumeRead = true;
-            Classes.ChangeVolume.AudioManager.SetMasterVolume((float)volume);
-        }
+   
 
-
-
-        private void HandleChangingMAXCPU(int maxcpu)
-        {
-            if (this.IsLoaded)
-            {
-                int sendMaxCPU = 0;
-                if (maxcpu != generalSlider.Maximum) { sendMaxCPU = maxcpu; }
-
-
-                Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeCPUMaxFrequency(sendMaxCPU));
-            }
-
-
-
-        }
-
-        private void HandleChangingActiveCores(double cores)
-        {
-            if (this.IsLoaded)
-            {
-                Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));
-            }
-
-
-
-        }
+    
 
 
         private void HandleChangingGPUCLK(int gpuclk)
@@ -544,20 +557,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
 
-        private void btnCloseCombobox_Click(object sender, RoutedEventArgs e)
+        private void btnCloseComboboxSlider_Click(object sender, RoutedEventArgs e)
         {
             clearGB();
         }
 
-        private void btnCloseSlider_Click(object sender, RoutedEventArgs e)
-        {
-            clearGB();
-        }
+ 
 
         private void cbochangeValue_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -579,6 +586,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                             { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayResolution(cbochangeValue.SelectedItem.ToString()); }
 
                             break;
+                        case "FPSLimit":
+                            if (GlobalVariables.FPSLimit != cbochangeValue.SelectedItem )
+                            { PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cbochangeValue.SelectedItem.ToString()); }
+
+                            break;
                         case "DisplayScaling":
                             if (cbochangeValue.SelectedValue.ToString() != "Default")
                             {
@@ -595,6 +607,20 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                                 PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile("None");
                             }
                             break;
+                        case "FanSpeed":
+                            if (cbochangeValue.SelectedValue.ToString() == "Hardware")
+                            {
+                                PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.disableSoftwareFanControl();
+
+                            }
+                            if (cbochangeValue.SelectedValue.ToString() == "Manual")
+                            {
+                                PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.enableSoftwareFanControl();
+
+                            }
+
+                            break;
+
                         default:
                             break;
 
@@ -603,6 +629,52 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 }
             }
 
+        }
+
+        private void sliderThumbSize()
+        {
+            //set thumb size, internet routine
+            var SliderThumb = GetElementFromParent(generalSlider as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
+            if (SliderThumb != null)
+            {
+
+                if (SliderThumb is Thumb thumb)
+                {
+
+                    thumb.Width = 20;
+                    thumb.Height = 25;
+                }
+                else { }
+            }
+            else { }
+        }
+
+        private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
+        {
+            //Internet routine for finding thumb of slider
+            //Use element parent for thumb size control on slider
+            int count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is FrameworkElement childframeworkelement && childframeworkelement.Name == childname)
+                    return child;
+
+                var FindRes = GetElementFromParent(child, childname);
+                if (FindRes != null)
+                    return FindRes;
+            }
+            return null;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            //change thumb size and then hide the change window
+            //Needs to be done at loaded page otherwise unable to find thumb in visual tree until control is loaded
+            sliderThumbSize();
+            //hide change window
+            GBChangeValue.Visibility = Visibility.Collapsed;
         }
     }
    

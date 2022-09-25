@@ -53,10 +53,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.PIDandCPUMonitor
                     {
                         GlobalVariables.cpuTemp = Convert.ToDouble(sensor.Value);
                     }
-                    if (sense.Contains("package") && sense.Contains("power"))
-                    {
-                        GlobalVariables.cpuPower = Convert.ToDouble(sensor.Value);
-                    }
+
 
                 }
 

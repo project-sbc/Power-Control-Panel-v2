@@ -201,11 +201,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (GlobalVariables.cpuMaxFrequency == 0)
                 {
+                    changingMAXCPU = true;
                     MAXCPU.Value = MAXCPU.Maximum;
                     txtsliderMAXCPU.Visibility = Visibility.Collapsed;
                     txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
- 
-             
+                    changingMAXCPU = false;
                 }
                 else
                 {
@@ -220,9 +220,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //active core updates
             if (!dragStartedActiveCores && enableCPU)
             {
-
-                    ActiveCores.Value = GlobalVariables.cpuActiveCores;
-  
+                changingActiveCores = true;
+                ActiveCores.Value = GlobalVariables.cpuActiveCores;
+                changingActiveCores = false;
             }
 
 
@@ -946,7 +946,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             if (this.IsLoaded)
             {
-                if (dragStartedActiveCores == false)
+                if (dragStartedActiveCores == false && !changingActiveCores)
                 {
                     changingActiveCores = true;
                     Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));

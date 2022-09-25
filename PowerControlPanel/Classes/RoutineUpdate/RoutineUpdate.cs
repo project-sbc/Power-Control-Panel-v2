@@ -35,10 +35,15 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
                 Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeVolume.AudioManager.GetMasterVolume());
                 Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeBrightness.WindowsSettingsBrightnessController.getBrightness());
 
-                if (GlobalVariables.fanControlDevice && GlobalVariables.fanControlEnable)
+                if (GlobalVariables.fanControlDevice)
                 {
                     Classes.TaskScheduler.TaskScheduler.runTask(() => ChangeFanSpeedOXP.ChangeFanSpeed.readFanSpeed());
+                    
+                }
+                if (counter%2 == 0)
+                {
                     Classes.TaskScheduler.TaskScheduler.runTask(() => PIDandCPUMonitor.PIDCPUMonitor.MonitorCPU());
+
                 }
 
                 if (counter > 10) { 

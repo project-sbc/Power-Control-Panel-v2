@@ -24,6 +24,7 @@ using System.Text;
 using System.Data;
 using Power_Control_Panel.PowerControlPanel.Classes.ManageXML;
 
+using RTSSSharedMemoryNET;
 
 namespace Power_Control_Panel
 {
@@ -65,7 +66,8 @@ namespace Power_Control_Panel
         public static int baseCPUSpeed = 1000;
 
 
-
+        //RTSS fps limit
+        public static string FPSLimit = "Unlocked";
 
         //Profile and app settings
         public static string ActiveProfile = "None";
@@ -82,6 +84,8 @@ namespace Power_Control_Panel
         public static List<string> resolutions = new List<string>();
         public static List<string> refreshRates = new List<string>();
         public static List<string> scalings = new List<string>();
+        public static List<string> FPSLimits = new List<string>();
+        public static List<string> FanModes = new List<string>();
         //TDP change class
         public static PowerControlPanel.Classes.ChangeTDP.ChangeTDP tdp = new PowerControlPanel.Classes.ChangeTDP.ChangeTDP();
 
@@ -97,12 +101,13 @@ namespace Power_Control_Panel
         //fan controls
         public static bool fanControlDevice = false;
         public static bool fanControlEnable = false;
+        public static string fanControlMode = "Hardware";
         public static int fanRangeBase = 100;
         public static int fanSpeed = 0;
 
         //cpu values
         public static double cpuTemp = 0;
-        public static double cpuPower = 0;
+
 
         //language pack
         public static ResourceDictionary languageDict = new ResourceDictionary();
@@ -123,9 +128,9 @@ namespace Power_Control_Panel
         public static Window overlay;
         public static Window osk;
 
+        //notify icon for task tray icon when minimized
         private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
 
-        private Uri currentUri;
         public MainWindow()
         {
 
@@ -148,7 +153,7 @@ namespace Power_Control_Panel
             _ = Tablet.TabletDevices;
 
             //test code here
-          
+
         }
 
  
@@ -185,6 +190,7 @@ namespace Power_Control_Panel
 
         private void setTheme()
         {
+            //set theme, is called at load and when theme is changed in settings. IMPORTANT TO KEEP AS SEPARATE ROUTINE
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
         }
         private void initializeTimer()
@@ -293,13 +299,21 @@ namespace Power_Control_Panel
             }
 
 
-            //Theme manager
+            //Theme manager, set theme if changed in settings
             if (theme != Properties.Settings.Default.systemTheme)
             {
                 setTheme();
                 theme = Properties.Settings.Default.systemTheme;
             }
 
+            //call routine to check if profile needs to be changed because of app running or power change
+            handleRoutineProfileChecker();
+        }
+
+        private void handleRoutineProfileChecker()
+        {
+
+            //------------------------------------ Profile change----------------------------------
 
 
             //Profile or power status change updater
@@ -324,12 +338,12 @@ namespace Power_Control_Panel
                 {
                     setProfile = profile;
                     setApp = exe;
-                    if (exe == GlobalVariables.ActiveApp) 
+                    if (exe == GlobalVariables.ActiveApp)
                     {
                         //if exe name matches current active app then break so that app is always the one picked
                         break;
                     }
-               
+
                 }
             }
 
@@ -373,11 +387,11 @@ namespace Power_Control_Panel
 
             }
 
-                    
+
             GlobalVariables.powerStatus = Power;
             //scenarios
             //program opens,  key indicator is  
-            
+
 
 
 
@@ -401,8 +415,9 @@ namespace Power_Control_Panel
                     ManageXML_Profiles.applyProfile("Default");
                     break;
             }
-        }
 
+
+        }
 
         private void OSKEvent()
         {
@@ -517,7 +532,7 @@ namespace Power_Control_Panel
             //                                                     .FirstOrDefault(x => x.NavigationType == e.Content?.GetType());
 
             // update back button
-            currentUri = e.Uri;
+    
             this.GoBackButton.SetCurrentValue(VisibilityProperty, this.navigationServiceEx.CanGoBack ? Visibility.Visible : Visibility.Collapsed);
         }
 
@@ -563,11 +578,5 @@ namespace Power_Control_Panel
         }
     }
 
-    public static class timerHandler
-    {
-
-
-
-
-    }
+   
 }
