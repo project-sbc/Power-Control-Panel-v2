@@ -124,7 +124,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private ChartValues<ObservablePoint> UpdatePoints(double Value, int index, bool x_or_y)
         {
             if ((Value < 0) || (Value > 100)) { return CPUTempFanPercentagePoints; }
-            if ((index < 0) || (index > 6)) { return CPUTempFanPercentagePoints; }
+            if ((index < 0) || (index > 4)) { return CPUTempFanPercentagePoints; }
             if (CPUTempFanPercentagePoints == null) { return CPUTempFanPercentagePoints; }
 
 
@@ -138,6 +138,42 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
             return CPUTempFanPercentagePoints;
+        }
+
+        // Fanspeed % based on temperature deg Celsisus
+        // Interpolation function (linear), takes list of
+        // coordinates and temperature returns fan speed
+
+        // @Chris, this needs to be moved some place else where you have access to live temperature, fan setpoint and configuration
+        private void DetermineFanspeedBasedOnTemperature(float TemperatureDegCelsius, float[,] Nodes)
+        {
+            int NodeAmount = 4;
+            float FanSpeed = 100.0f; // Use safe default value, not zero!
+
+            // Convert xy list to separate single lists
+            float[] X = new float[NodeAmount];
+            float[] Y = new float[NodeAmount];
+
+            for (int node_index = 0; node_index < NodeAmount; node_index++)
+            {
+                X[node_index] = Nodes[node_index, 0];
+                Y[node_index] = Nodes[node_index, 1];
+            }
+
+            // Figure out between which two nodes the temperature is
+            int i = Array.FindIndex(X, k => TemperatureDegCelsius <= k);
+
+            // Interpolate between those two points
+            FanSpeed = Y[i - 1] + (TemperatureDegCelsius - X[i - 1]) * (Y[i] - Y[i - 1]) / (X[i] - X[i - 1]);
+
+            // Graph for testing
+            // Update
+            //lvLineSeriesActual.Values = new ChartValues<double>() { TemperatureDegCelsius, FanSpeed };
+
+            //CPUTempFanPercentagePoints = new();
+            //CPUTempFanPercentagePoints.Add(new ObservablePoint() { X = TemperatureDegCelsius, Y = FanSpeed });
+
+            //lvLineSeriesActual.Values = CPUTempFanPercentagePoints;
         }
     }
 }
