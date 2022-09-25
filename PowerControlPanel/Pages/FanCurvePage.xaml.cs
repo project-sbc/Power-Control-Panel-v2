@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using LiveCharts;
@@ -66,6 +66,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (double.IsNaN(Value))
                 return;
 
+            NumericUpDown_FanControl2X.Minimum = Value + 1;
+
             lvLineSeriesValues.Values = UpdatePoints(Value, 1, true);
         }
         private void NumericUpDown_FanControl2X_ValueChanged(object sender, System.Windows.RoutedEventArgs e)
@@ -73,6 +75,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             double Value = (double)NumericUpDown_FanControl2X.Value;
             if (double.IsNaN(Value))
                 return;
+
+            NumericUpDown_FanControl1X.Maximum = Value - 1;
 
             lvLineSeriesValues.Values = UpdatePoints(Value, 2, true);
         }
