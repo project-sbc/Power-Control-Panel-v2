@@ -74,5 +74,8 @@
     <Setting Name="showProfiles" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="qamButtonCombo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LB+RB+DPadRight</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

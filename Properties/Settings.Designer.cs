@@ -310,5 +310,17 @@ namespace Power_Control_Panel.Properties {
                 this["showProfiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LB+RB+DPadRight")]
+        public string qamButtonCombo {
+            get {
+                return ((string)(this["qamButtonCombo"]));
+            }
+            set {
+                this["qamButtonCombo"] = value;
+            }
+        }
     }
 }

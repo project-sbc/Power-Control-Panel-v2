@@ -107,7 +107,8 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFanSpeedOXP
                 else
                 {
                     double normalizedFanSpeed = Math.Round(((double)fanSpeed / 100) * 255,0);
-                    hexValue = normalizedFanSpeed.ToString("X");
+                    int fanspeedInt = (int)normalizedFanSpeed;
+                    hexValue = fanspeedInt.ToString("X");
                 }
                 
                 string argument = " -winring0 -w 0x4B " + hexValue;

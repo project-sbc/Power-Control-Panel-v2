@@ -120,8 +120,8 @@ namespace Power_Control_Panel
         private NavigationServiceEx navigationServiceEx;
         private DispatcherTimer timer = new DispatcherTimer();
         
-        private Controller controller;
-        private Gamepad gamepad;
+        public Controller controller;
+        public Gamepad gamepad;
 
         private string theme = Properties.Settings.Default.systemTheme;
 
@@ -153,7 +153,7 @@ namespace Power_Control_Panel
             _ = Tablet.TabletDevices;
 
             //test code here
-
+            
         }
 
  
@@ -195,7 +195,7 @@ namespace Power_Control_Panel
         }
         private void initializeTimer()
         {
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Interval = TimeSpan.FromMilliseconds(15);
             timer.Tick += timerTick;
             timer.Start();
 
@@ -204,7 +204,7 @@ namespace Power_Control_Panel
         private void getController()
         {
             int controllerNum = 1;
-
+            //get controller used, loop controller number if less than 5, so if controller is connected make num = 5 to get out of while loop
             while (controllerNum <5)
             {
                 switch (controllerNum)
@@ -248,24 +248,98 @@ namespace Power_Control_Panel
 
           
         }
+
+        Dictionary<string, GamepadButtonFlags> buttonLookUp =
+    new Dictionary<string, GamepadButtonFlags>()
+    {
+           {"A", GamepadButtonFlags.A },
+           {"B", GamepadButtonFlags.B },
+           {"DPadUp", GamepadButtonFlags.DPadUp },
+           {"DPadDown", GamepadButtonFlags.DPadDown },
+           {"DPadLeft", GamepadButtonFlags.DPadLeft },
+           {"DPadRight", GamepadButtonFlags.DPadRight},
+           {"LB", GamepadButtonFlags.LeftShoulder },
+           {"RB", GamepadButtonFlags.RightShoulder },
+           {"L3", GamepadButtonFlags.LeftThumb },
+           {"R3", GamepadButtonFlags.RightThumb },
+           {"X", GamepadButtonFlags.X },
+           {"Y", GamepadButtonFlags.Y},
+           {"Start", GamepadButtonFlags.Start },
+           {"Back", GamepadButtonFlags.Back },
+     };
+
+        private bool ButtonComboPress(Gamepad gp,string BC)
+        {
+            //make default false
+            bool result = false;
+
+            //split string into array
+            string[] strBC = BC.Split('+');
+            //gamepad flag array
+            GamepadButtonFlags[] qamButtonCombo = new GamepadButtonFlags[strBC.Length];
+            int intCount = 0;
+            foreach (var bc in strBC)
+            {
+                //for each string lookup in the dictionary for the gamepad flag
+                qamButtonCombo[intCount] = buttonLookUp[bc];
+                intCount++;
+            }
+            //set bool to true
+            bool oldGamepadPress = true;
+            bool GamepadPress = true;
+            foreach (GamepadButtonFlags button in qamButtonCombo)
+            {
+                //the press scenario is defined when the old gamepad state doesn't have all buttons pressed but the new state does. This will turn the bool false if any of the buttons arent pressed
+                if (!gamepad.Buttons.HasFlag(button))
+                {
+                    oldGamepadPress = false;
+                }
+                if (!gp.Buttons.HasFlag(button))
+                {
+                    GamepadPress = false;
+                }
+            }
+            //button press is true when current gamepadpress is true and the old gamepad state is false
+            if (!oldGamepadPress && GamepadPress)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+
+            return result;
+
+        }
+
         private void timerTick(object sender, EventArgs e)
         {
-            //update power status
-            
-
-
+         
             //Controller input handler
-            getController();
-
+            if (controller == null) 
+            { 
+                getController(); 
+                if (controller.IsConnected == false)
+                {
+                    getController();
+                }
+            }
 
 
             if (controller != null)
             { 
                 if (controller.IsConnected)
                 {
-                    gamepad = controller.GetState().Gamepad;
+                    Gamepad currentGamepad = controller.GetState().Gamepad;
 
-                    if (gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+
+                    
+
+
+                    //set currentgamepad snapshot to global gamepad for comparison
+                    gamepad = currentGamepad;
+                    if (gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder) && 1==0)
                     {
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight))
                         {
@@ -279,7 +353,8 @@ namespace Power_Control_Panel
                         }
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.B))
                         {
-                            GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 + 1, (int)GlobalVariables.setPL2 + 1);
+                            PowerControlPanel.Classes.EnableFSR.EnableFSR.enableDisableFSR();
+                            //GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 + 1, (int)GlobalVariables.setPL2 + 1);
                         }
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.A))
                         {
@@ -296,7 +371,9 @@ namespace Power_Control_Panel
                     }
 
                 }
+
             }
+
 
 
             //Theme manager, set theme if changed in settings

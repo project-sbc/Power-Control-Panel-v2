@@ -3,27 +3,41 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using WindowsInput;
 using WindowsInput.Native;
 
-namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFPSLimit
+namespace Power_Control_Panel.PowerControlPanel.Classes.EnableFSR
 {
-    public static class ChangeFPSLimit
+    public static class EnableFSR
     {
-        public static void setFPSLimits()
+        public static void enableDisableFSR()
         {
-            GlobalVariables.FPSLimits.Add("Unlocked");
-            GlobalVariables.FPSLimits.Add("30");
-            GlobalVariables.FPSLimits.Add("40");
-            GlobalVariables.FPSLimits.Add("60");
+            InputSimulator sim = new InputSimulator();
+            if (MagpieRunning())
+            {
+                sim.Keyboard.KeyDown(VirtualKeyCode.LMENU);
+                sim.Keyboard.KeyDown(VirtualKeyCode.F11);
+
+                sim.Keyboard.KeyUp(VirtualKeyCode.F11);
+                sim.Keyboard.KeyUp(VirtualKeyCode.LMENU);
+                //sim.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.F11);
+
+                //Keyboard kb = new Keyboard();
+                //kb.Send(Keyboard.ScanCodeShort.KEY_U, 0, Keyboard.VirtualKeyShort.KEY_U);
+                //kb.Send(Keyboard.ScanCodeShort.F11, Keyboard.KEYEVENTF.SCANCODE);
+                //kb.Send(Keyboard.ScanCodeShort.F11, Keyboard.KEYEVENTF.KEYUP);
+                //kb.Send(Keyboard.ScanCodeShort.KEY_U, Keyboard.KEYEVENTF.KEYUP, Keyboard.VirtualKeyShort.KEY_U);
+                //kb = null;
+            }
+
+
         }
-        
-        public static bool rtssRunning()
+    
+        public static bool MagpieRunning()
         {
-            Process[] pname = Process.GetProcessesByName("rtss");
+            Process[] pname = Process.GetProcessesByName("Magpie");
             if (pname.Length != 0)
             {
                 return true;
@@ -36,63 +50,20 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFPSLimit
 
 
         }
-
-        public static void changeLimit(string fps)
-        {
-            if (rtssRunning())
-            {
-                Keyboard kb = new Keyboard();
-
-                switch (fps)
-                {
-                    case "Unlocked":
-                        //kb.Send(Keyboard.ScanCodeShort.CONTROL, Keyboard.KEYEVENTF.EXTENDEDKEY | Keyboard.KEYEVENTF.SCANCODE);
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_2, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_2, Keyboard.KEYEVENTF.KEYUP);
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, Keyboard.KEYEVENTF.KEYUP);
-                        //kb.Send(Keyboard.ScanCodeShort.LCONTROL, Keyboard.KEYEVENTF.SCANCODE | Keyboard.KEYEVENTF.KEYUP);
-                        break;
-                    case "30":
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_3, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_3, Keyboard.KEYEVENTF.KEYUP);
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, Keyboard.KEYEVENTF.KEYUP);
-                        break;
-                    case "60":
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_1, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_1, Keyboard.KEYEVENTF.KEYUP);
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, Keyboard.KEYEVENTF.KEYUP);
-                        break;
-                    case "40":
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_4, 0);
-                        kb.Send(Keyboard.ScanCodeShort.KEY_4, Keyboard.KEYEVENTF.KEYUP);
-                        kb.Send(Keyboard.ScanCodeShort.LMENU, Keyboard.KEYEVENTF.KEYUP);
-                        break;
-                    default:
-                        break;
-
-                }
-                GlobalVariables.FPSLimit = fps;
-
-                kb = null;
-            }
-         
-        }
-
     }
+
     public class Keyboard
     {
 
-        public void Send(ScanCodeShort chr, KEYEVENTF keyevent)
+        public void Send(ScanCodeShort chr, KEYEVENTF keyevent, object vwk = null)
         {
             INPUT[] Inputs = new INPUT[1];
 
             INPUT Input = new INPUT();
             Input.type = 1; // 1 = Keyboard Input
             Input.U.ki.wScan = chr;
+            if (vwk is not null) { Input.U.ki.wVk = (VirtualKeyShort)vwk; }
+            
             Input.U.ki.dwFlags = keyevent;
             Inputs[0] = Input;
             SendInput(1, Inputs, INPUT.Size);
@@ -1074,3 +1045,4 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeFPSLimit
 
 
 }
+

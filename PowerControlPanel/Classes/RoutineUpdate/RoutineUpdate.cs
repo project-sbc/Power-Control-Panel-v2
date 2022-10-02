@@ -42,7 +42,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.RoutineUpdate
                 }
                 if (counter%2 == 0)
                 {
-                    Classes.TaskScheduler.TaskScheduler.runTask(() => PIDandCPUMonitor.PIDCPUMonitor.MonitorCPU());
+                    //Classes.TaskScheduler.TaskScheduler.runTask(() => PIDandCPUMonitor.PIDCPUMonitor.MonitorCPU());
 
                 }
 

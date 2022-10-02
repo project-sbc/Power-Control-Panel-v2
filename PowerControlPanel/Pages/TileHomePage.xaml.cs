@@ -49,6 +49,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 FanSpeed.Visibility = Visibility.Collapsed;
             }
 
+            showHideFPSLimit();
+
 
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
             initializeTimer();
@@ -59,7 +61,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //force touch due to wpf bug 
             _ = Tablet.TabletDevices;
         }
-
+        private void showHideFPSLimit()
+        {
+            if (Classes.ChangeFPSLimit.ChangeFPSLimit.rtssRunning())
+            {
+                FPSLimit.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                FPSLimit.Visibility = Visibility.Collapsed;
+            }
+        }
 
         private void initializeTimer()
         {
@@ -72,6 +84,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
 
             loadUpdateValues();
+            showHideFPSLimit();
         }
 
         private void loadUpdateValues()
@@ -127,6 +140,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             GBChangeValue.Visibility = Visibility.Visible;
             switch (currentControl)
             {
+
                 case ("TDPSustain"):
                     dpSlider.Visibility = Visibility.Visible;
                     generalSlider.Minimum = Properties.Settings.Default.minTDP;
@@ -434,7 +448,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     }
                     dragStarted = false;
                     Task.Delay(500);
-                    clearGB();
+                    //clearGB();
                 }
                 else
                 {

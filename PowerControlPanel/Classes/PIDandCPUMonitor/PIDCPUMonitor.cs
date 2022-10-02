@@ -23,20 +23,21 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.PIDandCPUMonitor
             public void VisitParameter(IParameter parameter) { }
         }
 
+        public static Computer computer = new Computer
+        {
+            IsCpuEnabled = true,
+            IsGpuEnabled = false,
+            IsMemoryEnabled = false,
+            IsMotherboardEnabled = false,
+            IsControllerEnabled = false,
+            IsNetworkEnabled = false,
+            IsStorageEnabled = false
+        };
         public static void MonitorCPU()
         {
           
-            Computer computer = new Computer
-            {
-                IsCpuEnabled = true,
-                IsGpuEnabled = false,
-                IsMemoryEnabled = false,
-                IsMotherboardEnabled = false,
-                IsControllerEnabled = false,
-                IsNetworkEnabled = false,
-                IsStorageEnabled = false
-            };
 
+            
             computer.Open();
             foreach (IHardware hardware in computer.Hardware)
             {

@@ -261,6 +261,7 @@
                         </StackPanel>
 
                     </mah:Tile>
+                   
                     <mah:Tile x:Name="ActiveProfile" Title="{DynamicResource TileHomePage_ActiveProfile}"
                       Count=""
                    
