@@ -27,10 +27,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             }
 
             //if first run of app, then make the profile
-            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml"))
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml")==false)
             {
                 File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles_Template.xml", AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml");
             }
+
 
             //start dedicated task scheduler for background tdp, cpu, etc changes
             TaskScheduler.TaskScheduler.startScheduler();

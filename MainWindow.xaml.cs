@@ -145,10 +145,7 @@ namespace Power_Control_Panel
 
         public MainWindow()
         {
-            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            if (Properties.Settings.Default.autoCheckUpdates) { AutoUpdater.Start("https://raw.githubusercontent.com/project-sbc/Power-Control-Panel-v2/master/Update.xml"); }
-
-
+           
             StartUp.runStartUp();
 
             this.InitializeComponent();
@@ -172,75 +169,7 @@ namespace Power_Control_Panel
             //test code here
             
         }
-        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
-        {
-            if (args.Error == null)
-            {
-                if (args.IsUpdateAvailable)
-                {
-                    DialogResult dialogResult;
-                    if (args.Mandatory.Value)
-                    {
-                        dialogResult =
-                            System.Windows.Forms.MessageBox.Show(
-                                $@"There is new version {args.CurrentVersion} available. You are using version {args.InstalledVersion}. This is required update. Press Ok to begin updating the application.", @"Update Available",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        dialogResult =
-                            System.Windows.Forms.MessageBox.Show(
-                                $@"There is new version {args.CurrentVersion} available. You are using version {
-                                        args.InstalledVersion
-                                    }. Do you want to update the application now?", @"Update Available",
-                                MessageBoxButtons.YesNo,
-                                MessageBoxIcon.Information);
-                    }
-
-                    // Uncomment the following line if you want to show standard update dialog instead.
-                    // AutoUpdater.ShowUpdateForm(args);
-
-                    if (dialogResult.Equals(System.Windows.Forms.DialogResult.Yes) || dialogResult.Equals(System.Windows.Forms.DialogResult.OK))
-                    {
-                        try
-                        {
-                            if (AutoUpdater.DownloadUpdate(args))
-                            {
-                                this.Close();
-                            }
-                        }
-                        catch (Exception exception)
-                        {
-                            System.Windows.Forms.MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                        }
-                    }
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show(@"There is no update available please try again later.", @"No update available",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                if (args.Error is WebException)
-                {
-                    System.Windows.Forms.MessageBox.Show(
-                        @"There is a problem reaching update server. Please check your internet connection and try again later.",
-                        @"Update Check Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show(args.Error.Message,
-                        args.Error.GetType().ToString(), MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
-        }
-
-
+      
         private void setUpNotifyIcon()
         {
             notifyIcon.Click += notifyIcon_Click;
