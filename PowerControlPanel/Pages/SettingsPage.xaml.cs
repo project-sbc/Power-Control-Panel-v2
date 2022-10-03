@@ -4,6 +4,7 @@ using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -47,6 +49,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 GB_AMD_GPUCLK.Visibility = Visibility.Collapsed;
             }
         }
+     
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -64,7 +67,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             if (Properties.Settings.Default.Language != cboLanguage.Text)
             {
-                Application.Current.Resources.MergedDictionaries.Remove(GlobalVariables.languageDict);
+                System.Windows.Application.Current.Resources.MergedDictionaries.Remove(GlobalVariables.languageDict);
                 switch (cboLanguage.Text)
                 {
                     default:
@@ -76,7 +79,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         GlobalVariables.languageDict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.zh-Hans.xaml", UriKind.RelativeOrAbsolute);
                         break;
                 }
-                Application.Current.Resources.MergedDictionaries.Add(GlobalVariables.languageDict);
+                System.Windows.Application.Current.Resources.MergedDictionaries.Add(GlobalVariables.languageDict);
                 Properties.Settings.Default.Language = cboLanguage.Text;
             }
 
@@ -173,19 +176,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 }
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
 
 
@@ -230,7 +220,13 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            AutoUpdater.Start("https://github.com/project-sbc/Power-Control-Panel-v2/blob/master/Update.xml");
+            
+            AutoUpdater.Start("https://raw.githubusercontent.com/project-sbc/Power-Control-Panel-v2/master/Update.xml");
+
         }
+
+       
+
+
     }
 }
