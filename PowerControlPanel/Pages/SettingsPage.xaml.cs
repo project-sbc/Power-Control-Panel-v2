@@ -1,4 +1,5 @@
-﻿using ControlzEx.Theming;
+﻿using AutoUpdaterDotNET;
+using ControlzEx.Theming;
 using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
@@ -227,8 +228,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
         }
 
-  
-
-  
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            AutoUpdater.Start("https://github.com/project-sbc/Power-Control-Panel-v2/blob/master/Update.xml");
+        }
     }
 }

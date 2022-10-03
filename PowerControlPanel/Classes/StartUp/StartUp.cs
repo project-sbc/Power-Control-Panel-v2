@@ -18,6 +18,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 
         public static void runStartUp()
         {
+            if (Properties.Settings.Default.updateRequired)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.updateRequired = false;
+                Properties.Settings.Default.Save();
+            }
+
+
             //start dedicated task scheduler for background tdp, cpu, etc changes
             TaskScheduler.TaskScheduler.startScheduler();
             //read tdp

@@ -77,5 +77,14 @@
     <Setting Name="qamButtonCombo" Type="System.String" Scope="User">
       <Value Profile="(Default)">LB+RB+DPadRight</Value>
     </Setting>
+    <Setting Name="oskButtonCombo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LB+RB+DPadDown</Value>
+    </Setting>
+    <Setting Name="fsrButtonCombo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RB+B</Value>
+    </Setting>
+    <Setting Name="updateRequired" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

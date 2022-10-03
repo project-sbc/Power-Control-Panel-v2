@@ -40,6 +40,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.EnableFSR
             Process[] pname = Process.GetProcessesByName("Magpie");
             if (pname.Length != 0)
             {
+                if (pname[0].PriorityClass != ProcessPriorityClass.AboveNormal) { pname[0].PriorityClass = ProcessPriorityClass.AboveNormal; }
                 return true;
 
             }

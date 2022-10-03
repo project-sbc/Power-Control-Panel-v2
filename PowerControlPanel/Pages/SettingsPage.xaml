@@ -17,14 +17,23 @@
 
     <ScrollViewer Margin="5,10,0,0" PanningMode="VerticalOnly">
         <StackPanel Orientation="Vertical" >
+
+            <DockPanel Height="30" Margin="0,0,0,10" >
+
+
+                <Button x:Name="btnSave" Content="{DynamicResource Settings_SaveSettings}" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click" Margin="15,0,0,0"></Button>
+                <Button x:Name="btnUpdate" Content="{DynamicResource Settings_UpdateSettings}" HorizontalAlignment="Left" DockPanel.Dock="Right"  Click="btnUpdate_Click" ></Button>
+                <Label Content="Settings saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right"  Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
+
+            </DockPanel>
+
+
             <GroupBox Name="GB_General_Settings" Margin="0,0,0,10">
                    <GroupBox.Header >
                     <DockPanel Height="30">
                         <Label Content="{DynamicResource Settings_GeneralSettings}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <Button x:Name="btnSave" Content="{DynamicResource Settings_SaveSettings}" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="btnSave_Click"></Button>
-                        <Label Content="Settings saved" x:Name="lblSaved" Visibility="Collapsed"  VerticalAlignment="Center" HorizontalAlignment="Right"  Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}" FontSize="16" DockPanel.Dock="Right" Height="19"  Padding="0,0,10,0" Margin="10,0,0,0" />
-
+                     
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid>

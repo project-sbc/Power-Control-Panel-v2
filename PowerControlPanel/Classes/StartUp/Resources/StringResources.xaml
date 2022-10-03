@@ -66,6 +66,8 @@
     <system:String x:Key="TileHomePage_FPSLimit">FPS Limit</system:String>
     <system:String x:Key="TileHomePage_FanSpeed">Fan Speed</system:String>
     <!-- Settings {DynamicResource HomePage_Brightness} -->
+
+    <system:String x:Key="Settings_UpdateSettings">Check For Updates</system:String>
     <system:String x:Key="Settings_GeneralSettings">GENERAL SETTINGS</system:String>
     <system:String x:Key="Settings_AMDSettings">AMD SETTINGS</system:String>
     <system:String x:Key="Settings_IntelSettings">INTEL SETTINGS</system:String>
