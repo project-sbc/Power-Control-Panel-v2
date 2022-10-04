@@ -83,7 +83,11 @@
     <system:String x:Key="Settings_Language">Language/语言</system:String>
     <system:String x:Key="Settings_IntelTDPType">TDP Set Type</system:String>
     <system:String x:Key="Settings_AMDMaxGPUClk">Set Max GPU Clock (MHz)</system:String>
-
+    <system:String x:Key="Settings_ControllerShortCuts">Conroller Short Cuts</system:String>
+    <system:String x:Key="Settings_ShortCutQAM">Quick Access Menu</system:String>
+    <system:String x:Key="Settings_ShortCutOSK">OSK</system:String>
+    <system:String x:Key="Settings_ShortCutFSR">FSR</system:String>
+    
     <!-- AppSettings  -->
     <system:String x:Key="AppSettings_Applications">Applications</system:String>
     <system:String x:Key="AppSettings_AddProfile">ADD PROFILE</system:String>

@@ -1,5 +1,6 @@
 ﻿using AutoUpdaterDotNET;
 using ControlzEx.Theming;
+using MahApps.Metro.Controls;
 using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
@@ -223,7 +224,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             
            
             AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
-            if (Properties.Settings.Default.autoCheckUpdates) { AutoUpdater.Start("https://raw.githubusercontent.com/project-sbc/Power-Control-Panel-v2/master/Update.xml"); }
+            AutoUpdater.Start("https://raw.githubusercontent.com/project-sbc/Power-Control-Panel-v2/master/Update.xml");
 
 
         }
@@ -298,8 +299,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
         }
 
-
-
-
+        private void toggleGeneral_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (toggleGeneral.IsOn)
+            {
+                GB_General_Settings.Height = double.NaN;
+            }
+            else
+            {
+                GB_General_Settings.Height = 40;
+            }
+            
+        }
     }
 }

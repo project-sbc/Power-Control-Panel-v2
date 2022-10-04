@@ -19,10 +19,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 
         public static void runStartUp()
         {
-            if (Properties.Settings.Default.updateRequired)
+            if (Properties.Settings.Default.upgradeSettingsRequired)
             {
                 Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.updateRequired = false;
+                Properties.Settings.Default.upgradeSettingsRequired = false;
                 Properties.Settings.Default.Save();
             }
 

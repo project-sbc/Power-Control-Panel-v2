@@ -32,8 +32,8 @@
                    <GroupBox.Header >
                     <DockPanel Height="30">
                         <Label Content="{DynamicResource Settings_GeneralSettings}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" x:Name="toggleGeneral"  Toggled="toggleGeneral_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
 
-                     
                     </DockPanel>
                 </GroupBox.Header>
                 <Grid>
@@ -278,6 +278,26 @@
 
 
 
+            </GroupBox>
+
+
+            <GroupBox Name="GB_CONTROLLERSHORTCUTS" Margin="0,0,0,10">
+                <GroupBox.Header >
+                    <DockPanel Height="30">
+                        <Label Content="{DynamicResource Settings_ControllerShortCuts}" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
+                    </DockPanel>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                    <DockPanel Grid.Row="0"  >
+                        <Label Content="{DynamicResource Settings_ShortCutQAM}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+                        
+                        <TextBox x:Name="ShortCutQAM" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40"  />
+                    </DockPanel>
+                </Grid>
             </GroupBox>
         </StackPanel>
     </ScrollViewer>

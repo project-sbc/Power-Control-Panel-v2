@@ -83,10 +83,7 @@
     <Setting Name="fsrButtonCombo" Type="System.String" Scope="User">
       <Value Profile="(Default)">RB+B</Value>
     </Setting>
-    <Setting Name="updateRequired" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="autoCheckUpdates" Type="System.Boolean" Scope="User">
+    <Setting Name="upgradeSettingsRequired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

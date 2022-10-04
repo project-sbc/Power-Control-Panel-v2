@@ -350,24 +350,12 @@ namespace Power_Control_Panel.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool updateRequired {
+        public bool upgradeSettingsRequired {
             get {
-                return ((bool)(this["updateRequired"]));
+                return ((bool)(this["upgradeSettingsRequired"]));
             }
             set {
-                this["updateRequired"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool autoCheckUpdates {
-            get {
-                return ((bool)(this["autoCheckUpdates"]));
-            }
-            set {
-                this["autoCheckUpdates"] = value;
+                this["upgradeSettingsRequired"] = value;
             }
         }
     }
