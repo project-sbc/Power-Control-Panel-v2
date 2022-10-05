@@ -113,6 +113,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             cboRefreshRate.ItemsSource = GlobalVariables.refreshRates;
             cboResolution.ItemsSource = GlobalVariables.resolutions;
+            cboFPSLimit.ItemsSource = GlobalVariables.FPSLimits;
 
             changingResolution = true;
             cboResolution.SelectedIndex = 0;
@@ -250,6 +251,22 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     changingScaling = false;
 
                 }
+
+               
+
+            }
+
+            if (PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.rtssRunning())
+            {
+                cboFPSLimit.Text = GlobalVariables.FPSLimit;
+
+                rdFPSLimit.Height = new GridLength(50);
+                dpFPSLimit.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                rdFPSLimit.Height = new GridLength(0);
+                dpFPSLimit.Visibility = Visibility.Collapsed;
             }
 
             //profile
@@ -892,6 +909,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 Properties.Settings.Default.Save();
             }
 
+        }
+
+        private void cboFPSLimit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cboFPSLimit.SelectedValue.ToString());
         }
     }
 }

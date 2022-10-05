@@ -26,6 +26,7 @@
     <system:String x:Key="Display_Resolution">Display Resolution</system:String>
     <system:String x:Key="Display_Refresh">Display Refresh Rate</system:String>
     <system:String x:Key="Display_Scaling">Display Scaling (%)</system:String>
+    <system:String x:Key="FPS_Limit">FPS Limit</system:String>
     <system:String x:Key="ActiveProfile">Active Profile</system:String>
     
     <system:String x:Key="SystemControls">SYSTEM CONTROLS</system:String>

@@ -27,6 +27,7 @@
     <system:String x:Key="Display_Resolution">显示分辨率</system:String>
     <system:String x:Key="Display_Refresh">屏幕刷新率</system:String>
     <system:String x:Key="Display_Scaling">显示比例</system:String>
+    <system:String x:Key="FPS_Limit">FPS Limit</system:String>
     <system:String x:Key="ActiveProfile">Active Profile</system:String>
 
     <!-- profiles page -->

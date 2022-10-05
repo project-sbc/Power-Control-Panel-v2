@@ -234,12 +234,12 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
-
+                        <RowDefinition Height="50" x:Name="rdFPSLimit" />
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
                     <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
+                    <Border  Grid.Row="3" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
 
                     <DockPanel   >
                         <Label Content="{DynamicResource Display_Resolution}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
@@ -275,6 +275,15 @@
                             <ComboBoxItem Content="175" />
                             <ComboBoxItem Content="200" />
                             <ComboBoxItem Content="225" />
+                        </ComboBox>
+
+                    </DockPanel>
+                    <DockPanel Name="dpFPSLimit" Grid.Row="3"  >
+                        <Label Content="{DynamicResource FPS_Limit}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
+
+                        </Label>
+                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboFPSLimit" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboFPSLimit_SelectionChanged">
+                         
                         </ComboBox>
 
                     </DockPanel>
