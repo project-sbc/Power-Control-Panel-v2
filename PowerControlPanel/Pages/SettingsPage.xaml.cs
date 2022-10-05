@@ -98,6 +98,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Properties.Settings.Default.homePageTypeMW = cboMWHomePageStyle.Text;
 
             Properties.Settings.Default.homePageTypeQAM = cboQAMHomePageStyle.Text;
+
+            Properties.Settings.Default.fsrButtonCombo = txtbxShortCutFSR.Text.Replace(" ","");
+            Properties.Settings.Default.qamButtonCombo = txtbxShortCutQAM.Text.Replace(" ", "");
+            Properties.Settings.Default.oskButtonCombo = txtbxShortCutOSK.Text.Replace(" ", "");
             //Save
             Properties.Settings.Default.Save();
 
@@ -142,6 +146,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             cboQAMHomePageStyle.Text = Properties.Settings.Default.homePageTypeQAM;
             cboTDPTypeIntel.Text = Properties.Settings.Default.IntelMMIOMSR;
+
+            txtbxShortCutFSR.Text = Properties.Settings.Default.fsrButtonCombo;
+            txtbxShortCutOSK.Text = Properties.Settings.Default.oskButtonCombo;
+            txtbxShortCutQAM.Text = Properties.Settings.Default.qamButtonCombo;
         }
         private void changeTaskService(string systemAutoStart)
         {

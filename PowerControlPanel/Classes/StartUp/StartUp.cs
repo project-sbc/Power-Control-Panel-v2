@@ -75,7 +75,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMINCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
                   
             //check if device is one netbook one x player for fan control capability
-            if (GlobalVariables.manufacturer.Contains("ONE") && GlobalVariables.manufacturer.Contains("NETBOOK"))
+            if (GlobalVariables.manufacturer.Contains("ONE") && GlobalVariables.manufacturer.Contains("NETBOOK") && 1==0)
             {
                 if (GlobalVariables.product.Contains("ONE") && GlobalVariables.product.Contains("X") && GlobalVariables.product.Contains("PLAYER"))
                 {

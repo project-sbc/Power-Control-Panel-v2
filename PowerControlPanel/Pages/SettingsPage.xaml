@@ -290,12 +290,26 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,0,0,0" />
+                    <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,0,0,0" />
                     <DockPanel Grid.Row="0"  >
                         <Label Content="{DynamicResource Settings_ShortCutQAM}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
-                        
-                        <TextBox x:Name="ShortCutQAM" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40"  />
+
+                        <TextBox x:Name="txtbxShortCutQAM" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40"  />
+                    </DockPanel>
+                    <DockPanel Grid.Row="1"  >
+                        <Label Content="{DynamicResource Settings_ShortCutOSK}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+
+                        <TextBox x:Name="txtbxShortCutOSK" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40"  />
+                    </DockPanel>
+                    <DockPanel Grid.Row="2"  >
+                        <Label Content="{DynamicResource Settings_ShortCutFSR}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
+
+                        <TextBox x:Name="txtbxShortCutFSR" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Height="40"  />
                     </DockPanel>
                 </Grid>
             </GroupBox>

@@ -400,8 +400,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             foreach (XmlNode node in xmlNode.ChildNodes)
             {
-
-                dt.Rows.Add(node.SelectSingleNode("DisplayName").InnerText);
+                if (node.SelectSingleNode("DisplayName") != null)
+                {
+                    dt.Rows.Add(node.SelectSingleNode("DisplayName").InnerText);
+                }
+                
             }
             xmlDocument = null;
             return dt;

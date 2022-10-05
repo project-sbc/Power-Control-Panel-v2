@@ -46,7 +46,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //hide fan control if device is not fan control capable
             if (!GlobalVariables.fanControlDevice)
             {
-                FanSpeed.Visibility = Visibility.Collapsed;
+                FanSpeed222.Visibility = Visibility.Collapsed;
             }
 
             showHideFPSLimit();
