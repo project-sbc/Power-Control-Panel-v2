@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="450"
       MinWidth="370"
-      Title="TileHomePage">
+      Title="TileHomePage" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
             <Style x:Key="LargeTileStyle" TargetType="mah:Tile">
@@ -245,6 +245,23 @@
                         </StackPanel>
 
                     </mah:Tile>
+                    <mah:Tile x:Name="FPSLimit" Title="{DynamicResource TileHomePage_FPSLimit}"
+                      Count=""
+                   
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center"  x:Name="labelFPSLimitValue" Content="Default" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="MonitorLock" />
+                        </StackPanel>
+
+                    </mah:Tile>
+                   
                     <mah:Tile x:Name="ActiveProfile" Title="{DynamicResource TileHomePage_ActiveProfile}"
                       Count=""
                    
@@ -261,13 +278,31 @@
                         </StackPanel>
 
                     </mah:Tile>
+
+                    <mah:Tile x:Name="FanSpeed222" Visibility="Collapsed" Title="{DynamicResource TileHomePage_FanSpeed}"
+                      Count=""
+                   
+                      VerticalTitleAlignment="Bottom"
+                      mah:ControlsHelper.MouseOverBorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}"
+                      Style="{StaticResource LargeTileStyle}">
+
+
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center"  x:Name="labelFanSpeedValue" Content="Default" FontSize="20" Foreground="White"/>
+                            <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="40"
+                                               Height="40"
+                                               Kind="FanSolid" />
+                        </StackPanel>
+
+                    </mah:Tile>
+
                 </WrapPanel>
                 <GroupBox Name="GBChangeValue" Visibility="Visible" VerticalAlignment="Top">
 
                     <GroupBox.Header >
                         <DockPanel >
                             <Label x:Name="labelSlider" Content="" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-                            <Button x:Name="btnCloseSlider" Width="100" Content="{DynamicResource Close}" HorizontalAlignment="Right" Click="btnCloseSlider_Click" />
+                            <Button x:Name="btnCloseSlider" Width="100" Content="{DynamicResource Close}" HorizontalAlignment="Right" Click="btnCloseComboboxSlider_Click" />
 
                         </DockPanel>
                     </GroupBox.Header>
@@ -277,7 +312,7 @@
 
                             <Slider Name="generalSlider" Width="300" HorizontalAlignment="Center"
                         Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Height="80" Minimum="5" Maximum="35"  SmallChange="1"  ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" 
-                        TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="None" Loaded="Slider_Loaded"  
+                        TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="None"   
       
                         />
                             <iconPacks:PackIconFontAwesome x:Name="iconAwesome" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50"

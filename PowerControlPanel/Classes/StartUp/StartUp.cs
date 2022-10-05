@@ -10,6 +10,7 @@ using Microsoft.Win32;
 using System.Management;
 using System.Windows.Input;
 using System.Windows;
+using System.IO;
 
 namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 {
@@ -18,22 +19,46 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
 
         public static void runStartUp()
         {
+            if (Properties.Settings.Default.upgradeSettingsRequired)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.upgradeSettingsRequired = false;
+                Properties.Settings.Default.Save();
+            }
+
+            //if first run of app, then make the profile
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml")==false)
+            {
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles_Template.xml", AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml");
+            }
+
+
+            //start dedicated task scheduler for background tdp, cpu, etc changes
             TaskScheduler.TaskScheduler.startScheduler();
+            //read tdp
             GlobalVariables.tdp.readTDP();
 
             //force touch due to wpf bug 
             _ = Tablet.TabletDevices;
 
+          
             //set max cpu cores
             GlobalVariables.maxCpuCores = new ManagementObjectSearcher("Select * from Win32_Processor").Get().Cast<ManagementBaseObject>().Sum(item => int.Parse(item["NumberOfCores"].ToString()));
+            //get manufacturer info (for OXP fan control)
             GlobalVariables.manufacturer = PowerControlPanel.Classes.MotherboardInfo.MotherboardInfo.Manufacturer.ToUpper();
             GlobalVariables.product = PowerControlPanel.Classes.MotherboardInfo.MotherboardInfo.Product.ToUpper();
 
+
+            //generate lists for combo boxes across the app such as display resolutions, refresh rates and fps limits (RTSS)
             ChangeDisplaySettings.ChangeDisplaySettings.generateDisplayResolutionAndRateList();
             ChangeDisplaySettings.ChangeDisplaySettings.getCurrentDisplaySettings();
-            //ChangeBrightness.WindowsSettingsBrightnessController.getBrightness();
+            ChangeFPSLimit.ChangeFPSLimit.setFPSLimits();
+            ChangeFanSpeedOXP.ChangeFanSpeed.generateFanControlModeList();
+
+            //read current cpu max frequency and active cores.        
             changeCPU.ChangeCPU.readCPUMaxFrequency();
             changeCPU.ChangeCPU.readActiveCores();
+
             //Modify settings for CPU specific like gpu clock and intel power bal
             configureSettings();
 
@@ -48,23 +73,23 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             //unhide core parking from power plan
             RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMAXCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
             RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMINCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
-
+                  
             //check if device is one netbook one x player for fan control capability
-            if (GlobalVariables.manufacturer.Contains("ONE") && GlobalVariables.manufacturer.Contains("NETBOOK"))
+            if (GlobalVariables.manufacturer.Contains("ONE") && GlobalVariables.manufacturer.Contains("NETBOOK") && 1==0)
             {
                 if (GlobalVariables.product.Contains("ONE") && GlobalVariables.product.Contains("X") && GlobalVariables.product.Contains("PLAYER"))
                 {
                     GlobalVariables.fanControlDevice = true;
                     if (GlobalVariables.cpuType == "Intel") { GlobalVariables.fanRangeBase = 255; }
-                    if (GlobalVariables.cpuType == "AMD") { GlobalVariables.fanRangeBase = 100; }
+                    if (GlobalVariables.cpuType == "AMD") { GlobalVariables.fanRangeBase = 255; }
                     ChangeFanSpeedOXP.ChangeFanSpeed.readSoftwareFanControl();
                     ChangeFanSpeedOXP.ChangeFanSpeed.readFanSpeed();
-                    PIDandCPUMonitor.PIDCPUMonitor.MonitorCPU();
+                    //PIDandCPUMonitor.PIDCPUMonitor.MonitorCPU();
                     
                 }
             }
 
-             
+             //set language resource
             switch (Properties.Settings.Default.Language)
             {
                 default:

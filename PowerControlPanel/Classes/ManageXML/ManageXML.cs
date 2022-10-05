@@ -400,8 +400,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             foreach (XmlNode node in xmlNode.ChildNodes)
             {
-
-                dt.Rows.Add(node.SelectSingleNode("DisplayName").InnerText);
+                if (node.SelectSingleNode("DisplayName") != null)
+                {
+                    dt.Rows.Add(node.SelectSingleNode("DisplayName").InnerText);
+                }
+                
             }
             xmlDocument = null;
             return dt;
@@ -418,15 +421,21 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ManageXML
 
             dt.Columns.Add("Profile");
             dt.Columns.Add("Exe");
-
-            foreach (XmlNode node in xmlNode.ChildNodes)
+            if (xmlNode.ChildNodes.Count > 0)
             {
-                if (node.SelectSingleNode("Profile").InnerText != "")
+                foreach (XmlNode node in xmlNode.ChildNodes)
                 {
-                    dt.Rows.Add(node.SelectSingleNode("Profile").InnerText, node.SelectSingleNode("Exe").InnerText);
+                    if (node.SelectSingleNode("Profile") != null)
+                    {
+                        if (node.SelectSingleNode("Profile").InnerText != "")
+                        {
+                            dt.Rows.Add(node.SelectSingleNode("Profile").InnerText, node.SelectSingleNode("Exe").InnerText);
+                        }
+                    }
+
                 }
-                
             }
+
             xmlDocument = null;
             return dt;
 

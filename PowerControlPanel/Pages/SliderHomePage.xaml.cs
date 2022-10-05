@@ -18,6 +18,7 @@ using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
 using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
 using ControlzEx.Theming;
+using System.Diagnostics;
 
 namespace Power_Control_Panel.PowerControlPanel.Pages
 {
@@ -127,8 +128,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (SliderThumb is Thumb thumb)
                 {
 
-                    thumb.Width = 25;
-                    thumb.Height = 35;
+                    thumb.Width = 32;
+                    thumb.Height = 40;
                 }
                 else { }
             }
@@ -318,9 +319,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Slider slider = sender as Slider;
 
             string sliderName = slider.Name;
-
+       
             if (this.IsLoaded)
             {
+                Debug.WriteLine("value changed event");
                 switch (sliderName)
                 {
                     case "TDP1":
@@ -338,7 +340,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     case "TDP2":
                         if (!dragStartedTDP2 && !changingTDP)
                         {
-                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
                         }
                         break;
                     case "Brightness":
@@ -397,9 +399,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Slider slider = sender as Slider;
 
             string sliderName = slider.Name;
-
+     
             if (this.IsLoaded)
             {
+                Debug.WriteLine("drag complete event");
                 switch (sliderName)
                 {
                     case "TDP1":
@@ -408,7 +411,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         break;
                     case "TDP2":
                         dragStartedTDP2 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
                         break;
                     case "TDP":
                         dragStartedTDP = false;
@@ -452,9 +455,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Slider slider = sender as Slider;
 
             string sliderName = slider.Name;
-
+         
             if (this.IsLoaded)
             {
+                Debug.WriteLine("drag started event");
                 switch (sliderName)
                 {
                     case "TDP1":
@@ -492,159 +496,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         #endregion
 
-        #region slider mouse left up
-        private void Slider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        dragStartedTDP1 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "TDP":
-                        dragStartedTDP = false;
-                        HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
-                        break;
-                    case "TDP2":
-                        dragStartedTDP2 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "Brightness":
-                        dragStartedBrightness = false;
-                        HandleChangingBrightness(Brightness.Value);
-                        break;
-                    case "Volume":
-                        dragStartedVolume = false;
-                        HandleChangingVolume((int)Volume.Value);
-                        break;
-                    case "GPUCLK":
-                        dragStartedGPUCLK = false;
-                        HandleChangingGPUCLK((int)GPUCLK.Value);
-                        break;
-                    case "MAXCPU":
-                        dragStartedMAXCPU = false;
-                        HandleChangingMAXCPU((int)MAXCPU.Value);
-                        break;
-                    case "ActiveCores":
-                        dragStartedActiveCores = false;
-                        HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-        }
+      
 
 
 
-
-        #endregion
-
-        #region slider touchup
-
-        private void Slider_TouchUp(object sender, TouchEventArgs e)
-        {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        dragStartedTDP1 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "TDP":
-                        dragStartedTDP = false;
-                        HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
-                        break;
-                    case "TDP2":
-                        dragStartedTDP2 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "Brightness":
-                        dragStartedBrightness = false;
-                        HandleChangingBrightness(Brightness.Value);
-                        break;
-                    case "Volume":
-                        dragStartedVolume = false;
-                        HandleChangingVolume((int)Volume.Value);
-                        break;
-                    case "GPUCLK":
-                        dragStartedGPUCLK = false;
-                        HandleChangingGPUCLK((int)GPUCLK.Value);
-                        break;
-                    case "MAXCPU":
-                        dragStartedMAXCPU = false;
-                        HandleChangingMAXCPU((int)MAXCPU.Value);
-                        break;
-                    case "ActiveCores":
-                        dragStartedActiveCores = false;
-                        HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-        }
-
-        #endregion
-
-        #region slider touchdown
-        private void Slider_TouchDown(object sender, TouchEventArgs e)
-        {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        dragStartedTDP1 = true;
-                        break;
-                    case "TDP":
-                        dragStartedTDP = true;
-                        break;
-                    case "TDP2":
-                        dragStartedTDP2 = true;
-                        break;
-                    case "Brightness":
-                        dragStartedBrightness = true;
-                        break;
-                    case "Volume":
-                        dragStartedVolume = true;
-                        break;
-                    case "GPUCLK":
-                        dragStartedGPUCLK = true;
-                        break;
-                    case "MAXCPU":
-                        dragStartedMAXCPU = true;
-                        break;
-                    case "ActiveCores":
-                        dragStartedActiveCores = true;
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-        }
-
-
-        #endregion
-
+     
 
 
 

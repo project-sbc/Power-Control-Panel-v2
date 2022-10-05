@@ -10,13 +10,13 @@
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>Resources\Pictures\PCP.ico</ApplicationIcon>
-    <Version>1.0.0</Version>
+    <Version>0.1.13.0</Version>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="PowerControlPanel\Logs\application_log.txt" />
-    <None Remove="PowerControlPanel\ProfileData\Profiles.xml" />
+    <None Remove="PowerControlPanel\ProfileData\Profiles_Template.xml" />
     <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\libryzenadj.dll" />
     <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
@@ -46,7 +46,7 @@
     <Content Include="PowerControlPanel\Logs\application_log.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="PowerControlPanel\ProfileData\Profiles.xml">
+    <Content Include="PowerControlPanel\ProfileData\Profiles_Template.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\AMD\RyzenAdj\inpoutx64.dll">
@@ -116,9 +116,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autoupdater.NET.Official" Version="1.7.5" />
     <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
     <PackageReference Include="InputSimulatorCore" Version="1.0.5" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.0" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
@@ -129,6 +131,7 @@
     <PackageReference Include="System.Management" Version="6.0.0" />
     <PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
     <PackageReference Include="TaskScheduler" Version="2.10.1" />
+    <PackageReference Include="ViceCode.LiveCharts.Wpf" Version="1.2.1.1" />
   </ItemGroup>
 	<ItemGroup>
 		<Reference Include="RTSSSharedMemoryNET">
@@ -171,6 +174,10 @@
 
 	<ItemGroup>
 		<FrameworkReference Update="Microsoft.WindowsDesktop.App;Microsoft.WindowsDesktop.App.WPF;Microsoft.WindowsDesktop.App.WindowsForms" TargetingPackVersion="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="PowerControlPanel\Pages\Settings\" />
 	</ItemGroup>
 
 </Project>

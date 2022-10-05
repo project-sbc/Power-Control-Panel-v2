@@ -17,8 +17,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
         public static TaskFactory taskFactory = new TaskFactory(scheduler);
 
 
-        
-
         public static void startScheduler()
         {
             scheduler = new SecretNest.TaskSchedulers.SequentialScheduler(true);
@@ -35,7 +33,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.TaskScheduler
         }
         public static void runTask(Action action)
         {
-   
+            //Debug.WriteLine("Task started " + DateTime.Now.ToString() + " Task Name " + action.Method.ToString());
             var result = taskFactory.StartNew(action);
 
         }

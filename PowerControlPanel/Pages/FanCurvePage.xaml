@@ -1,0 +1,131 @@
+﻿<Page x:Class="Power_Control_Panel.PowerControlPanel.Pages.FanCurvePage"
+      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="800"
+      MinWidth="450"
+      Title="FanCurvePage">
+
+    <Grid>
+        <!-- Fan Control-->
+        <Border       
+                Height="200"
+                Padding="15,12,12,12">
+            <Grid Name="FanControl">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*" MinWidth="200"/>
+                    <ColumnDefinition Width="2*" MinWidth="200"/>
+                    <ColumnDefinition Width="2*" MinWidth="200"/>
+                </Grid.ColumnDefinitions>
+
+
+                <!-- Graph Control-->
+                <lvc:CartesianChart LegendLocation="None" Grid.Column="0" Hoverable="True" DisableAnimations="False">
+                    <lvc:CartesianChart.Series>
+                        <lvc:LineSeries
+                                        Name = "lvLineSeriesValues"
+                                        StrokeThickness="2" 
+                                        Stroke="{DynamicResource SystemControlForegroundAccentBrush}" 
+                                        Fill="Transparent" 
+                                        LineSmoothness="0" />
+                    </lvc:CartesianChart.Series>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Fan Percentage %"  MinValue="0" MaxValue="100" FontSize="12" Foreground="DarkGray">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Stroke="DarkGray"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="CPU Temperature Degree" MinValue="0" MaxValue="100" FontSize="12" Foreground="DarkGray">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Stroke="DarkGray"/>
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+
+                <!-- X Control-->
+                <StackPanel Grid.Column="1">
+                    <DockPanel Height="40" >
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+
+                </StackPanel>
+
+                <!-- Y Control-->
+                <StackPanel Grid.Column="2">
+                    <DockPanel Height="40" >
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+                    <DockPanel Height="40">
+                        <mah:NumericUpDown Minimum="20"
+                        Maximum="100"
+                        Interval="1"
+                        StringFormat="C2" />
+                    </DockPanel>
+
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

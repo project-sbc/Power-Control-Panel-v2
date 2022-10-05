@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
+
 using System.Windows.Navigation;
 using Power_Control_Panel.PowerControlPanel.Classes.Navigation;
 using Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP;
@@ -23,6 +23,12 @@ using System.Diagnostics;
 using System.Text;
 using System.Data;
 using Power_Control_Panel.PowerControlPanel.Classes.ManageXML;
+using AutoUpdaterDotNET;
+
+using System.Net;
+using System.Windows;
+using System.Windows.Forms;
+//using RTSSSharedMemoryNET;
 
 
 namespace Power_Control_Panel
@@ -65,7 +71,8 @@ namespace Power_Control_Panel
         public static int baseCPUSpeed = 1000;
 
 
-
+        //RTSS fps limit
+        public static string FPSLimit = "Unlocked";
 
         //Profile and app settings
         public static string ActiveProfile = "None";
@@ -82,6 +89,8 @@ namespace Power_Control_Panel
         public static List<string> resolutions = new List<string>();
         public static List<string> refreshRates = new List<string>();
         public static List<string> scalings = new List<string>();
+        public static List<string> FPSLimits = new List<string>();
+        public static List<string> FanModes = new List<string>();
         //TDP change class
         public static PowerControlPanel.Classes.ChangeTDP.ChangeTDP tdp = new PowerControlPanel.Classes.ChangeTDP.ChangeTDP();
 
@@ -97,16 +106,20 @@ namespace Power_Control_Panel
         //fan controls
         public static bool fanControlDevice = false;
         public static bool fanControlEnable = false;
+        public static string fanControlMode = "Hardware";
         public static int fanRangeBase = 100;
         public static int fanSpeed = 0;
 
         //cpu values
         public static double cpuTemp = 0;
-        public static double cpuPower = 0;
+
 
         //language pack
         public static ResourceDictionary languageDict = new ResourceDictionary();
 
+
+        //close window to update from settings update button
+        public static bool closeForUpdate = false;
     }
     
 
@@ -114,21 +127,25 @@ namespace Power_Control_Panel
     {
         private NavigationServiceEx navigationServiceEx;
         private DispatcherTimer timer = new DispatcherTimer();
-        
-        private Controller controller;
-        private Gamepad gamepad;
+        private int timercounter = 0;
+
+        public Controller controller;
+        public Gamepad gamepad;
 
         private string theme = Properties.Settings.Default.systemTheme;
 
         public static Window overlay;
         public static Window osk;
 
+        //make date time variable to check if system went to sleep.The datetime should always be less than 10 seconds. when its greater than it knows the computer went to sleep
+        private DateTime timeSleepCheck;
+
+        //notify icon for task tray icon when minimized
         private System.Windows.Forms.NotifyIcon notifyIcon = new System.Windows.Forms.NotifyIcon();
 
-        private Uri currentUri;
         public MainWindow()
         {
-
+           
             StartUp.runStartUp();
 
             this.InitializeComponent();
@@ -140,6 +157,8 @@ namespace Power_Control_Panel
 
             initializeTimer();
 
+            //set time for sleep check, this is updated every couple seconds. If computer goes to sleep the delta time between now and last update will change drastically
+            timeSleepCheck = DateTime.Now;
 
             //set theme
             setTheme();
@@ -148,10 +167,9 @@ namespace Power_Control_Panel
             _ = Tablet.TabletDevices;
 
             //test code here
-          
+            
         }
-
- 
+      
         private void setUpNotifyIcon()
         {
             notifyIcon.Click += notifyIcon_Click;
@@ -185,11 +203,12 @@ namespace Power_Control_Panel
 
         private void setTheme()
         {
+            //set theme, is called at load and when theme is changed in settings. IMPORTANT TO KEEP AS SEPARATE ROUTINE
             ThemeManager.Current.ChangeTheme(this, Properties.Settings.Default.systemTheme);
         }
         private void initializeTimer()
         {
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Interval = TimeSpan.FromMilliseconds(15);
             timer.Tick += timerTick;
             timer.Start();
 
@@ -198,7 +217,7 @@ namespace Power_Control_Panel
         private void getController()
         {
             int controllerNum = 1;
-
+            //get controller used, loop controller number if less than 5, so if controller is connected make num = 5 to get out of while loop
             while (controllerNum <5)
             {
                 switch (controllerNum)
@@ -242,38 +261,114 @@ namespace Power_Control_Panel
 
           
         }
+
+        Dictionary<string, GamepadButtonFlags> buttonLookUp =
+    new Dictionary<string, GamepadButtonFlags>()
+    {
+           {"A", GamepadButtonFlags.A },
+           {"B", GamepadButtonFlags.B },
+           {"DPadUp", GamepadButtonFlags.DPadUp },
+           {"DPadDown", GamepadButtonFlags.DPadDown },
+           {"DPadLeft", GamepadButtonFlags.DPadLeft },
+           {"DPadRight", GamepadButtonFlags.DPadRight},
+           {"LB", GamepadButtonFlags.LeftShoulder },
+           {"RB", GamepadButtonFlags.RightShoulder },
+           {"L3", GamepadButtonFlags.LeftThumb },
+           {"R3", GamepadButtonFlags.RightThumb },
+           {"X", GamepadButtonFlags.X },
+           {"Y", GamepadButtonFlags.Y},
+           {"Start", GamepadButtonFlags.Start },
+           {"Back", GamepadButtonFlags.Back },
+     };
+
+        private bool ButtonComboPress(Gamepad gp,string BC)
+        {
+            //make default false
+            bool result = false;
+
+            //split string into array
+            string[] strBC = BC.Split('+');
+            //gamepad flag array
+            GamepadButtonFlags[] qamButtonCombo = new GamepadButtonFlags[strBC.Length];
+            int intCount = 0;
+            foreach (var bc in strBC)
+            {
+                //for each string lookup in the dictionary for the gamepad flag
+                qamButtonCombo[intCount] = buttonLookUp[bc];
+                intCount++;
+            }
+            //set bool to true
+            bool oldGamepadPress = true;
+            bool GamepadPress = true;
+            foreach (GamepadButtonFlags button in qamButtonCombo)
+            {
+                //the press scenario is defined when the old gamepad state doesn't have all buttons pressed but the new state does. This will turn the bool false if any of the buttons arent pressed
+                if (!gamepad.Buttons.HasFlag(button))
+                {
+                    oldGamepadPress = false;
+                }
+                if (!gp.Buttons.HasFlag(button))
+                {
+                    GamepadPress = false;
+                }
+            }
+            //button press is true when current gamepadpress is true and the old gamepad state is false
+            if (!oldGamepadPress && GamepadPress)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+
+            return result;
+
+        }
+
         private void timerTick(object sender, EventArgs e)
         {
-            //update power status
-            
-
 
             //Controller input handler
-            getController();
-
+            if (controller == null) 
+            { 
+                getController(); 
+                if (controller.IsConnected == false)
+                {
+                    getController();
+                }
+            }
 
 
             if (controller != null)
             { 
                 if (controller.IsConnected)
                 {
-                    gamepad = controller.GetState().Gamepad;
+                    Gamepad currentGamepad = controller.GetState().Gamepad;
 
-                    if (gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+                    if (ButtonComboPress(currentGamepad,Properties.Settings.Default.qamButtonCombo))
                     {
-                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight))
-                        {
-                            handleOpenCloseQAM();
+                        handleOpenCloseQAM();
+                    }
+                    if (ButtonComboPress(currentGamepad, Properties.Settings.Default.oskButtonCombo))
+                    {
+                        handleOpenCloseOSK();
+                        
+                    }
+                    if (ButtonComboPress(currentGamepad, Properties.Settings.Default.fsrButtonCombo))
+                    {
+                        PowerControlPanel.Classes.EnableFSR.EnableFSR.enableDisableFSR();
+                    }
 
-                        }
-                        if (gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown))
-                        {
-                            handleOpenCloseOSK();
-                            initializeNavigationFrame();
-                        }
+                    //set currentgamepad snapshot to global gamepad for comparison
+                    gamepad = currentGamepad;
+                    if (1==0)
+                    {
+
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.B))
                         {
-                            GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 + 1, (int)GlobalVariables.setPL2 + 1);
+                           
+                            //GlobalVariables.tdp.changeTDP((int)GlobalVariables.setPL1 + 1, (int)GlobalVariables.setPL2 + 1);
                         }
                         if (gamepad.Buttons.HasFlag(GamepadButtonFlags.A))
                         {
@@ -290,16 +385,38 @@ namespace Power_Control_Panel
                     }
 
                 }
+
             }
-
-
-            //Theme manager
-            if (theme != Properties.Settings.Default.systemTheme)
+            if (timercounter > 60)
             {
-                setTheme();
-                theme = Properties.Settings.Default.systemTheme;
-            }
+                if (GlobalVariables.closeForUpdate)
+                { this.Close(); }
 
+
+                //Theme manager, set theme if changed in settings
+                if (theme != Properties.Settings.Default.systemTheme)
+                {
+                    setTheme();
+                    theme = Properties.Settings.Default.systemTheme;
+                }
+
+                //call routine to check if profile needs to be changed because of app running or power change
+                PowerControlPanel.Classes.TaskScheduler.TaskScheduler.runTask(() => handleRoutineProfileChecker());
+                
+                timercounter = 0;
+
+
+            }
+            else { timercounter++; }
+
+
+
+        }
+
+        private void handleRoutineProfileChecker()
+        {
+
+            //------------------------------------ Profile change----------------------------------
 
 
             //Profile or power status change updater
@@ -324,12 +441,12 @@ namespace Power_Control_Panel
                 {
                     setProfile = profile;
                     setApp = exe;
-                    if (exe == GlobalVariables.ActiveApp) 
+                    if (exe == GlobalVariables.ActiveApp)
                     {
                         //if exe name matches current active app then break so that app is always the one picked
                         break;
                     }
-               
+
                 }
             }
 
@@ -373,11 +490,28 @@ namespace Power_Control_Panel
 
             }
 
-                    
+            TimeSpan timeDifference = DateTime.Now.Subtract(timeSleepCheck);
+
+            if (timeDifference.Seconds > 15)
+            {
+                if (profileCase == "" && GlobalVariables.ActiveProfile != "None")
+                {
+                    profileCase = "Reapply Profile";
+                }
+                if (profileCase == "" && GlobalVariables.ActiveProfile == "None")
+                {
+                    profileCase = "Default Profile";
+                }
+                
+            }
+            //set sleep check clock
+            timeSleepCheck = DateTime.Now;
+            
+
             GlobalVariables.powerStatus = Power;
             //scenarios
             //program opens,  key indicator is  
-            
+
 
 
 
@@ -385,7 +519,8 @@ namespace Power_Control_Panel
             {
                 default:
                     break;
-                case "Nothing":
+                case "Default Profile":
+                    ManageXML_Profiles.applyProfile("Default");
                     break;
                 case "Reapply Profile":
                     ManageXML_Profiles.applyProfile(GlobalVariables.ActiveProfile);
@@ -401,8 +536,9 @@ namespace Power_Control_Panel
                     ManageXML_Profiles.applyProfile("Default");
                     break;
             }
-        }
 
+
+        }
 
         private void OSKEvent()
         {
@@ -517,7 +653,7 @@ namespace Power_Control_Panel
             //                                                     .FirstOrDefault(x => x.NavigationType == e.Content?.GetType());
 
             // update back button
-            currentUri = e.Uri;
+    
             this.GoBackButton.SetCurrentValue(VisibilityProperty, this.navigationServiceEx.CanGoBack ? Visibility.Visible : Visibility.Collapsed);
         }
 
@@ -563,11 +699,5 @@ namespace Power_Control_Panel
         }
     }
 
-    public static class timerHandler
-    {
-
-
-
-
-    }
+   
 }

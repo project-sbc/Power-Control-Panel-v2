@@ -270,6 +270,7 @@ namespace Power_Control_Panel
 
             txtblkDateTime.Text = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
 
+            txtblkCPUTempLoad.Text = "CPU T:" + GlobalVariables.cpuTemp + " C"; 
             //game pad stuff here
             //if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }
         }

@@ -23,13 +23,7 @@
 
 	<Applications>
 		<App>
-			<DisplayName>Test123</DisplayName>
-			<Exe></Exe>
-			<Path></Path>
-			<AppType></AppType>
-			<GameType></GameType>
-			<Image></Image>
-			<Profile>Default</Profile>
+
 			
 		</App>
 

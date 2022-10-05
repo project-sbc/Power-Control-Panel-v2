@@ -1,8 +1,11 @@
-﻿using ControlzEx.Theming;
+﻿using AutoUpdaterDotNET;
+using ControlzEx.Theming;
+using MahApps.Metro.Controls;
 using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -46,6 +50,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 GB_AMD_GPUCLK.Visibility = Visibility.Collapsed;
             }
         }
+     
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -63,7 +68,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             if (Properties.Settings.Default.Language != cboLanguage.Text)
             {
-                Application.Current.Resources.MergedDictionaries.Remove(GlobalVariables.languageDict);
+                System.Windows.Application.Current.Resources.MergedDictionaries.Remove(GlobalVariables.languageDict);
                 switch (cboLanguage.Text)
                 {
                     default:
@@ -75,7 +80,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         GlobalVariables.languageDict.Source = new Uri("PowerControlPanel/Classes/StartUp/Resources/StringResources.zh-Hans.xaml", UriKind.RelativeOrAbsolute);
                         break;
                 }
-                Application.Current.Resources.MergedDictionaries.Add(GlobalVariables.languageDict);
+                System.Windows.Application.Current.Resources.MergedDictionaries.Add(GlobalVariables.languageDict);
                 Properties.Settings.Default.Language = cboLanguage.Text;
             }
 
@@ -93,6 +98,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Properties.Settings.Default.homePageTypeMW = cboMWHomePageStyle.Text;
 
             Properties.Settings.Default.homePageTypeQAM = cboQAMHomePageStyle.Text;
+
+            Properties.Settings.Default.fsrButtonCombo = txtbxShortCutFSR.Text.Replace(" ","");
+            Properties.Settings.Default.qamButtonCombo = txtbxShortCutQAM.Text.Replace(" ", "");
+            Properties.Settings.Default.oskButtonCombo = txtbxShortCutOSK.Text.Replace(" ", "");
             //Save
             Properties.Settings.Default.Save();
 
@@ -137,6 +146,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             cboQAMHomePageStyle.Text = Properties.Settings.Default.homePageTypeQAM;
             cboTDPTypeIntel.Text = Properties.Settings.Default.IntelMMIOMSR;
+
+            txtbxShortCutFSR.Text = Properties.Settings.Default.fsrButtonCombo;
+            txtbxShortCutOSK.Text = Properties.Settings.Default.oskButtonCombo;
+            txtbxShortCutQAM.Text = Properties.Settings.Default.qamButtonCombo;
         }
         private void changeTaskService(string systemAutoStart)
         {
@@ -171,19 +184,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                     ts.RootFolder.DeleteTask("Power_Control_Panel");
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         }
 
@@ -227,8 +227,97 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
         }
 
-  
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            
+           
+            AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+            AutoUpdater.Start("https://raw.githubusercontent.com/project-sbc/Power-Control-Panel-v2/master/Update.xml");
 
-  
+
+        }
+
+        private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+        {
+            if (args.Error == null)
+            {
+                if (args.IsUpdateAvailable)
+                {
+                    DialogResult dialogResult;
+                    if (args.Mandatory.Value)
+                    {
+                        dialogResult =
+                            System.Windows.Forms.MessageBox.Show(
+                                $@"There is new version {args.CurrentVersion} available. You are using version {args.InstalledVersion}. This is required update. Press Ok to begin updating the application.", @"Update Available",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        dialogResult =
+                            System.Windows.Forms.MessageBox.Show(
+                                $@"There is new version {args.CurrentVersion} available. You are using version {
+                                        args.InstalledVersion
+                                    }. Do you want to update the application now?", @"Update Available",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Information);
+                    }
+
+                    // Uncomment the following line if you want to show standard update dialog instead.
+                    // AutoUpdater.ShowUpdateForm(args);
+
+                    if (dialogResult.Equals(System.Windows.Forms.DialogResult.Yes) || dialogResult.Equals(System.Windows.Forms.DialogResult.OK))
+                    {
+                        try
+                        {
+
+
+                            if (AutoUpdater.DownloadUpdate(args))
+                            {
+                                GlobalVariables.closeForUpdate = true;
+                            }
+                        }
+                        catch (Exception exception)
+                        {
+                            System.Windows.Forms.MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show(@"There is no update available please try again later.", @"No update available",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                if (args.Error is WebException)
+                {
+                    System.Windows.Forms.MessageBox.Show(
+                        @"There is a problem reaching update server. Please check your internet connection and try again later.",
+                        @"Update Check Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show(args.Error.Message,
+                        args.Error.GetType().ToString(), MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void toggleGeneral_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (toggleGeneral.IsOn)
+            {
+                GB_General_Settings.Height = double.NaN;
+            }
+            else
+            {
+                GB_General_Settings.Height = 40;
+            }
+            
+        }
     }
 }

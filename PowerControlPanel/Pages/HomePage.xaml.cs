@@ -201,11 +201,11 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (GlobalVariables.cpuMaxFrequency == 0)
                 {
+                    changingMAXCPU = true;
                     MAXCPU.Value = MAXCPU.Maximum;
                     txtsliderMAXCPU.Visibility = Visibility.Collapsed;
                     txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
- 
-             
+                    changingMAXCPU = false;
                 }
                 else
                 {
@@ -220,9 +220,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //active core updates
             if (!dragStartedActiveCores && enableCPU)
             {
-
-                    ActiveCores.Value = GlobalVariables.cpuActiveCores;
-  
+                changingActiveCores = true;
+                ActiveCores.Value = GlobalVariables.cpuActiveCores;
+                changingActiveCores = false;
             }
 
 
@@ -650,163 +650,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
   
         #endregion
 
-        #region slider mouse left up
-        private void Slider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        dragStartedTDP1 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "TDP":
-                        dragStartedTDP = false;
-                        HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
-                        break;
-                    case "TDP2":
-                        dragStartedTDP2 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "Brightness":
-                        dragStartedBrightness = false;
-                        HandleChangingBrightness(Brightness.Value);
-                        break;
-                    case "Volume":
-                        dragStartedVolume = false;
-                        HandleChangingVolume((int)Volume.Value);
-                        break;
-                    case "GPUCLK":
-                        dragStartedGPUCLK = false;
-                        HandleChangingGPUCLK((int)GPUCLK.Value);
-                        break;
-                    case "MAXCPU":
-                        dragStartedMAXCPU = false;
-                        HandleChangingMAXCPU((int)MAXCPU.Value);
-                        break;
-                    case "ActiveCores":
-                        dragStartedActiveCores = false;
-                        HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-        }
-
-      
-
-
-        #endregion
-
-        #region slider touchup
-
-        private void Slider_TouchUp(object sender, TouchEventArgs e)
-        {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        dragStartedTDP1 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "TDP":
-                        dragStartedTDP = false;
-                        HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
-                        break;
-                    case "TDP2":
-                        dragStartedTDP2 = false;
-                        HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        break;
-                    case "Brightness":
-                        dragStartedBrightness = false;
-                        HandleChangingBrightness(Brightness.Value);
-                        break;
-                    case "Volume":
-                        dragStartedVolume = false;
-                        HandleChangingVolume((int)Volume.Value);
-                        break;
-                    case "GPUCLK":
-                        dragStartedGPUCLK = false;
-                        HandleChangingGPUCLK((int)GPUCLK.Value);
-                        break;
-                    case "MAXCPU":
-                        dragStartedMAXCPU = false;
-                        HandleChangingMAXCPU((int)MAXCPU.Value);
-                        break;
-                    case "ActiveCores":
-                        dragStartedActiveCores = false;
-                        HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-        }
-  
-        #endregion
-
-        #region slider touchdown
-        private void Slider_TouchDown(object sender, TouchEventArgs e)
-        {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-
-            if (this.IsLoaded)
-            {
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        dragStartedTDP1 = true;
-                        break;
-                    case "TDP":
-                        dragStartedTDP = true;
-                        break;
-                    case "TDP2":
-                        dragStartedTDP2 = true;
-                        break;
-                    case "Brightness":
-                        dragStartedBrightness = true;
-                        break;
-                    case "Volume":
-                        dragStartedVolume = true;
-                        break;
-                    case "GPUCLK":
-                        dragStartedGPUCLK = true;
-                        break;
-                    case "MAXCPU":
-                        dragStartedMAXCPU = true;
-                        break;
-                    case "ActiveCores":
-                        dragStartedActiveCores = true;
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-        }
-
-
-        #endregion
-
-
-
-
-
 
         void updateFromGlobalTDP()
         {
@@ -946,7 +789,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             if (this.IsLoaded)
             {
-                if (dragStartedActiveCores == false)
+                if (dragStartedActiveCores == false && !changingActiveCores)
                 {
                     changingActiveCores = true;
                     Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));

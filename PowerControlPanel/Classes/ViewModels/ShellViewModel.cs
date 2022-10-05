@@ -89,6 +89,13 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
                 Label = Application.Current.Resources["MainWindow_Menu_OSK"].ToString(),
 
             });
+            //this.Menu.Add(new MenuItem()
+            //{
+                //Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.ThermometerThreeQuartersSolid },
+                //Label = Application.Current.Resources["MainWindow_Menu_FanCurve"].ToString(),
+               // NavigationType = typeof(FanCurvePage),
+               // NavigationDestination = new Uri("PowerControlPanel/Pages/FanCurvePage.xaml", UriKind.RelativeOrAbsolute)
+           // });
             this.OptionsMenu.Add(new MenuItem()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.InfoCircleSolid },

@@ -310,5 +310,53 @@ namespace Power_Control_Panel.Properties {
                 this["showProfiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LB+RB+DPadRight")]
+        public string qamButtonCombo {
+            get {
+                return ((string)(this["qamButtonCombo"]));
+            }
+            set {
+                this["qamButtonCombo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LB+RB+DPadDown")]
+        public string oskButtonCombo {
+            get {
+                return ((string)(this["oskButtonCombo"]));
+            }
+            set {
+                this["oskButtonCombo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RB+B")]
+        public string fsrButtonCombo {
+            get {
+                return ((string)(this["fsrButtonCombo"]));
+            }
+            set {
+                this["fsrButtonCombo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool upgradeSettingsRequired {
+            get {
+                return ((bool)(this["upgradeSettingsRequired"]));
+            }
+            set {
+                this["upgradeSettingsRequired"] = value;
+            }
+        }
     }
 }
