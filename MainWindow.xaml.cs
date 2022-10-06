@@ -288,39 +288,50 @@ namespace Power_Control_Panel
 
             //split string into array
             string[] strBC = BC.Split('+');
-            //gamepad flag array
-            GamepadButtonFlags[] qamButtonCombo = new GamepadButtonFlags[strBC.Length];
-            int intCount = 0;
-            foreach (var bc in strBC)
+
+            if (strBC.Length > 0)
             {
-                //for each string lookup in the dictionary for the gamepad flag
-                qamButtonCombo[intCount] = buttonLookUp[bc];
-                intCount++;
-            }
-            //set bool to true
-            bool oldGamepadPress = true;
-            bool GamepadPress = true;
-            foreach (GamepadButtonFlags button in qamButtonCombo)
-            {
-                //the press scenario is defined when the old gamepad state doesn't have all buttons pressed but the new state does. This will turn the bool false if any of the buttons arent pressed
-                if (!gamepad.Buttons.HasFlag(button))
+                //gamepad flag array
+                GamepadButtonFlags[] ButtonCombo = new GamepadButtonFlags[strBC.Length];
+                int intCount = 0;
+
+                foreach (var bc in strBC)
                 {
-                    oldGamepadPress = false;
+                    //for each string lookup in the dictionary for the gamepad flag
+                    ButtonCombo[intCount] = buttonLookUp[bc];
+                    intCount++;
                 }
-                if (!gp.Buttons.HasFlag(button))
+
+                //set bool to true
+                bool oldGamepadPress = true;
+                bool GamepadPress = true;
+                foreach (GamepadButtonFlags button in ButtonCombo)
                 {
-                    GamepadPress = false;
+                    //the press scenario is defined when the old gamepad state doesn't have all buttons pressed but the new state does. This will turn the bool false if any of the buttons arent pressed
+                    if (!gamepad.Buttons.HasFlag(button))
+                    {
+                        oldGamepadPress = false;
+                    }
+                    if (!gp.Buttons.HasFlag(button))
+                    {
+                        GamepadPress = false;
+                    }
                 }
+                //button press is true when current gamepadpress is true and the old gamepad state is false
+                if (!oldGamepadPress && GamepadPress)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+
+
+
             }
-            //button press is true when current gamepadpress is true and the old gamepad state is false
-            if (!oldGamepadPress && GamepadPress)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
+  
+
 
             return result;
 
