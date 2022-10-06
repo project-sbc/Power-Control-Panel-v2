@@ -74,6 +74,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             InitializeComponent();
             //set max cpu core count here
 
+            //hide items
+            if (GlobalVariables.cpuType != "AMD")
+            {
+                GBAMDGPUCLK.Visibility = Visibility.Collapsed;
+            }
+
             initializeTimer();
 
             setMinMaxSliderValues();
@@ -198,7 +204,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
             //max cpu clock updates
-            if (!dragStartedMAXCPU && enableCPU)
+            if (!dragStartedMAXCPU && enableCPU && GlobalVariables.needCPUMaxFreqRead == false)
             {
                 if (GlobalVariables.cpuMaxFrequency == 0)
                 {
@@ -219,7 +225,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
             //active core updates
-            if (!dragStartedActiveCores && enableCPU)
+            if (!dragStartedActiveCores && enableCPU && GlobalVariables.needActiveCoreRead == false)
             {
                 changingActiveCores = true;
                 ActiveCores.Value = GlobalVariables.cpuActiveCores;
@@ -787,6 +793,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if(dragStartedMAXCPU == false)
                 {
                     changingMAXCPU = true;
+                    GlobalVariables.needCPUMaxFreqRead = true;
                     int sendMaxCPU = 0;
                     if (maxcpu != MAXCPU.Maximum) { sendMaxCPU = maxcpu; }
 
@@ -809,6 +816,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (dragStartedActiveCores == false && !changingActiveCores)
                 {
                     changingActiveCores = true;
+                    GlobalVariables.needActiveCoreRead = true;
                     Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));
 
                     changingActiveCores = false;

@@ -32,138 +32,82 @@
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource Brightness}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel   >
-
-
-                            
-                            <Slider x:Name="Brightness" Margin="0,0,40,0"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" MouseUp="Slider_MouseUp"   AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"      />
-
-
-
-
-                          
+                              <Slider x:Name="Brightness" Margin="0,0,40,0"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"   AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"      />
                         </DockPanel>
-
                     </StackPanel>
-
                 </DockPanel>
-
             </Border>
 
             <Border BorderThickness="1" CornerRadius="15" Margin="5,5,5,5" DockPanel.Dock="Top" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}">
                 <DockPanel>
-
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="60"
                                                Height="60" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
                                                Kind="VolumeUpSolid" DockPanel.Dock="Left" />
-
-
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource Volume}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel   >
-
-
-
-                            <Slider x:Name="Volume" Margin="0,0,40,0"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" MouseUp="Slider_MouseUp"   AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"      />
-
-
-
-
-
+                            <Slider x:Name="Volume" Margin="0,0,40,0"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"   AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"      />
                         </DockPanel>
-
                     </StackPanel>
-
                 </DockPanel>
-
             </Border>
-
-
-
 
             <Border x:Name="bdTDP1" BorderThickness="1" CornerRadius="15" Margin="5,5,5,5" DockPanel.Dock="Top" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}">
                 <DockPanel>
-
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="60"
                                                Height="60" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
                                                Kind="BoltSolid" DockPanel.Dock="Left" />
-
-
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource TDP_Sustained}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel  x:Name="dpTDP1" >
-
                             <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
-                            <Slider x:Name="TDP1"  DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" MouseUp="Slider_MouseUp"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
-
+                            <Slider x:Name="TDP1"  DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
                         </DockPanel>
-
                     </StackPanel>
-
                 </DockPanel>
-
             </Border>
 
             <Border  x:Name="bdTDP2" BorderThickness="1" CornerRadius="15" Margin="5,5,5,5" DockPanel.Dock="Top" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}">
                 <DockPanel>
-
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="60"
                                                Height="60" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
                                                Kind="BoltSolid" DockPanel.Dock="Left" />
-
-
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource TDP_Boost}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel  x:Name="dpTDP2" >
-
                             <Label x:Name="txtsliderTDP2" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP2, Path=Value}"/>
-                            <Slider x:Name="TDP2"  DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" MouseUp="Slider_MouseUp"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
-
+                            <Slider x:Name="TDP2"  DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
                         </DockPanel>
-
                     </StackPanel>
-
                 </DockPanel>
-
             </Border>
+            
             <Border  x:Name="bdTDP" BorderThickness="1" CornerRadius="15" Margin="5,5,5,5" DockPanel.Dock="Top" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}">
                 <DockPanel>
-
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="60"
                                                Height="60" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
                                                Kind="BoltSolid" DockPanel.Dock="Left" />
-
-
                     <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource TDP}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel  x:Name="dpTDP" >
-
                             <Label x:Name="txtsliderTDP" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP, Path=Value}"/>
-                            <Slider x:Name="TDP"  DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" MouseUp="Slider_MouseUp"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
-
+                            <Slider x:Name="TDP"  DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
                         </DockPanel>
-
                     </StackPanel>
-
                 </DockPanel>
-
             </Border>
 
             <Border   x:Name="bdmaxCPU" BorderThickness="1" CornerRadius="15" Margin="5,5,5,5" DockPanel.Dock="Top" BorderBrush="{DynamicResource MahApps.Brushes.ThemeForeground}">
                 <DockPanel>
-
                     <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="60"
                                                Height="60" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
                                                Kind="Memory" DockPanel.Dock="Left" />
-                  
-
-                    <StackPanel DockPanel.Dock="Right">
+                      <StackPanel DockPanel.Dock="Right">
                         <Label Content="{DynamicResource Max_CPU}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel   >
-              
-                            <Label x:Name="txtsliderMAXCPU" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=MAXCPU, Path=Value}"/>
+                             <Label x:Name="txtsliderMAXCPU" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=MAXCPU, Path=Value}"/>
                             <Label x:Name="txtsliderMAXCPUAuto" Visibility="Collapsed" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Auto"/>
-
-                            <Slider x:Name="MAXCPU" DockPanel.Dock="Left"  LargeChange="100" TickFrequency="100"  HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Height="40" Minimum="1000" Maximum="5000"  SmallChange="100" TickPlacement="None" MouseUp="Slider_MouseUp"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
+                            <Slider x:Name="MAXCPU" DockPanel.Dock="Left"  LargeChange="100" TickFrequency="100"  HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Height="40" Minimum="1000" Maximum="5000"  SmallChange="100" TickPlacement="None" ValueChanged="Slider_ValueChanged"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
 
 
 
@@ -189,9 +133,8 @@
 
 
                             <Label x:Name="txtsliderActiveCores" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=ActiveCores, Path=Value}"/>
-                            <Slider x:Name="ActiveCores" LargeChange="1" DockPanel.Dock="Left" Thumb.DragCompleted="Slider_DragCompleted" Height="40" Thumb.DragStarted="Slider_DragStarted" Minimum="1" IsSnapToTickEnabled="True" Maximum="16"  SmallChange="1" TickPlacement="None" MouseUp="Slider_MouseUp" HorizontalAlignment="Stretch" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"   >
+                            <Slider x:Name="ActiveCores" LargeChange="1" DockPanel.Dock="Left" Thumb.DragCompleted="Slider_DragCompleted" Height="40" Thumb.DragStarted="Slider_DragStarted" Minimum="1" IsSnapToTickEnabled="True" Maximum="16"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged" HorizontalAlignment="Stretch" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"    />
 
-                            </Slider>
 
 
                         </DockPanel>
@@ -214,7 +157,7 @@
                         <DockPanel   >
                             <Label x:Name="txtsliderAMDGPUCLKDEF"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Default"/>
                             <Label x:Name="txtsliderAMDGPUCLK" Visibility="Collapsed"  DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=GPUCLK, Path=Value}"/>
-                            <Slider x:Name="GPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="40" Minimum="200" Maximum="2200"   SmallChange="50" TickPlacement="None" MouseUp="Slider_MouseUp"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded" LargeChange="50" TickFrequency="50"  />
+                            <Slider x:Name="GPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Stretch" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="40" Minimum="200" Maximum="2200"   SmallChange="50" TickPlacement="None" ValueChanged="Slider_ValueChanged"       IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded" LargeChange="50" TickFrequency="50"  />
 
 
 

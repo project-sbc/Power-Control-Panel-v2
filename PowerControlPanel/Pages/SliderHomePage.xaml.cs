@@ -330,80 +330,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         #region slider value changed
         private void Slider_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-       
-            if (this.IsLoaded)
-            {
-                Debug.WriteLine("value changed event");
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        if (!dragStartedTDP1 && !changingTDP)
-                        {
-                            //Debug.WriteLine(TDP1.Value.ToString());
-                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        }
-                        break;
-                    case "TDP":
-                        if (!dragStartedTDP && !changingTDP)
-                        {
-                            HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
-                        }
-                        break;
-                    case "TDP2":
-                        if (!dragStartedTDP2 && !changingTDP)
-                        {
-                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
-                        }
-                        break;
-                    case "Brightness":
-                        if (!dragStartedBrightness)
-                        {
-                            HandleChangingBrightness(Brightness.Value);
-                        }
-                        break;
-
-                    case "Volume":
-                        if (!dragStartedVolume)
-                        {
-                            HandleChangingVolume((int)Volume.Value);
-                        }
-                        break;
-                    case "GPUCLK":
-                        if (!dragStartedGPUCLK && !changingGPUCLK)
-                        {
-                            HandleChangingGPUCLK((int)GPUCLK.Value);
-                        }
-                        break;
-                    case "MAXCPU":
-                        if (!dragStartedMAXCPU && !changingMAXCPU)
-                        {
-                            HandleChangingMAXCPU((int)MAXCPU.Value);
-                        }
-                        if (MAXCPU.Value == MAXCPU.Maximum)
-                        {
-                            txtsliderMAXCPU.Visibility = Visibility.Collapsed;
-                            txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            txtsliderMAXCPUAuto.Visibility = Visibility.Collapsed;
-                            txtsliderMAXCPU.Visibility = Visibility.Visible;
-                        }
-                        break;
-                    case "ActiveCores":
-                        if (!dragStartedActiveCores && !changingActiveCores)
-                        {
-                            HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-            }
+ 
         }
 
         #endregion
@@ -654,6 +581,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (dragStartedActiveCores == false)
                 {
                     changingActiveCores = true;
+                    GlobalVariables.needActiveCoreRead = true;
                     Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));
 
                     changingActiveCores = false;
@@ -732,6 +660,82 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cboFPSLimit.SelectedValue.ToString());
         }
 
-  
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = sender as Slider;
+
+            string sliderName = slider.Name;
+
+            if (this.IsLoaded)
+            {
+                Debug.WriteLine("value changed event");
+                switch (sliderName)
+                {
+                    case "TDP1":
+                        if (!dragStartedTDP1 && !changingTDP)
+                        {
+                            //Debug.WriteLine(TDP1.Value.ToString());
+                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+                        }
+                        break;
+                    case "TDP":
+                        if (!dragStartedTDP && !changingTDP)
+                        {
+                            HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
+                        }
+                        break;
+                    case "TDP2":
+                        if (!dragStartedTDP2 && !changingTDP)
+                        {
+                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
+                        }
+                        break;
+                    case "Brightness":
+                        if (!dragStartedBrightness)
+                        {
+                            HandleChangingBrightness(Brightness.Value);
+                        }
+                        break;
+
+                    case "Volume":
+                        if (!dragStartedVolume)
+                        {
+                            HandleChangingVolume((int)Volume.Value);
+                        }
+                        break;
+                    case "GPUCLK":
+                        if (!dragStartedGPUCLK && !changingGPUCLK)
+                        {
+                            HandleChangingGPUCLK((int)GPUCLK.Value);
+                        }
+                        break;
+                    case "MAXCPU":
+                        if (!dragStartedMAXCPU && !changingMAXCPU)
+                        {
+                            HandleChangingMAXCPU((int)MAXCPU.Value);
+                        }
+                        if (MAXCPU.Value == MAXCPU.Maximum)
+                        {
+                            txtsliderMAXCPU.Visibility = Visibility.Collapsed;
+                            txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            txtsliderMAXCPUAuto.Visibility = Visibility.Collapsed;
+                            txtsliderMAXCPU.Visibility = Visibility.Visible;
+                        }
+                        break;
+                    case "ActiveCores":
+                        if (!dragStartedActiveCores && !changingActiveCores)
+                        {
+                            HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
     }
 }
