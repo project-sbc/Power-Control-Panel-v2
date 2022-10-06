@@ -103,7 +103,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.changeCPU
             RunCLI.RunCommand(" /S scheme_current", false, "C:\\windows\\system32\\powercfg.exe", 1000);
 
             readCPUMaxFrequency();
-
+            GlobalVariables.needCPUMaxFreqRead = false;
 
         }
 
@@ -123,6 +123,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.changeCPU
             }
             RunCLI.RunCommand(" /S scheme_current", false, "C:\\windows\\system32\\powercfg.exe", 1000);
             readActiveCores();
+            GlobalVariables.needActiveCoreRead = false;
         }
 
 

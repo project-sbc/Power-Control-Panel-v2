@@ -69,8 +69,8 @@ namespace Power_Control_Panel
         public static int cpuActiveCores = 0;
         public static int maxCpuCores = 1;
         public static int baseCPUSpeed = 1000;
-
-
+        public static bool needCPUMaxFreqRead = false;
+        public static bool needActiveCoreRead = false;
         //RTSS fps limit
         public static string FPSLimit = "Unlocked";
 
@@ -287,10 +287,12 @@ namespace Power_Control_Panel
             bool result = false;
 
             //split string into array
-            string[] strBC = BC.Split('+');
+            
 
-            if (strBC.Length > 0)
+            if (BC.IndexOf("+") > 0)
             {
+                string[] strBC = BC.Split('+');
+
                 //gamepad flag array
                 GamepadButtonFlags[] ButtonCombo = new GamepadButtonFlags[strBC.Length];
                 int intCount = 0;
