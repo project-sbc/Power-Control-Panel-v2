@@ -2,6 +2,10 @@
 
 Hello everyone! This is the long awaited version 2 of my power control panel. This is a WORK IN PROGRESS!
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/LsCFg_GVnc0/0.jpg)](https://www.youtube.com/watch?v=LsCFg_GVnc0)
+
+
+
 # PLEASE READ THIS:
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. MISUSE OF THIS SOFTWARE COULD CAUSE SYSTEM INSTABILITY OR MALFUNCTION.
 
@@ -17,10 +21,10 @@ You can find it in the releases tab here https://github.com/project-sbc/Power-Co
 
 ## One Netbook
 -One Mix 4, T1, OneGx/Pro
--One X Player AMD 4800U/5700U/5800U mini and big; Intel 1165G7/1195G7/1260p mini and big
+-One X Player AMD 4800U/5700U/5800U/6800U mini and big; Intel 1165G7/1195G7/1260p mini and big
 
 ## GPD
--Win 2, Win 3, Win max 2020, Win Max 2021 Intel/AMD, Win Max 2 1260p, Pocket 2, Pocket 3
+-Win 2, Win 3, Win max 2020, Win Max 2021 Intel/AMD, Win Max 2 1260p, Win Max 2 6800U Pocket 2, Pocket 3
 
 ## Anbernic
 -Win600
