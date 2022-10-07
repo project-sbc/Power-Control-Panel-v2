@@ -225,13 +225,7 @@
                         <Label Content="{DynamicResource Display_Scaling}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
                         <DockPanel   >
                             <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
-                                <ComboBoxItem Content="Default" />
-                                <ComboBoxItem Content="100" />
-                                <ComboBoxItem Content="125" />
-                                <ComboBoxItem Content="150" />
-                                <ComboBoxItem Content="175" />
-                                <ComboBoxItem Content="200" />
-                                <ComboBoxItem Content="225" />
+             
                             </ComboBox>
 
 

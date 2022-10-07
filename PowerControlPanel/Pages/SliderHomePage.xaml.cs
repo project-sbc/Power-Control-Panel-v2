@@ -110,7 +110,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboRefreshRate.ItemsSource = GlobalVariables.refreshRates;
             cboResolution.ItemsSource = GlobalVariables.resolutions;
             cboFPSLimit.ItemsSource = GlobalVariables.FPSLimits;
-
+            cboScaling.ItemsSource = GlobalVariables.scalings;
             changingResolution = true;
             cboResolution.SelectedIndex = 0;
             changingResolution = false;
@@ -628,10 +628,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void cboScaling_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!changingScaling && cboScaling.SelectedValue.ToString() != "Default")
+            if (!changingScaling && cboScaling.SelectedItem.ToString() != "Default")
             {
                 changingScaling = true;
-                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cboScaling.SelectedValue.ToString());
+                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cboScaling.SelectedItem.ToString());
                 changingScaling = false;
             }
 

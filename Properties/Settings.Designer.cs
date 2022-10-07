@@ -358,5 +358,17 @@ namespace Power_Control_Panel.Properties {
                 this["upgradeSettingsRequired"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LB+DPadUp")]
+        public string playniteButtonCombo {
+            get {
+                return ((string)(this["playniteButtonCombo"]));
+            }
+            set {
+                this["playniteButtonCombo"] = value;
+            }
+        }
     }
 }

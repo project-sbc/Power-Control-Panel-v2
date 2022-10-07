@@ -120,7 +120,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboRefreshRate.ItemsSource = GlobalVariables.refreshRates;
             cboResolution.ItemsSource = GlobalVariables.resolutions;
             cboFPSLimit.ItemsSource = GlobalVariables.FPSLimits;
-
+            cboScaling.ItemsSource = GlobalVariables.scalings;
             changingResolution = true;
             cboResolution.SelectedIndex = 0;
             changingResolution = false;
@@ -874,7 +874,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (!changingScaling && cboScaling.SelectedValue.ToString() != "Default")
             {
                 changingScaling = true;
-                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cboScaling.SelectedValue.ToString());
+                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cboScaling.SelectedItem.ToString());
                 changingScaling = false;
             }
 
@@ -891,7 +891,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (cboProfile.SelectedValue.ToString() != "None")
                 {
-                    PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cboProfile.SelectedValue.ToString());
+                    PowerControlPanel.Classes.ManageXML.ManageXML_Profiles.applyProfile(cboProfile.SelectedItem.ToString());
                 }
                 else
                 {
@@ -921,7 +921,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void cboFPSLimit_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cboFPSLimit.SelectedValue.ToString());
+            PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cboFPSLimit.SelectedItem.ToString());
         }
     }
 }

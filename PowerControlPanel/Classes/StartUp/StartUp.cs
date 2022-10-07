@@ -24,6 +24,11 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
                 Properties.Settings.Default.Upgrade();
                 Properties.Settings.Default.upgradeSettingsRequired = false;
                 Properties.Settings.Default.Save();
+
+                if (Properties.Settings.Default.systemAutoStart == "Enable")
+                {
+                    PowerControlPanel.Classes.TaskSchedulerWin32.TaskSchedulerWin32.changeTaskService("Enable");
+                }
             }
 
             //if first run of app, then make the profile

@@ -167,7 +167,9 @@ namespace Power_Control_Panel
             _ = Tablet.TabletDevices;
 
             //test code here
-            
+            //RunCLI.RunCommand(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile + ""));
+            //System.Windows.Forms.MessageBox.Show(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "\\Playnite\\Playnite.FullscreenApp.exe --start"));
+           
         }
       
         private void setUpNotifyIcon()
@@ -371,6 +373,10 @@ namespace Power_Control_Panel
                     if (ButtonComboPress(currentGamepad, Properties.Settings.Default.fsrButtonCombo))
                     {
                         PowerControlPanel.Classes.EnableFSR.EnableFSR.enableDisableFSR();
+                    }
+                    if (ButtonComboPress(currentGamepad, Properties.Settings.Default.playniteButtonCombo))
+                    {
+                        PowerControlPanel.Classes.Playnite.Playnite.playniteToggle();
                     }
 
                     //set currentgamepad snapshot to global gamepad for comparison
