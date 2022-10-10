@@ -86,12 +86,12 @@ namespace Power_Control_Panel.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool enableSystem {
+        public bool enableVolume {
             get {
-                return ((bool)(this["enableSystem"]));
+                return ((bool)(this["enableVolume"]));
             }
             set {
-                this["enableSystem"] = value;
+                this["enableVolume"] = value;
             }
         }
         
@@ -110,12 +110,12 @@ namespace Power_Control_Panel.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool showSystem {
+        public bool showVolume {
             get {
-                return ((bool)(this["showSystem"]));
+                return ((bool)(this["showVolume"]));
             }
             set {
-                this["showSystem"] = value;
+                this["showVolume"] = value;
             }
         }
         
@@ -368,6 +368,30 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["playniteButtonCombo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showBrightness {
+            get {
+                return ((bool)(this["showBrightness"]));
+            }
+            set {
+                this["showBrightness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool enableBrightness {
+            get {
+                return ((bool)(this["enableBrightness"]));
+            }
+            set {
+                this["enableBrightness"] = value;
             }
         }
     }

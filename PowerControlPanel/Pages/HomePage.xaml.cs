@@ -53,7 +53,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         //enabled booleans
         private bool enableTDP = Properties.Settings.Default.enableTDP;
         private bool enableGPUCLK = Properties.Settings.Default.enableGPUCLK;
-        private bool enableSystem = Properties.Settings.Default.enableSystem;
+        private bool enableSystem = Properties.Settings.Default.enableVolume;
         private bool enableDisplay = Properties.Settings.Default.enableDisplay;
         private bool enableCPU = Properties.Settings.Default.enableCPU;
 
@@ -368,14 +368,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
 
-            if (!Properties.Settings.Default.enableSystem)
+            if (!Properties.Settings.Default.enableVolume)
             {
                 GBSystemControls.Visibility = Visibility.Collapsed;
                 GBSystemControls.Margin = new Thickness(0, 0, 0, 0);
             }
             else
             {
-                if (Properties.Settings.Default.showSystem)
+                if (Properties.Settings.Default.showVolume)
                 { enableControlSystem.IsOn = true; }
                 else { enableControlSystem.IsOn = false; GBSystemControls.Height = 40; enableControlSystem.IsOn = false; }
             }
@@ -464,9 +464,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (enableControlSystem.IsOn)
                 {
                     GBSystemControls.Height = 150;
-                    Properties.Settings.Default.showSystem = true;
+                    Properties.Settings.Default.showVolume = true;
                 }
-                else { GBSystemControls.Height = 40; Properties.Settings.Default.showSystem = false; }
+                else { GBSystemControls.Height = 40; Properties.Settings.Default.showVolume = false; }
                 Properties.Settings.Default.Save();
             }
         }

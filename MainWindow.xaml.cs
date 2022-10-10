@@ -568,7 +568,6 @@ namespace Power_Control_Panel
 
         private void QAMEvent()
         {
-
             handleOpenCloseQAM();
         }
 
@@ -581,18 +580,9 @@ namespace Power_Control_Panel
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
 
-            if (Properties.Settings.Default.homePageTypeMW == "Grouped Slider")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
-            if (Properties.Settings.Default.homePageTypeMW == "Slider")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
-            if (Properties.Settings.Default.homePageTypeMW == "Tile")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
+
+                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute));
+  
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)

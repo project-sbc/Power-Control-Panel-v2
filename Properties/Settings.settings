@@ -17,13 +17,13 @@
     <Setting Name="IntelMMIOMSR" Type="System.String" Scope="User">
       <Value Profile="(Default)">MMIO</Value>
     </Setting>
-    <Setting Name="enableSystem" Type="System.Boolean" Scope="User">
+    <Setting Name="enableVolume" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="showTDP" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="showSystem" Type="System.Boolean" Scope="User">
+    <Setting Name="showVolume" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="showIntlPB" Type="System.Boolean" Scope="User">
@@ -88,6 +88,12 @@
     </Setting>
     <Setting Name="playniteButtonCombo" Type="System.String" Scope="User">
       <Value Profile="(Default)">LB+DPadUp</Value>
+    </Setting>
+    <Setting Name="showBrightness" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="enableBrightness" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

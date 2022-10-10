@@ -68,12 +68,7 @@ namespace Power_Control_Panel
             this.Topmost = true;
             this.WindowStyle = WindowStyle.None;
             this.AllowsTransparency = true;
-
-
-            using (Icon ico = System.Drawing.Icon.ExtractAssociatedIcon(AppDomain.CurrentDomain.BaseDirectory + "\\Power Control Panel.exe"))
-            {
-                icon.Source = Imaging.CreateBitmapSourceFromHIcon(ico.Handle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            }
+                       
         }
 
 
@@ -85,19 +80,21 @@ namespace Power_Control_Panel
             navigationServiceEx = new NavigationServiceEx();
             navigationServiceEx.Navigated += this.NavigationServiceEx_OnNavigated;
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
+
+            this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute));
             // Navigate to the home page.
-            if (Properties.Settings.Default.homePageTypeQAM == "Slider")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/sliderHomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
-            if (Properties.Settings.Default.homePageTypeQAM == "Grouped Slider")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
-            if (Properties.Settings.Default.homePageTypeQAM == "Tile")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
+            //if (Properties.Settings.Default.homePageTypeQAM == "Slider")
+            //{
+            //this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/sliderHomePage.xaml", UriKind.RelativeOrAbsolute));
+            //}
+            //if (Properties.Settings.Default.homePageTypeQAM == "Grouped Slider")
+            //{
+            // this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
+            //}
+            //if (Properties.Settings.Default.homePageTypeQAM == "Tile")
+            //{
+            //   this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute));
+            //}
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)
@@ -270,7 +267,7 @@ namespace Power_Control_Panel
 
             txtblkDateTime.Text = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
 
-            txtblkCPUTempLoad.Text = "CPU T:" + GlobalVariables.cpuTemp + " C"; 
+           
             //game pad stuff here
             //if (GlobalVariables.controller is null) { txtblkGamepad.Text = ""; } else { if (GlobalVariables.controller.IsConnected) { txtblkGamepad.Text = "\uE7FC"; } else { txtblkGamepad.Text = ""; } }
         }

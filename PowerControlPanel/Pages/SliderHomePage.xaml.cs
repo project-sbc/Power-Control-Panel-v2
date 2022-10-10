@@ -51,7 +51,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         //enabled booleans
         private bool enableTDP = Properties.Settings.Default.enableTDP;
         private bool enableGPUCLK = Properties.Settings.Default.enableGPUCLK;
-        private bool enableSystem = Properties.Settings.Default.enableSystem;
+        private bool enableSystem = Properties.Settings.Default.enableVolume;
         private bool enableDisplay = Properties.Settings.Default.enableDisplay;
         private bool enableCPU = Properties.Settings.Default.enableCPU;
         //profiles

@@ -5,11 +5,11 @@
         xmlns:viewModels="clr-namespace:Power_Control_Panel.PowerControlPanel.Classes.VMQAM"
         xmlns:navigation="clr-namespace:Power_Control_Panel.PowerControlPanel.Classes.Navigation"
         xmlns:classes="clr-namespace:Power_Control_Panel.PowerControlPanel.Classes"
-        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-        UseNoneWindowStyle="True" 
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls" xmlns:iconPacks="clr-namespace:MahApps.Metro.IconPacks;assembly=MahApps.Metro.IconPacks.FontAwesome"
+                 UseNoneWindowStyle="True" 
         ResizeMode="CanResizeWithGrip"         
         Topmost="True"           
-        Title="Power Control Panel" Height="600" Width="530" Closing="MetroWindow_Closing" MinWidth="450" MinHeight="350" Loaded="MetroWindow_Loaded">
+        Title="Power Control Panel" Height="600" Width="500" Closing="MetroWindow_Closing" MinWidth="450" MinHeight="350" Loaded="MetroWindow_Loaded">
     <controls:MetroWindow.DataContext>
         <viewModels:SVM />
     </controls:MetroWindow.DataContext>
@@ -101,7 +101,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="39" />
+            <RowDefinition Height="60" />
            
             
             <RowDefinition/>
@@ -110,8 +110,12 @@
             <DockPanel.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkDarkColorKey}}"/>
             </DockPanel.Background>
-            <Image x:Name="icon" DockPanel.Dock="Right"/>
-            
+            <Border DockPanel.Dock="Right" BorderThickness="3" BorderBrush="White">
+                <iconPacks:PackIconFontAwesome VerticalAlignment="Center" Width="40"
+                                               Height="40" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
+                                               Kind="SignOutAltSolid" />
+            </Border>
+           
             <TextBlock Name="txtblkInternet" FontFamily="Segoe MDL2 Assets" Text="&#xF384;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="25" Margin="0,0,10,0" />
             <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xE83E;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="30" Margin="0,0,10,0" />
             <TextBlock Name="txtblkBatteryPercentage"  Text="" TextAlignment="Right" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
@@ -119,8 +123,7 @@
 
             <TextBlock Name="txtblkGamepad" FontFamily="Segoe MDL2 Assets" Text="&#xE7FC;" TextAlignment="Right" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="25" Margin="0,0,10,0" />
             <TextBlock Name="txtblkDateTime"  Text="" TextAlignment="Right" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
-            <TextBlock Name="txtblkCPUTempLoad"  Text="" TextAlignment="Right" Foreground="White" VerticalAlignment="Center" DockPanel.Dock="Right" FontSize="22" Margin="0,0,10,0" />
-
+           
         </DockPanel>
 
         <controls:HamburgerMenu Grid.Row="1" x:Name="HamburgerMenuControl"

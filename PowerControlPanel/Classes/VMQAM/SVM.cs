@@ -26,8 +26,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                 Label = Application.Current.Resources["QAM_Menu_Hide"].ToString(),
 
             });
-            if (Properties.Settings.Default.homePageTypeQAM == "Grouped Slider")
-            {
+        
                 this.Menu.Add(new MI()
                 {
                     Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
@@ -35,46 +34,12 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.VMQAM
                     Label = Application.Current.Resources["QAM_Menu_System"].ToString(),
                     NavigationType = typeof(MainPage),
 
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute),
+                    NavigationDestination = new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute),
 
 
                 });
-            }
-            if (Properties.Settings.Default.homePageTypeQAM == "Slider")
-            {
-                this.Menu.Add(new MI()
-                {
-                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
+         
 
-                    Label = Application.Current.Resources["QAM_Menu_System"].ToString(),
-                    NavigationType = typeof(MainPage),
-
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute),
-
-
-                });
-            }
-            if (Properties.Settings.Default.homePageTypeQAM == "Tile")
-            {
-                this.Menu.Add(new MI()
-                {
-                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HddSolid },
-
-                    Label = Application.Current.Resources["QAM_Menu_System"].ToString(),
-                    NavigationType = typeof(MainPage),
-
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute),
-
-
-                });
-            }
-            this.Menu.Add(new MI()
-            {
-                Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.GamepadSolid },
-                Label = Application.Current.Resources["QAM_Menu_Games"].ToString(),
-                NavigationType = typeof(ProfilesPage),
-                NavigationDestination = new Uri("PowerControlPanel/Pages/TileViewer.xaml", UriKind.RelativeOrAbsolute)
-            });
             this.OptionsMenu.Add(new MI()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.CogSolid },
