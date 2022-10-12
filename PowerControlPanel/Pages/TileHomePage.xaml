@@ -311,7 +311,7 @@
 
 
                             <Slider Name="generalSlider" Width="300" HorizontalAlignment="Center"
-                        Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Height="80" Minimum="5" Maximum="35"  SmallChange="1"  ValueChanged="Slider_ValueChanged" MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" 
+                        Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" Height="80" Minimum="5" Maximum="35"  SmallChange="1"   MouseLeftButtonUp="Slider_MouseLeftButtonUp" TouchUp="Slider_TouchUp" 
                         TouchDown="Slider_TouchDown" IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="None"   
       
                         />

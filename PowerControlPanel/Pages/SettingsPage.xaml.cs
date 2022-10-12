@@ -87,7 +87,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
             Properties.Settings.Default.minTDP = (int)TDPMIN.Value;
-            Properties.Settings.Default.sizeQAM = cboQAMSize.Text;
+       
 
             Properties.Settings.Default.IntelMMIOMSR = cboTDPTypeIntel.Text;
 
@@ -138,7 +138,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             TDPMAX.Value = Properties.Settings.Default.maxTDP;
             TDPMIN.Value = Properties.Settings.Default.minTDP;
             GPUCLKMAX.Value = Properties.Settings.Default.maxGPUCLK;
-            cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
+          
             cboCombineTDP.Text = Properties.Settings.Default.enableCombineTDP;
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
             cboLanguage.Text = Properties.Settings.Default.Language;

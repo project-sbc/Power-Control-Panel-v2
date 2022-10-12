@@ -205,18 +205,6 @@ namespace Power_Control_Panel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("40")]
-        public string sizeQAM {
-            get {
-                return ((string)(this["sizeQAM"]));
-            }
-            set {
-                this["sizeQAM"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool showCPU {
             get {
@@ -392,6 +380,30 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["enableBrightness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string directorySteam {
+            get {
+                return ((string)(this["directorySteam"]));
+            }
+            set {
+                this["directorySteam"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string directoryPlaynite {
+            get {
+                return ((string)(this["directoryPlaynite"]));
+            }
+            set {
+                this["directoryPlaynite"] = value;
             }
         }
     }
