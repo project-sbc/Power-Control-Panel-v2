@@ -37,6 +37,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         private bool dragGPUCLK = false;
         private bool dragVolume = false;
         private bool dragBrightness = false;
+        private bool changingProfiles = false;
         private Brush accentBrush = null;
 
         public QAMHomePage()
@@ -59,6 +60,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //set upper and lower limits on sliders
             setMinMaxSliderValues();
 
+            //set values
+            loadUpdateValues();
+
             //set intial visibility (to remove disabled stuff)
             hideDisabledItems();
 
@@ -66,6 +70,117 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             setViewStyle();
 
             //
+
+        }
+
+        private void loadUpdateValues()
+        {
+            //GPU clock updates
+            if (!dragGPUCLK && Properties.Settings.Default.enableGPUCLK)
+            {
+                if (GlobalVariables.gpuclk == "Default")
+                {
+                    if (AMDGPUCLK_Slider.Value != 200) { AMDGPUCLK_Slider.Value = 200; }
+                    AMDGPUCLK_Label.Content = "Default";
+                }
+                else
+                {
+                    if (AMDGPUCLK_Slider.Value != Int32.Parse(GlobalVariables.gpuclk))
+                    {
+                        AMDGPUCLK_Slider.Value = Int32.Parse(GlobalVariables.gpuclk);
+                    }
+                }
+            }
+
+            //max cpu clock updates
+            if (!dragMaxCPU && Properties.Settings.Default.enableCPU && !GlobalVariables.needCPUMaxFreqRead)
+            {
+                if (GlobalVariables.cpuMaxFrequency == 0)
+                {
+                    MAXCPU_Slider.Value = MAXCPU_Slider.Maximum;
+                    MaxCPU_Label.Content = "Auto";
+                }
+                else
+                {
+                    MAXCPU_Slider.Value = GlobalVariables.cpuMaxFrequency;
+                    MaxCPU_Label.Content = GlobalVariables.cpuMaxFrequency.ToString();
+                }
+            }
+
+
+            //active core updates
+            if (!dragActiveCores && Properties.Settings.Default.enableCPU && !GlobalVariables.needActiveCoreRead)
+            {
+                ActiveCores_Slider.Value = GlobalVariables.cpuActiveCores;
+            }
+
+            //profile
+            if (Profile_Cbo.Text != GlobalVariables.ActiveProfile)
+            {
+                Profile_Cbo.Text = GlobalVariables.ActiveProfile;
+            }
+
+            //display updates
+            if (enableDisplay)
+            {
+                if (cboRefreshRate.Text != GlobalVariables.refreshRate && !changingRefreshRate)
+                {
+                    changingRefreshRate = true;
+                    cboRefreshRate.Text = GlobalVariables.refreshRate;
+                    changingRefreshRate = false;
+
+                }
+                if (cboResolution.Text != GlobalVariables.resolution && !changingResolution && GlobalVariables.resolution != "")
+                {
+                    changingResolution = true;
+                    cboResolution.Text = GlobalVariables.resolution;
+                    changingResolution = false;
+
+                }
+                if (cboScaling.Text != GlobalVariables.scaling && !changingScaling)
+                {
+                    changingScaling = true;
+                    cboScaling.Text = GlobalVariables.scaling;
+                    changingScaling = false;
+
+                }
+            }
+
+            if (PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.rtssRunning())
+            {
+                cboFPSLimit.Text = GlobalVariables.FPSLimit;
+
+
+                bdFPSLimit.Visibility = Visibility.Visible;
+            }
+            else
+            {
+
+                bdFPSLimit.Visibility = Visibility.Collapsed;
+            }
+
+
+            //system values
+            if (enableSystem)
+            {
+                if (!dragStartedBrightness && !GlobalVariables.needBrightnessRead) { Brightness.Value = GlobalVariables.brightness; }
+                if (!dragStartedVolume && !GlobalVariables.needVolumeRead)
+                { Volume.Value = GlobalVariables.volume; }
+            }
+
+            //TPD
+            if (enableTDP)
+            {
+                if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
+                {
+                    changingTDP = true;
+                    updateFromGlobalTDPPL1();
+                    updateFromGlobalTDPPL2();
+                    updateFromGlobalTDP();
+                    changingTDP = false;
+                }
+
+            }
 
         }
         private void hideDisabledItems()
@@ -285,7 +400,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //set height of scrollviewer
             //sliderScrollViewer.Height = this.ActualHeight - wrapPanel.ActualHeight;
             setInitialVisibility();
-
 
         }
 
@@ -537,45 +651,31 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (this.IsLoaded)
+            {
+                Slider slider = (Slider)sender;
+                string sliderName = slider.Name;
+                if (e.Source.ToString() == "valueupdate")
+                {
+                    slider.Value = e.NewValue;
+                }
+                else
+                {
+                    handleChangeValues(sliderName, false);
+                }
+              
+            }
 
-            handleChangeValues();
+
+
         }
 
         private void Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             Slider slider = (Slider)sender;
             string sliderName = slider.Name;
-
-            switch (sliderName)
-            {
-                case "TDP_Slider":
-                    dragTDP = false;
-                    break;
-                case "TDP1_Slider":
-                    dragTDP1 = false;
-                    break;
-                case "TDP2_Slider":
-                    dragTDP2 = false;
-                    break;
-                case "GPUCLK_Slider":
-                    dragGPUCLK = false;
-                    break;
-                case "Volume_Slider":
-                    dragVolume = false;
-                    break;
-                case "Brightness_Slider":
-                    dragBrightness = false;
-                    break;
-                case "MaxCPU_Slider":
-                    dragMaxCPU = false;
-                    break;
-                case "ActiveCores_Slider":
-                    dragActiveCores = false;
-                    break;
-                default:
-                    break;
-            }
-            handleChangeValues(sliderName);
+       
+            handleChangeValues(sliderName, false);
 
         }
 
@@ -585,182 +685,104 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Slider slider = (Slider)sender;
             string sliderName = slider.Name;
 
-            switch(sliderName)
-            {
-                case "TDP_Slider":
-                    dragTDP = true;
-                    break;
-                case "TDP1_Slider":
-                    dragTDP1 = true;
-                    break;
-                case "TDP2_Slider":
-                    dragTDP2 = true;
-                    break;
-                case "GPUCLK_Slider":
-                    dragGPUCLK = true;
-                    break;
-                case "Volume_Slider":
-                    dragVolume = true;
-                    break;
-                case "Brightness_Slider":
-                    dragBrightness = true;
-                    break;
-                case "MaxCPU_Slider":
-                    dragMaxCPU = true;
-                    break;
-                case "ActiveCores_Slider":
-                    dragActiveCores = true;
-                    break;
-                default:
-                    break;
-            }
+            handleChangeValues(sliderName, true);
         }
         private void handleChangeValues(string sliderName, bool dragStarted)
         {
-            switch (sliderName)
-            {
-                case "TDP_Slider":
-                    if (dragStarted) { dragTDP = true; }
-                    else
-                    {
-                        dragTDP = false;
-
-
-
-                    }
-
-                    break;
-                case "TDP1_Slider":
-                    dragTDP1 = false;
-                    break;
-                case "TDP2_Slider":
-                    dragTDP2 = false;
-                    break;
-                case "GPUCLK_Slider":
-                    dragGPUCLK = false;
-                    break;
-                case "Volume_Slider":
-                    dragVolume = false;
-                    break;
-                case "Brightness_Slider":
-                    dragBrightness = false;
-                    break;
-                case "MaxCPU_Slider":
-                    dragMaxCPU = false;
-                    break;
-                case "ActiveCores_Slider":
-                    dragActiveCores = false;
-                    break;
-                default:
-                    break;
-            }
-
-
-
             if (this.IsLoaded)
             {
-                if (!dragStarted & controlActive)
+                switch (sliderName)
                 {
-                    double sliderValue = generalSlider.Value;
-                    switch (currentControl)
-                    {
-                        case "TDPSustain":
-                            HandleChangingTDP((int)sliderValue, (int)GlobalVariables.readPL2, true);
-                            break;
-                        case "TDPBoost":
-                            HandleChangingTDP((int)GlobalVariables.readPL1, (int)sliderValue, false);
-                            break;
-                        case "TDP":
-                            HandleChangingTDP((int)sliderValue, (int)sliderValue, true);
-                            break;
-                        case "Brightness":
-                            GlobalVariables.needBrightnessRead = true;
-                            Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)sliderValue);
-                            break;
+                    case "TDP_Slider":
+                        if (dragStarted) { dragTDP = true; }
+                        else
+                        {
+                            if (!dragTDP)
+                            {
+                                dragTDP = false;
+                                HandleChangingTDP((int)TDP_Slider.Value, (int)TDP_Slider.Value, true);
+                            }
+                        }
 
-                        case "Volume":
+                        break;
+                    case "TDP1_Slider":
+                        if (dragStarted) { dragTDP1 = true; }
+                        else
+                        {
+                            if (!dragTDP1)
+                            {
+                                dragTDP1 = false;
+                                HandleChangingTDP((int)TDP1_Slider.Value, (int)TDP2_Slider.Value, true);
+                            }
+                        }
+                        break;
+                    case "TDP2_Slider":
+                        if (dragStarted) { dragTDP2 = true; }
+                        else
+                        {
+                            dragTDP2 = false;
+                            HandleChangingTDP((int)TDP1_Slider.Value, (int)TDP2_Slider.Value, false);
+                        }
+                        break;
+                    case "GPUCLK_Slider":
+                        dragGPUCLK = false;
+                        break;
+                    case "Volume_Slider":
+                        if (dragStarted) { dragVolume = true; }
+                        else
+                        {
                             GlobalVariables.needVolumeRead = true;
-                            Classes.ChangeVolume.AudioManager.SetMasterVolume((float)sliderValue);
-                            break;
-                        case "GPUCLK":
-                            HandleChangingGPUCLK((int)sliderValue);
-                            //hide the default label for gpu clk
-                            labelSliderMessage.Visibility = Visibility.Collapsed;
-                            break;
-                        case "MaxCPU":
+                            dragVolume = false;
+                            Classes.TaskScheduler.TaskScheduler.runTask(() => Classes.ChangeVolume.AudioManager.SetMasterVolume((float)Volume_Slider.Value));
+                        }
+                        break;
+                    case "Brightness_Slider":
+                        if (dragStarted) { dragBrightness = true; }
+                        else
+                        {
+                            GlobalVariables.needBrightnessRead = true;
+                            dragBrightness = false;
+                            Classes.TaskScheduler.TaskScheduler.runTask(() => Classes.ChangeBrightness.WindowsSettingsBrightnessController.setBrightness((int)Brightness_Slider.Value));
+                        }
+                        break;
+                    case "MaxCPU_Slider":
+
+                        if (dragStarted) { dragMaxCPU = true; }
+                        else
+                        {
+                            GlobalVariables.needCPUMaxFreqRead = true;
+                            dragMaxCPU = false;
                             int sendMaxCPU = 0;
-                            if ((int)generalSlider.Value != generalSlider.Maximum) { sendMaxCPU = (int)sliderValue; }
-                            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeCPUMaxFrequency((int)sliderValue));
-                            break;
-                        case "ActiveCores":
-                            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores((int)sliderValue));
-                            break;
-                        case "FanSpeed":
-                            if (GlobalVariables.fanControlEnable)
+                            if ((int)MAXCPU_Slider.Value != MAXCPU_Slider.Maximum)
                             {
-                                if (generalSlider.Value == 29)
-                                {
-                                    Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.setFanSpeed(0));
-                                }
-                                else
-                                {
-                                    Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeFanSpeedOXP.ChangeFanSpeed.setFanSpeed((int)sliderValue));
-
-                                }
-                            }
-
-                            break;
-
-                        default:
-                            break;
-                    }
-                    dragStarted = false;
-                    Task.Delay(500);
-                    //clearGB();
-                }
-                else
-                {
-                    switch (currentControl)
-                    {
-
-                        case "GPUCLK":
-
-                            labelSliderMessage.Visibility = Visibility.Collapsed;
-                            labelSliderValue.Visibility = Visibility.Visible;
-                            break;
-                        case "MaxCPU":
-                            if (generalSlider.Value == generalSlider.Maximum)
-                            {
-                                labelSliderMessage.Visibility = Visibility.Visible;
-                                labelSliderMessage.Content = "Auto";
-                                labelSliderValue.Visibility = Visibility.Collapsed;
+                                sendMaxCPU = (int)MAXCPU_Slider.Value;
+                                //update label because maxcpu is special
+                                MaxCPU_Label.Content = MAXCPU_Slider.Value.ToString();
                             }
                             else
                             {
-                                labelSliderMessage.Visibility = Visibility.Collapsed;
+                                MaxCPU_Label.Content = "Auto";
+                            }
+                            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeCPUMaxFrequency((int)MAXCPU_Slider.Value));
+                        }
 
-                                labelSliderValue.Visibility = Visibility.Visible;
-                            }
-                            break;
-                        case "FanSpeed":
-                            if (generalSlider.Value == generalSlider.Minimum)
-                            {
-                                labelSliderMessage.Visibility = Visibility.Visible;
-                                labelSliderMessage.Content = "Off";
-                                labelSliderValue.Visibility = Visibility.Collapsed;
-                            }
-                            else
-                            {
-                                labelSliderMessage.Visibility = Visibility.Collapsed;
 
-                                labelSliderValue.Visibility = Visibility.Visible;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+
+                    case "ActiveCores_Slider":
+                        if (dragStarted) { dragActiveCores = true; }
+                        else
+                        {
+                            GlobalVariables.needActiveCoreRead = true;
+                            dragActiveCores = false;
+                            Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores((int)ActiveCores_Slider.Value));
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
+
 
         }
         private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
