@@ -16,7 +16,7 @@
                 <Setter Property="Height" Value="100" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
-                <Setter Property="TitleFontSize" Value="20" />
+                <Setter Property="TitleFontSize" Value="18" />
                 <Setter Property="VerticalContentAlignment" Value="Top"/>
                 <Setter Property="Count" Value=""/>
                 <Setter Property="Margin" Value="2,2,2,2"/>
@@ -33,7 +33,7 @@
                 <Setter Property="Height" Value="100" />
                 <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
                 <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
-                <Setter Property="TitleFontSize" Value="20" />
+                <Setter Property="TitleFontSize" Value="18" />
                 <Setter Property="VerticalContentAlignment" Value="Top"/>
                 <Setter Property="VerticalTitleAlignment" Value="Bottom"/>
                 <Setter Property="HorizontalTitleAlignment" Value="Center"/>
@@ -101,8 +101,8 @@
                 <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="50" Height="50" DockPanel.Dock="Left" Kind="BoltSolid" />
                     <StackPanel Orientation="Vertical">
-                        <Label FontSize="15" Foreground="White" Content="Sustained: 15W"/>
-                        <Label FontSize="15" Foreground="White" Content="Boost:     15W"/>
+                        <Label x:Name="TDP1_TileLabel" FontSize="15" Foreground="White" Content="Sustained: 15W"/>
+                        <Label x:Name="TDP2_TileLabel" FontSize="15" Foreground="White" Content="Boost:     15W"/>
                     </StackPanel>
                 </DockPanel>
             </mah:Tile>
@@ -111,8 +111,8 @@
                 <DockPanel Width="200" HorizontalAlignment="Left" Margin="0,10,0,0" >
                     <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="50" DockPanel.Dock="Left" Height="50" Kind="Chip" />
                     <StackPanel Orientation="Vertical">
-                        <Label FontSize="15" Foreground="White" Content="Max CPU: 3200 MHz"/>
-                        <Label FontSize="15" Foreground="White" Content="Active Cores: 8"/>
+                        <Label x:Name="MaxCPU_TileLabel" FontSize="15" Foreground="White" Content="Max CPU: 3200 MHz"/>
+                        <Label x:Name="ActiveCores_TileLabel" FontSize="15" Foreground="White" Content="Active Cores: 8"/>
                     </StackPanel>
                 </DockPanel>
             </mah:Tile>
@@ -121,8 +121,8 @@
                 <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
                     <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="50" Height="50" DockPanel.Dock="Left" Kind="Monitor" />
                     <StackPanel  Orientation="Vertical">
-                        <Label FontSize="15" Foreground="White" Content="1920x1200 60 Hz"/>
-                        <Label FontSize="15" Foreground="White" Content="Scaling: 225%"/>
+                        <Label x:Name="ResolutionRefresh_TileLabel" FontSize="15" Foreground="White" Content="1920x1200 60 Hz"/>
+                        <Label x:Name="Scaling_TileLabel" FontSize="15" Foreground="White" Content="Scaling: 225%"/>
                     </StackPanel>
                 </DockPanel>
             </mah:Tile>
@@ -131,7 +131,7 @@
                 <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
                     <iconPacks:PackIconSimpleIcons HorizontalAlignment="Center" Width="50" Height="50" DockPanel.Dock="Left" Kind="Amd" />
                     <StackPanel  Orientation="Vertical">
-                        <Label FontSize="15" Foreground="White" Content="GPU Clock: 2200 MHz"/>
+                        <Label x:Name="GPUCLK_TileLabel" FontSize="15" Foreground="White" Content="GPU Clock: 2200 MHz"/>
                     </StackPanel>
                 </DockPanel>
             </mah:Tile>
@@ -150,24 +150,24 @@
                 <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="50" Height="50" Kind="BookSolid" />
                     <StackPanel  Orientation="Vertical">
-                        <Label FontSize="15" Foreground="White" Content="Heaven Profile"/>
-                        <Label FontSize="15" Foreground="White" Content="App"/>
+                        <Label x:Name="Profile_TileLabel" FontSize="15" Foreground="White" Content="Heaven Profile"/>
+                        <Label x:Name="App_TileLabel" FontSize="15" Foreground="White" Content="App"/>
                     </StackPanel>
                 </DockPanel>
             </mah:Tile>
 
 
 
-            <mah:Tile x:Name="Volume_Tile" Title="{DynamicResource TileHomePage_FPSLimit}" Style="{StaticResource SmallTileStyle}">
+            <mah:Tile x:Name="Volume_Tile" Title="Volume" Style="{StaticResource SmallTileStyle}">
                 <StackPanel Orientation="Vertical">
-                    <Label HorizontalAlignment="Center"  x:Name="labelFPSdLimitValue" Content="10%" FontSize="15" Foreground="White"/>
+                    <Label HorizontalAlignment="Center"  x:Name="Volume_TileLabel" Content="10%" FontSize="15" Foreground="White"/>
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="30" Height="30" Kind="VolumeUpSolid" />
                 </StackPanel>
 
             </mah:Tile>
-            <mah:Tile x:Name="Brightness_Tile" Title="{DynamicResource TileHomePage_FPSLimit}" Style="{StaticResource SmallTileStyle}">
+            <mah:Tile x:Name="Brightness_Tile" Title="Brightness" Style="{StaticResource SmallTileStyle}">
                 <StackPanel Orientation="Vertical">
-                    <Label HorizontalAlignment="Center"  x:Name="labeldFPSLimitValue" Content="100%" FontSize="15" Foreground="White"/>
+                    <Label HorizontalAlignment="Center"  x:Name="Brightness_TileLabel" Content="100%" FontSize="15" Foreground="White"/>
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="30" Height="30" Kind="SunRegular" />
                 </StackPanel>
 
@@ -175,7 +175,7 @@
 
             <mah:Tile x:Name="FPSLimit_Tile" Title="{DynamicResource TileHomePage_FPSLimit}" Style="{StaticResource SmallTileStyle}">
                 <StackPanel Orientation="Vertical">
-                    <Label HorizontalAlignment="Center"  x:Name="labelFPSLimitValue" Content="Default" FontSize="15" Foreground="White"/>
+                    <Label HorizontalAlignment="Center"  x:Name="FPSLimit_TileLabel" Content="Default" FontSize="15" Foreground="White"/>
                     <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="30" Height="30" Kind="MonitorLock" />
                 </StackPanel>
 
@@ -184,7 +184,7 @@
 
             <mah:Tile x:Name="FanSpeed_Tile" Visibility="Collapsed" Title="{DynamicResource TileHomePage_FPSLimit}" Style="{StaticResource SmallTileStyle}">
                 <StackPanel Orientation="Vertical">
-                    <Label HorizontalAlignment="Center"  x:Name="labdelddFePSLimitValue" Content="100%" FontSize="15" Foreground="White"/>
+                    <Label HorizontalAlignment="Center"  x:Name="FanSpeed_TileLabel" Content="100%" FontSize="15" Foreground="White"/>
                     <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="30" Height="30" Kind="FanSolid" />
                 </StackPanel>
             </mah:Tile>
