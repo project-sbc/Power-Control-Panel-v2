@@ -50,7 +50,8 @@
     <system:String x:Key="Show">Show</system:String>
     <system:String x:Key="Hide">Hide</system:String>
     <system:String x:Key="Close">Close</system:String>
-
+    <system:String x:Key="Open">Open</system:String>
+    <system:String x:Key="Auto">Auto</system:String>
     <!-- Tile Homepage -->
     <system:String x:Key="TileHomePage_TDP">TDP</system:String>
     <system:String x:Key="TileHomePage_TDPBoost">TDP Boost</system:String>
@@ -66,6 +67,20 @@
     <system:String x:Key="TileHomePage_ActiveProfile">Active Profile</system:String>
     <system:String x:Key="TileHomePage_FPSLimit">FPS Limit</system:String>
     <system:String x:Key="TileHomePage_FanSpeed">Fan Speed</system:String>
+
+    <system:String x:Key="TileHomePage_Intel">Intel</system:String>
+    <system:String x:Key="TileHomePage_PlayNite">PlayNite</system:String>
+    <system:String x:Key="TileHomePage_Steam">Steam</system:String>
+
+    <system:String x:Key="HomePage_TDPSettings">TDP Settings</system:String>
+    <system:String x:Key="HomePage_CPUSettings">CPU Settings</system:String>
+    <system:String x:Key="HomePage_DisplaySettings">Display Settings</system:String>
+    <system:String x:Key="HomePage_AMDSettings">AMD Settings</system:String>
+    <system:String x:Key="HomePage_ProfileSettings">Profile Settings</system:String>
+    <system:String x:Key="HomePage_VolumeSettings">Volume Settings</system:String>
+    <system:String x:Key="HomePage_BrightnessSettings">Brightness Settings</system:String>
+    <system:String x:Key="HomePage_FPSSettings">FPS Limit Settings</system:String>
+    
     <!-- Settings {DynamicResource HomePage_Brightness} -->
 
     <system:String x:Key="Settings_UpdateSettings">Check For Updates</system:String>

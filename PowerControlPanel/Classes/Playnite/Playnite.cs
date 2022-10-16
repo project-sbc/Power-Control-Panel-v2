@@ -13,19 +13,26 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.Playnite
     {
         public static void playniteToggle()
         {
-            if (playniteRunning())
+            if (playniteRunning() && Properties.Settings.Default.directoryPlaynite != "")
             {
-                RunCLI.RunCommand(" --shutdown", false, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Playnite") + "\\Playnite.FullscreenApp.exe",6000,false);
-
+                RunCLI.RunCommand(" --shutdown", false, Properties.Settings.Default.directoryPlaynite + "\\Playnite.FullscreenApp.exe",6000,false);
             }
             else
             {
-
-                RunCLI.RunCommand(" --startfullscreen", false, Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Playnite") + "\\Playnite.FullscreenApp.exe",6000,false);
-
+                RunCLI.RunCommand(" --startfullscreen", false, Properties.Settings.Default.directoryPlaynite + "\\Playnite.FullscreenApp.exe",6000,false);
             }
         }
+        public static void setPlayniteDirectory()
+        {
+            if (Properties.Settings.Default.directoryPlaynite == "")
+            {
+                if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Playnite") + "\\Playnite.FullscreenApp.exe"))
+                {
+                    Properties.Settings.Default.directoryPlaynite = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Playnite");
+                }
+            }
 
+        }
         private static bool playniteRunning()
         {
             

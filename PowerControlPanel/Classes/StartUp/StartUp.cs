@@ -37,6 +37,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
                 File.Copy(AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles_Template.xml", AppDomain.CurrentDomain.BaseDirectory + "\\PowerControlPanel\\ProfileData\\Profiles.xml");
             }
 
+            //set game launcher directories
+            PowerControlPanel.Classes.Steam.Steam.setSteamDirectory();
+            PowerControlPanel.Classes.Playnite.Playnite.setPlayniteDirectory();
+
 
             //start dedicated task scheduler for background tdp, cpu, etc changes
             TaskScheduler.TaskScheduler.startScheduler();
@@ -80,13 +84,13 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.StartUp
             RunCLI.RunCommand(" -attributes SUB_PROCESSOR CPMINCORES -ATTRIB_HIDE", false, "C:\\windows\\system32\\powercfg.exe", 1000);
                   
             //check if device is one netbook one x player for fan control capability
-            if (GlobalVariables.manufacturer.Contains("ONE") && GlobalVariables.manufacturer.Contains("NETBOOK") && 1==0)
+            if (GlobalVariables.manufacturer.Contains("ONE") && GlobalVariables.manufacturer.Contains("NETBOOK"))
             {
                 if (GlobalVariables.product.Contains("ONE") && GlobalVariables.product.Contains("X") && GlobalVariables.product.Contains("PLAYER"))
                 {
                     GlobalVariables.fanControlDevice = true;
                     if (GlobalVariables.cpuType == "Intel") { GlobalVariables.fanRangeBase = 255; }
-                    if (GlobalVariables.cpuType == "AMD") { GlobalVariables.fanRangeBase = 255; }
+                    if (GlobalVariables.cpuType == "AMD") { GlobalVariables.fanRangeBase = 100; }
                     ChangeFanSpeedOXP.ChangeFanSpeed.readSoftwareFanControl();
                     ChangeFanSpeedOXP.ChangeFanSpeed.readFanSpeed();
                     //PIDandCPUMonitor.PIDCPUMonitor.MonitorCPU();

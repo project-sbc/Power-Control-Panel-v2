@@ -30,10 +30,10 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeGPUCLK
                         lock (objLock)
                         {
                             if (gpuclk > Properties.Settings.Default.maxGPUCLK) { gpuclk = Properties.Settings.Default.maxGPUCLK; }
-                            commandArguments = " --set-gfx=" + gpuclk.ToString();
+                            commandArguments = " --gfx-clk=" + gpuclk.ToString();
                             //StreamWriterLog.startStreamWriter("Read TDP AMD processRyzenAj=" + processRyzenAdj + "; commandarugment=" + commandArguments);
 
-                            result = RunCLI.RunCommand(commandArguments, true, processRyzenAdj);
+                            result = RunCLI.RunCommand(commandArguments, false, processRyzenAdj);
 
                             GlobalVariables.gpuclk = gpuclk.ToString();
 

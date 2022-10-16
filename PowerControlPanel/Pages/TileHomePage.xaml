@@ -279,7 +279,7 @@
 
                     </mah:Tile>
 
-                    <mah:Tile x:Name="FanSpeed222" Visibility="Collapsed" Title="{DynamicResource TileHomePage_FanSpeed}"
+                    <mah:Tile x:Name="FanSpeed"  Title="{DynamicResource TileHomePage_FanSpeed}"
                       Count=""
                    
                       VerticalTitleAlignment="Bottom"

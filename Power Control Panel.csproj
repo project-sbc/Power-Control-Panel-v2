@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="PowerControlPanel\Logs\application_log.txt" />
     <None Remove="PowerControlPanel\ProfileData\Profiles_Template.xml" />
+    <None Remove="ProjectSBC.png" />
     <None Remove="Resources\AMD\RyzenAdj\inpoutx64.dll" />
     <None Remove="Resources\AMD\RyzenAdj\libryzenadj.dll" />
     <None Remove="Resources\AMD\RyzenAdj\ryzenadj.exe" />
@@ -37,7 +38,6 @@
     <None Remove="Resources\Intel\MSR\WinRing0x64.dll" />
     <None Remove="Resources\Intel\MSR\WinRing0x64.sys" />
     <None Remove="Resources\Intel\RW\Rw.exe" />
-    <None Remove="Resources\Pictures\ProjectSBC.png" />
     <None Remove="Resources\QRes\QRes.exe" />
     <None Remove="Resources\SetDPI\SetDpi.exe" />
   </ItemGroup>
@@ -104,9 +104,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Pictures\PCP.ico" />
-    <Content Include="Resources\Pictures\ProjectSBC.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\QRes\QRes.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -179,6 +176,12 @@
 
 	<ItemGroup>
 	  <Folder Include="PowerControlPanel\Pages\Settings\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="ProjectSBC.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 </Project>

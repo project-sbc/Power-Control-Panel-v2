@@ -650,15 +650,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 }
             }
         }
+        private void cboFPSLimit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cboFPSLimit.SelectedValue.ToString());
+        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             handleVisibility();
         }
 
-        private void cboFPSLimit_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cboFPSLimit.SelectedValue.ToString());
-        }
+
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {

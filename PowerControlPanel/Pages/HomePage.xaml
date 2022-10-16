@@ -1,333 +1,489 @@
 ﻿<Page x:Class="Power_Control_Panel.PowerControlPanel.Pages.HomePage"
-      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Power_Control_Panel.PowerControlPanel.Pages" xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d" 
-      d:DesignHeight="500" d:DesignWidth="800"
-      MinWidth="450"
+      d:DesignHeight="800" d:DesignWidth="435"
+      MinWidth="435"
+      
       Title="HomePage" Loaded="Page_Loaded" >
-
-
     <Page.Resources>
-       
+        <ResourceDictionary>
+            <Style x:Key="LargeTileStyle" TargetType="mah:Tile">
+                <Setter Property="Height" Value="100" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TitleFontSize" Value="18" />
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="Count" Value=""/>
+                <Setter Property="Margin" Value="2,2,2,2"/>
+                <Setter Property="HorizontalTitleAlignment" Value="Center"/>
+                <Setter Property="Width" Value="210" />
+                <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                <Setter Property="HorizontalTitleAlignment" Value="Left" />
+                <Setter Property="VerticalTitleAlignment" Value="Bottom" />
+                <Setter Property="VerticalContentAlignment" Value="Top" />
+                <EventSetter Event="Click" Handler="Tile_Click" />
+            </Style>
 
+            <Style x:Key="SmallTileStyle" TargetType="mah:Tile">
+                <Setter Property="Height" Value="100" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="TitleFontSize" Value="18" />
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="VerticalTitleAlignment" Value="Bottom"/>
+                <Setter Property="HorizontalTitleAlignment" Value="Center"/>
+                <Setter Property="Width" Value="102" />
+                <Setter Property="Count" Value="" />
+                <EventSetter Event="Click" Handler="Tile_Click" />
+                <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            </Style>
+            <Style x:Key="sliderBorder" TargetType="Border" >
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="CornerRadius" Value="3" />
+                <Setter Property="Margin" Value="0,1,0,0" />
+                <Setter Property="DockPanel.Dock" Value="Top" />
+                <Setter Property="Height" Value="70" />
 
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            </Style>
+            <Style x:Key="groupSliderBorder" TargetType="Border" >
+                <Setter Property="BorderThickness" Value="3" />
+                <Setter Property="CornerRadius" Value="3" />
+                <Setter Property="Margin" Value="0,2,0,2" />
+                <Setter Property="Width" Value="430" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+            </Style>
+            <Style x:Key="sliderIconAwesome" TargetType="iconPacks:PackIconFontAwesome">
+                <Setter Property="Width" Value="40" />
+                <Setter Property="Height" Value="40" />
+                <Setter Property="Margin" Value="5,5,5,5" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                <Setter Property="DockPanel.Dock" Value="Left" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+
+            </Style>
+            <Style x:Key="sliderIconMaterial" TargetType="iconPacks:PackIconMaterial">
+                <Setter Property="Width" Value="40" />
+                <Setter Property="Height" Value="40" />
+                <Setter Property="Margin" Value="5,5,5,5" />
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                <Setter Property="DockPanel.Dock" Value="Left" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="BorderBrush" Value="Black" />
+            </Style>
+            <Style x:Key="sliderLabel" TargetType="Label">
+
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="DockPanel.Dock" Value="Left" />
+                <Setter Property="VerticalContentAlignment" Value="Top" />
+                <Setter Property="Margin" Value="0,-7,0,2" />
+
+            </Style>
+
+        </ResourceDictionary>
     </Page.Resources>
-    
-    
-    <ScrollViewer  PanningMode="VerticalOnly">
-        <StackPanel Orientation="Vertical" >
-         
-            <GroupBox Name="GBSystemControls" Margin="0,0,0,10">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Bottom" Height="Auto" x:Name="wrapPanel" >
+
+            <mah:Tile x:Name="TDP_Tile"  Title="{DynamicResource TileHomePage_TDP}" Style="{StaticResource LargeTileStyle}" >
+                <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="50" Height="50" DockPanel.Dock="Left" Kind="BoltSolid" />
+                    <StackPanel Orientation="Vertical">
+                        <Label x:Name="TDP1_TileLabel" FontSize="15" Foreground="White" Content="Sustained: 15W"/>
+                        <Label x:Name="TDP2_TileLabel" FontSize="15" Foreground="White" Content="Boost:     15W"/>
+                    </StackPanel>
+                </DockPanel>
+            </mah:Tile>
+
+            <mah:Tile x:Name="CPU_Tile" Title="{DynamicResource TileHomePage_MaxCPU}" Style="{StaticResource LargeTileStyle}">
+                <DockPanel Width="200" HorizontalAlignment="Left" Margin="0,10,0,0" >
+                    <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="50" DockPanel.Dock="Left" Height="50" Kind="Chip" />
+                    <StackPanel Orientation="Vertical">
+                        <Label x:Name="MaxCPU_TileLabel" FontSize="15" Foreground="White" Content="Max CPU: 3200 MHz"/>
+                        <Label x:Name="ActiveCores_TileLabel" FontSize="15" Foreground="White" Content="Active Cores: 8"/>
+                    </StackPanel>
+                </DockPanel>
+            </mah:Tile>
+
+            <mah:Tile x:Name="Display_Tile" Title="{DynamicResource TileHomePage_Resolution}" Style="{StaticResource LargeTileStyle}">
+                <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
+                    <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="50" Height="50" DockPanel.Dock="Left" Kind="Monitor" />
+                    <StackPanel  Orientation="Vertical">
+                        <Label x:Name="ResolutionRefresh_TileLabel" FontSize="15" Foreground="White" Content="1920x1200 60 Hz"/>
+                        <Label x:Name="Scaling_TileLabel" FontSize="15" Foreground="White" Content="Scaling: 225%"/>
+                    </StackPanel>
+                </DockPanel>
+            </mah:Tile>
+
+            <mah:Tile x:Name="AMD_Tile" Title="{DynamicResource TileHomePage_GPUCLK}" Style="{StaticResource LargeTileStyle}">
+                <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
+                    <iconPacks:PackIconSimpleIcons HorizontalAlignment="Center" Width="50" Height="50" DockPanel.Dock="Left" Kind="Amd" />
+                    <StackPanel  Orientation="Vertical">
+                        <Label x:Name="GPUCLK_TileLabel" FontSize="15" Foreground="White" Content="GPU Clock: 2200 MHz"/>
+                    </StackPanel>
+                </DockPanel>
+            </mah:Tile>
+
+            <mah:Tile x:Name="Intel_Tile" Visibility="Collapsed" Title="{DynamicResource TileHomePage_GPUCLK}" Style="{StaticResource LargeTileStyle}">
+                <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
+                    <iconPacks:PackIconSimpleIcons HorizontalAlignment="Center" Width="50"  Height="50" DockPanel.Dock="Left" Kind="Intel" />
+                    <StackPanel  Orientation="Vertical">
+                        <Label FontSize="15" Foreground="White" Content="Power:30 CPU/30 GPU"/>
+                        <Label FontSize="15" Foreground="White" Content="EPP: 100%"/>
+                    </StackPanel>
+                </DockPanel>
+            </mah:Tile>
+
+            <mah:Tile x:Name="Profile_Tile" Title="{DynamicResource TileHomePage_GPUCLK}" Style="{StaticResource LargeTileStyle}">
+                <DockPanel HorizontalAlignment="Left" Width="200" Margin="0,10,0,0" >
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="50" Height="50" Kind="BookSolid" />
+                    <StackPanel  Orientation="Vertical">
+                        <Label x:Name="Profile_TileLabel" FontSize="15" Foreground="White" Content="Heaven Profile"/>
+                        <Label x:Name="App_TileLabel" FontSize="15" Foreground="White" Content="App"/>
+                    </StackPanel>
+                </DockPanel>
+            </mah:Tile>
+
+
+
+            <mah:Tile x:Name="Volume_Tile" Title="Volume" Style="{StaticResource SmallTileStyle}">
+                <StackPanel Orientation="Vertical">
+                    <Label HorizontalAlignment="Center"  x:Name="Volume_TileLabel" Content="10%" FontSize="15" Foreground="White"/>
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="30" Height="30" Kind="VolumeUpSolid" />
+                </StackPanel>
+
+            </mah:Tile>
+            <mah:Tile x:Name="Brightness_Tile" Title="Brightness" Style="{StaticResource SmallTileStyle}">
+                <StackPanel Orientation="Vertical">
+                    <Label HorizontalAlignment="Center"  x:Name="Brightness_TileLabel" Content="100%" FontSize="15" Foreground="White"/>
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="30" Height="30" Kind="SunRegular" />
+                </StackPanel>
+
+            </mah:Tile>
+
+            <mah:Tile x:Name="FPSLimit_Tile" Title="{DynamicResource TileHomePage_FPSLimit}" Style="{StaticResource SmallTileStyle}">
+                <StackPanel Orientation="Vertical">
+                    <Label HorizontalAlignment="Center"  x:Name="FPSLimit_TileLabel" Content="Default" FontSize="15" Foreground="White"/>
+                    <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="30" Height="30" Kind="MonitorLock" />
+                </StackPanel>
+
+            </mah:Tile>
+
+
+            <mah:Tile x:Name="FanSpeed_Tile" Visibility="Collapsed" Title="{DynamicResource TileHomePage_FPSLimit}" Style="{StaticResource SmallTileStyle}">
+                <StackPanel Orientation="Vertical">
+                    <Label HorizontalAlignment="Center"  x:Name="FanSpeed_TileLabel" Content="100%" FontSize="15" Foreground="White"/>
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="30" Height="30" Kind="FanSolid" />
+                </StackPanel>
+            </mah:Tile>
+
+            <mah:Tile x:Name="PlayNite_Tile"  Title="Playnite" Style="{StaticResource SmallTileStyle}">
+                <StackPanel Orientation="Vertical">
+                    <Label HorizontalAlignment="Center"  x:Name="Open" Content="Open" FontSize="15" Foreground="White"/>
+                    <iconPacks:PackIconMaterial HorizontalAlignment="Center" Width="30" Height="30"  Kind="MicrosoftXboxController" />
+                </StackPanel>
+            </mah:Tile>
+            <mah:Tile x:Name="Steam_Tile"  Title="Steam" Style="{StaticResource SmallTileStyle}">
+                <StackPanel Orientation="Vertical">
+                    <Label HorizontalAlignment="Center"  Content="Open" FontSize="15" Foreground="White"/>
+                    <iconPacks:PackIconFontAwesome HorizontalAlignment="Center" Width="30" Height="30"  Kind="SteamBrands" />
+                </StackPanel>
+            </mah:Tile>
+        </WrapPanel>
+
+        <ScrollViewer Grid.Row="1" PanningMode="VerticalOnly" HorizontalContentAlignment="Center" HorizontalAlignment="Center"  x:Name="sliderScrollViewer" VerticalScrollBarVisibility="Hidden"  >
+            <WrapPanel HorizontalAlignment="Center">
+
+                <Border x:Name="TDP_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="TDP_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="TDP Settings" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled"  x:Name="TDP_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide" />
+                        </DockPanel>
+                        <WrapPanel>
+                            <Border x:Name="TDP1_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconFontAwesome Kind="BoltSolid"  Style="{StaticResource sliderIconAwesome}" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="{DynamicResource TDP_Sustained}" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel >
+                                            <Label x:Name="TDP1_Label" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1_Slider, Path=Value}"/>
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="TDP1_Slider" Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Minimum="5" Maximum="35"  SmallChange="1"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+
+                            <Border x:Name="TDP2_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconFontAwesome  Kind="BoltSolid" Style="{StaticResource sliderIconAwesome}" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="{DynamicResource TDP_Boost}" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel  >
+                                            <Label x:Name="TDP2_Label" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP2_Slider, Path=Value}"/>
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="TDP2_Slider"  Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Minimum="5" Maximum="35"  SmallChange="1"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+
+                            <Border x:Name="TDP_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconFontAwesome Kind="BoltSolid" Style="{StaticResource sliderIconAwesome}" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="{DynamicResource TDP}" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel  >
+                                            <Label x:Name="TDP_Label" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP_Slider, Path=Value}"/>
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="TDP_Slider" Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Minimum="5" Maximum="35"  SmallChange="1"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+
+                        </WrapPanel>
+
+                    </StackPanel>
+
+                </Border>
+                <Border x:Name="CPU_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="CPU_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="CPU Settings" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled" x:Name="CPU_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide" />
+                        </DockPanel>
+                        <WrapPanel>
+                            <Border x:Name="MaxCPU_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconMaterial Style="{StaticResource sliderIconMaterial}" Kind="Chip"  />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="Max CPU" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel   >
+                                            <Label x:Name="MaxCPU_Label" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="MAXCPU_Slider" Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"  LargeChange="100" TickFrequency="100"  Minimum="1000" Maximum="5000"  SmallChange="100"   />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+
+                            <Border x:Name="ActiveCores_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconMaterial Kind="Chip" Style="{StaticResource sliderIconMaterial}" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="{DynamicResource Active_CPU_Cores}" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel >
+                                            <Label x:Name="ActiveCores_Label" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=ActiveCores_Slider, Path=Value}"/>
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="ActiveCores_Slider" Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" LargeChange="1" Minimum="1" Maximum="16"  SmallChange="1"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </WrapPanel>
+
+
+                    </StackPanel>
+
+                </Border>
+                <Border x:Name="Display_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="Display_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="Display Settings" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled" x:Name="Display_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide" />
+                        </DockPanel>
+                        <WrapPanel>
+                            <Border x:Name="Resolution_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconMaterial Kind="Monitor" Style="{StaticResource sliderIconMaterial}"/>
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="Display Resolution" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel>
+                                            <ComboBox x:Name="Resolution_Cbo" Margin="0,-7,8,3" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20"  IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+
+                            <Border x:Name="RefreshRate_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconMaterial Kind="MonitorShimmer" Style="{StaticResource sliderIconMaterial}" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="Display Refresh" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel   >
+                                            <ComboBox  x:Name="RefreshRate_Cbo" Margin="0,-7,8,3" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20"  IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+
+                            <Border x:Name="Scaling_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconMaterial  Kind="MonitorScreenshot" Style="{StaticResource sliderIconMaterial}"  />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="Display Scaling" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel   >
+                                            <ComboBox x:Name="Scaling_Cbo" Margin="0,-7,8,3" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20"  IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"  >
+                                            </ComboBox>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </WrapPanel>
+
+                    </StackPanel>
+
+                </Border>
+
+
+
+                <Border x:Name="AMD_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="AMD_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="AMD Settings" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled" x:Name="AMD_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide" />
+                        </DockPanel>
+
+                        <WrapPanel>
+                            <Border x:Name="AMDGPUCLK_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconMaterial Kind="ExpansionCard" Style="{StaticResource sliderIconMaterial}"/>
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="GPU Clock" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel   >
+                                            <Label x:Name="AMDGPUCLK_Label"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Default"/>
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="AMDGPUCLK_Slider" Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Minimum="200" Maximum="2200"   SmallChange="50" LargeChange="50" TickFrequency="50"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </WrapPanel>
+
+
+                    </StackPanel>
+
+                </Border>
+                <Border x:Name="Profile_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="Profile_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="Active Profile" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled" x:Name="Profile_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide" />
+                        </DockPanel>
+                        <WrapPanel>
+                            <Border x:Name="Profile_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconFontAwesome Kind="BookSolid" Style="{StaticResource sliderIconAwesome}" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="Active Profile" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel   >
+                                            <ComboBox x:Name="Profile_Cbo" Margin="0,-7,8,3" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20"  IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </WrapPanel>
+
+                    </StackPanel>
+
+                </Border>
+                <Border x:Name="Volume_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="Volume_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="Volume" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled" x:Name="Volume_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide" />
+                        </DockPanel>
+                        <WrapPanel>
+                            <Border x:Name="Volume_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconFontAwesome Style="{StaticResource sliderIconAwesome}"   Kind="VolumeUpSolid" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="Volume" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel   >
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="Volume_Slider" Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Maximum="100"  SmallChange="1"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </WrapPanel>
+
+
+                    </StackPanel>
+
+                </Border>
+
+
+                <Border x:Name="Brightness_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="Brightness_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="Brightness" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled" x:Name="Brightness_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide"  />
+                        </DockPanel>
+                        <WrapPanel>
+                            <Border x:Name="Brightness_Border"  Style="{StaticResource sliderBorder}"  >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconFontAwesome   Style="{StaticResource sliderIconAwesome}"          Kind="SunRegular" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="Brightness" Style="{StaticResource sliderLabel}" />
+                                        <DockPanel   >
+                                            <Slider Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" ValueChanged="Slider_ValueChanged" x:Name="Brightness_Slider" Margin="0,-5,40,0" Loaded="Slider_Loaded"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="40" TickPlacement="None" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft"  Maximum="100"  SmallChange="1"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </WrapPanel>
+
+                    </StackPanel>
+
+                </Border>
+                <Border x:Name="FPSLimit_GroupBorder" Style="{StaticResource groupSliderBorder}">
+                    <StackPanel>
+                        <DockPanel x:Name="FPSLimit_BoxHeader" Background="{DynamicResource MahApps.Brushes.Accent}" >
+                            <Label Content="FPS Limit" DockPanel.Dock="Left" FontSize="20"  />
+                            <mah:ToggleSwitch Toggled="Toggle_Toggled" x:Name="FPSLimit_Toggle" HorizontalAlignment="Right"  DockPanel.Dock="Right" IsOn="True"  OnContent="Show"  OffContent="Hide" />
+                        </DockPanel>
+                        <WrapPanel>
+                            <Border x:Name="FPSLimit_Border" Style="{StaticResource sliderBorder}" >
+                                <DockPanel Width="420">
+                                    <iconPacks:PackIconMaterial Kind="MonitorLock" Style="{StaticResource sliderIconMaterial}" />
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <Label Content="FPS Limit" Style="{StaticResource sliderLabel}"/>
+                                        <DockPanel   >
+                                            <ComboBox x:Name="FPSLimit_Cbo" Margin="0,-7,8,3" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20"  IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right"  />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </Border>
+                        </WrapPanel>
+
+                    </StackPanel>
+
+                </Border>
+
+
+
+
+
+
+            </WrapPanel>
+
+        </ScrollViewer>
+
+
+        <Border Grid.Row="2" BorderThickness="0 2 0 0" BorderBrush="White">
+            <Button Content="Change View Style" BorderThickness="1" FontSize="15" Click="Button_Click" Width="200" HorizontalAlignment="Right"/>
+
+        </Border>
+
+    </Grid>
 
-                <GroupBox.Header >
-                    <DockPanel Height="30">
-                        <Label Content="SYSTEM CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
 
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" x:Name="enableControlSystem"  Toggled="enableControlSystem_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="100" VerticalAlignment="Center"  />
-                    </DockPanel>
-                </GroupBox.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" />
-
-
-                    </Grid.RowDefinitions>
-                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
-                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-               
-
-
-
-                    <DockPanel   >
-
-                        <Label Content="{DynamicResource Brightness}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20"/>
-
-                        <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE706;" FontSize="30" Margin="8,0,0,0"/>
-                        <Slider x:Name="Brightness" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"  AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"    />
-
-
-                    </DockPanel>
-                    <DockPanel Grid.Row="2"  >
-
-                        <Label Content="{DynamicResource Volume}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" Text="&#xE767;" FontSize="30" Margin="8,0,0,0"/>
-                        <Slider x:Name="Volume"  DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" IsSnapToTickEnabled="True" Maximum="100"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"    AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  >
-       
-
-                        </Slider>
-
-                    </DockPanel>
-
-
-                </Grid>
-
-
-
-
-
-            </GroupBox>
-
-            <GroupBox Name="GBTDPControls" Margin="0,0,0,10">
-                <GroupBox.Header >
-                    <DockPanel Height="30">
-                        <Label Content="TDP CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlTDP"  Toggled="enableControlTDP_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
-                    </DockPanel>
-                </GroupBox.Header>
-  
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="rdTDP1" Height="50" />
-                        <RowDefinition x:Name="rdTDP2" Height="50" />
-                        <RowDefinition x:Name="rdTDP" Height="50" />
-
-                    </Grid.RowDefinitions>
-                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
-                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-                    <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
-                    <DockPanel  x:Name="dpTDP1" >
-                        <Label Content="{DynamicResource TDP_Sustained}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20"/>
-
-                        <Label x:Name="txtsliderTDP1" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP1, Path=Value}"/>
-                        <Slider x:Name="TDP1"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="230" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted"  Height="50" Minimum="5" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"    IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
-
-                    </DockPanel>
-
-
-                    <DockPanel Grid.Row="1" x:Name="dpTDP2"  >
-                        <Label Content="{DynamicResource TDP_Boost}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
-     
-                        </Label>
-
-                        <Label x:Name="txtsliderTDP2" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP2, Path=Value}"/>
-                        <Slider x:Name="TDP2"  DockPanel.Dock="Right" Thumb.DragCompleted="Slider_DragCompleted" Height="25" Thumb.DragStarted="Slider_DragStarted" Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"  HorizontalAlignment="Right"   AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  >
-
-                        </Slider>
-                    </DockPanel>
-                    <DockPanel Grid.Row="2" x:Name="dpTDP"  >
-                        <Label Content="{DynamicResource TDP}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-
-                        <Label x:Name="txtsliderTDP" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=TDP, Path=Value}"/>
-                        <Slider x:Name="TDP"  DockPanel.Dock="Right" Thumb.DragCompleted="Slider_DragCompleted" Height="25" Thumb.DragStarted="Slider_DragStarted" Width="230" Minimum="5" IsSnapToTickEnabled="True" Maximum="35"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"  HorizontalAlignment="Right"   AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  >
-
-                        </Slider>
-                    </DockPanel>
-                </Grid>
-
-
-
-
-
-            </GroupBox>
-
-            <GroupBox Name="GBCPUControls" Margin="0,0,0,10">
-                <GroupBox.Header >
-                    <DockPanel Height="30">
-                        <Label Content="CPU CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlCPU"  Toggled="enableControlCPU_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
-                    </DockPanel>
-                </GroupBox.Header>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" />
-
-
-                    </Grid.RowDefinitions>
-                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
-                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
-
-
-                    <DockPanel   >
-                        <Label Content="{DynamicResource Max_CPU}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <Label x:Name="txtsliderMAXCPU" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=MAXCPU, Path=Value}"/>
-                        <Label x:Name="txtsliderMAXCPUAuto" Visibility="Collapsed" DockPanel.Dock="Right" HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Auto"/>
-                      
-                        <Slider x:Name="MAXCPU" DockPanel.Dock="Right"  LargeChange="100" TickFrequency="100"  HorizontalAlignment="Right" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" Minimum="1000" Maximum="5000"  SmallChange="100" TickPlacement="None" ValueChanged="Slider_ValueChanged"    IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  />
-
-                    </DockPanel>
-
-                    <DockPanel Grid.Row="1"  >
-                        <Label Content="{DynamicResource Active_CPU_Cores}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-
-                        <Label x:Name="txtsliderActiveCores" DockPanel.Dock="Right" Width="40" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding ElementName=ActiveCores, Path=Value}"/>
-                        <Slider x:Name="ActiveCores" LargeChange="1" DockPanel.Dock="Right" Thumb.DragCompleted="Slider_DragCompleted" Height="25" Thumb.DragStarted="Slider_DragStarted" Width="230" Minimum="1" IsSnapToTickEnabled="True" Maximum="16"  SmallChange="1" TickPlacement="None" ValueChanged="Slider_ValueChanged"  HorizontalAlignment="Right"   AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded"  >
-
-                        </Slider>
-                    </DockPanel>
-
-                </Grid>
-
-
-
-
-
-            </GroupBox>
-
-            <GroupBox Name="GBAMDGPUCLK" Margin="0,0,0,10">
-                <GroupBox.Header >
-                    <DockPanel Height="30">
-                        <Label Content="AMD GPU CLOCK CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlGPUCLK"  Toggled="enableControlGPUCLK_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
-                    </DockPanel>
-                </GroupBox.Header>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                 
-
-
-                    </Grid.RowDefinitions>
-                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
-  
-
-
-
-                    <DockPanel   >
-                        <Label Content="{DynamicResource GPU_Clock}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <Label x:Name="txtsliderAMDGPUCLK"  DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="40" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content=""/>
-                        <Slider x:Name="GPUCLK" DockPanel.Dock="Right" HorizontalAlignment="Right" Thumb.DragCompleted="Slider_DragCompleted"  Thumb.DragStarted="Slider_DragStarted" Width="230" Height="40" Minimum="200" Maximum="2200"   SmallChange="50" TickPlacement="None" ValueChanged="Slider_ValueChanged"    IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" Loaded="Slider_Loaded" LargeChange="50" TickFrequency="50"  />
-                        <Label x:Name="txtsliderAMDGPUCLKDEF"  DockPanel.Dock="Right" HorizontalAlignment="Right" Width="70" FontSize="17" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Default"/>
-                    </DockPanel>
-
-                </Grid>
-
-
-
-
-
-            </GroupBox>
-
-            <GroupBox Name="GBDisplayControls" Margin="0,0,0,10">
-                <GroupBox.Header >
-                    <DockPanel Height="30">
-                        <Label Content="DISPLAY CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlDisplay"  Toggled="enableControlDisplay_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
-                    </DockPanel>
-                </GroupBox.Header>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" />
-                        <RowDefinition Height="50" x:Name="rdFPSLimit" />
-                    </Grid.RowDefinitions>
-                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
-                    <Border  Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-                    <Border  Grid.Row="2" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-                    <Border  Grid.Row="3" BorderBrush="Gray" BorderThickness="0,1,0,0"  />
-
-                    <DockPanel   >
-                        <Label Content="{DynamicResource Display_Resolution}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboResolution" Text="Custom Scaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboResolution_SelectionChanged">
-
-
-                        </ComboBox>
-
-
-                    </DockPanel>
-
-                    <DockPanel Grid.Row="1"  >
-                        <Label Content="{DynamicResource Display_Refresh}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboRefreshRate" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboRefreshRate_SelectionChanged">
-                            
-                            
-                        </ComboBox>
-                       
-                    </DockPanel>
-                    <DockPanel Grid.Row="2"  >
-                        <Label Content="{DynamicResource Display_Scaling}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboScaling" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboScaling_SelectionChanged">
-             
-                        </ComboBox>
-
-                    </DockPanel>
-                    <DockPanel Name="dpFPSLimit" Grid.Row="3"  >
-                        <Label Content="{DynamicResource FPS_Limit}" DockPanel.Dock="Left" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboFPSLimit" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboFPSLimit_SelectionChanged">
-                         
-                        </ComboBox>
-
-                    </DockPanel>
-                </Grid>
-
-
-
-
-
-            </GroupBox>
-
-            <GroupBox Name="GBProfiles" Margin="0,0,0,10">
-                <GroupBox.Header >
-                    <DockPanel Height="30">
-                        <Label Content="PROFILE CONTROLS" VerticalAlignment="Center"  Foreground="White" FontSize="16" DockPanel.Dock="Left" Height="19"  Padding="0,0,0,0" />
-
-                        <mah:ToggleSwitch Foreground="White" DockPanel.Dock="Right" Name="enableControlProfile"  Toggled="enableControlProfile_Toggled" IsOn="True" OffContent="{DynamicResource Hide}" OnContent="{DynamicResource Show}" MaxHeight="35" HorizontalAlignment="Right"  Width="80" VerticalAlignment="Center"  />
-                    </DockPanel>
-                </GroupBox.Header>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                   
-
-                    </Grid.RowDefinitions>
-                    <Border  Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,0,0" />
-                 
-
-
-                    <DockPanel   >
-                        <Label Content="{DynamicResource ActiveProfile}" VerticalContentAlignment="Center" DockPanel.Dock="Left" HorizontalAlignment="Left" FontSize="20">
-
-                        </Label>
-                        <ComboBox Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" x:Name="cboProfile" Text="" IsEditable="False" Width="200" DockPanel.Dock="Right" HorizontalAlignment="Right" SelectionChanged="cboProfile_SelectionChanged">
-
-
-                        </ComboBox>
-
-
-                    </DockPanel>
-
-                  
-                </Grid>
-
-
-
-
-
-            </GroupBox>
-        </StackPanel>
-    </ScrollViewer>
 </Page>
