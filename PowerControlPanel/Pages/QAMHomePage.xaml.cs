@@ -68,13 +68,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //set values
             loadUpdateValues();
 
+
+ 
             //set intial visibility (to remove disabled stuff)
             hideDisabledItems();
 
 
             setViewStyle();
 
-            setInitialVisibility();
 
             initializeTimer();
             loadUpdateValues();
@@ -82,7 +83,17 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
-
+        private void setSliderThumbSizes()
+        {
+            setThumbSize(ActiveCores_Slider);
+            setThumbSize(AMDGPUCLK_Slider);
+            setThumbSize(Brightness_Slider);
+            setThumbSize(MAXCPU_Slider);
+            setThumbSize(TDP1_Slider);
+            setThumbSize(TDP2_Slider);
+            setThumbSize(TDP_Slider);
+            setThumbSize(Volume_Slider);
+        }
         private void initializeTimer()
         {
             timer.Interval = new TimeSpan(0, 0, 3);
@@ -182,15 +193,26 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             if (PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.rtssRunning())
             {
-                FPSLimit_Cbo.Text = GlobalVariables.FPSLimit;
-                FPSLimit_TileLabel.Content = GlobalVariables.FPSLimit;
-                FPSLimit_Tile.Visibility=Visibility.Visible;
-                FPSLimit_Border.Visibility = Visibility.Visible;
+                if (FPSLimit_GroupBorder.Visibility == Visibility.Collapsed)
+                {
+                    FPSLimit_GroupBorder.Visibility = Visibility.Visible;
+                    FPSLimit_Tile.Visibility=Visibility.Visible;
+                    FPSLimit_Cbo.Text = GlobalVariables.FPSLimit;
+                    FPSLimit_TileLabel.Content = GlobalVariables.FPSLimit;
+                    FPSLimit_Border.Visibility = Visibility.Visible;
+                    
+                }
+                else
+                {
+                    FPSLimit_Cbo.Text = GlobalVariables.FPSLimit;
+                    FPSLimit_TileLabel.Content = GlobalVariables.FPSLimit;
+                }
+
             }
             else
             {
                 FPSLimit_Tile.Visibility = Visibility.Collapsed;
-                FPSLimit_Border.Visibility = Visibility.Collapsed;
+                FPSLimit_GroupBorder.Visibility = Visibility.Collapsed;
             }
 
 
@@ -514,8 +536,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             //set height of scrollviewer
             //sliderScrollViewer.Height = this.ActualHeight - wrapPanel.ActualHeight;
+            //set thumb size
+            setSliderThumbSizes();
+
             setInitialVisibility();
 
+  
         }
 
         private void Tile_Click(object sender, RoutedEventArgs e)
@@ -564,23 +590,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
-        private void Slider_Loaded(object sender, RoutedEventArgs e)
-        {
-            //set thumb size, internet routine
-            var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
-            if (SliderThumb != null)
-            {
-
-                if (SliderThumb is Thumb thumb)
-                {
-                
-                    thumb.Width = 25;
-                    thumb.Height = 35;
-                }
-                else { }
-            }
-            else { }
-        }
+     
 
 
         private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
@@ -852,11 +862,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         if (dragStarted) { dragGPUCLK = true; }
                         else
                         {
+                            AMDGPUCLK_Label.Content = sliderValue.ToString();
                             if (dragCompleted) { dragGPUCLK = false; }
                             if (!dragGPUCLK)
                             {
                                 Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock((int)sliderValue));
-                                AMDGPUCLK_Label.Content = sliderValue.ToString();
+                                
                             }
 
                         }
@@ -1018,7 +1029,25 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(FPSLimit_Cbo.SelectedValue.ToString());
         }
 
+        private void setThumbSize(Slider slider)
+        {
+            //set thumb size, internet routine
+            var SliderThumb = GetElementFromParent(slider as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
+            if (SliderThumb != null)
+            {
 
+                if (SliderThumb is Thumb thumb)
+                {
+
+                    thumb.Width = 25;
+                    thumb.Height = 35;
+                }
+                else { }
+            }
+            else { }
+        }
     }
+
+ 
 
 }

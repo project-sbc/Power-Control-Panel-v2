@@ -13,14 +13,19 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.Playnite
     {
         public static void playniteToggle()
         {
-            if (playniteRunning() && Properties.Settings.Default.directoryPlaynite != "")
+            if (Properties.Settings.Default.directoryPlaynite != "")
             {
-                RunCLI.RunCommand(" --shutdown", false, Properties.Settings.Default.directoryPlaynite + "\\Playnite.FullscreenApp.exe",6000,false);
+                if (playniteRunning())
+                {
+                    RunCLI.RunCommand(" --shutdown", false, Properties.Settings.Default.directoryPlaynite + "\\Playnite.FullscreenApp.exe", 6000, false);
+                }
+                else
+                {
+                    RunCLI.RunCommand(" --startfullscreen", false, Properties.Settings.Default.directoryPlaynite + "\\Playnite.FullscreenApp.exe", 6000, false);
+                }
             }
-            else
-            {
-                RunCLI.RunCommand(" --startfullscreen", false, Properties.Settings.Default.directoryPlaynite + "\\Playnite.FullscreenApp.exe",6000,false);
-            }
+           
+          
         }
         public static void setPlayniteDirectory()
         {

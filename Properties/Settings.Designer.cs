@@ -349,13 +349,13 @@ namespace Power_Control_Panel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("LB+DPadUp")]
-        public string playniteButtonCombo {
+        [global::System.Configuration.DefaultSettingValueAttribute("LB+RB+DPadUp")]
+        public string gameLauncherButtonCombo {
             get {
-                return ((string)(this["playniteButtonCombo"]));
+                return ((string)(this["gameLauncherButtonCombo"]));
             }
             set {
-                this["playniteButtonCombo"] = value;
+                this["gameLauncherButtonCombo"] = value;
             }
         }
         
@@ -404,6 +404,18 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["directoryPlaynite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string gameLauncher {
+            get {
+                return ((string)(this["gameLauncher"]));
+            }
+            set {
+                this["gameLauncher"] = value;
             }
         }
     }

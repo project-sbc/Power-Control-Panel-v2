@@ -83,8 +83,8 @@
     <Setting Name="upgradeSettingsRequired" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="playniteButtonCombo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">LB+DPadUp</Value>
+    <Setting Name="gameLauncherButtonCombo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">LB+RB+DPadUp</Value>
     </Setting>
     <Setting Name="showBrightness" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -96,6 +96,9 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="directoryPlaynite" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="gameLauncher" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

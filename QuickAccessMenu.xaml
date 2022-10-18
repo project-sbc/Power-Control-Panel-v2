@@ -110,11 +110,14 @@
             <DockPanel.Background>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkDarkColorKey}}"/>
             </DockPanel.Background>
-            <Border DockPanel.Dock="Right" BorderThickness="3" BorderBrush="White">
-                <iconPacks:PackIconFontAwesome VerticalAlignment="Center" Width="40"
+            <Button DockPanel.Dock="Right" Background="Transparent" BorderThickness="1" x:Name="Close" Click="Close_Click">
+   
+                    <iconPacks:PackIconFontAwesome VerticalAlignment="Center" Width="40"
                                                Height="40" Margin="10,10,10,10" Foreground="White"  BorderBrush="Black"
                                                Kind="SignOutAltSolid" />
-            </Border>
+      
+            </Button>
+
            
             <TextBlock Name="txtblkInternet" FontFamily="Segoe MDL2 Assets" Text="&#xF384;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="25" Margin="0,0,10,0" />
             <TextBlock Name="txtblkPower" FontFamily="Segoe MDL2 Assets" Text="&#xE83E;" VerticalAlignment="Center" Foreground="White" DockPanel.Dock="Right" FontSize="30" Margin="0,0,10,0" />

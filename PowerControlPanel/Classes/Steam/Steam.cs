@@ -25,15 +25,20 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.Steam
         }
         public static void openSteamBigPicture()
         {
-            if (steamRunning())
+            if (Properties.Settings.Default.directorySteam != "")
             {
-                RunCLI.RunCommand(" \"steam://open/bigpicture\"",false, Properties.Settings.Default.directorySteam + "\\Steam.exe", 6000, false);
+                if (steamRunning())
+                {
+                    RunCLI.RunCommand(" \"steam://open/bigpicture\"", false, Properties.Settings.Default.directorySteam + "\\Steam.exe", 6000, false);
 
+                }
+                else
+                {
+                    RunCLI.RunCommand(" -bigpicture", false, Properties.Settings.Default.directorySteam + "\\Steam.exe", 6000, false);
+                }
             }
-            else 
-            {
-                RunCLI.RunCommand(" -bigpicture", false, Properties.Settings.Default.directorySteam + "\\Steam.exe", 6000, false);
-            }
+
+  
 
         }
         public static void setSteamDirectory()

@@ -62,6 +62,7 @@
     <system:String x:Key="TileHomePage_Brightness">亮度</system:String>
     <system:String x:Key="TileHomePage_Volume">音量</system:String>
     <system:String x:Key="TileHomePage_GPUCLK">GPU Clock</system:String>
+    <system:String x:Key="TileHomePage_Display">显示</system:String>
     <system:String x:Key="TileHomePage_Resolution">显示分辨率</system:String>
     <system:String x:Key="TileHomePage_Scaling">显示比例</system:String>
     <system:String x:Key="TileHomePage_Refresh">屏幕刷新率</system:String>
@@ -72,15 +73,16 @@
     <system:String x:Key="TileHomePage_Intel">Intel</system:String>
     <system:String x:Key="TileHomePage_PlayNite">PlayNite</system:String>
     <system:String x:Key="TileHomePage_Steam">Steam</system:String>
-
-    <system:String x:Key="HomePage_TDPSettings">TDP Settings</system:String>
-    <system:String x:Key="HomePage_CPUSettings">CPU Settings</system:String>
-    <system:String x:Key="HomePage_DisplaySettings">Display Settings</system:String>
-    <system:String x:Key="HomePage_AMDSettings">AMD Settings</system:String>
-    <system:String x:Key="HomePage_ProfileSettings">Profile Settings</system:String>
-    <system:String x:Key="HomePage_VolumeSettings">Volume Settings</system:String>
-    <system:String x:Key="HomePage_BrightnessSettings">Brightness Settings</system:String>
-    <system:String x:Key="HomePage_FPSSettings">FPS Limit Settings</system:String>
+    <system:String x:Key="TileHomePage_ChangeView">切换人机界面</system:String>
+    
+    <system:String x:Key="HomePage_TDPSettings">TDP设定</system:String>
+    <system:String x:Key="HomePage_CPUSettings">CPU设定</system:String>
+    <system:String x:Key="HomePage_DisplaySettings">显示设定</system:String>
+    <system:String x:Key="HomePage_AMDSettings">AMD设定</system:String>
+    <system:String x:Key="HomePage_ProfileSettings">Profile设定</system:String>
+    <system:String x:Key="HomePage_VolumeSettings">音量设定</system:String>
+    <system:String x:Key="HomePage_BrightnessSettings">亮度设定</system:String>
+    <system:String x:Key="HomePage_FPSSettings">FPS Limit设定</system:String>
 
     <!-- Settings {DynamicResource HomePage_Brightness} -->
     <system:String x:Key="Settings_UpdateSettings">Check For Updates</system:String>
@@ -97,12 +99,17 @@
     <system:String x:Key="Settings_MainWindowStyle">Main Window Home Page Style (Restart App)</system:String>
     <system:String x:Key="Settings_QAMStyle">Quick Acces Mneu Home Page Style</system:String>
     <system:String x:Key="Settings_Language">Language/语言</system:String>
+
+    <system:String x:Key="Settings_SteamDirectory">Steam Directory</system:String>
+    <system:String x:Key="Settings_PlayNiteDirectory">PlayNite Directory</system:String>
+
     <system:String x:Key="Settings_IntelTDPType">TDP Set Type</system:String>
     <system:String x:Key="Settings_AMDMaxGPUClk">Set Max GPU Clock (MHz)</system:String>
     <system:String x:Key="Settings_ControllerShortCuts">Conroller Short Cuts</system:String>
     <system:String x:Key="Settings_ShortCutQAM">Quick Access Menu</system:String>
     <system:String x:Key="Settings_ShortCutOSK">OSK</system:String>
     <system:String x:Key="Settings_ShortCutFSR">FSR</system:String>
+    <system:String x:Key="Settings_ShortCutGameLauncher">Game Launcher</system:String>
     <!-- AppSettings  -->
     <system:String x:Key="AppSettings_Applications">应用程序</system:String>
     <system:String x:Key="AppSettings_AddProfile">加剖面</system:String>

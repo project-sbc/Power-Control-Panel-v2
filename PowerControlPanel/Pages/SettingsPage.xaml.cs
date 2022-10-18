@@ -4,6 +4,7 @@ using MahApps.Metro.Controls;
 using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -97,11 +98,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             Properties.Settings.Default.homePageTypeMW = cboMWHomePageStyle.Text;
 
-            Properties.Settings.Default.homePageTypeQAM = cboQAMHomePageStyle.Text;
+
+            Properties.Settings.Default.directorySteam = txtbxSteamDirectory.Text;
+            Properties.Settings.Default.directoryPlaynite = txtbxPlayNiteDirectory.Text;
 
             Properties.Settings.Default.fsrButtonCombo = txtbxShortCutFSR.Text.Replace(" ","");
             Properties.Settings.Default.qamButtonCombo = txtbxShortCutQAM.Text.Replace(" ", "");
             Properties.Settings.Default.oskButtonCombo = txtbxShortCutOSK.Text.Replace(" ", "");
+            Properties.Settings.Default.gameLauncherButtonCombo = txtbxShortCutGameLauncher.Text.Replace(" ", "");
+            Properties.Settings.Default.gameLauncher = cboGameLauncher.Text;
             //Save
             Properties.Settings.Default.Save();
 
@@ -144,12 +149,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             cboLanguage.Text = Properties.Settings.Default.Language;
             cboMWHomePageStyle.Text = Properties.Settings.Default.homePageTypeMW;
 
-            cboQAMHomePageStyle.Text = Properties.Settings.Default.homePageTypeQAM;
+            txtbxPlayNiteDirectory.Text = Properties.Settings.Default.directoryPlaynite;
+            txtbxSteamDirectory.Text = Properties.Settings.Default.directorySteam;
+
             cboTDPTypeIntel.Text = Properties.Settings.Default.IntelMMIOMSR;
 
             txtbxShortCutFSR.Text = Properties.Settings.Default.fsrButtonCombo;
             txtbxShortCutOSK.Text = Properties.Settings.Default.oskButtonCombo;
             txtbxShortCutQAM.Text = Properties.Settings.Default.qamButtonCombo;
+            txtbxShortCutGameLauncher.Text = Properties.Settings.Default.gameLauncherButtonCombo;
+            cboGameLauncher.Text = Properties.Settings.Default.gameLauncher;
         }
     
 
@@ -207,6 +216,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             if (args.Error == null)
             {
+
                 if (args.IsUpdateAvailable)
                 {
                     DialogResult dialogResult;

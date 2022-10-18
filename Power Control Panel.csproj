@@ -10,7 +10,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>Resources\Pictures\PCP.ico</ApplicationIcon>
-    <Version>0.1.13.0</Version>
+    <Version>0.2.2.0</Version>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 

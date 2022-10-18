@@ -353,6 +353,10 @@ namespace Power_Control_Panel
                     getController();
                 }
             }
+            else if (!controller.IsConnected)
+            {
+                getController();
+            }
 
 
             if (controller != null)
@@ -374,9 +378,17 @@ namespace Power_Control_Panel
                     {
                         PowerControlPanel.Classes.EnableFSR.EnableFSR.enableDisableFSR();
                     }
-                    if (ButtonComboPress(currentGamepad, Properties.Settings.Default.playniteButtonCombo))
+                    if (ButtonComboPress(currentGamepad, Properties.Settings.Default.gameLauncherButtonCombo))
                     {
-                        PowerControlPanel.Classes.Playnite.Playnite.playniteToggle();
+                        if (Properties.Settings.Default.gameLauncher == "Steam")
+                        {
+                            PowerControlPanel.Classes.Steam.Steam.openSteamBigPicture();
+                        }
+                        if (Properties.Settings.Default.gameLauncher == "PlayNite")
+                        {
+                            PowerControlPanel.Classes.Playnite.Playnite.playniteToggle();
+                        }
+               
                     }
 
                     //set currentgamepad snapshot to global gamepad for comparison
@@ -581,7 +593,7 @@ namespace Power_Control_Panel
             // Navigate to the home page.
 
 
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/QAMHomePage.xaml", UriKind.RelativeOrAbsolute));
+                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
   
         }
 

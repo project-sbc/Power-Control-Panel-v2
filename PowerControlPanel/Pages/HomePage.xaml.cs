@@ -74,8 +74,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             setViewStyle();
 
-            setInitialVisibility();
-
             initializeTimer();
             loadUpdateValues();
             //
@@ -105,14 +103,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 {
                     if (AMDGPUCLK_Slider.Value != 200) { AMDGPUCLK_Slider.Value = 200; }
                     AMDGPUCLK_Label.Content = "Default";
-                    GPUCLK_TileLabel.Content = "GPU Clock: Default";
+                    GPUCLK_TileLabel.Content = Application.Current.Resources["TileHomePage_GPUCLK"].ToString() + ": Default";
                 }
                 else
                 {
                     if (AMDGPUCLK_Slider.Value != Int32.Parse(GlobalVariables.gpuclk))
                     {
                         AMDGPUCLK_Slider.Value = Int32.Parse(GlobalVariables.gpuclk);
-                        GPUCLK_TileLabel.Content = "GPU Clock: " + GlobalVariables.gpuclk + " MHz";
+                        GPUCLK_TileLabel.Content = Application.Current.Resources["TileHomePage_GPUCLK"].ToString() + ": " + GlobalVariables.gpuclk + " MHz";
                     }
                 }
             }
@@ -123,14 +121,14 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (GlobalVariables.cpuMaxFrequency == 0)
                 {
                     MAXCPU_Slider.Value = MAXCPU_Slider.Maximum;
-                    MaxCPU_Label.Content = "Auto";
-                    MaxCPU_TileLabel.Content = "Max CPU: Auto";
+                    MaxCPU_Label.Content = Application.Current.Resources["Auto"].ToString();
+                    MaxCPU_TileLabel.Content = Application.Current.Resources["TileHomePage_MaxCPU"].ToString() + ": " + Application.Current.Resources["Auto"].ToString();
                 }
                 else
                 {
                     MAXCPU_Slider.Value = GlobalVariables.cpuMaxFrequency;
                     MaxCPU_Label.Content = GlobalVariables.cpuMaxFrequency.ToString();
-                    MaxCPU_TileLabel.Content = "Max CPU: " + GlobalVariables.cpuMaxFrequency.ToString() + " MHz";
+                    MaxCPU_TileLabel.Content = Application.Current.Resources["TileHomePage_MaxCPU"].ToString() + ": " + GlobalVariables.cpuMaxFrequency.ToString() + " MHz";
                 }
             }
 
@@ -139,7 +137,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (!dragActiveCores && Properties.Settings.Default.enableCPU && !GlobalVariables.needActiveCoreRead)
             {
                 ActiveCores_Slider.Value = GlobalVariables.cpuActiveCores;
-                ActiveCores_TileLabel.Content = "Active Cores: " + GlobalVariables.cpuActiveCores;
+                ActiveCores_TileLabel.Content = Application.Current.Resources["TileHomePage_ActiveCores"].ToString() + ": " + GlobalVariables.cpuActiveCores;
             }
 
             //profile
@@ -210,8 +208,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             {
                 if (GlobalVariables.readPL1 > 0 && GlobalVariables.readPL2 > 0)
                 {
-                    TDP1_TileLabel.Content = "Sustained TDP: " + GlobalVariables.readPL1 + " W";
-                    TDP2_TileLabel.Content = "Boost TDP: " + GlobalVariables.readPL2 + " W";
+                    TDP1_TileLabel.Content = Application.Current.Resources["TileHomePage_TDPSustained"].ToString() + ": " + GlobalVariables.readPL1 + " W";
+                    TDP2_TileLabel.Content = Application.Current.Resources["TileHomePage_TDPBoost"].ToString() + ": " + GlobalVariables.readPL2 + " W";
                     changingTDP = true;
                     updateFromGlobalTDPPL1();
                     updateFromGlobalTDPPL2();
@@ -281,37 +279,42 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //set enable/disable
             if (!Properties.Settings.Default.enableDisplay)
             {
-                Display_GroupBorder.Visibility = Visibility.Collapsed;
+                Resolution_Border.Visibility = Visibility.Collapsed;
+                RefreshRate_Border.Visibility = Visibility.Collapsed;
+                Scaling_Border.Visibility = Visibility.Collapsed;
                 Display_Tile.Visibility = Visibility.Collapsed;
             }
 
             if (!Properties.Settings.Default.enableCPU)
             {
-                CPU_GroupBorder.Visibility = Visibility.Collapsed;
+                MaxCPU_Border.Visibility = Visibility.Collapsed;
+                ActiveCores_Border.Visibility = Visibility.Collapsed;
                 CPU_Tile.Visibility = Visibility.Collapsed;
             }
 
             if (!Properties.Settings.Default.enableVolume)
             {
-                Volume_GroupBorder.Visibility = Visibility.Collapsed;
+                Volume_Border.Visibility = Visibility.Collapsed;
                 Volume_Tile.Visibility = Visibility.Collapsed;
             }
             if (!Properties.Settings.Default.enableBrightness)
             {
-                Brightness_GroupBorder.Visibility = Visibility.Collapsed;
+                Brightness_Border.Visibility = Visibility.Collapsed;
                 Brightness_Tile.Visibility = Visibility.Collapsed;
             }
 
 
             if (!Properties.Settings.Default.enableTDP)
             {
-                TDP_GroupBorder.Visibility = Visibility.Collapsed;
+                TDP_Border.Visibility = Visibility.Collapsed;
+                TDP1_Border.Visibility = Visibility.Collapsed;
+                TDP2_Border.Visibility = Visibility.Collapsed;
                 TDP_Tile.Visibility = Visibility.Collapsed;
             }
 
             if (!Properties.Settings.Default.enableGPUCLK)
             {
-                AMD_GroupBorder.Visibility = Visibility.Collapsed;
+                AMDGPUCLK_Border.Visibility = Visibility.Collapsed;
                 AMD_Tile.Visibility = Visibility.Collapsed;
             }
 
@@ -383,71 +386,33 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void setViewStyle()
         {
+            if (this.Title == "QAMHomePage")
+            {
+                //set by view style
+                if (Properties.Settings.Default.homePageTypeQAM == "Tile")
+                {
+                    //removeGroupSliderBoxAndBorder();
+                }
+                if (Properties.Settings.Default.homePageTypeQAM == "Slider")
+                {
+                    //removeGroupSliderBoxAndBorder();
+                    wrapPanel.Visibility = Visibility.Collapsed;
+                }
+                if (Properties.Settings.Default.homePageTypeQAM == "Group Slider")
+                {
+                    wrapPanel.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                //removeGroupSliderBoxAndBorder();
+                rdViewChange.Height = new GridLength(0);
+                borderChangeViewStyle.Visibility = Visibility.Collapsed;
+            }
 
-
-            //set by view style
-            if (Properties.Settings.Default.homePageTypeQAM == "Tile")
-            {
-                removeGroupSliderBoxAndBorder();
-            }
-            if (Properties.Settings.Default.homePageTypeQAM == "Slider")
-            {
-                removeGroupSliderBoxAndBorder();
-                wrapPanel.Visibility = Visibility.Collapsed;
-            }
-            if (Properties.Settings.Default.homePageTypeQAM == "Group Slider")
-            {
-                wrapPanel.Visibility = Visibility.Collapsed;
-            }
         }
 
-        private void resetView()
-        {
-            AMD_BoxHeader.Visibility = Visibility.Visible;
-            Brightness_BoxHeader.Visibility = Visibility.Visible;
-            CPU_BoxHeader.Visibility = Visibility.Visible;
-            Display_BoxHeader.Visibility = Visibility.Visible;
-            FPSLimit_BoxHeader.Visibility = Visibility.Visible;
-            Profile_BoxHeader.Visibility = Visibility.Visible;
-            TDP_BoxHeader.Visibility = Visibility.Visible;
-            Volume_BoxHeader.Visibility = Visibility.Visible;
 
-            wrapPanel.Visibility = Visibility.Visible;
-
-            TDP_GroupBorder.BorderThickness = new Thickness(3);
-            CPU_GroupBorder.BorderThickness = new Thickness(3);
-            Display_GroupBorder.BorderThickness = new Thickness(3);
-            Volume_GroupBorder.BorderThickness = new Thickness(3);
-            Brightness_GroupBorder.BorderThickness = new Thickness(3);
-            Profile_GroupBorder.BorderThickness = new Thickness(3);
-            AMD_GroupBorder.BorderThickness = new Thickness(3);
-            FPSLimit_GroupBorder.BorderThickness = new Thickness(3);
-
-
-
-        }
-        private void removeGroupSliderBoxAndBorder()
-        {
-            //get rid of border and box headers
-            TDP_GroupBorder.BorderThickness = new Thickness(0);
-            CPU_GroupBorder.BorderThickness = new Thickness(0);
-            Display_GroupBorder.BorderThickness = new Thickness(0);
-            Volume_GroupBorder.BorderThickness = new Thickness(0);
-            Brightness_GroupBorder.BorderThickness = new Thickness(0);
-            Profile_GroupBorder.BorderThickness = new Thickness(0);
-            AMD_GroupBorder.BorderThickness = new Thickness(0);
-            FPSLimit_GroupBorder.BorderThickness = new Thickness(0);
-
-
-            AMD_BoxHeader.Visibility = Visibility.Collapsed;
-            Brightness_BoxHeader.Visibility = Visibility.Collapsed;
-            CPU_BoxHeader.Visibility = Visibility.Collapsed;
-            Display_BoxHeader.Visibility = Visibility.Collapsed;
-            FPSLimit_BoxHeader.Visibility = Visibility.Collapsed;
-            Profile_BoxHeader.Visibility = Visibility.Collapsed;
-            TDP_BoxHeader.Visibility = Visibility.Collapsed;
-            Volume_BoxHeader.Visibility = Visibility.Collapsed;
-        }
 
         private void setInitialVisibility()
         {
@@ -459,27 +424,32 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (!Properties.Settings.Default.showTDP && Properties.Settings.Default.enableTDP)
             {
                 handleToggleControls("TDP_Toggle", false);
+
             }
 
 
             if (!Properties.Settings.Default.showDisplay && Properties.Settings.Default.enableDisplay)
             {
                 handleToggleControls("Display_Toggle", false);
+
             }
 
             if (!Properties.Settings.Default.showCPU && Properties.Settings.Default.enableCPU)
             {
                 handleToggleControls("CPU_Toggle", false);
+
             }
 
             if (!Properties.Settings.Default.showVolume && Properties.Settings.Default.enableVolume)
             {
                 handleToggleControls("Volume_Toggle", false);
+
             }
 
             if (!Properties.Settings.Default.showBrightness && Properties.Settings.Default.enableBrightness)
             {
                 handleToggleControls("Brightness_Toggle", false);
+
             }
 
 
@@ -488,6 +458,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (!Properties.Settings.Default.showGPUCLK && Properties.Settings.Default.enableGPUCLK)
             {
                 handleToggleControls("AMD_Toggle", false);
+
             }
 
 
@@ -500,8 +471,30 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             //set height of scrollviewer
             //sliderScrollViewer.Height = this.ActualHeight - wrapPanel.ActualHeight;
+            setSliderThumbSizes();
+
             setInitialVisibility();
 
+        }
+        private void setSliderThumbSizes()
+        {
+            setThumbSize(ActiveCores_Slider);
+            setThumbSize(AMDGPUCLK_Slider);
+            setThumbSize(Brightness_Slider);
+            setThumbSize(MAXCPU_Slider);
+            setThumbSize(TDP1_Slider);
+            setThumbSize(TDP2_Slider);
+            setThumbSize(TDP_Slider);
+            setThumbSize(Volume_Slider);
+        }
+        private bool isTileGray(Tile tile)
+        {
+            if (tile.Background == Brushes.Gray)
+            {
+                return true;
+            }
+            else
+            { return false; }
         }
 
         private void Tile_Click(object sender, RoutedEventArgs e)
@@ -513,28 +506,29 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             switch (tileName)
             {
                 case "TDP_Tile":
-                    TDP_Toggle.IsOn = !TDP_Toggle.IsOn;
+                    handleToggleControls("TDP_Toggle", isTileGray(TDP_Tile));
+
                     break;
                 case "Volume_Tile":
-                    Volume_Toggle.IsOn = !Volume_Toggle.IsOn;
+                    handleToggleControls("Volume_Toggle", isTileGray(Volume_Tile));
                     break;
                 case "Brightness_Tile":
-                    Brightness_Toggle.IsOn = !Brightness_Toggle.IsOn;
+                    handleToggleControls("Brightness_Toggle", isTileGray(Brightness_Tile));
                     break;
                 case "Display_Tile":
-                    Display_Toggle.IsOn = !Display_Toggle.IsOn;
+                    handleToggleControls("Display_Toggle", isTileGray(Display_Tile));
                     break;
                 case "CPU_Tile":
-                    CPU_Toggle.IsOn = !CPU_Toggle.IsOn;
+                    handleToggleControls("CPU_Toggle", isTileGray(CPU_Tile));
                     break;
                 case "AMD_Tile":
-                    AMD_Toggle.IsOn = !AMD_Toggle.IsOn;
+                    handleToggleControls("AMD_Toggle", isTileGray(AMD_Tile));
                     break;
                 case "Profile_Tile":
-                    Profile_Toggle.IsOn = !Profile_Toggle.IsOn;
+                    handleToggleControls("Profile_Toggle", isTileGray(Profile_Tile));
                     break;
                 case "FPSLimit_Tile":
-                    FPSLimit_Toggle.IsOn = !FPSLimit_Toggle.IsOn;
+                    handleToggleControls("FPSLimit_Toggle", isTileGray(FPSLimit_Tile));
                     break;
                 case "Steam_Tile":
                     PowerControlPanel.Classes.Steam.Steam.openSteamBigPicture();
@@ -550,23 +544,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         }
 
-        private void Slider_Loaded(object sender, RoutedEventArgs e)
-        {
-            //set thumb size, internet routine
-            var SliderThumb = GetElementFromParent(sender as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
-            if (SliderThumb != null)
-            {
-
-                if (SliderThumb is Thumb thumb)
-                {
-
-                    thumb.Width = 25;
-                    thumb.Height = 35;
-                }
-                else { }
-            }
-            else { }
-        }
+      
 
 
         private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
@@ -752,7 +730,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
             Properties.Settings.Default.Save();
-            resetView();
+
             setViewStyle();
         }
 
@@ -835,14 +813,16 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         }
                         break;
                     case "AMDGPUCLK_Slider":
+
                         if (dragStarted) { dragGPUCLK = true; }
                         else
                         {
                             if (dragCompleted) { dragGPUCLK = false; }
+                            AMDGPUCLK_Label.Content = sliderValue.ToString();
                             if (!dragGPUCLK)
                             {
                                 Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock((int)sliderValue));
-                                AMDGPUCLK_Label.Content = sliderValue.ToString();
+                                
                             }
 
                         }
@@ -1004,7 +984,23 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(FPSLimit_Cbo.SelectedValue.ToString());
         }
 
+        private void setThumbSize(Slider slider)
+        {
+            //set thumb size, internet routine
+            var SliderThumb = GetElementFromParent(slider as DependencyObject, "HorizontalThumb"); //Make sure to put the right name for your slider layout options are: ("VerticalThumb", "HorizontalThumb")
+            if (SliderThumb != null)
+            {
 
+                if (SliderThumb is Thumb thumb)
+                {
+
+                    thumb.Width = 25;
+                    thumb.Height = 35;
+                }
+                else { }
+            }
+            else { }
+        }
     }
 
 }
