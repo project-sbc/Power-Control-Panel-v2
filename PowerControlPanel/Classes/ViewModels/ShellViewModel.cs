@@ -18,51 +18,14 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ViewModels
         public ShellViewModel()
         {
             // Build the menus
-         
-            if (Properties.Settings.Default.homePageTypeMW == "Grouped Slider")
+            this.Menu.Add(new MenuItem()
             {
-                this.Menu.Add(new MenuItem()
-                {
-                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid },
+                Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid },
+                Label = Application.Current.Resources["MainWindow_Menu_Home"].ToString(),
+                NavigationType = typeof(MainPage),
+                NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute),
+            });
 
-                    Label = Application.Current.Resources["MainWindow_Menu_Home"].ToString(),
-                    NavigationType = typeof(MainPage),
-
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute),
-
-
-                });
-            }
-            if (Properties.Settings.Default.homePageTypeMW == "Tile")
-            {
-                this.Menu.Add(new MenuItem()
-                {
-                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid },
-
-                    Label = Application.Current.Resources["MainWindow_Menu_Home"].ToString(),
-                    NavigationType = typeof(MainPage),
-
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute),
-
-
-                });
-            }
-
-
-            if (Properties.Settings.Default.homePageTypeMW == "Slider")
-            {
-                this.Menu.Add(new MenuItem()
-                {
-                    Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.HomeSolid },
-
-                    Label = Application.Current.Resources["MainWindow_Menu_Home"].ToString(),
-                    NavigationType = typeof(MainPage),
-
-                    NavigationDestination = new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute),
-
-
-                });
-            }
             this.Menu.Add(new MenuItem()
             {
                 Icon = new PackIconFontAwesome() { Kind = PackIconFontAwesomeKind.BookSolid },

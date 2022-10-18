@@ -12,7 +12,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
     public static class RunCLI
     {
 
-        public static string RunCommand(string arguments, bool readOutput, string processName = "cmd.exe",  int waitExit=6000)
+        public static string RunCommand(string arguments, bool readOutput, string processName = "cmd.exe",  int waitExit=6000, bool runasadmin=true)
         {
             //Runs CLI, if readOutput is true then returns output
 
@@ -28,8 +28,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes
                 //startInfo.Arguments = "/c " + arguments;
                 startInfo.Arguments = arguments;
                 startInfo.CreateNoWindow = true;
-         
-                startInfo.Verb = "runas";
+                if (runasadmin) { startInfo.Verb = "runas"; }
                 startInfo.RedirectStandardError = readOutput;
                 startInfo.RedirectStandardOutput = readOutput;
                 process.EnableRaisingEvents = true;

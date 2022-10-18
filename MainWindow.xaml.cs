@@ -69,8 +69,8 @@ namespace Power_Control_Panel
         public static int cpuActiveCores = 0;
         public static int maxCpuCores = 1;
         public static int baseCPUSpeed = 1000;
-
-
+        public static bool needCPUMaxFreqRead = false;
+        public static bool needActiveCoreRead = false;
         //RTSS fps limit
         public static string FPSLimit = "Unlocked";
 
@@ -167,7 +167,9 @@ namespace Power_Control_Panel
             _ = Tablet.TabletDevices;
 
             //test code here
-            
+            //RunCLI.RunCommand(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile + ""));
+            //System.Windows.Forms.MessageBox.Show(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "\\Playnite\\Playnite.FullscreenApp.exe --start"));
+           
         }
       
         private void setUpNotifyIcon()
@@ -287,40 +289,53 @@ namespace Power_Control_Panel
             bool result = false;
 
             //split string into array
-            string[] strBC = BC.Split('+');
-            //gamepad flag array
-            GamepadButtonFlags[] qamButtonCombo = new GamepadButtonFlags[strBC.Length];
-            int intCount = 0;
-            foreach (var bc in strBC)
+            
+
+            if (BC.IndexOf("+") > 0)
             {
-                //for each string lookup in the dictionary for the gamepad flag
-                qamButtonCombo[intCount] = buttonLookUp[bc];
-                intCount++;
-            }
-            //set bool to true
-            bool oldGamepadPress = true;
-            bool GamepadPress = true;
-            foreach (GamepadButtonFlags button in qamButtonCombo)
-            {
-                //the press scenario is defined when the old gamepad state doesn't have all buttons pressed but the new state does. This will turn the bool false if any of the buttons arent pressed
-                if (!gamepad.Buttons.HasFlag(button))
+                string[] strBC = BC.Split('+');
+
+                //gamepad flag array
+                GamepadButtonFlags[] ButtonCombo = new GamepadButtonFlags[strBC.Length];
+                int intCount = 0;
+
+                foreach (var bc in strBC)
                 {
-                    oldGamepadPress = false;
+                    //for each string lookup in the dictionary for the gamepad flag
+                    ButtonCombo[intCount] = buttonLookUp[bc];
+                    intCount++;
                 }
-                if (!gp.Buttons.HasFlag(button))
+
+                //set bool to true
+                bool oldGamepadPress = true;
+                bool GamepadPress = true;
+                foreach (GamepadButtonFlags button in ButtonCombo)
                 {
-                    GamepadPress = false;
+                    //the press scenario is defined when the old gamepad state doesn't have all buttons pressed but the new state does. This will turn the bool false if any of the buttons arent pressed
+                    if (!gamepad.Buttons.HasFlag(button))
+                    {
+                        oldGamepadPress = false;
+                    }
+                    if (!gp.Buttons.HasFlag(button))
+                    {
+                        GamepadPress = false;
+                    }
                 }
+                //button press is true when current gamepadpress is true and the old gamepad state is false
+                if (!oldGamepadPress && GamepadPress)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+
+
+
             }
-            //button press is true when current gamepadpress is true and the old gamepad state is false
-            if (!oldGamepadPress && GamepadPress)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
+  
+
 
             return result;
 
@@ -337,6 +352,10 @@ namespace Power_Control_Panel
                 {
                     getController();
                 }
+            }
+            else if (!controller.IsConnected)
+            {
+                getController();
             }
 
 
@@ -358,6 +377,18 @@ namespace Power_Control_Panel
                     if (ButtonComboPress(currentGamepad, Properties.Settings.Default.fsrButtonCombo))
                     {
                         PowerControlPanel.Classes.EnableFSR.EnableFSR.enableDisableFSR();
+                    }
+                    if (ButtonComboPress(currentGamepad, Properties.Settings.Default.gameLauncherButtonCombo))
+                    {
+                        if (Properties.Settings.Default.gameLauncher == "Steam")
+                        {
+                            PowerControlPanel.Classes.Steam.Steam.openSteamBigPicture();
+                        }
+                        if (Properties.Settings.Default.gameLauncher == "PlayNite")
+                        {
+                            PowerControlPanel.Classes.Playnite.Playnite.playniteToggle();
+                        }
+               
                     }
 
                     //set currentgamepad snapshot to global gamepad for comparison
@@ -549,7 +580,6 @@ namespace Power_Control_Panel
 
         private void QAMEvent()
         {
-
             handleOpenCloseQAM();
         }
 
@@ -562,18 +592,9 @@ namespace Power_Control_Panel
             HamburgerMenuControl.Content = this.navigationServiceEx.Frame;
             // Navigate to the home page.
 
-            if (Properties.Settings.Default.homePageTypeMW == "Grouped Slider")
-            {
+
                 this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/HomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
-            if (Properties.Settings.Default.homePageTypeMW == "Slider")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/SliderHomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
-            if (Properties.Settings.Default.homePageTypeMW == "Tile")
-            {
-                this.Loaded += (sender, args) => this.navigationServiceEx.Navigate(new Uri("PowerControlPanel/Pages/TileHomePage.xaml", UriKind.RelativeOrAbsolute));
-            }
+  
         }
 
         private void HamburgerMenuControl_OnItemInvoked(object sender, HamburgerMenuItemInvokedEventArgs e)

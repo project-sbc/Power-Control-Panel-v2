@@ -13,7 +13,7 @@
         Height="170"
         Width="300">
         <Grid>
-        <Image x:Name="image" Source="Resources/Pictures/ProjectSBC.png" HorizontalAlignment="Stretch" Height="Auto"  VerticalAlignment="Stretch" Width="Auto"/>
+        <Image x:Name="image" Source="ProjectSBC.png" HorizontalAlignment="Stretch" Height="Auto"  VerticalAlignment="Stretch" Width="Auto"/>
 <Label Foreground="White" Content="Loading..." VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,10"/>
     </Grid>
     </Window>

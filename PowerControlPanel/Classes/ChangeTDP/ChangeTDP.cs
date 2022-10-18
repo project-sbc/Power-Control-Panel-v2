@@ -117,6 +117,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeTDP
 
                 //read tdp after changing
                 readTDP();
+                GlobalVariables.needTDPRead = false;
             }
             catch (Exception ex)
             {

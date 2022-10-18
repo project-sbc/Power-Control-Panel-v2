@@ -46,7 +46,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             //hide fan control if device is not fan control capable
             if (!GlobalVariables.fanControlDevice)
             {
-                FanSpeed222.Visibility = Visibility.Collapsed;
+                //FanSpeed.Visibility = Visibility.Collapsed;
             }
 
             showHideFPSLimit();
@@ -495,12 +495,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
          
         }
-
-        private void Slider_TouchUp(object sender, TouchEventArgs e)
-        {
-            dragStarted = false;
-            //handleChangeValues();
-        }
         private void HandleChangingTDP(int tdpPL1, int tdpPL2, bool PL1started)
         {
 
@@ -528,12 +522,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 };
             }
 
-          
+
         }
-
-   
-
-    
 
 
         private void HandleChangingGPUCLK(int gpuclk)
@@ -546,6 +536,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
         }
+        private void Slider_TouchUp(object sender, TouchEventArgs e)
+        {
+            dragStarted = false;
+            //handleChangeValues();
+        }
+
+
+
+
 
 
         private void enableGroup_Toggled(object sender, RoutedEventArgs e)

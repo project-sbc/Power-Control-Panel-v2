@@ -4,6 +4,7 @@ using MahApps.Metro.Controls;
 using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -62,7 +63,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             if (Properties.Settings.Default.systemAutoStart != cboAutoStart.Text)
             {
                 Properties.Settings.Default.systemAutoStart = cboAutoStart.Text;
-                changeTaskService(cboAutoStart.Text);
+                PowerControlPanel.Classes.TaskSchedulerWin32.TaskSchedulerWin32.changeTaskService(cboAutoStart.Text);
             }
             
 
@@ -87,7 +88,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             Properties.Settings.Default.maxTDP = (int)TDPMAX.Value;
             Properties.Settings.Default.minTDP = (int)TDPMIN.Value;
-            Properties.Settings.Default.sizeQAM = cboQAMSize.Text;
+       
 
             Properties.Settings.Default.IntelMMIOMSR = cboTDPTypeIntel.Text;
 
@@ -97,11 +98,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             Properties.Settings.Default.homePageTypeMW = cboMWHomePageStyle.Text;
 
-            Properties.Settings.Default.homePageTypeQAM = cboQAMHomePageStyle.Text;
+
+            Properties.Settings.Default.directorySteam = txtbxSteamDirectory.Text;
+            Properties.Settings.Default.directoryPlaynite = txtbxPlayNiteDirectory.Text;
 
             Properties.Settings.Default.fsrButtonCombo = txtbxShortCutFSR.Text.Replace(" ","");
             Properties.Settings.Default.qamButtonCombo = txtbxShortCutQAM.Text.Replace(" ", "");
             Properties.Settings.Default.oskButtonCombo = txtbxShortCutOSK.Text.Replace(" ", "");
+            Properties.Settings.Default.gameLauncherButtonCombo = txtbxShortCutGameLauncher.Text.Replace(" ", "");
+            Properties.Settings.Default.gameLauncher = cboGameLauncher.Text;
             //Save
             Properties.Settings.Default.Save();
 
@@ -138,54 +143,24 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             TDPMAX.Value = Properties.Settings.Default.maxTDP;
             TDPMIN.Value = Properties.Settings.Default.minTDP;
             GPUCLKMAX.Value = Properties.Settings.Default.maxGPUCLK;
-            cboQAMSize.Text = Properties.Settings.Default.sizeQAM;
+          
             cboCombineTDP.Text = Properties.Settings.Default.enableCombineTDP;
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
             cboLanguage.Text = Properties.Settings.Default.Language;
             cboMWHomePageStyle.Text = Properties.Settings.Default.homePageTypeMW;
 
-            cboQAMHomePageStyle.Text = Properties.Settings.Default.homePageTypeQAM;
+            txtbxPlayNiteDirectory.Text = Properties.Settings.Default.directoryPlaynite;
+            txtbxSteamDirectory.Text = Properties.Settings.Default.directorySteam;
+
             cboTDPTypeIntel.Text = Properties.Settings.Default.IntelMMIOMSR;
 
             txtbxShortCutFSR.Text = Properties.Settings.Default.fsrButtonCombo;
             txtbxShortCutOSK.Text = Properties.Settings.Default.oskButtonCombo;
             txtbxShortCutQAM.Text = Properties.Settings.Default.qamButtonCombo;
+            txtbxShortCutGameLauncher.Text = Properties.Settings.Default.gameLauncherButtonCombo;
+            cboGameLauncher.Text = Properties.Settings.Default.gameLauncher;
         }
-        private void changeTaskService(string systemAutoStart)
-        {
-            Microsoft.Win32.TaskScheduler.TaskService ts = new Microsoft.Win32.TaskScheduler.TaskService();
-            Microsoft.Win32.TaskScheduler.Task task = ts.GetTask("Power_Control_Panel");
-            string BaseDir = AppDomain.CurrentDomain.BaseDirectory;
-            if (task == null)
-            {
-                if (systemAutoStart == "Enable")
-                {
-                    TaskDefinition td = ts.NewTask();
-
-                    td.RegistrationInfo.Description = "Power Control Panel";
-                    td.Triggers.AddNew(TaskTriggerType.Logon);
-                    td.Principal.RunLevel = TaskRunLevel.Highest;
-                    td.Settings.DisallowStartIfOnBatteries = false;
-                    td.Settings.StopIfGoingOnBatteries = false;
-                    td.Settings.RunOnlyIfIdle = false;
-
-                    td.Actions.Add(new ExecAction(BaseDir + "\\Power Control Panel.exe"));
-
-                    Microsoft.Win32.TaskScheduler.TaskService.Instance.RootFolder.RegisterTaskDefinition("Power_Control_Panel", td);
-
-                }
-            }
-
-            else
-            {
-                if (systemAutoStart == "Disable")
-                {
-                    task.RegisterChanges();
-                    ts.RootFolder.DeleteTask("Power_Control_Panel");
-                }
-            }
-
-        }
+    
 
 
         private DependencyObject GetElementFromParent(DependencyObject parent, string childname)
@@ -241,6 +216,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         {
             if (args.Error == null)
             {
+
                 if (args.IsUpdateAvailable)
                 {
                     DialogResult dialogResult;

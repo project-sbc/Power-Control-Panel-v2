@@ -51,7 +51,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         //enabled booleans
         private bool enableTDP = Properties.Settings.Default.enableTDP;
         private bool enableGPUCLK = Properties.Settings.Default.enableGPUCLK;
-        private bool enableSystem = Properties.Settings.Default.enableSystem;
+        private bool enableSystem = Properties.Settings.Default.enableVolume;
         private bool enableDisplay = Properties.Settings.Default.enableDisplay;
         private bool enableCPU = Properties.Settings.Default.enableCPU;
         //profiles
@@ -109,10 +109,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             cboRefreshRate.ItemsSource = GlobalVariables.refreshRates;
             cboResolution.ItemsSource = GlobalVariables.resolutions;
-
+            cboFPSLimit.ItemsSource = GlobalVariables.FPSLimits;
+            cboScaling.ItemsSource = GlobalVariables.scalings;
             changingResolution = true;
             cboResolution.SelectedIndex = 0;
             changingResolution = false;
+
         }
 
 
@@ -193,7 +195,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
 
             //max cpu clock updates
-            if (!dragStartedMAXCPU && enableCPU)
+            if (!dragStartedMAXCPU && enableCPU && !GlobalVariables.needCPUMaxFreqRead)
             {
                 if (GlobalVariables.cpuMaxFrequency == 0)
                 {
@@ -214,11 +216,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
             //active core updates
-            if (!dragStartedActiveCores && enableCPU)
+            if (!dragStartedActiveCores && enableCPU && !GlobalVariables.needActiveCoreRead)
             {
-
                 ActiveCores.Value = GlobalVariables.cpuActiveCores;
-
             }
 
             //profile
@@ -255,6 +255,20 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                 }
             }
+
+            if (PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.rtssRunning())
+            {
+                cboFPSLimit.Text = GlobalVariables.FPSLimit;
+
+                
+                bdFPSLimit.Visibility = Visibility.Visible;
+            }
+            else
+            {
+              
+                bdFPSLimit.Visibility = Visibility.Collapsed;
+            }
+
 
             //system values
             if (enableSystem)
@@ -314,81 +328,9 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         #endregion
 
         #region slider value changed
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Slider_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Slider slider = sender as Slider;
-
-            string sliderName = slider.Name;
-       
-            if (this.IsLoaded)
-            {
-                Debug.WriteLine("value changed event");
-                switch (sliderName)
-                {
-                    case "TDP1":
-                        if (!dragStartedTDP1 && !changingTDP)
-                        {
-                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
-                        }
-                        break;
-                    case "TDP":
-                        if (!dragStartedTDP && !changingTDP)
-                        {
-                            HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
-                        }
-                        break;
-                    case "TDP2":
-                        if (!dragStartedTDP2 && !changingTDP)
-                        {
-                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
-                        }
-                        break;
-                    case "Brightness":
-                        if (!dragStartedBrightness)
-                        {
-                            HandleChangingBrightness(Brightness.Value);
-                        }
-                        break;
-
-                    case "Volume":
-                        if (!dragStartedVolume)
-                        {
-                            HandleChangingVolume((int)Volume.Value);
-                        }
-                        break;
-                    case "GPUCLK":
-                        if (!dragStartedGPUCLK && !changingGPUCLK)
-                        {
-                            HandleChangingGPUCLK((int)GPUCLK.Value);
-                        }
-                        break;
-                    case "MAXCPU":
-                        if (!dragStartedMAXCPU && !changingMAXCPU)
-                        {
-                            HandleChangingMAXCPU((int)MAXCPU.Value);
-                        }
-                        if (MAXCPU.Value == MAXCPU.Maximum)
-                        {
-                            txtsliderMAXCPU.Visibility = Visibility.Collapsed;
-                            txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            txtsliderMAXCPUAuto.Visibility = Visibility.Collapsed;
-                            txtsliderMAXCPU.Visibility = Visibility.Visible;
-                        }
-                        break;
-                    case "ActiveCores":
-                        if (!dragStartedActiveCores && !changingActiveCores)
-                        {
-                            HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-            }
+ 
         }
 
         #endregion
@@ -402,11 +344,12 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
      
             if (this.IsLoaded)
             {
-                Debug.WriteLine("drag complete event");
+                //Debug.WriteLine("drag complete event");
                 switch (sliderName)
                 {
                     case "TDP1":
                         dragStartedTDP1 = false;
+                        Debug.WriteLine("drag complete event" + TDP1.Value.ToString());
                         HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
                         break;
                     case "TDP2":
@@ -497,14 +440,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         #endregion
 
       
-
-
-
-     
-
-
-
-
 
         void updateFromGlobalTDP()
         {
@@ -616,8 +551,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             Classes.ChangeVolume.AudioManager.SetMasterVolume((float)volume);
         }
 
-
-
         private void HandleChangingMAXCPU(int maxcpu)
         {
             if (this.IsLoaded)
@@ -625,6 +558,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (dragStartedMAXCPU == false)
                 {
                     changingMAXCPU = true;
+                    GlobalVariables.needCPUMaxFreqRead = true;
                     int sendMaxCPU = 0;
                     if (maxcpu != MAXCPU.Maximum) { sendMaxCPU = maxcpu; }
 
@@ -647,6 +581,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 if (dragStartedActiveCores == false)
                 {
                     changingActiveCores = true;
+                    GlobalVariables.needActiveCoreRead = true;
                     Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.changeCPU.ChangeCPU.changeActiveCores(cores));
 
                     changingActiveCores = false;
@@ -676,14 +611,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
         #endregion system controls
 
 
-        #region GPU Clock Slider
-
-
-
-
-
-
-        #endregion GPU Clock Slider
 
 
 
@@ -701,10 +628,10 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
         private void cboScaling_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!changingScaling && cboScaling.SelectedValue.ToString() != "Default")
+            if (!changingScaling && cboScaling.SelectedItem.ToString() != "Default")
             {
                 changingScaling = true;
-                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cboScaling.SelectedValue.ToString());
+                PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayScaling(cboScaling.SelectedItem.ToString());
                 changingScaling = false;
             }
 
@@ -723,11 +650,93 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 }
             }
         }
+        private void cboFPSLimit_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PowerControlPanel.Classes.ChangeFPSLimit.ChangeFPSLimit.changeLimit(cboFPSLimit.SelectedValue.ToString());
+        }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             handleVisibility();
         }
 
 
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Slider slider = sender as Slider;
+
+            string sliderName = slider.Name;
+
+            if (this.IsLoaded)
+            {
+                Debug.WriteLine("value changed event");
+                switch (sliderName)
+                {
+                    case "TDP1":
+                        if (!dragStartedTDP1 && !changingTDP)
+                        {
+                            //Debug.WriteLine(TDP1.Value.ToString());
+                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, true);
+                        }
+                        break;
+                    case "TDP":
+                        if (!dragStartedTDP && !changingTDP)
+                        {
+                            HandleChangingTDP((int)TDP.Value, (int)TDP.Value, true);
+                        }
+                        break;
+                    case "TDP2":
+                        if (!dragStartedTDP2 && !changingTDP)
+                        {
+                            HandleChangingTDP((int)TDP1.Value, (int)TDP2.Value, false);
+                        }
+                        break;
+                    case "Brightness":
+                        if (!dragStartedBrightness)
+                        {
+                            HandleChangingBrightness(Brightness.Value);
+                        }
+                        break;
+
+                    case "Volume":
+                        if (!dragStartedVolume)
+                        {
+                            HandleChangingVolume((int)Volume.Value);
+                        }
+                        break;
+                    case "GPUCLK":
+                        if (!dragStartedGPUCLK && !changingGPUCLK)
+                        {
+                            HandleChangingGPUCLK((int)GPUCLK.Value);
+                        }
+                        break;
+                    case "MAXCPU":
+                        if (!dragStartedMAXCPU && !changingMAXCPU)
+                        {
+                            HandleChangingMAXCPU((int)MAXCPU.Value);
+                        }
+                        if (MAXCPU.Value == MAXCPU.Maximum)
+                        {
+                            txtsliderMAXCPU.Visibility = Visibility.Collapsed;
+                            txtsliderMAXCPUAuto.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            txtsliderMAXCPUAuto.Visibility = Visibility.Collapsed;
+                            txtsliderMAXCPU.Visibility = Visibility.Visible;
+                        }
+                        break;
+                    case "ActiveCores":
+                        if (!dragStartedActiveCores && !changingActiveCores)
+                        {
+                            HandleChangingActiveCores(Convert.ToDouble(ActiveCores.Value));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
     }
 }

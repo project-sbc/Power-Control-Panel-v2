@@ -86,12 +86,12 @@ namespace Power_Control_Panel.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool enableSystem {
+        public bool enableVolume {
             get {
-                return ((bool)(this["enableSystem"]));
+                return ((bool)(this["enableVolume"]));
             }
             set {
-                this["enableSystem"] = value;
+                this["enableVolume"] = value;
             }
         }
         
@@ -110,12 +110,12 @@ namespace Power_Control_Panel.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool showSystem {
+        public bool showVolume {
             get {
-                return ((bool)(this["showSystem"]));
+                return ((bool)(this["showVolume"]));
             }
             set {
-                this["showSystem"] = value;
+                this["showVolume"] = value;
             }
         }
         
@@ -200,18 +200,6 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["showDisplay"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("40")]
-        public string sizeQAM {
-            get {
-                return ((string)(this["sizeQAM"]));
-            }
-            set {
-                this["sizeQAM"] = value;
             }
         }
         
@@ -356,6 +344,78 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["upgradeSettingsRequired"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LB+RB+DPadUp")]
+        public string gameLauncherButtonCombo {
+            get {
+                return ((string)(this["gameLauncherButtonCombo"]));
+            }
+            set {
+                this["gameLauncherButtonCombo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showBrightness {
+            get {
+                return ((bool)(this["showBrightness"]));
+            }
+            set {
+                this["showBrightness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool enableBrightness {
+            get {
+                return ((bool)(this["enableBrightness"]));
+            }
+            set {
+                this["enableBrightness"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string directorySteam {
+            get {
+                return ((string)(this["directorySteam"]));
+            }
+            set {
+                this["directorySteam"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string directoryPlaynite {
+            get {
+                return ((string)(this["directoryPlaynite"]));
+            }
+            set {
+                this["directoryPlaynite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string gameLauncher {
+            get {
+                return ((string)(this["gameLauncher"]));
+            }
+            set {
+                this["gameLauncher"] = value;
             }
         }
     }
