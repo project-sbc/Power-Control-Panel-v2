@@ -38,8 +38,8 @@
     <system:String x:Key="Profiles_SaveProfile">Сохранить профиль</system:String>
     <system:String x:Key="Profiles_HeaderDetails">Детали профиля</system:String>
     <system:String x:Key="Profiles_Name">Имя профиля</system:String>
-    <system:String x:Key="Profiles_OnCharger">On Charger Values</system:String>
-    <system:String x:Key="Profiles_OnBattery">On Battery Values</system:String>
+    <system:String x:Key="Profiles_OnCharger">Значения при работе от зарядного устройства</system:String>
+    <system:String x:Key="Profiles_OnBattery">Значения при работе от батареи</system:String>
     <system:String x:Key="Profiles_ProfileApplications">Связанные приложения</system:String>
     <system:String x:Key="Profiles_AddApp">Добавить приложение</system:String>
     <system:String x:Key="Profiles_DeleteApp">Удалить приложение</system:String>
