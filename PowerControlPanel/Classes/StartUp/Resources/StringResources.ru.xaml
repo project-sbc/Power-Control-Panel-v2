@@ -1,0 +1,128 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!-- main window menu -->
+    <system:String x:Key="MainWindow_Menu_Home">Home</system:String>
+    <system:String x:Key="MainWindow_Menu_Profiles">Profiles</system:String>
+    <system:String x:Key="MainWindow_Menu_AppSettings">Application Settings</system:String>
+    <system:String x:Key="MainWindow_Menu_QAM">Quick Access Menu</system:String>
+    <system:String x:Key="MainWindow_Menu_OSK">On Screen Keyboard</system:String>
+    <system:String x:Key="MainWindow_Menu_About">About</system:String>
+    <system:String x:Key="MainWindow_Menu_Settings">Settings</system:String>
+    <!-- QAM window menu -->
+    <system:String x:Key="QAM_Menu_Hide">Hide</system:String>
+    <system:String x:Key="QAM_Menu_System">System</system:String>
+    <system:String x:Key="QAM_Menu_Games">Games</system:String>
+    <system:String x:Key="QAM_Menu_Settings">Settings</system:String>
+    <!-- Home page values -->
+    <system:String x:Key="Brightness">Brightness</system:String>
+    <system:String x:Key="Volume">Volume</system:String>
+    <system:String x:Key="TDP">TDP (W)</system:String>
+    <system:String x:Key="TDP_Sustained">TDP Sustained (W)</system:String>
+    <system:String x:Key="TDP_Boost">TDP Boost (W)</system:String>
+    <system:String x:Key="Max_CPU">Max CPU Frequency (MHz)</system:String>
+    <system:String x:Key="Active_CPU_Cores">Active CPU Cores</system:String>
+    <system:String x:Key="GPU_Clock">GPU Clock (MHz)</system:String>
+    <system:String x:Key="Display_Resolution">Display Resolution</system:String>
+    <system:String x:Key="Display_Refresh">Display Refresh Rate</system:String>
+    <system:String x:Key="Display_Scaling">Display Scaling (%)</system:String>
+    <system:String x:Key="FPS_Limit">FPS Limit</system:String>
+    <system:String x:Key="ActiveProfile">Active Profile</system:String>
+    
+    <system:String x:Key="SystemControls">SYSTEM CONTROLS</system:String>
+    
+    <!-- profiles page -->
+    <system:String x:Key="Profiles_Header">Profiles</system:String>
+    <system:String x:Key="Profiles_AddProfile">Add Profile</system:String>
+    <system:String x:Key="Profiles_DeleteProfile">Delete Profile</system:String>
+    <system:String x:Key="Profiles_SaveProfile">Save Profile</system:String>
+    <system:String x:Key="Profiles_HeaderDetails">Profile Details</system:String>
+    <system:String x:Key="Profiles_Name">Profile Name</system:String>
+    <system:String x:Key="Profiles_OnCharger">On Charger Values</system:String>
+    <system:String x:Key="Profiles_OnBattery">On Battery Values</system:String>
+    <system:String x:Key="Profiles_ProfileApplications">Profile Applications</system:String>
+    <system:String x:Key="Profiles_AddApp">Add App</system:String>
+    <system:String x:Key="Profiles_DeleteApp">Delete App</system:String>
+
+    <!-- general words -->
+    <system:String x:Key="Enable">Enable</system:String>
+    <system:String x:Key="Disable">Disable</system:String>
+    <system:String x:Key="Show">Show</system:String>
+    <system:String x:Key="Hide">Hide</system:String>
+    <system:String x:Key="Close">Close</system:String>
+    <system:String x:Key="Open">Open</system:String>
+    <system:String x:Key="Auto">Auto</system:String>
+    <!-- Tile Homepage -->
+    <system:String x:Key="TileHomePage_TDP">TDP</system:String>
+    <system:String x:Key="TileHomePage_TDPBoost">TDP Boost</system:String>
+    <system:String x:Key="TileHomePage_TDPSustained">TDP Sustained</system:String>
+    <system:String x:Key="TileHomePage_MaxCPU">Max CPU Freq</system:String>
+    <system:String x:Key="TileHomePage_ActiveCores">Active Cores</system:String>
+    <system:String x:Key="TileHomePage_Brightness">Brightness</system:String>
+    <system:String x:Key="TileHomePage_Volume">Volume</system:String>
+    <system:String x:Key="TileHomePage_GPUCLK">GPU Clock</system:String>
+    <system:String x:Key="TileHomePage_Display">Display</system:String>   
+    <system:String x:Key="TileHomePage_Resolution">Display Resolution</system:String>
+    <system:String x:Key="TileHomePage_Scaling">Display Scaling</system:String>
+    <system:String x:Key="TileHomePage_Refresh">Display Refresh</system:String>
+    <system:String x:Key="TileHomePage_ActiveProfile">Active Profile</system:String>
+    <system:String x:Key="TileHomePage_FPSLimit">FPS Limit</system:String>
+    <system:String x:Key="TileHomePage_FanSpeed">Fan Speed</system:String>
+
+    <system:String x:Key="TileHomePage_Intel">Intel</system:String>
+    <system:String x:Key="TileHomePage_PlayNite">PlayNite</system:String>
+    <system:String x:Key="TileHomePage_Steam">Steam</system:String>
+    <system:String x:Key="TileHomePage_ChangeView">Change View Style</system:String>
+
+    
+    <system:String x:Key="HomePage_TDPSettings">TDP Settings</system:String>
+    <system:String x:Key="HomePage_CPUSettings">CPU Settings</system:String>
+    <system:String x:Key="HomePage_DisplaySettings">Display Settings</system:String>
+    <system:String x:Key="HomePage_AMDSettings">AMD Settings</system:String>
+    <system:String x:Key="HomePage_ProfileSettings">Profile Settings</system:String>
+    <system:String x:Key="HomePage_VolumeSettings">Volume Settings</system:String>
+    <system:String x:Key="HomePage_BrightnessSettings">Brightness Settings</system:String>
+    <system:String x:Key="HomePage_FPSSettings">FPS Limit Settings</system:String>
+    
+    <!-- Settings {DynamicResource HomePage_Brightness} -->
+
+    <system:String x:Key="Settings_UpdateSettings">Check For Updates</system:String>
+    <system:String x:Key="Settings_GeneralSettings">GENERAL SETTINGS</system:String>
+    <system:String x:Key="Settings_AMDSettings">AMD SETTINGS</system:String>
+    <system:String x:Key="Settings_IntelSettings">INTEL SETTINGS</system:String>
+    <system:String x:Key="Settings_SaveSettings">Save Settings</system:String>
+    <system:String x:Key="Settings_Theme">Theme</system:String>
+    <system:String x:Key="Settings_StartWithWindows">Start With Windows</system:String>
+    <system:String x:Key="Settings_MinimumTDP">Minimum TDP</system:String>
+    <system:String x:Key="Settings_MaximumTDP">Maximum TDP</system:String>
+    <system:String x:Key="Settings_QuickAccessMenuWidth">Quick Access Menu Width (%)</system:String>
+    <system:String x:Key="Settings_CombineTDP">Combine Sustained and Boost TDP</system:String>
+    <system:String x:Key="Settings_MainWindowStyle">Main Window Home Page Style (Restart App)</system:String>
+    <system:String x:Key="Settings_QAMStyle">Quick Access Menu Home Page Style</system:String>
+    <system:String x:Key="Settings_Language">Language/语言</system:String>
+
+    <system:String x:Key="Settings_SteamDirectory">Steam Directory</system:String>
+    <system:String x:Key="Settings_PlayNiteDirectory">PlayNite Directory</system:String>
+
+    <system:String x:Key="Settings_IntelTDPType">TDP Set Type</system:String>
+    <system:String x:Key="Settings_AMDMaxGPUClk">Set Max GPU Clock (MHz)</system:String>
+    <system:String x:Key="Settings_ControllerShortCuts">Controller Short Cuts</system:String>
+    <system:String x:Key="Settings_ShortCutQAM">Quick Access Menu</system:String>
+    <system:String x:Key="Settings_ShortCutOSK">OSK</system:String>
+    <system:String x:Key="Settings_ShortCutFSR">FSR</system:String>
+    <system:String x:Key="Settings_ShortCutGameLauncher">Game Launcher</system:String>
+    <!-- AppSettings  -->
+    <system:String x:Key="AppSettings_Applications">Applications</system:String>
+    <system:String x:Key="AppSettings_AddProfile">ADD PROFILE</system:String>
+    <system:String x:Key="AppSettings_DeleteProfile">DELETE PROFILE</system:String>
+    <system:String x:Key="AppSettings_AppMain">APPLICATION MAIN</system:String>
+    <system:String x:Key="AppSettings_RunApp">RUN APPLICATION</system:String>
+    <system:String x:Key="AppSettings_AppName">Application Name</system:String>
+    <system:String x:Key="AppSettings_SaveApp">Save Profile</system:String>
+    <system:String x:Key="AppSettings_ProcessName">Process Name</system:String>
+    <system:String x:Key="AppSettings_Profile">Profile</system:String>
+    <system:String x:Key="AppSettings_AppType">Application Type</system:String>
+    <system:String x:Key="AppSettings_GameType">Game Type</system:String>
+    <system:String x:Key="AppSettings_ExePath">Exe Path</system:String>
+    <system:String x:Key="AppSettings_ImagePath">Image Path</system:String>
+</ResourceDictionary>

@@ -10,7 +10,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>Resources\Pictures\PCP.ico</ApplicationIcon>
-    <Version>0.2.2.0</Version>
+    <Version>0.2.1.0</Version>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
@@ -165,6 +165,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="PowerControlPanel\Classes\StartUp\Resources\StringResources.ru.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="QuickAccessMenu.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
