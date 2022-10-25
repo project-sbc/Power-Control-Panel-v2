@@ -39,6 +39,9 @@ You can find it in the releases tab here https://github.com/project-sbc/Power-Co
 QUICK ACCESS MENU:   LB+RB+DPAD RIGHT  Hold for 1 second
 KEYBOARD:   LB+RB+DPAD DOWN  Hold for 1 second
 
+# Configure RTSS Frame Limit Feature
+![RTSS](https://github.com/project-sbc/Power-Control-Panel-v2/blob/master/RTSS%20PCP%20Setup.jpg?raw=true "RTSS Setup")
+
 
 # Features that are working:
 -TDP changing for both AMD and Intel, including 12th gen alder lake
