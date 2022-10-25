@@ -850,7 +850,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         if (dragStarted) { dragTDP2 = true; }
                         else
                         {
-                            if (dragCompleted) { dragTDP = false; }
+                            if (dragCompleted) { dragTDP2 = false; }
                             if (!dragTDP2)
                             {
                                  HandleChangingTDP((int)TDP1_Slider.Value, (int)sliderValue, false);
