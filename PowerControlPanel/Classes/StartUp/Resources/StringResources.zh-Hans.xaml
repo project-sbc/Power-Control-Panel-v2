@@ -31,7 +31,7 @@
     <system:String x:Key="ActiveProfile">Active Profile</system:String>
 
     <!-- profiles page -->
-    <system:String x:Key="Profiles_Header">剖面</system:String>
+    <system:String x:Key="Profiles_Header">配置文件</system:String>
     <system:String x:Key="Profiles_AddProfile">加剖面</system:String>
     <system:String x:Key="Profiles_DeleteProfile">删剖面</system:String>
     <system:String x:Key="Profiles_SaveProfile">保存剖面</system:String>
