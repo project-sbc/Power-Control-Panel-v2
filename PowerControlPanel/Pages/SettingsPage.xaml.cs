@@ -94,7 +94,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
             Properties.Settings.Default.maxGPUCLK = (int)GPUCLKMAX.Value;
 
-            Properties.Settings.Default.enableCombineTDP = cboCombineTDP.Text;
+            if (cboCombineTDP.Text =="True")
+            {
+                Properties.Settings.Default.enableCombinedTDP = true;
+            }
+            else
+            {
+                Properties.Settings.Default.enableCombinedTDP = false;
+            }
+            
 
             Properties.Settings.Default.homePageTypeMW = cboMWHomePageStyle.Text;
 
@@ -144,7 +152,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             TDPMIN.Value = Properties.Settings.Default.minTDP;
             GPUCLKMAX.Value = Properties.Settings.Default.maxGPUCLK;
           
-            cboCombineTDP.Text = Properties.Settings.Default.enableCombineTDP;
+            cboCombineTDP.Text = Properties.Settings.Default.enableCombinedTDP.ToString();
             cboAutoStart.Text = Properties.Settings.Default.systemAutoStart;
             cboLanguage.Text = Properties.Settings.Default.Language;
             cboMWHomePageStyle.Text = Properties.Settings.Default.homePageTypeMW;

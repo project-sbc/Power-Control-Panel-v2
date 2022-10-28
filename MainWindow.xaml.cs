@@ -113,6 +113,8 @@ namespace Power_Control_Panel
         //cpu values
         public static double cpuTemp = 0;
 
+        //
+
 
         //language pack
         public static ResourceDictionary languageDict = new ResourceDictionary();
@@ -145,7 +147,7 @@ namespace Power_Control_Panel
 
         public MainWindow()
         {
-           
+            
             StartUp.runStartUp();
 
             this.InitializeComponent();
@@ -180,29 +182,20 @@ namespace Power_Control_Panel
 
             if (String.Equals("C:\\Windows\\System32", Directory.GetCurrentDirectory(), StringComparison.OrdinalIgnoreCase))
             {
-
-                
                 this.ShowInTaskbar = false;
                 notifyIcon.Visible = true;
-            
             }
             else
             {
                 this.WindowState = WindowState.Normal;
             }
-
-            
-
         }
-      
         private void notifyIcon_Click(object sender, EventArgs e)
         {
             this.WindowState = WindowState.Normal;
             notifyIcon.Visible = false;
             this.ShowInTaskbar = true;
-
         }
-
         private void setTheme()
         {
             //set theme, is called at load and when theme is changed in settings. IMPORTANT TO KEEP AS SEPARATE ROUTINE
@@ -213,9 +206,7 @@ namespace Power_Control_Panel
             timer.Interval = TimeSpan.FromMilliseconds(15);
             timer.Tick += timerTick;
             timer.Start();
-
         }
-
         private void getController()
         {
             int controllerNum = 1;
@@ -238,9 +229,7 @@ namespace Power_Control_Panel
                     case 4:
                         controller = new Controller(UserIndex.Four);
                         break;
-
-                }
-                
+                }           
                 if (controller == null )
                 {
                     controllerNum++;
@@ -256,12 +245,7 @@ namespace Power_Control_Panel
                         controllerNum++;
                     }
                 }
-
             }
-            
-
-
-          
         }
 
         Dictionary<string, GamepadButtonFlags> buttonLookUp =

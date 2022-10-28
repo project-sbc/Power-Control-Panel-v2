@@ -36,7 +36,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             InitializeComponent();
 
 
-            if (Properties.Settings.Default.enableCombineTDP == "Disable")
+            if (!Properties.Settings.Default.enableCombinedTDP)
             {
                 TDP.Visibility = Visibility.Collapsed;
                 TDPBoost.Visibility = Visibility.Visible;

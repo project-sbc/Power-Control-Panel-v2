@@ -19,7 +19,7 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.changeCPU
             string cpuFreq = "";
             int intCpuFreq = 0;
             string[] resultArray = result.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
-          
+
 
             if (resultArray.Length > 2)
             {

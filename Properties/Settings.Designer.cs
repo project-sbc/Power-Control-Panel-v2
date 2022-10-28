@@ -229,18 +229,6 @@ namespace Power_Control_Panel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Disable")]
-        public string enableCombineTDP {
-            get {
-                return ((string)(this["enableCombineTDP"]));
-            }
-            set {
-                this["enableCombineTDP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Slider")]
         public string homePageTypeMW {
             get {
@@ -416,6 +404,18 @@ namespace Power_Control_Panel.Properties {
             }
             set {
                 this["gameLauncher"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool enableCombinedTDP {
+            get {
+                return ((bool)(this["enableCombinedTDP"]));
+            }
+            set {
+                this["enableCombinedTDP"] = value;
             }
         }
     }
