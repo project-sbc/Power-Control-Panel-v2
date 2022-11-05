@@ -37,8 +37,6 @@ namespace Power_Control_Panel.PowerControlPanel.Classes.ChangeBrightness
                 }
             }
         }
-
-
         public static void setBrightness(int intBrightness)
         {
 

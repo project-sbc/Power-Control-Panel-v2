@@ -37,7 +37,8 @@
                 <Setter Property="VerticalContentAlignment" Value="Top"/>
                 <Setter Property="VerticalTitleAlignment" Value="Bottom"/>
                 <Setter Property="HorizontalTitleAlignment" Value="Center"/>
-                <Setter Property="Width" Value="102" />
+                <Setter Property="Width" Value="103" />
+                <Setter Property="Margin" Value="2,2,2,2"/>
                 <Setter Property="Count" Value="" />
                 <EventSetter Event="Click" Handler="Tile_Click" />
                 <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />

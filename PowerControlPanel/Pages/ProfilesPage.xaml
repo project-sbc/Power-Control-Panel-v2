@@ -29,12 +29,15 @@
 
                     </DockPanel>
 
-                    <ScrollViewer VerticalContentAlignment="Stretch" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
+                    <ScrollViewer VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" VerticalAlignment="Stretch" >
                         <DataGrid x:Name="profileDataGrid"
                           Grid.Column="0"
                               Grid.Row="1"
                               MinHeight="320"
-                          
+                                  MaxHeight="500"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                              ScrollViewer.CanContentScroll="True" 
                               Width="245"
                               VerticalContentAlignment="Stretch"
                               VerticalAlignment="Stretch"

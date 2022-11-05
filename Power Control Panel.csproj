@@ -122,6 +122,7 @@
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="4.11.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.SimpleIcons" Version="4.11.0" />
+    <PackageReference Include="MouseKeyHook" Version="5.6.0" />
     <PackageReference Include="SecretNest.SequentialScheduler" Version="1.0.2" />
     <PackageReference Include="SharpDX.XInput" Version="4.2.0" />
     <PackageReference Include="squirrel.windows" Version="2.0.1" />
@@ -165,6 +166,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="PowerControlPanel\Classes\StartUp\Resources\StringResources.ru.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
     <Page Update="QuickAccessMenu.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>

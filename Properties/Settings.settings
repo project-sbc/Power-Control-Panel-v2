@@ -53,9 +53,6 @@
     <Setting Name="maxGPUCLK" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1500</Value>
     </Setting>
-    <Setting Name="enableCombineTDP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Disable</Value>
-    </Setting>
     <Setting Name="homePageTypeMW" Type="System.String" Scope="User">
       <Value Profile="(Default)">Slider</Value>
     </Setting>
@@ -100,6 +97,9 @@
     </Setting>
     <Setting Name="gameLauncher" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="enableCombinedTDP" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

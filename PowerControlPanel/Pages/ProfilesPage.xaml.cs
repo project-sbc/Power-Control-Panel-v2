@@ -35,7 +35,15 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             online_sliderActiveCores.Maximum = GlobalVariables.maxCpuCores;
             offline_sliderMAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
             online_sliderMAXCPU.Minimum = GlobalVariables.baseCPUSpeed;
+            offline_sliderTDP1.Minimum = Properties.Settings.Default.minTDP;
+            offline_sliderTDP2.Minimum = Properties.Settings.Default.minTDP;
+            offline_sliderTDP1.Maximum = Properties.Settings.Default.maxTDP;
+            offline_sliderTDP2.Maximum = Properties.Settings.Default.maxTDP;
 
+            online_sliderTDP1.Minimum = Properties.Settings.Default.minTDP;
+            offline_sliderTDP2.Minimum = Properties.Settings.Default.minTDP;
+            online_sliderTDP1.Maximum = Properties.Settings.Default.maxTDP;
+            offline_sliderTDP2.Maximum = Properties.Settings.Default.maxTDP;
 
             //populate profile list
             loadProfileListView();

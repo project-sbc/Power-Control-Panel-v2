@@ -343,7 +343,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 FPSLimit_Tile.Visibility = Visibility.Collapsed;
             }
 
-            if (Properties.Settings.Default.enableCombineTDP == "Enable")
+            if (Properties.Settings.Default.enableCombinedTDP)
             {
                 TDP1_Border.Visibility = Visibility.Collapsed;
                 TDP2_Border.Visibility = Visibility.Collapsed;
@@ -636,7 +636,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 switch (toggleName)
                 {
                     case "TDP_Toggle":
-                        if (Properties.Settings.Default.enableCombineTDP == "Enable")
+                        if (Properties.Settings.Default.enableCombinedTDP)
                         {
                             TDP_Border.Visibility = Visibility.Visible;
                         }
@@ -696,7 +696,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 switch (toggleName)
                 {
                     case "TDP_Toggle":
-                        if (Properties.Settings.Default.enableCombineTDP == "Enable")
+                        if (Properties.Settings.Default.enableCombinedTDP)
                         {
                             TDP_Border.Visibility = Visibility.Collapsed;
                         }
@@ -850,7 +850,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         if (dragStarted) { dragTDP2 = true; }
                         else
                         {
-                            if (dragCompleted) { dragTDP = false; }
+                            if (dragCompleted) { dragTDP2 = false; }
                             if (!dragTDP2)
                             {
                                  HandleChangingTDP((int)TDP1_Slider.Value, (int)sliderValue, false);

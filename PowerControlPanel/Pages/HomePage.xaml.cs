@@ -324,7 +324,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 FPSLimit_Tile.Visibility = Visibility.Collapsed;
             }
 
-            if (Properties.Settings.Default.enableCombineTDP == "Enable")
+            if (Properties.Settings.Default.enableCombinedTDP)
             {
                 TDP1_Border.Visibility = Visibility.Collapsed;
                 TDP2_Border.Visibility = Visibility.Collapsed;
@@ -590,7 +590,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 switch (toggleName)
                 {
                     case "TDP_Toggle":
-                        if (Properties.Settings.Default.enableCombineTDP == "Enable")
+                        if (Properties.Settings.Default.enableCombinedTDP)
                         {
                             TDP_Border.Visibility = Visibility.Visible;
                         }
@@ -650,7 +650,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                 switch (toggleName)
                 {
                     case "TDP_Toggle":
-                        if (Properties.Settings.Default.enableCombineTDP == "Enable")
+                        if (Properties.Settings.Default.enableCombinedTDP)
                         {
                             TDP_Border.Visibility = Visibility.Collapsed;
                         }
@@ -749,11 +749,8 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
                     handleChangeValues(sliderName, false, false, e.NewValue);
                 }
-
             }
-
         }
-
         private void Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
             Slider slider = (Slider)sender;
@@ -762,8 +759,6 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             handleChangeValues(sliderName, false, true, sliderValue);
 
         }
-
-
         private void Slider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
             Slider slider = (Slider)sender;
@@ -804,7 +799,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
                         if (dragStarted) { dragTDP2 = true; }
                         else
                         {
-                            if (dragCompleted) { dragTDP = false; }
+                            if (dragCompleted) { dragTDP2 = false; }
                             if (!dragTDP2)
                             {
                                 HandleChangingTDP((int)TDP1_Slider.Value, (int)sliderValue, false);
@@ -929,32 +924,23 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
 
 
         }
-
-
         private void HandleChangingGPUCLK(int gpuclk)
         {
             if (this.IsLoaded)
             {
-
                 Classes.TaskScheduler.TaskScheduler.runTask(() => PowerControlPanel.Classes.ChangeGPUCLK.ChangeGPUCLK.changeAMDGPUClock(gpuclk));
-
             }
-
         }
-
-
         private void Resolution_Cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (GlobalVariables.resolution != Resolution_Cbo.SelectedItem && !changingResolution && Resolution_Cbo.SelectedItem != "Custom Scaling")
             { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayResolution(Resolution_Cbo.SelectedItem.ToString()); }
         }
-
         private void RefreshRate_Cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (GlobalVariables.refreshRate != RefreshRate_Cbo.SelectedItem && !changingRefreshRate)
             { PowerControlPanel.Classes.ChangeDisplaySettings.ChangeDisplaySettings.SetDisplayRefreshRate(RefreshRate_Cbo.SelectedItem.ToString()); }
         }
-
         private void Scaling_Cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!changingScaling && Scaling_Cbo.SelectedItem.ToString() != "Default")

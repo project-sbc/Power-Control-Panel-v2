@@ -309,7 +309,7 @@ namespace Power_Control_Panel.PowerControlPanel.Pages
             }
           
 
-            if (Properties.Settings.Default.enableCombineTDP == "Enable")
+            if (Properties.Settings.Default.enableCombinedTDP)
             {
                 bdTDP1.Visibility = Visibility.Collapsed;
                 bdTDP2.Visibility = Visibility.Collapsed;
