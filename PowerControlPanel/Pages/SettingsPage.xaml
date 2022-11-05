@@ -135,8 +135,8 @@
 
                         </Label>
                         <ComboBox x:Name="cboCombineTDP" Style="{DynamicResource MahApps.Styles.ComboBox}" FontSize="20" Width="200" HorizontalAlignment="Right" IsEditable="False" DockPanel.Dock="Right" >
-                            <ComboBoxItem Content="Enable" />
-                            <ComboBoxItem Content="Disable" />
+                            <ComboBoxItem Content="True" />
+                            <ComboBoxItem Content="False" />
      
                         </ComboBox>
                      
