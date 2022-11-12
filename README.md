@@ -15,8 +15,7 @@ Go to RegEdit to the following address:  Computer\HKEY_LOCAL_MACHINE\SYSTEM\Curr
 change the DWORD value to 0 like the screenshot below.
 Restart the computer
 
-![Intel22H2](https://github.com/project-sbc/Power-Control-Panel-v2/blob/master/Intel%2022H2%20Driver%20Fix.jpg?raw=true "Intel 22H2 fix")
-
+![Intel22H2](https://github.com/project-sbc/Power-Control-Panel-v2/blob/master/Intel%2022H2%20driver%20fix.jpg?raw=true "Intel 22H2 fix")
 
 
 # Requirements:
