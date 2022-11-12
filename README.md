@@ -9,6 +9,16 @@ Hello everyone! This is the long awaited version 2 of my power control panel. Th
 # PLEASE READ THIS:
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. MISUSE OF THIS SOFTWARE COULD CAUSE SYSTEM INSTABILITY OR MALFUNCTION.
 
+# Fix Error on Intel Devices Running Windows 11 22H2
+
+Go to RegEdit to the following address:  Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Config
+change the DWORD value to 0 like the screenshot below.
+Restart the computer
+
+![Intel22H2](https://github.com/project-sbc/Power-Control-Panel-v2/blob/master/Intel%2022H2%20Driver%20Fix.jpg?raw=true "Intel 22H2 fix")
+
+
+
 # Requirements:
 You need .net 6.0 desktop to run this software OR download the self contained zip in the releases (newer versions only).
 
