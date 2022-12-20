@@ -17,6 +17,8 @@ Restart the computer
 
 ![Intel22H2](https://github.com/project-sbc/Power-Control-Panel-v2/blob/master/Intel%2022H2%20driver%20fix.jpg?raw=true "Intel 22H2 fix")
 
+If it doesn't help, try disabling it via Windows Security: https://support.microsoft.com/en-us/topic/kb5020779-the-vulnerable-driver-blocklist-after-the-october-2022-preview-release-3fcbe13a-6013-4118-b584-fcfbc6a09936 (either completely disable "core isolation/memory integrity" or if there is a separate toggle for "Microsoft Vulnerable Driver Blocklist", disable it).
+
 
 # Requirements:
 You need .net 6.0 desktop to run this software OR download the self contained zip in the releases (newer versions only).
