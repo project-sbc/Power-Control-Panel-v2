@@ -89,7 +89,7 @@
     <system:String x:Key="Settings_UpdateSettings">Проверить наличие обновлений</system:String>
     <system:String x:Key="Settings_GeneralSettings">Общие настройки</system:String>
     <system:String x:Key="Settings_AMDSettings">Настройки AMD</system:String>
-    <system:String x:Key="Settings_IntelSettings">Настройки INTEL</system:String>
+    <system:String x:Key="Settings_IntelSettings">Настройки Intel</system:String>
     <system:String x:Key="Settings_SaveSettings">Сохранить настройки</system:String>
     <system:String x:Key="Settings_Theme">Тема</system:String>
     <system:String x:Key="Settings_StartWithWindows">Запускать при старте Windows</system:String>
