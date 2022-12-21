@@ -88,13 +88,13 @@
 
     <system:String x:Key="Settings_UpdateSettings">Проверить наличие обновлений</system:String>
     <system:String x:Key="Settings_GeneralSettings">Общие настройки</system:String>
-    <system:String x:Key="Settings_AMDSettings">Настрокйи AMD</system:String>
+    <system:String x:Key="Settings_AMDSettings">Настройки AMD</system:String>
     <system:String x:Key="Settings_IntelSettings">Настройки INTEL</system:String>
     <system:String x:Key="Settings_SaveSettings">Сохранить настройки</system:String>
     <system:String x:Key="Settings_Theme">Тема</system:String>
     <system:String x:Key="Settings_StartWithWindows">Запускать при старте Windows</system:String>
-    <system:String x:Key="Settings_MinimumTDP">Минимальное значение TDP</system:String>
-    <system:String x:Key="Settings_MaximumTDP">Максимальное значение TDP</system:String>
+    <system:String x:Key="Settings_MinimumTDP">Минимальное TDP</system:String>
+    <system:String x:Key="Settings_MaximumTDP">Максимальное TDP</system:String>
     <system:String x:Key="Settings_QuickAccessMenuWidth">Ширина меню быстрого доступа (%)</system:String>
     <system:String x:Key="Settings_CombineTDP">Объединить стабильный и повышенный TDP</system:String>
     <system:String x:Key="Settings_MainWindowStyle">Стиль главной страницы приложения (перезагрузите приложение)</system:String>
