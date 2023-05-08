@@ -1,9 +1,6 @@
 # Power-Control-Panel-v2
 
-Hello everyone! This is the long awaited version 2 of my power control panel. This is a WORK IN PROGRESS!
-
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/LsCFg_GVnc0/0.jpg)](https://www.youtube.com/watch?v=LsCFg_GVnc0)
-
+Hello everyone! This is being dropped for support of my newest software, located here https://github.com/project-sbc/Handheld-Control-Panel
 
 
 # PLEASE READ THIS:
