@@ -1,3 +1,13 @@
+# Successor
+
+Please see my latest tool Handheld Hardware Tools https://github.com/project-sbc/Handheld-Hardware-Tools
+
+--------------
+# This tool is obsolete, please see above message
+--------------
+--------------
+--------------
+
 # Power-Control-Panel-v2
 
 Hello everyone! This is being dropped for support of my newest software, located here https://github.com/project-sbc/Handheld-Control-Panel
